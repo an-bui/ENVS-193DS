@@ -252,7 +252,7 @@ ggplot(data = penguins, aes(x = species, y = body_mass_g)) +
   scale_fill_manual(values = c("#F56A56", "#3D83F5", "#A9A20B")) +
   labs(x = "Penguin species", y = "Body mass (g)",
        title = "Gentoo penguins tend to be heavier than Adelie or Chinstrap",
-       caption = "Data source: Palmer LTER") +
+       caption = "Data source: {palmerpenguins}, \n Horst AM, Hill AP, Gorman KB.") +
   theme_bw() +
   theme(legend.position = "none", 
         axis.title = element_text(size = 13),
@@ -272,7 +272,7 @@ ggplot() +
   scale_color_manual(values = c("#F56A56", "#3D83F5", "#A9A20B")) +
   labs(x = "Penguin species", y = "Body mass (g)",
        title = "Gentoo penguins tend to be heavier than Adelie or Chinstrap",
-       caption = "Data source: Palmer LTER") +
+       caption = "Data source: {palmerpenguins}, \n Horst AM, Hill AP, Gorman KB.") +
   theme_bw() +
   theme(legend.position = "none", 
         axis.title = element_text(size = 13),
@@ -286,12 +286,22 @@ ggplot() +
 
 # 5. Bonus: adjusting breaks on a histogram
 
-The default `geom_histogram()` bins sometimes don't reflect the actual values in your data set. For example, we know that the smallest mass in the data set is 2700 g, but the histogram from part 3b starts around 2625. This is because the formula to calculate the width of the bins from the number of bins maximizes even splits in the middle of the data set but doesn't really incorporate the ends all that well. I like to manually put in the breaks in a histogram so that I know exactly how they're being broken up, all while more or less following the Rice Rule for number of bins to display.
+The default `geom_histogram()` bins sometimes don't reflect the actual values in your data set. For example, we know that the smallest mass in the data set is 2700 g, but the histogram from part 3b starts around 2625. I like to manually put in the breaks in a histogram so that I know exactly how they're being broken up, all while more or less following the Rice Rule for number of bins to display.
 
 ```{r}
 breaks <- ggplot(data = penguins, aes(x = body_mass_g)) +
-  geom_histogram(alpha = 0.5, breaks = seq(from = 2700, to = 6500, by = 250)) +
-  scale_x_continuous(breaks = round(seq(from = 2700, to = 6500, by = 250)))
+  geom_histogram(fill = "#FFFFFF", color = "#000000", breaks = seq(from = 2700, to = 6500, by = 250)) +
+  scale_x_continuous(breaks = round(seq(from = 2700, to = 6500, by = 250)), limits = c(2700, 6450), expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 50), breaks = seq(from = 10, to = 50, by = 10)) +
+  labs(x = "Body mass (g)", y = "Count",
+       title = "Histogram of penguin body masses from Palmer Station LTER",
+       caption = "Data source: {palmerpenguins}, \n Horst AM, Hill AP, Gorman KB.") +
+  theme_classic() +
+  theme(plot.margin = margin(1, 1, 1, 1, "cm"),
+        plot.caption = element_text(face = "italic", size = 10),
+        axis.title = element_text(size = 12),
+        axis.text = element_text(size = 11)) 
+
 breaks
 ```
 

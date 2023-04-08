@@ -148,7 +148,7 @@ penguins %>%
 # You can also group by multiple columns.
 
 penguins %>% 
-  group_by(island, species) %>% 
+  group_by(island, species) %>%  
   summarize(max_flipper_length = max(flipper_length_mm, na.rm = TRUE))
   
 # What if you only want Biscoe island? 
@@ -158,11 +158,6 @@ penguins %>%
   filter(island == "Biscoe") %>% 
   group_by(species) %>% 
   summarize(mean_body_mass = mean(body_mass_g, na.rm = TRUE))
-
-and_vertebrates %>% 
-  group_by(species) %>% 
-  tally()
-
 
 
 

@@ -1,7 +1,7 @@
 ---
 title: "Lecture 03 figures"
 editor: source
-freeze: auto
+freeze: true
 author:
   - name: An Bui
     url: https://an-bui.com/
@@ -52,5 +52,159 @@ ggplot(data.frame(x = -4:4), aes(x)) +
         axis.title.y = element_blank(),
         axis.text.y = element_blank(),
         axis.ticks = element_blank()) 
+```
+
+```{r}
+# randomly select 10000 numbers from a uniform distribution for the population
+uniform <- runif(10000, min = 2, max = 8)
+
+# make a histogram for the population
+uniformdf <- as.data.frame(uniform)
+
+ggplot(uniformdf, aes(x = uniform)) +
+  geom_histogram(breaks = seq(2, 8, length.out = 40), fill = "firebrick", alpha = 0.7, color = "firebrick") +
+  geom_vline(xintercept = mean(uniform), linewidth = 2) +
+  annotate("text", x = 5.8, y = 290, label = "mean = 4.967", size = 10) +
+  scale_x_continuous(breaks = seq(from = 2, to = 8, by = 1)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 305)) +
+  labs(x = "Continuous value", y = "Count") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18))
+```
+
+
+```{r}
+# for() loop to 
+store2 <- c()
+store5 <- c()
+store15 <- c()
+store30 <- c()
+store50 <- c()
+
+for(i in 1:100) {
+  
+  store2[i] <- mean(sample(uniform, 2, replace = FALSE))
+
+}
+
+for(i in 1:100) {
+  
+  store5[i] <- mean(sample(uniform, 5, replace = FALSE))
+
+}
+for(i in 1:100) {
+  
+  store15[i] <- mean(sample(uniform, 15, replace = FALSE))
+
+}
+
+for(i in 1:100) {
+  
+  store30[i] <- mean(sample(uniform, 30, replace = FALSE))
+
+}
+
+for(i in 1:100) {
+  
+  store50[i] <- mean(sample(uniform, 50, replace = FALSE))
+
+}
+
+
+df <- cbind(store2, store5, store15, store30, store50) %>% 
+  as.data.frame() %>% 
+  rownames_to_column("sim")
+
+df_long <- df %>% 
+  pivot_longer(cols = store2:store50, names_to = "samplen", values_to = "means")
+
+ggplot(df_long, aes(x = means)) +
+  geom_histogram(bins = 10, position = "identity") +
+  facet_wrap(~samplen)
+
+ggplot(df_long, aes(x = means)) +
+  geom_histogram(bins = 25) +
+  geom_histogram(data = df, aes(x = store50), bins = 25, fill = "blue")
+
+hist_labs <- function() {
+
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18))
+}
+
+ggplot(df) +
+  geom_histogram(aes(x = store2), bins = 10, alpha = 0.7, fill = "yellow", color = "yellow") +
+  coord_cartesian(xlim = c(2, 8), ylim = c(0, 30)) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  geom_vline(xintercept = mean(store2)) +
+  geom_vline(xintercept = mean(uniform), color = "red") +
+  labs(x = "Sample means", y = "Count") +
+  hist_labs()
+
+
+ggplot(df) +
+  geom_histogram(aes(x = store5), bins = 10, alpha = 0.7, fill = "blue", color = "blue") +
+    coord_cartesian(xlim = c(2, 8), ylim = c(0, 30)) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+    geom_vline(xintercept = mean(store5)) +
+  geom_vline(xintercept = mean(uniform), color = "red") +
+  labs(x = "Sample means", y = "Count") +
+  hist_labs()
+
+ggplot(df) +
+  geom_histogram(aes(x = store15), bins = 12, alpha = 0.7, fill = "red", color = "red") +
+  coord_cartesian(xlim = c(2, 8), ylim = c(0, 30)) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+    geom_vline(xintercept = mean(store15)) +
+  geom_vline(xintercept = mean(uniform), color = "red") +
+  labs(x = "Sample means", y = "Count") +
+  hist_labs()
+
+ggplot(df) +
+  geom_histogram(aes(x = store30), bins = 12, alpha = 0.7, fill = "orange", color = "orange") +
+    coord_cartesian(xlim = c(2, 8), ylim = c(0, 30)) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+    geom_vline(xintercept = mean(store30)) +
+  geom_vline(xintercept = mean(uniform), color = "red") +
+  labs(x = "Sample means", y = "Count") +
+  hist_labs()
+
+ggplot(df) +
+  geom_histogram(aes(x = store50), bins = 12, alpha = 0.7, fill = "green", color = "green") +
+  coord_cartesian(xlim = c(2, 8), ylim = c(0, 30)) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+    geom_vline(xintercept = mean(store50)) +
+  geom_vline(xintercept = mean(uniform), color = "red") +
+  labs(x = "Sample means", y = "Count") +
+  hist_labs()
+
+```
+
+```{r}
+breakpoints <- round(seq(from = 2700, to = 6500, length.out = 15))
+
+breaks <- ggplot(data = penguins, aes(x = body_mass_g)) +
+  geom_histogram(fill = "#FFFFFF", color = "#000000", breaks = breakpoints) +
+  scale_x_continuous(expand = c(0, 0), breaks = breakpoints) +
+  scale_y_continuous(expand = c(0, 0), breaks = seq(from = 10, to = 50, by = 10)) +
+  labs(x = "Body mass (g)", y = "Count",
+       title = "Histogram of penguin body masses from Palmer Station LTER",
+       caption = "Data source: {palmerpenguins}, \n Horst AM, Hill AP, Gorman KB.") +
+  theme_classic() +
+  theme(plot.margin = margin(1, 1, 1, 1, "cm"),
+        plot.caption = element_text(face = "italic", size = 10),
+        axis.title = element_text(size = 12),
+        axis.text = element_text(size = 11)) 
+
+breaks
 ```
 

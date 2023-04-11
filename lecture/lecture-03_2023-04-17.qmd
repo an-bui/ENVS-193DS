@@ -1,0 +1,56 @@
+---
+title: "Lecture 03 figures"
+editor: source
+freeze: auto
+author:
+  - name: An Bui
+    url: https://an-bui.com/
+    affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology
+    affiliation-url: https://www.eemb.ucsb.edu/
+date: 2023-04-17
+categories: [probability distribution, normal, Z-score, Student's t, t-score]
+citation:
+  url: https://an-bui.github.io/ES-193DS-W23/lecture/lecture-03_2023-04-17.html
+---
+
+# 0. set up
+
+```{r}
+# cleaning
+library(tidyverse)
+
+# visualization
+library(showtext)
+font_add_google("Lato", "Lato")
+showtext_auto()
+```
+
+# 1. 68-95-99.7 rule
+
+```{r}
+labels <- c(
+  "", "\U03BC - 3\U03C3", "\U03BC - 2\U03C3", "\U03BC - \U03C3", "\U03BC", "\U03BC + \U03C3", "\U03BC + 2\U03C3", "\U03BC + 3\U03C3", ""
+)
+
+ggplot(data.frame(x = -4:4), aes(x)) +
+  geom_linerange(x = 1, ymin = 0, ymax = 0.24) +
+  geom_linerange(x = -1, ymin = 0, ymax = 0.24) +
+  geom_linerange(x = 2, ymin = 0, ymax = 0.055) +
+  geom_linerange(x = -2, ymin = 0, ymax = 0.055) +
+  geom_linerange(x = 3, ymin = 0, ymax = 0.005) +
+  geom_linerange(x = -3, ymin = 0, ymax = 0.005) +
+  geom_linerange(x = 0, ymin = 0, ymax = 0.399) +
+  stat_function(geom = "line", n = 1000, fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1.5, color = "darkorange") +
+  scale_x_continuous(labels = labels, breaks = seq(-4, 4, by = 1)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.41)) +
+  labs(x = "") +
+  theme_classic() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        axis.line.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank()) 
+```
+

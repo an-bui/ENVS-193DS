@@ -168,7 +168,10 @@ $$
 So, for example, the penguin data set has 344 observations. Therefore, according to the Rice Rule, you could use around 14 bins.
 
 ```{r}
+# step 1. use the ggplot() function call
+# step 2. use the aes() call
 ggplot(data = penguins, aes(x = body_mass_g)) +
+  # step 3. specify a geom (geometry)
   geom_histogram(bins = 14) 
 ```
 
@@ -209,7 +212,7 @@ Jitter plots are a random smattering of points in a cloud, but the y-axis positi
 
 ```{r}
 ggplot(data = penguins, aes(x = species, y = body_mass_g)) +
-  geom_boxplot() 
+  geom_jitter() 
 ```
 
 ### iv. points with bars 
@@ -232,6 +235,7 @@ There are some common combinations of the above plots, for example:
 ```{r}
 ggplot(data = penguins, aes(x = species, y = body_mass_g)) +
   geom_violin() +
+  # width argument controls boxplot width
   geom_boxplot(width = 0.2)
 ```
 
@@ -254,13 +258,21 @@ We'll use the violin + boxplot example to make into a finalized version.
 
 ```{r}
 ggplot(data = penguins, aes(x = species, y = body_mass_g)) +
+  # fill the violin shape using the species column: every species has a different color
+  # alpha argument: makes the violin shape more transparent (scale of 0 to 1)
   geom_violin(aes(fill = species), alpha = 0.5) +
+  # fill the boxplot shape using the species column
+  # make the boxplots narrower
   geom_boxplot(aes(fill = species), width = 0.2) +
+  # specify the colors you want to use for each species
   scale_fill_manual(values = c("#F56A56", "#3D83F5", "#A9A20B")) +
+  # relabel the axis titles, plot title, and caption
   labs(x = "Penguin species", y = "Body mass (g)",
        title = "Gentoo penguins tend to be heavier than Adelie or Chinstrap",
        caption = "Data source: {palmerpenguins}, \n Horst AM, Hill AP, Gorman KB.") +
+  # themes built in to ggplot
   theme_bw() +
+  # other theme adjustments
   theme(legend.position = "none", 
         axis.title = element_text(size = 13),
         axis.text = element_text(size = 12),
@@ -273,7 +285,10 @@ Another one as an example is a plot with the mean point and standard deviation b
 
 ```{r}
 ggplot() +
+  # using two different data frames: penguins (raw data) and penguins_summary (mean and SD)
+  # raw data are jittered
   geom_jitter(data = penguins, aes(x = species, y = body_mass_g, color = species), alpha = 0.4) +
+  # summary data: mean is a point, bars are standard deviation
   geom_point(data = penguin_summary, aes(x = species, y = mean_body_mass, color = species), size = 5) +
   geom_errorbar(data = penguin_summary, aes(x = species, ymin = mean_body_mass - sd_body_mass, ymax = mean_body_mass + sd_body_mass, color = species), width = 0.2) +
   scale_color_manual(values = c("#F56A56", "#3D83F5", "#A9A20B")) +

@@ -54,6 +54,8 @@ ggplot(data.frame(x = -4:4), aes(x)) +
         axis.ticks = element_blank()) 
 ```
 
+# 2. central limit theorem
+
 ```{r}
 # randomly select 10000 numbers from a uniform distribution for the population
 uniform <- runif(10000, min = 2, max = 8)
@@ -62,7 +64,7 @@ uniform <- runif(10000, min = 2, max = 8)
 uniformdf <- as.data.frame(uniform)
 
 ggplot(uniformdf, aes(x = uniform)) +
-  geom_histogram(breaks = seq(2, 8, length.out = 40), fill = "firebrick", alpha = 0.7, color = "firebrick") +
+  geom_histogram(breaks = seq(2, 8, length.out = 41), fill = "firebrick", alpha = 0.7, color = "firebrick") +
   geom_vline(xintercept = mean(uniform), linewidth = 2) +
   annotate("text", x = 5.8, y = 290, label = "mean = 4.967", size = 10) +
   scale_x_continuous(breaks = seq(from = 2, to = 8, by = 1)) +
@@ -88,6 +90,7 @@ for(i in 1:100) {
   store2[i] <- mean(sample(uniform, 2, replace = FALSE))
 
 }
+
 
 for(i in 1:100) {
   
@@ -121,7 +124,7 @@ df_long <- df %>%
   pivot_longer(cols = store2:store50, names_to = "samplen", values_to = "means")
 
 ggplot(df_long, aes(x = means)) +
-  geom_histogram(bins = 10, position = "identity") +
+  geom_histogram(bins = 12, position = "identity") +
   facet_wrap(~samplen)
 
 ggplot(df_long, aes(x = means)) +
@@ -139,7 +142,6 @@ hist_labs <- function() {
 ggplot(df) +
   geom_histogram(aes(x = store2), bins = 10, alpha = 0.7, fill = "yellow", color = "yellow") +
   coord_cartesian(xlim = c(2, 8), ylim = c(0, 30)) +
-  scale_x_continuous(expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
   geom_vline(xintercept = mean(store2)) +
   geom_vline(xintercept = mean(uniform), color = "red") +
@@ -150,7 +152,6 @@ ggplot(df) +
 ggplot(df) +
   geom_histogram(aes(x = store5), bins = 10, alpha = 0.7, fill = "blue", color = "blue") +
     coord_cartesian(xlim = c(2, 8), ylim = c(0, 30)) +
-  scale_x_continuous(expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
     geom_vline(xintercept = mean(store5)) +
   geom_vline(xintercept = mean(uniform), color = "red") +
@@ -160,7 +161,6 @@ ggplot(df) +
 ggplot(df) +
   geom_histogram(aes(x = store15), bins = 12, alpha = 0.7, fill = "red", color = "red") +
   coord_cartesian(xlim = c(2, 8), ylim = c(0, 30)) +
-  scale_x_continuous(expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
     geom_vline(xintercept = mean(store15)) +
   geom_vline(xintercept = mean(uniform), color = "red") +
@@ -170,7 +170,6 @@ ggplot(df) +
 ggplot(df) +
   geom_histogram(aes(x = store30), bins = 12, alpha = 0.7, fill = "orange", color = "orange") +
     coord_cartesian(xlim = c(2, 8), ylim = c(0, 30)) +
-  scale_x_continuous(expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
     geom_vline(xintercept = mean(store30)) +
   geom_vline(xintercept = mean(uniform), color = "red") +
@@ -180,7 +179,6 @@ ggplot(df) +
 ggplot(df) +
   geom_histogram(aes(x = store50), bins = 12, alpha = 0.7, fill = "green", color = "green") +
   coord_cartesian(xlim = c(2, 8), ylim = c(0, 30)) +
-  scale_x_continuous(expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
     geom_vline(xintercept = mean(store50)) +
   geom_vline(xintercept = mean(uniform), color = "red") +
@@ -189,22 +187,16 @@ ggplot(df) +
 
 ```
 
+
+
 ```{r}
-breakpoints <- round(seq(from = 2700, to = 6500, length.out = 15))
 
-breaks <- ggplot(data = penguins, aes(x = body_mass_g)) +
-  geom_histogram(fill = "#FFFFFF", color = "#000000", breaks = breakpoints) +
-  scale_x_continuous(expand = c(0, 0), breaks = breakpoints) +
-  scale_y_continuous(expand = c(0, 0), breaks = seq(from = 10, to = 50, by = 10)) +
-  labs(x = "Body mass (g)", y = "Count",
-       title = "Histogram of penguin body masses from Palmer Station LTER",
-       caption = "Data source: {palmerpenguins}, \n Horst AM, Hill AP, Gorman KB.") +
-  theme_classic() +
-  theme(plot.margin = margin(1, 1, 1, 1, "cm"),
-        plot.caption = element_text(face = "italic", size = 10),
-        axis.title = element_text(size = 12),
-        axis.text = element_text(size = 11)) 
-
-breaks
 ```
+
+
+
+
+
+
+
 

@@ -159,3 +159,67 @@ ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm, color = species, sh
 - complete axis labels    
 - text is larger and font is changed  
 - legend is in plot area (if there's space to do this, generally good)
+
+# Other plots
+
+## violin + boxplot
+
+```{r}
+ggplot(data = penguins, aes(x = species, y = body_mass_g)) +
+  # fill the violin shape using the species column: every species has a different color
+  # alpha argument: makes the violin shape more transparent (scale of 0 to 1)
+  geom_violin(aes(fill = species), alpha = 0.5) +
+  # fill the boxplot shape using the species column
+  # make the boxplots narrower
+  geom_boxplot(aes(fill = species), width = 0.2) +
+  # specify the colors you want to use for each species
+  scale_fill_manual(values = c("#F56A56", "#3D83F5", "#A9A20B")) +
+  # relabel the axis titles, plot title, and caption
+  labs(x = "Penguin species", y = "Body mass (g)",
+       title = "Gentoo penguins tend to be heavier than Adelie or Chinstrap",
+       caption = "Data source: {palmerpenguins}, \n Horst AM, Hill AP, Gorman KB.") +
+  # themes built in to ggplot
+  theme_bw() +
+  # other theme adjustments
+  theme(legend.position = "none", 
+        axis.title = element_text(size = 13),
+        axis.text = element_text(size = 12),
+        plot.title = element_text(size = 14),
+        plot.caption = element_text(face = "italic"),
+        text = element_text(family = "Times New Roman"))
+```
+
+## points with bars + jitter
+
+```{r}
+# summarizing penguin data set: calculating mean and SD body mass by species
+penguin_summary <- penguins %>% 
+  group_by(species) %>% 
+  summarize(mean_body_mass = mean(body_mass_g, na.rm = TRUE),
+            sd_body_mass = sd(body_mass_g, na.rm = TRUE))
+
+ggplot() +
+  # using two different data frames: penguins (raw data) and penguins_summary (mean and SD)
+  # raw data are jittered
+  geom_jitter(data = penguins, aes(x = species, y = body_mass_g, color = species), alpha = 0.4) +
+  # summary data: mean is a point, bars are standard deviation
+  geom_point(data = penguin_summary, aes(x = species, y = mean_body_mass, color = species), size = 5) +
+  geom_errorbar(data = penguin_summary, aes(x = species, ymin = mean_body_mass - sd_body_mass, ymax = mean_body_mass + sd_body_mass, color = species), width = 0.2) +
+  scale_color_manual(values = c("#F56A56", "#3D83F5", "#A9A20B")) +
+  labs(x = "Penguin species", y = "Body mass (g)",
+       title = "Gentoo penguins tend to be heavier than Adelie or Chinstrap",
+       caption = "Data source: {palmerpenguins}, \n Horst AM, Hill AP, Gorman KB.") +
+  theme_bw() +
+  theme(legend.position = "none", 
+        axis.title = element_text(size = 13),
+        axis.text = element_text(size = 12),
+        plot.title = element_text(size = 14),
+        plot.caption = element_text(face = "italic"),
+        text = element_text(family = "Times New Roman"))
+```
+```
+
+
+
+
+

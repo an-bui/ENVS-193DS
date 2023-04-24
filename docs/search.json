@@ -1,5 +1,68 @@
 [
   {
+    "objectID": "lecture/lecture-04_2023-04-24.html",
+    "href": "lecture/lecture-04_2023-04-24.html",
+    "title": "Lecture 04 figures",
+    "section": "",
+    "text": "# cleaning\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.0     ✔ readr     2.1.4\n✔ forcats   1.0.0     ✔ stringr   1.5.0\n✔ ggplot2   3.4.1     ✔ tibble    3.2.0\n✔ lubridate 1.9.2     ✔ tidyr     1.3.0\n✔ purrr     1.0.1     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the \u001b]8;;http://conflicted.r-lib.org/\u0007conflicted package\u001b]8;;\u0007 to force all conflicts to become errors\n\n# visualization\nlibrary(showtext)\n\nLoading required package: sysfonts\nLoading required package: showtextdb\n\nfont_add_google(\"Lato\", \"Lato\")\nshowtext_auto()\n\n# panels together\nlibrary(patchwork)\n\n# cohen's d\nlibrary(effsize)"
+  },
+  {
+    "objectID": "lecture/lecture-04_2023-04-24.html#random-numbers-from-t-distribution",
+    "href": "lecture/lecture-04_2023-04-24.html#random-numbers-from-t-distribution",
+    "title": "Lecture 04 figures",
+    "section": "random numbers from t-distribution",
+    "text": "random numbers from t-distribution\n\nset.seed(7)\n# acorns <- rt(n = 41, df = 40, ncp = 2.5) \nacorns <- rnorm(n = 41, mean = 2, sd = 1)"
+  },
+  {
+    "objectID": "lecture/lecture-04_2023-04-24.html#histogram",
+    "href": "lecture/lecture-04_2023-04-24.html#histogram",
+    "title": "Lecture 04 figures",
+    "section": "histogram",
+    "text": "histogram\n\nhist <- enframe(acorns) %>% \n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 7, fill = \"cornflowerblue\", color = \"#000000\") +\n  scale_y_continuous(expand = c(0, 0), limits = c(0, 11.5), breaks = c(0, 3, 6, 9, 12)) +\n  theme_classic() +\n  labs(x = \"Acorn mass (g)\", y = \"Count\")"
+  },
+  {
+    "objectID": "lecture/lecture-04_2023-04-24.html#qq-plot",
+    "href": "lecture/lecture-04_2023-04-24.html#qq-plot",
+    "title": "Lecture 04 figures",
+    "section": "qq plot",
+    "text": "qq plot\n\nqq <- enframe(acorns) %>% \n  ggplot(aes(sample = value)) +\n  stat_qq_line(aes(sample = value)) +\n  stat_qq(aes(sample = value), color = \"cornflowerblue\", size = 3) +\n  theme_classic() +\n  labs(x = \"Theoretical quantiles\", y = \"Sample quantiles\")\n\n\nhist + qq"
+  },
+  {
+    "objectID": "lecture/lecture-04_2023-04-24.html#calculating-a-critical-value",
+    "href": "lecture/lecture-04_2023-04-24.html#calculating-a-critical-value",
+    "title": "Lecture 04 figures",
+    "section": "calculating a critical value",
+    "text": "calculating a critical value\n\nqt(p = .05/2, df = 40)\n\n[1] -2.021075"
+  },
+  {
+    "objectID": "lecture/lecture-04_2023-04-24.html#calculating-t-score",
+    "href": "lecture/lecture-04_2023-04-24.html#calculating-t-score",
+    "title": "Lecture 04 figures",
+    "section": "calculating t-score",
+    "text": "calculating t-score\n\n# population mean\nmu0 <- 2\n\n# number of observations\nn <- 41\n\n# sample mean\nxbar <- mean(acorns)\n\n# sample standard deviation\ns <- sd(acorns)\n\n# sample standard error\nse <- s/sqrt(n)\n\n# degrees of freedom\ndf <- n - 1\n\n# t-score\nt <- (xbar-mu0)/se\n\nt\n\n[1] 1.803471\n\n\n\\[\nt_s = \\frac{\\bar{x} - \\mu}{s/\\sqrt{n}} = \\frac{2.29 - 2}{1.04/\\sqrt{41}} = 1.8\n\\] ## visual representation of sample t-statistic vs t-critical\n\nggplot(data.frame(x = -5:5), aes(x)) +\n  stat_function(geom = \"area\", fun = dt, args = list(df = 1), xlim = c(1.8, 5), fill = \"darkgrey\") +\n  stat_function(geom = \"area\", fun = dt, args = list(df = 1), xlim = c(-5, -1.8), fill = \"darkgrey\") +\n  geom_linerange(aes(x = 1.8, ymin = 0, ymax = 0.075), linewidth = 1, lty = 2, color = \"#000000\") +\n  geom_linerange(aes(x = -1.8, ymin = 0, ymax = 0.075), linewidth = 1, lty = 2, color = \"#000000\") +\n  \n  geom_linerange(aes(x = 2.021, ymin = 0, ymax = 0.075), linewidth = 1, lty = 3, color = \"#FFFFFF\") +\n  geom_linerange(aes(x = -2.021, ymin = 0, ymax = 0.075), linewidth = 1, lty = 3, color = \"#FFFFFF\") +\n  stat_function(geom = \"line\", n = 1000, fun = dt, args = list(df = 1), linewidth = 1, color = \"#000000\") +\n  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.32)) +\n  theme_void() +\n  theme(panel.grid = element_blank(),\n        plot.margin = unit(c(1, 0, 0, 0), \"cm\"))"
+  },
+  {
+    "objectID": "lecture/lecture-04_2023-04-24.html#manually-calculating-p-value",
+    "href": "lecture/lecture-04_2023-04-24.html#manually-calculating-p-value",
+    "title": "Lecture 04 figures",
+    "section": "manually calculating p-value",
+    "text": "manually calculating p-value\n\n# two-tailed: multiply probability by 2\n# lower = FALSE: probability of the value being more than t\n2*pt(t, df, lower = FALSE)\n\n[1] 0.07885024"
+  },
+  {
+    "objectID": "lecture/lecture-04_2023-04-24.html#doing-a-t-test",
+    "href": "lecture/lecture-04_2023-04-24.html#doing-a-t-test",
+    "title": "Lecture 04 figures",
+    "section": "doing a t-test",
+    "text": "doing a t-test\n\nt.test(acorns, mu = 2)\n\n\n    One Sample t-test\n\ndata:  acorns\nt = 1.8035, df = 40, p-value = 0.07885\nalternative hypothesis: true mean is not equal to 2\n95 percent confidence interval:\n 1.964535 2.623323\nsample estimates:\nmean of x \n 2.293929"
+  },
+  {
+    "objectID": "lecture/lecture-04_2023-04-24.html#same-differences-in-means-different-sd",
+    "href": "lecture/lecture-04_2023-04-24.html#same-differences-in-means-different-sd",
+    "title": "Lecture 04 figures",
+    "section": "same differences in means, different SD",
+    "text": "same differences in means, different SD\n\nsmall <- ggplot(data.frame(x = -6:9), aes(x)) +\n  stat_function(geom = \"line\", n = 100, fun = dnorm, args = list(mean = 0, sd = 2), linewidth = 2, color = \"#FF6B2B\") +\n  geom_vline(aes(xintercept = 0), color = \"#FF6B2B\", lty = 2, linewidth = 2) +\n  stat_function(geom = \"line\", n = 100, fun = dnorm, args = list(mean = 3, sd = 2), linewidth = 2, color = \"#00A38D\") +\n  geom_vline(aes(xintercept = 3), color = \"#00A38D\", lty = 2, linewidth = 2) +\n    scale_y_continuous(expand = c(0, 0), limits = c(0, 0.21)) +\n  theme_void() +\n  theme(plot.margin = unit(c(1, 1, 1, 1), \"cm\"))\n\nbig <- ggplot(data.frame(x = -6:9), aes(x)) +\n  stat_function(geom = \"line\", n = 100, fun = dnorm, args = list(mean = 0, sd = 0.5), linewidth = 2, color = \"#FF6B2B\") +\n  geom_vline(aes(xintercept = 0), color = \"#FF6B2B\", lty = 2, linewidth = 2) +\n  stat_function(geom = \"line\", n = 100, fun = dnorm, args = list(mean = 3, sd = 0.5), linewidth = 2, color = \"#00A38D\") +\n  geom_vline(aes(xintercept = 3), color = \"#00A38D\", lty = 2, linewidth = 2) +\n    scale_y_continuous(expand = c(0, 0), limits = c(0, 0.8)) +\n  theme_void() +\n  theme(plot.margin = unit(c(1, 1, 1, 1), \"cm\"))\n\nsmall / big"
+  },
+  {
     "objectID": "lecture/lecture-01_2023-04-03.html",
     "href": "lecture/lecture-01_2023-04-03.html",
     "title": "Lecture 01 figures",
@@ -46,7 +109,70 @@
     "href": "workshop/workshop-04_2023-04-26.html",
     "title": "Coding workshop: Week 4",
     "section": "",
-    "text": "1. Data\n\n\n\n\n\n\n\nCitationBibTeX citation:@online{bui2023,\n  author = {An Bui},\n  editor = {},\n  title = {Coding Workshop: {Week} 4},\n  date = {2023-04-26},\n  url = {https://an-bui.github.io/ES-193DS-W23/workshop/workshop-04_2023-04-26.html},\n  langid = {en}\n}\nFor attribution, please cite this work as:\nAn Bui. 2023. “Coding Workshop: Week 4.” April 26, 2023. https://an-bui.github.io/ES-193DS-W23/workshop/workshop-04_2023-04-26.html."
+    "text": "library(tidyverse)\nlibrary(lterdatasampler)"
+  },
+  {
+    "objectID": "workshop/workshop-04_2023-04-26.html#a.-initial-wrangling",
+    "href": "workshop/workshop-04_2023-04-26.html#a.-initial-wrangling",
+    "title": "Coding workshop: Week 4",
+    "section": "a. initial wrangling",
+    "text": "a. initial wrangling\n\nmaples_2003 <- hbr_maples %>% \n  filter(year == 2003) %>% \n  mutate(watershed = case_when(\n    watershed == \"Reference\" ~ \"Reference\", \n    watershed == \"W1\" ~ \"Calcium-treated\"\n  ))\n\nhead(maples_2003, 5)\n\n# A tibble: 5 × 11\n   year watershed eleva…¹ trans…² sample stem_…³ leaf1…⁴ leaf2…⁵ leaf_…⁶ stem_…⁷\n  <dbl> <chr>     <fct>   <fct>   <fct>    <dbl>   <dbl>   <dbl>   <dbl>   <dbl>\n1  2003 Reference Low     R1      1         86.9   13.8    12.1   0.0453  0.03  \n2  2003 Reference Low     R1      2        114     14.6    15.3   0.0476  0.0338\n3  2003 Reference Low     R1      3         83.5   12.5     9.73  0.0423  0.0248\n4  2003 Reference Low     R1      4         68.1    9.97   10.1   0.0397  0.0194\n5  2003 Reference Low     R1      5         72.1    6.84    5.48  0.0204  0.018 \n# … with 1 more variable: corrected_leaf_area <dbl>, and abbreviated variable\n#   names ¹​elevation, ²​transect, ³​stem_length, ⁴​leaf1area, ⁵​leaf2area,\n#   ⁶​leaf_dry_mass, ⁷​stem_dry_mass"
+  },
+  {
+    "objectID": "workshop/workshop-04_2023-04-26.html#b.-summary-statistics",
+    "href": "workshop/workshop-04_2023-04-26.html#b.-summary-statistics",
+    "title": "Coding workshop: Week 4",
+    "section": "b. summary statistics",
+    "text": "b. summary statistics\nRemember, we’re interested in stem lengths in 2003 between reference and calcium-treated watersheds. What groups would be useful if that was the case?\n\nlengths_2003_summary <- maples_2003 %>% \n  group_by(watershed) %>% \n  summarize(mean_l = mean(stem_length),\n            sd_l = sd(stem_length),\n            var_l = var(stem_length),\n            count_l = length(stem_length),\n            se_l = sd_l/sqrt(count_l),\n            margin_l = qt(0.95, df = count_l - 1) * se_l) \n\nlengths_2003_summary\n\n# A tibble: 2 × 7\n  watershed       mean_l  sd_l var_l count_l  se_l margin_l\n  <chr>            <dbl> <dbl> <dbl>   <int> <dbl>    <dbl>\n1 Calcium-treated   87.9  14.3  206.     120  1.31     2.17\n2 Reference         81.0  13.9  194.     120  1.27     2.11\n\n# not getting the digits after the decimal point that you're expecting?\n# try `as.data.frame()` piped in after the summarize call."
+  },
+  {
+    "objectID": "workshop/workshop-04_2023-04-26.html#c.-check-for-normally-distributed-data",
+    "href": "workshop/workshop-04_2023-04-26.html#c.-check-for-normally-distributed-data",
+    "title": "Coding workshop: Week 4",
+    "section": "c. check for normally distributed data",
+    "text": "c. check for normally distributed data\n\nggplot(data = maples_2003) +\n  stat_qq(aes(sample = stem_length)) +\n  stat_qq_line(aes(sample = stem_length), color = \"red\") +\n  facet_wrap(~ watershed)"
+  },
+  {
+    "objectID": "workshop/workshop-04_2023-04-26.html#c.-check-for-equal-variances",
+    "href": "workshop/workshop-04_2023-04-26.html#c.-check-for-equal-variances",
+    "title": "Coding workshop: Week 4",
+    "section": "c. Check for equal variances",
+    "text": "c. Check for equal variances\nWith an F-test, you can ask: are the sample variances between my two groups equal?\nThe assumption is that your data are normally distributed.\n\\[\nH0: s^2_1 = s^2_2\nH1: s^2_1 \\neq s^2_2\n\\]\n\nlength_var <- var.test(stem_length ~ watershed, data = maples_2003)\n\nlength_var\n\n\n    F test to compare two variances\n\ndata:  stem_length by watershed\nF = 1.0587, num df = 119, denom df = 119, p-value = 0.7563\nalternative hypothesis: true ratio of variances is not equal to 1\n95 percent confidence interval:\n 0.7378244 1.5190473\nsample estimates:\nratio of variances \n          1.058674"
+  },
+  {
+    "objectID": "workshop/workshop-04_2023-04-26.html#c.-decide-on-a-critical-value",
+    "href": "workshop/workshop-04_2023-04-26.html#c.-decide-on-a-critical-value",
+    "title": "Coding workshop: Week 4",
+    "section": "c. decide on a critical value",
+    "text": "c. decide on a critical value\nTwo-tailed with significance level \\(\\alpha\\) = 0.05:\n\nqt(p = .05/2, df = 119)\n\n[1] -1.9801\n\n\nIf your test statistic is less than -1.98 or greater than 1.98, then you have evidence to reject the null hypothesis."
+  },
+  {
+    "objectID": "workshop/workshop-04_2023-04-26.html#d.-do-a-t-test",
+    "href": "workshop/workshop-04_2023-04-26.html#d.-do-a-t-test",
+    "title": "Coding workshop: Week 4",
+    "section": "d. Do a t-test",
+    "text": "d. Do a t-test\n\nlength_ttest <- t.test(stem_length ~ watershed, data = maples_2003, var.equal = TRUE)\n\nlength_ttest\n\n\n    Two Sample t-test\n\ndata:  stem_length by watershed\nt = 3.7797, df = 238, p-value = 0.0001985\nalternative hypothesis: true difference in means between group Calcium-treated and group Reference is not equal to 0\n95 percent confidence interval:\n  3.304134 10.497532\nsample estimates:\nmean in group Calcium-treated       mean in group Reference \n                     87.88583                      80.98500"
+  },
+  {
+    "objectID": "workshop/workshop-04_2023-04-26.html#e.-calculate-cohens-d-effect-size",
+    "href": "workshop/workshop-04_2023-04-26.html#e.-calculate-cohens-d-effect-size",
+    "title": "Coding workshop: Week 4",
+    "section": "e. Calculate Cohen’s d effect size",
+    "text": "e. Calculate Cohen’s d effect size\nCohen’s d is a measure of how many standard deviations apart the two sample means are.\n\\[\nCohen's d = \\frac{\\bar{x_1} - \\bar{x_2}}{\\sqrt{(s^2_1 + s^2_2)/2}}\n\\]\nNote that you are using sample means in the numerator and sample variances in the denominator.\nWe can calculate this by hand (use install.packages(\"data.table\") in the console before running the chunk below):\n\nlibrary(data.table)\n\n# create a data frame in data table format from lengths_2003_summary\nlengths_dt <- setDT(lengths_2003_summary)\n\n# pull out mean and variance values from the data table \nmean_ref_2003 <- lengths_dt[watershed == \"Reference\", mean_l]\nmean_w1_2003 <- lengths_dt[watershed == \"Calcium-treated\", mean_l]\nvar_ref_2003 <- lengths_dt[watershed == \"Reference\", var_l]\nvar_w1_2003 <- lengths_dt[watershed == \"Calcium-treated\", var_l]\n\n# calculate Cohen's d\nd_byhand <- (mean_w1_2003 - mean_ref_2003) / sqrt((var_w1_2003 + var_ref_2003)/2)\nd_byhand\n\n[1] 0.4879597\n\n\nOr using a function in a package:\nUse install.packages(\"effsize\") in the console before running the chunk below.\n\nlibrary(effsize)\n\nd_effsize <- cohen.d(stem_length ~ watershed, data = maples_2003)\n\nCompare the two calculations:\n\nd_byhand\n\n[1] 0.4879597\n\nd_effsize\n\n\nCohen's d\n\nd estimate: 0.4879597 (small)\n95 percent confidence interval:\n    lower     upper \n0.2298792 0.7460402"
+  },
+  {
+    "objectID": "workshop/workshop-04_2023-04-26.html#make-a-plot",
+    "href": "workshop/workshop-04_2023-04-26.html#make-a-plot",
+    "title": "Coding workshop: Week 4",
+    "section": "make a plot",
+    "text": "make a plot\n\nggplot(data = lengths_2003_summary, aes(x = watershed, y = mean_l, color = watershed)) +\n  geom_point(size = 3) +\n  geom_linerange(aes(ymin = mean_l - margin_l, ymax = mean_l + margin_l), linewidth = 1) +\n  geom_jitter(data = maples_2003, aes(x = watershed, y = stem_length), alpha = 0.3) +\n  scale_color_manual(values = c(\"Reference\" = \"#E57B33\", \"Calcium-treated\" = \"#039199\")) +\n  labs(x = \"Watershed\", y = \"Stem length (mm)\") +\n  theme_classic() +\n  theme(legend.position = \"none\",\n        text = element_text(family = \"Times New Roman\"),\n        axis.title = element_text(size = 14),\n        axis.text = element_text(size = 12),\n        plot.caption = element_text(hjust = 0),\n        plot.caption.position = \"plot\",\n        plot.title.position = \"plot\")"
+  },
+  {
+    "objectID": "workshop/workshop-04_2023-04-26.html#f.-communicating-about-the-results-of-a-t-test",
+    "href": "workshop/workshop-04_2023-04-26.html#f.-communicating-about-the-results-of-a-t-test",
+    "title": "Coding workshop: Week 4",
+    "section": "f. Communicating about the results of a t-test",
+    "text": "f. Communicating about the results of a t-test\n\nfigure caption\nFigure 1. Sugar maple stem lengths in calcium-treated and reference watersheds. Stem lengths (mm) for calcium-treated (turquoise) and reference (orange) watersheds from Hubbard Brook Long-term Ecological Research site (HBR LTER). Dark points represent mean stem length and vertical lines represent confidence intervals with a 95% confidence level. Transparent points represent stem lengths.\n\n\nin-text references\nThere is a moderate (Cohen’s d = 0.49) but significant effect of calcium treatment on sugar maple stem lengths (Student’s t-test, t(238) = 3.78, p < 0.001, \\(\\alpha\\) = 0.05). On average, sugar maple stem lengths in calcium-treated watersheds were 6.9 mm longer than those in reference watersheds (95% confidence interval: [3.3, 10.5] mm, Figure 1).\n\n\nbonus in-text references, using in-line R\nWhen rendering your document, compare the text above with the text below. Are there any differences?\nThere is a moderate (Cohen’s d = 0.49) but significant effect of calcium treatment on sugar maple stem lengths (Student’s t-test, t(238) = 3.8, p < 0.001, \\(\\alpha\\) = 0.05). On average, sugar maple stem lengths in calcium-treated watersheds were 6.9 mm longer than those in reference watersheds (CI = [3.3, 10.5] mm, Figure 1)."
   },
   {
     "objectID": "workshop/workshop-02_2023-04-12.html",
@@ -151,7 +277,7 @@
     "href": "lecture.html",
     "title": "Lecture visualizations",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Title\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\nDate\n\n\n\n\n\n\nLecture 03 figures\n\n\nApr 17, 2023\n\n\n\n\nLecture 02 figures\n\n\nApr 10, 2023\n\n\n\n\nLecture 01 figures\n\n\nApr 3, 2023\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n       Default\n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Title\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\nDate\n\n\n\n\n\n\nLecture 04 figures\n\n\nApr 24, 2023\n\n\n\n\nLecture 03 figures\n\n\nApr 17, 2023\n\n\n\n\nLecture 02 figures\n\n\nApr 10, 2023\n\n\n\n\nLecture 01 figures\n\n\nApr 3, 2023\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",

@@ -1,0 +1,294 @@
+---
+title: "Lecture 06 figures"
+editor: source
+freeze: auto
+author:
+  - name: An Bui
+    url: https://an-bui.com/
+    affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology
+    affiliation-url: https://www.eemb.ucsb.edu/
+date: 2023-05-08
+categories: [chi-square, ANOVA, shapiro-wilk, levene, kruskal-wallis, cliff's delta, eta squared]
+citation:
+  url: https://an-bui.github.io/ES-193DS-W23/lecture/lecture-06_2023-05-08.html
+---
+
+```{r message = FALSE}
+library(tidyverse)
+library(palmerpenguins)
+library(showtext)
+library(car)
+font_add_google("Lato", "Lato")
+showtext_auto()
+library(patchwork)
+```
+
+## Chi-square
+
+### test statistic:
+
+$$
+\chi^2 = \Sigma\frac{(O-E)^2}{E}
+$$
+### degrees of freedom
+$$
+df = (number\;of\;rows - 1) * (number\;of\;columns - 1)
+$$
+
+### expected counts:
+$$
+expected = \frac{row\;total * column\;total}{table\;total}
+$$
+
+### expected counts example from lecture
+$$
+\frac{126 * 118}{315} = 47.2
+$$
+
+### test statistic calculation example from lecture
+$$
+\begin{align}
+\chi^2 &= \Sigma\frac{(O-E)^2}{E} \\
+\chi^2 &= \frac{55-47.2}{47.2}+...+\frac{45-31.9}{31.9} \\
+&= 15.276
+\end{align}
+$$
+
+### example code
+
+```{r}
+# create matrix
+survey <- tribble(
+  ~distance, ~trails, ~dog_access, ~wildlife_habitat,
+  "walking_distance", 55, 38, 33,
+  "driving_distance", 41, 25, 29,
+  "out_of_town", 22, 27, 45
+) %>% 
+  column_to_rownames("distance")
+
+survey
+
+# calculate proportions
+survey_summary <- tribble(
+  ~distance, ~trails, ~dog_access, ~wildlife_habitat,
+  "walking_distance", 55, 38, 33,
+  "driving_distance", 41, 25, 29,
+  "out_of_town", 22, 27, 45
+) %>% 
+  pivot_longer(cols = trails:wildlife_habitat, names_to = "responses", values_to = "counts") %>% 
+  group_by(distance) %>% 
+  mutate(sum = sum(counts)) %>% 
+  ungroup() %>% 
+  mutate(prop = counts/sum)
+  
+# do chi-square
+chisq.test(survey)
+
+# get expected matrix
+chisq.test(survey)$expected
+```
+
+# ANOVA
+
+## ANOVA variance figure:
+
+```{r}
+col1 <- "cornflowerblue"
+col2 <- "orange"
+col3 <- "darkgreen"
+
+ggplot(data.frame(x = 0:22), aes(x)) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 10, sd = 2), linewidth = 1, col = col1) + 
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 8, sd = 2), linewidth = 1, col = col2) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 15, sd = 2), linewidth = 1, col = col3) +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_blank(),
+        axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        panel.border = element_blank(),
+        text = element_text(family = "Lato")) 
+
+```
+
+
+## ANOVA with palmer penguins
+```{r}
+# Adelie: 10
+# Chinstrap: 8
+# Gentoo: 10
+
+adelie <- penguins %>% 
+  filter(species == "Adelie")
+
+adelie_hist <- ggplot(data = adelie, aes(x = bill_length_mm)) +
+  geom_histogram(bins = 10, fill = col1, color = col1, alpha = 0.8) +
+  labs(x = "Bill length (mm)", y = "Count") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        axis.ticks = element_blank(),
+        text = element_text(family = "Lato")) 
+
+adelie_qq <- ggplot(data = adelie, aes(sample = bill_length_mm)) +
+  stat_qq_line(linewidth = 1) +
+  stat_qq(col = col1) +
+  labs(x = "Theoretical", y = "Sample") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        axis.ticks = element_blank(),
+        text = element_text(family = "Lato")) 
+
+shapiro.test(adelie$bill_length_mm)
+
+chinstrap <- penguins %>% 
+  filter(species == "Chinstrap")
+
+chinstrap_hist <- ggplot(data = chinstrap, aes(x = bill_length_mm)) +
+  geom_histogram(bins = 10, fill = col2, color = col2, alpha = 0.8) +
+  labs(x = "Bill length (mm)", y = "Count") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        axis.ticks = element_blank(),
+        text = element_text(family = "Lato")) 
+
+chinstrap_qq <- ggplot(data = chinstrap, aes(sample = bill_length_mm)) +
+  stat_qq_line(linewidth = 1) +
+  stat_qq(col = col2) +
+  labs(x = "Theoretical", y = "Sample") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        axis.ticks = element_blank(),
+        text = element_text(family = "Lato")) 
+
+shapiro.test(chinstrap$bill_length_mm)
+
+gentoo <- penguins %>% 
+  filter(species == "Gentoo")
+
+gentoo_hist <- ggplot(data = gentoo, aes(x = bill_length_mm)) +
+  geom_histogram(bins = 10, fill = col3, color = col3, alpha = 0.8) +
+  labs(x = "Bill length (mm)", y = "Count") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        axis.ticks = element_blank(),
+        text = element_text(family = "Lato")) 
+
+gentoo_qq <- ggplot(data = gentoo, aes(sample = bill_length_mm)) +
+  stat_qq_line(linewidth = 1) +
+  stat_qq(col = col3) +
+  labs(x = "Theoretical", y = "Sample") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        axis.ticks = element_blank(),
+        text = element_text(family = "Lato")) 
+
+
+(adelie_hist + adelie_qq) / (chinstrap_hist + chinstrap_qq) / (gentoo_hist + gentoo_qq)
+
+shapiro.test(gentoo$bill_length_mm)
+
+leveneTest(bill_length_mm ~ species, data = penguins)
+
+penguins_anova <- aov(bill_length_mm ~ species, data = penguins)
+penguins_anova
+summary(penguins_anova)
+TukeyHSD(penguins_anova)
+```
+
+## ANOVA information
+
+### Sum of squares
+
+#### among groups
+
+$$
+\sum_{i=1}^{k}\sum_{j=1}^{n}(\bar{x}_i - \bar{x})^2
+$$
+
+#### within groups
+$$
+\sum_{i=1}^{k}\sum_{j=1}^{n}(\bar{x}_{ij} - \bar{x}_i)^2
+$$
+
+#### total
+$$
+\sum_{i=1}^{k}\sum_{j=1}^{n}(\bar{x}_{ij} - \bar{x})^2
+$$
+
+### Mean squares
+
+#### among groups
+
+$$
+\frac{SS_{among\;group}}{k-1}
+$$
+#### within group
+
+$$
+\frac{SS_{within\;group}}{n-k}
+$$
+#### total
+
+$$
+\frac{SS_{total}}{kn-1}
+$$
+
+### F-ratio
+
+$$
+\frac{MS_{among\;group}}{MS_{within\;group}}
+$$
+
+## penguins visualization
+```{r}
+ggplot(data = penguins, aes(x = species, y = bill_length_mm, fill = species)) +
+  geom_violin(alpha = 0.6) +
+  geom_boxplot(width = 0.2) +
+  scale_fill_manual(values = c(col1, col2, col3)) +
+  labs(x = "Species", y = "Bill length (mm)") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        text = element_text(family = "Lato"),
+        legend.position = "none") 
+```
+
+
+# Kruskal-Wallis
+
+## test statistic
+
+$$
+H = \frac{12}{n(n+1)}\sum_{i = 1}^{k}\frac{R^2_i}{n_i}-3(n+1)
+$$
+
+## eta squared
+
+$$
+\eta^2 = \frac{H - k + 1}{n - k}
+$$
+
+
+
+
+
+
+
+
+
+
+
+

@@ -181,6 +181,18 @@ sal_summary
 # if the largest sample variance is < 4× the smallest sample variance, the variances are close enough
 ```
 
+```{r}
+# weirdness with quarto: don't name code chunks if they have tables in them!
+
+flextable(sal_summary) %>% 
+  set_header_labels(unit_name = "Unit name",
+                    mean = "Mean length (mm)", 
+                    sd = "Standard deviation",
+                    count = "Number of observations",
+                    se = "Standard error",
+                    var = "Variance")
+```
+
 ```{r plotting-the-data}
 ggplot(sal, aes(x = unit_name, y = length_1_mm)) +
   geom_boxplot()

@@ -105,6 +105,27 @@
     "text": "model plots\n\nlm_pred <- ggpredict(lm_ex, terms = ~x)\n\nex_plot_noline <- ggplot(df_ex, aes(x= x, y = y)) +\n  geom_point(shape = 17, size = 3, color = \"orange\") +\n  theme_classic() +\n  theme(text = element_text(size = 14))\n\nex_plot <- ggplot(df_ex, aes(x= x, y = y)) +\n  geom_point(shape = 17, size = 3, color = \"orange\") +\n  geom_line(data = lm_pred, aes(x = x, y = predicted), linewidth = 1) +\n  theme_classic() +\n  theme(text = element_text(size = 14))"
   },
   {
+    "objectID": "lecture/lecture-07_2023-05-15.html#formula-for-pearsons-correlation",
+    "href": "lecture/lecture-07_2023-05-15.html#formula-for-pearsons-correlation",
+    "title": "Lecture 07 figures",
+    "section": "formula for Pearson’s correlation",
+    "text": "formula for Pearson’s correlation\n\\[\nr = \\frac{\\sum(x_i - \\bar{x})(y_i - \\bar{y})}{\\sqrt{\\sum(x_i-\\bar{x})^2}\\sqrt{\\sum(y_i - \\bar{y})^2}}\n\\]"
+  },
+  {
+    "objectID": "lecture/lecture-07_2023-05-15.html#test-statistic-for-pearson-correlation",
+    "href": "lecture/lecture-07_2023-05-15.html#test-statistic-for-pearson-correlation",
+    "title": "Lecture 07 figures",
+    "section": "test statistic for pearson correlation",
+    "text": "test statistic for pearson correlation\n\\[\n\\begin{align}\nt &= \\frac{r\\sqrt{n - 2}}{\\sqrt{1-r^2}} \\\\\ndf &= n -2\n\\end{align}\n\\]\nuses a t-distribution"
+  },
+  {
+    "objectID": "lecture/lecture-07_2023-05-15.html#no-correlation-but-clear-relationship",
+    "href": "lecture/lecture-07_2023-05-15.html#no-correlation-but-clear-relationship",
+    "title": "Lecture 07 figures",
+    "section": "no correlation but clear relationship",
+    "text": "no correlation but clear relationship\n\nx_lm <- seq(from = 1, to = 30, length.out = 50)\n# y = a( x – h) 2 + k\ndf_para <- cbind(\n  x = x_lm,\n  y = 0.1*(x_lm - 15)^2 + 12\n) %>% \n  as_tibble()\n\nggplot(df_para, aes(x = x, y = y)) +\n  geom_point(size = 3) +\n  theme_bw()\n\n\n\ncor.test(df_para$x, df_para$y, method = \"pearson\")\n\n\n    Pearson's product-moment correlation\n\ndata:  df_para$x and df_para$y\nt = 0.90749, df = 48, p-value = 0.3687\nalternative hypothesis: true correlation is not equal to 0\n95 percent confidence interval:\n -0.1540408  0.3939806\nsample estimates:\n      cor \n0.1298756"
+  },
+  {
     "objectID": "lecture/lecture-05_2023-05-01.html",
     "href": "lecture/lecture-05_2023-05-01.html",
     "title": "Lecture 05 figures",

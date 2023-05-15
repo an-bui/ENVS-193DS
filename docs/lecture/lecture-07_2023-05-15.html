@@ -213,6 +213,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#what-is-a-residual" id="toc-what-is-a-residual" class="nav-link active" data-scroll-target="#what-is-a-residual">what is a residual?</a></li>
   <li><a href="#linear-model-equation" id="toc-linear-model-equation" class="nav-link" data-scroll-target="#linear-model-equation">linear model equation</a></li>
+  <li><a href="#linear-model-hypotheses" id="toc-linear-model-hypotheses" class="nav-link" data-scroll-target="#linear-model-hypotheses">linear model hypotheses</a></li>
   <li><a href="#what-are-we-doing-when-we-fit-a-linear-model" id="toc-what-are-we-doing-when-we-fit-a-linear-model" class="nav-link" data-scroll-target="#what-are-we-doing-when-we-fit-a-linear-model">what are we doing when we fit a linear model?</a></li>
   <li><a href="#actual-linear-relationship-example" id="toc-actual-linear-relationship-example" class="nav-link" data-scroll-target="#actual-linear-relationship-example">actual linear relationship example</a>
   <ul class="collapse">
@@ -227,6 +228,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   <li><a href="#diagnostic-plots" id="toc-diagnostic-plots" class="nav-link" data-scroll-target="#diagnostic-plots">diagnostic plots</a></li>
   <li><a href="#comparison-plots" id="toc-comparison-plots" class="nav-link" data-scroll-target="#comparison-plots">comparison plots</a></li>
+  <li><a href="#correlation" id="toc-correlation" class="nav-link" data-scroll-target="#correlation">correlation?</a>
+  <ul class="collapse">
+  <li><a href="#formula-for-pearsons-correlation" id="toc-formula-for-pearsons-correlation" class="nav-link" data-scroll-target="#formula-for-pearsons-correlation">formula for Pearson’s correlation</a></li>
+  <li><a href="#test-statistic-for-pearson-correlation" id="toc-test-statistic-for-pearson-correlation" class="nav-link" data-scroll-target="#test-statistic-for-pearson-correlation">test statistic for pearson correlation</a></li>
+  <li><a href="#no-correlation-but-clear-relationship" id="toc-no-correlation-but-clear-relationship" class="nav-link" data-scroll-target="#no-correlation-but-clear-relationship">no correlation but clear relationship</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -271,6 +278,15 @@ R^2 &amp;= 1 - \frac{\sum_{i = 1}^{n}(y_i - \hat{y})^2}{\sum_{i = 1}^{n}(y_i - \
 y &amp;= mx + b \\
 y &amp;= b_1x + b_0 + \epsilon = b_0 + b_1x + \epsilon \\
 y &amp;= \beta_1x + \beta_0 + \epsilon = \beta_0 + \beta_1x + \epsilon
+\end{align}
+\]</span></p>
+</section>
+<section id="linear-model-hypotheses" class="level1">
+<h1>linear model hypotheses</h1>
+<p><span class="math display">\[
+\begin{align}
+H_0 &amp;: \beta_1 = 0 \\
+H_A &amp;: \beta_1 \not = 0
 \end{align}
 \]</span></p>
 </section>
@@ -429,7 +445,7 @@ R^2 &amp;= 1 - \frac{SS_{residuals}}{SS_{total}} \\
 <span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_table_properties</span>(<span class="at">layout =</span> <span class="st">"autofit"</span>, <span class="at">width =</span> <span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div class="tabwid"><style>.cl-0445e3d0{table-layout:auto;width:80%;}.cl-04422fa6{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-0444097a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-0444097b{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-0444128a{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0444128b{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0444128c{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-04441294{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-04441295{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-04441296{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-0445e3d0"><thead><tr style="overflow-wrap:break-word;"><th class="cl-0444128a"><p class="cl-0444097a"><span class="cl-04422fa6">Term</span></p></th><th class="cl-0444128b"><p class="cl-0444097b"><span class="cl-04422fa6">Degrees of freedom</span></p></th><th class="cl-0444128b"><p class="cl-0444097b"><span class="cl-04422fa6">Sum of squares</span></p></th><th class="cl-0444128b"><p class="cl-0444097b"><span class="cl-04422fa6">Mean squares</span></p></th><th class="cl-0444128b"><p class="cl-0444097b"><span class="cl-04422fa6">F-statistic</span></p></th><th class="cl-0444128a"><p class="cl-0444097a"><span class="cl-04422fa6">p-value</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-0444128c"><p class="cl-0444097a"><span class="cl-04422fa6">x</span></p></td><td class="cl-04441294"><p class="cl-0444097b"><span class="cl-04422fa6">1</span></p></td><td class="cl-04441294"><p class="cl-0444097b"><span class="cl-04422fa6">3,003.92</span></p></td><td class="cl-04441294"><p class="cl-0444097b"><span class="cl-04422fa6">3,003.92</span></p></td><td class="cl-04441294"><p class="cl-0444097b"><span class="cl-04422fa6">233.87</span></p></td><td class="cl-0444128c"><p class="cl-0444097a"><span class="cl-04422fa6">&lt; 0.001</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-04441295"><p class="cl-0444097a"><span class="cl-04422fa6">Residuals</span></p></td><td class="cl-04441296"><p class="cl-0444097b"><span class="cl-04422fa6">28</span></p></td><td class="cl-04441296"><p class="cl-0444097b"><span class="cl-04422fa6">359.64</span></p></td><td class="cl-04441296"><p class="cl-0444097b"><span class="cl-04422fa6">12.84</span></p></td><td class="cl-04441296"><p class="cl-0444097b"><span class="cl-04422fa6"></span></p></td><td class="cl-04441295"><p class="cl-0444097a"><span class="cl-04422fa6"></span></p></td></tr></tbody></table></div>
+<div class="tabwid"><style>.cl-63e70faa{table-layout:auto;width:80%;}.cl-63e34fd2{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-63e53536{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-63e53540{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-63e53f90{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-63e53f91{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-63e53f9a{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-63e53f9b{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-63e53f9c{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-63e53f9d{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-63e70faa"><thead><tr style="overflow-wrap:break-word;"><th class="cl-63e53f90"><p class="cl-63e53536"><span class="cl-63e34fd2">Term</span></p></th><th class="cl-63e53f91"><p class="cl-63e53540"><span class="cl-63e34fd2">Degrees of freedom</span></p></th><th class="cl-63e53f91"><p class="cl-63e53540"><span class="cl-63e34fd2">Sum of squares</span></p></th><th class="cl-63e53f91"><p class="cl-63e53540"><span class="cl-63e34fd2">Mean squares</span></p></th><th class="cl-63e53f91"><p class="cl-63e53540"><span class="cl-63e34fd2">F-statistic</span></p></th><th class="cl-63e53f90"><p class="cl-63e53536"><span class="cl-63e34fd2">p-value</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-63e53f9a"><p class="cl-63e53536"><span class="cl-63e34fd2">x</span></p></td><td class="cl-63e53f9b"><p class="cl-63e53540"><span class="cl-63e34fd2">1</span></p></td><td class="cl-63e53f9b"><p class="cl-63e53540"><span class="cl-63e34fd2">3,003.92</span></p></td><td class="cl-63e53f9b"><p class="cl-63e53540"><span class="cl-63e34fd2">3,003.92</span></p></td><td class="cl-63e53f9b"><p class="cl-63e53540"><span class="cl-63e34fd2">233.87</span></p></td><td class="cl-63e53f9a"><p class="cl-63e53536"><span class="cl-63e34fd2">&lt; 0.001</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-63e53f9c"><p class="cl-63e53536"><span class="cl-63e34fd2">Residuals</span></p></td><td class="cl-63e53f9d"><p class="cl-63e53540"><span class="cl-63e34fd2">28</span></p></td><td class="cl-63e53f9d"><p class="cl-63e53540"><span class="cl-63e34fd2">359.64</span></p></td><td class="cl-63e53f9d"><p class="cl-63e53540"><span class="cl-63e34fd2">12.84</span></p></td><td class="cl-63e53f9d"><p class="cl-63e53540"><span class="cl-63e34fd2"></span></p></td><td class="cl-63e53f9c"><p class="cl-63e53536"><span class="cl-63e34fd2"></span></p></td></tr></tbody></table></div>
 </div>
 </div>
 </section>
@@ -564,8 +580,80 @@ F-statistic: 110.1 on 1 and 28 DF,  p-value: 3.298e-11</code></pre>
 <p><img src="lecture-07_2023-05-15_files/figure-html/plots-for-comparison-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section>
+<section id="correlation" class="level1">
+<h1>correlation?</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> x_lm</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> y_lm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(x, y, <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  x and y
+t = 15.293, df = 28, p-value = 4.021e-15
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.8866210 0.9737646
+sample estimates:
+      cor 
+0.9450274 </code></pre>
+</div>
+</div>
+<section id="formula-for-pearsons-correlation" class="level2">
+<h2 class="anchored" data-anchor-id="formula-for-pearsons-correlation">formula for Pearson’s correlation</h2>
+<p><span class="math display">\[
+r = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum(x_i-\bar{x})^2}\sqrt{\sum(y_i - \bar{y})^2}}
+\]</span></p>
+</section>
+<section id="test-statistic-for-pearson-correlation" class="level2">
+<h2 class="anchored" data-anchor-id="test-statistic-for-pearson-correlation">test statistic for pearson correlation</h2>
+<p><span class="math display">\[
+\begin{align}
+t &amp;= \frac{r\sqrt{n - 2}}{\sqrt{1-r^2}} \\
+df &amp;= n -2
+\end{align}
+\]</span></p>
+<p>uses a t-distribution</p>
+</section>
+<section id="no-correlation-but-clear-relationship" class="level2">
+<h2 class="anchored" data-anchor-id="no-correlation-but-clear-relationship">no correlation but clear relationship</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>x_lm <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="dv">30</span>, <span class="at">length.out =</span> <span class="dv">50</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># y = a( x – h) 2 + k</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>df_para <span class="ot">&lt;-</span> <span class="fu">cbind</span>(</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> x_lm,</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fl">0.1</span><span class="sc">*</span>(x_lm <span class="sc">-</span> <span class="dv">15</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">12</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_para, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="lecture-07_2023-05-15_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(df_para<span class="sc">$</span>x, df_para<span class="sc">$</span>y, <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  df_para$x and df_para$y
+t = 0.90749, df = 48, p-value = 0.3687
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.1540408  0.3939806
+sample estimates:
+      cor 
+0.1298756 </code></pre>
+</div>
+</div>
 
 
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{bui2023,

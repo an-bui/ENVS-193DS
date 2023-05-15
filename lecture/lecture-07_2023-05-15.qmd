@@ -54,6 +54,13 @@ y &= \beta_1x + \beta_0 + \epsilon = \beta_0 + \beta_1x + \epsilon
 \end{align}
 $$
 
+# linear model hypotheses
+$$
+\begin{align}
+H_0 &: \beta_1 = 0 \\
+H_A &: \beta_1 \not = 0
+\end{align}
+$$
 
 # what are we doing when we fit a linear model?
 
@@ -238,4 +245,55 @@ dev.off()
 model1_plot_noline + ex_plot_noline
 model1_plot + ex_plot
 ```
+
+# correlation?
+
+```{r}
+x <- x_lm
+y <- y_lm
+```
+
+```{r}
+cor.test(x, y, method = "pearson")
+```
+
+## formula for Pearson's correlation
+
+$$
+r = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum(x_i-\bar{x})^2}\sqrt{\sum(y_i - \bar{y})^2}}
+$$
+
+
+## test statistic for pearson correlation
+
+$$
+\begin{align}
+t &= \frac{r\sqrt{n - 2}}{\sqrt{1-r^2}} \\
+df &= n -2
+\end{align}
+$$
+
+uses a t-distribution
+
+## no correlation but clear relationship
+
+```{r}
+x_lm <- seq(from = 1, to = 30, length.out = 50)
+# y = a( x – h) 2 + k
+df_para <- cbind(
+  x = x_lm,
+  y = 0.1*(x_lm - 15)^2 + 12
+) %>% 
+  as_tibble()
+
+ggplot(df_para, aes(x = x, y = y)) +
+  geom_point(size = 3) +
+  theme_bw()
+
+cor.test(df_para$x, df_para$y, method = "pearson")
+
+```
+
+
+
 

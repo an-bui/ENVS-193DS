@@ -504,6 +504,76 @@
     "text": "Code\nknitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)"
   },
   {
+    "objectID": "workshop/workshop-10_2023-06-07.html",
+    "href": "workshop/workshop-10_2023-06-07.html",
+    "title": "Coding workshop: Week 10",
+    "section": "",
+    "text": "# model packages\nlibrary(MASS) # have to read this in before tidyverse \nlibrary(lme4)\nlibrary(glmmTMB) # ok if you don't have this - just comment it out\n\n# diagnostics and model info\nlibrary(DHARMa)\nlibrary(MuMIn)\nlibrary(ggeffects)\nlibrary(lmtest)\nlibrary(broom)\n\n# general usage\nlibrary(tidyverse)\nlibrary(here)\nlibrary(naniar)\nlibrary(skimr)\nlibrary(GGally)\nlibrary(flextable)\n\nsalamanders &lt;- read_csv(here(\"data\", \"salamanders.csv\"))"
+  },
+  {
+    "objectID": "workshop/workshop-10_2023-06-07.html#histogram-of-counts",
+    "href": "workshop/workshop-10_2023-06-07.html#histogram-of-counts",
+    "title": "Coding workshop: Week 10",
+    "section": "histogram of counts:",
+    "text": "histogram of counts:\n\nggplot(salamanders, aes(x = count)) +\n  geom_histogram(bins = 17)"
+  },
+  {
+    "objectID": "workshop/workshop-10_2023-06-07.html#missingness",
+    "href": "workshop/workshop-10_2023-06-07.html#missingness",
+    "title": "Coding workshop: Week 10",
+    "section": "Missingness:",
+    "text": "Missingness:\n\ngg_miss_var(salamanders) # nothing missing!"
+  },
+  {
+    "objectID": "workshop/workshop-10_2023-06-07.html#skim",
+    "href": "workshop/workshop-10_2023-06-07.html#skim",
+    "title": "Coding workshop: Week 10",
+    "section": "Skim:",
+    "text": "Skim:\n\nskim(salamanders)\n\n\nData summary\n\n\nName\nsalamanders\n\n\nNumber of rows\n644\n\n\nNumber of columns\n9\n\n\n_______________________\n\n\n\nColumn type frequency:\n\n\n\ncharacter\n3\n\n\nnumeric\n6\n\n\n________________________\n\n\n\nGroup variables\nNone\n\n\n\nVariable type: character\n\n\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nmin\nmax\nempty\nn_unique\nwhitespace\n\n\n\n\nsite\n0\n1\n3\n5\n0\n23\n0\n\n\nmined\n0\n1\n2\n3\n0\n2\n0\n\n\nspp\n0\n1\n2\n5\n0\n7\n0\n\n\n\nVariable type: numeric\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nmean\nsd\np0\np25\np50\np75\np100\nhist\n\n\n\n\ncover\n0\n1\n0.00\n0.98\n-1.59\n-0.70\n-0.05\n0.60\n1.89\n▅▇▇▅▃\n\n\nsample\n0\n1\n2.50\n1.12\n1.00\n1.75\n2.50\n3.25\n4.00\n▇▇▁▇▇\n\n\nDOP\n0\n1\n0.00\n0.98\n-2.20\n-0.30\n-0.09\n0.00\n3.17\n▂▇▅▂▁\n\n\nWtemp\n0\n1\n0.00\n0.98\n-3.02\n-0.61\n0.04\n0.60\n2.21\n▁▃▇▆▂\n\n\nDOY\n0\n1\n0.00\n1.00\n-2.71\n-0.57\n-0.06\n0.97\n1.46\n▁▅▇▅▇\n\n\ncount\n0\n1\n1.32\n2.64\n0.00\n0.00\n0.00\n2.00\n36.00\n▇▁▁▁▁"
+  },
+  {
+    "objectID": "workshop/workshop-10_2023-06-07.html#pairs-plot",
+    "href": "workshop/workshop-10_2023-06-07.html#pairs-plot",
+    "title": "Coding workshop: Week 10",
+    "section": "Pairs plot:",
+    "text": "Pairs plot:\n\nsalamanders %&gt;% \n  select(!site) %&gt;% \n  ggpairs()"
+  },
+  {
+    "objectID": "workshop/workshop-10_2023-06-07.html#build-models",
+    "href": "workshop/workshop-10_2023-06-07.html#build-models",
+    "title": "Coding workshop: Week 10",
+    "section": "Build models",
+    "text": "Build models\n\n# linear model, we know this is wrong\nsalmod1 &lt;- lm(count ~ cover + mined + spp, data = salamanders)\n\n# generalized linear model with Poisson distribution\nsalmod2 &lt;- glm(count ~ cover + mined + spp, data = salamanders, family = \"poisson\")\nsalmod2.a &lt;- glm(count ~ cover + mined + spp, data = salamanders, family = \"poisson\")\n\n# generalized linear model with negative binomial distribution\nsalmod3 &lt;- glm.nb(count ~ cover + mined + spp, data = salamanders)\nsalmod3.a &lt;- glmmTMB(count ~ cover + mined + spp, data = salamanders, family = \"nbinom2\")\n\n# generalized linear model with Poisson distribution and random effect of site\nsalmod4 &lt;- glmer(count ~ cover + mined  + spp + (1|site), data = salamanders, family = \"poisson\")\nsalmod4.a &lt;- glmmTMB(count ~ cover + mined  + spp + (1|site), data = salamanders, family = \"poisson\")\n\n# generalized linear model with negative binomial distribution and random effect of site\nsalmod5 &lt;- glmer.nb(count ~ cover + mined  + spp + (1|site), data = salamanders)\nsalmod5.a &lt;- glmmTMB(count ~ cover + mined + spp + (1|site), data = salamanders, family = \"nbinom2\")"
+  },
+  {
+    "objectID": "workshop/workshop-10_2023-06-07.html#look-at-residuals",
+    "href": "workshop/workshop-10_2023-06-07.html#look-at-residuals",
+    "title": "Coding workshop: Week 10",
+    "section": "Look at residuals",
+    "text": "Look at residuals\n\n# check diagnostics\nplot(simulateResiduals(salmod1)) # bad\n\n\n\n\n\n\n\nplot(simulateResiduals(salmod2)) # bad\n\n\n\n\n\n\n\nplot(simulateResiduals(salmod3)) # ok?\n\n\n\n\n\n\n\nplot(simulateResiduals(salmod4)) # bad\n\n\n\n\n\n\n\nplot(simulateResiduals(salmod5)) # ok?"
+  },
+  {
+    "objectID": "workshop/workshop-10_2023-06-07.html#which-distribution-to-use",
+    "href": "workshop/workshop-10_2023-06-07.html#which-distribution-to-use",
+    "title": "Coding workshop: Week 10",
+    "section": "Which distribution to use?",
+    "text": "Which distribution to use?\n\nMuMIn::model.sel(salmod1, salmod2, salmod3, salmod4, salmod5)\n\nModel selection table \n        (Intrc)   cover mined spp       family    class init.theta link random\nsalmod5   1.409 -0.1042     +   + NB(0.9424,l) glmerMod                      s\nsalmod3   1.465 -0.1418     +   + NB(0.8333,l)   negbin      0.833  log       \nsalmod4   1.385 -0.1205     +   +         p(l) glmerMod                      s\nsalmod2   1.486 -0.2309     +   +         p(l)      glm                       \nsalmod1   3.447 -0.3426     +   +         g(i)       lm                       \n        df    logLik   AICc   delta weight\nsalmod5 11  -825.964 1674.3    0.00      1\nsalmod3 10  -836.039 1692.4   18.08      0\nsalmod4 10  -972.141 1964.6  290.28      0\nsalmod2  9 -1001.066 2020.4  346.07      0\nsalmod1 10 -1457.026 2934.4 1260.05      0\nAbbreviations:\n family: g(i) = 'gaussian(identity)', \n         NB(0.8333,l) = 'Negative Binomial(0.8333,log)', \n         NB(0.9424,l) = 'Negative Binomial(0.9424,log)', p(l) = 'poisson(log)'\nModels ranked by AICc(x) \nRandom terms: \n s: 1 | site"
+  },
+  {
+    "objectID": "workshop/workshop-10_2023-06-07.html#model-summary",
+    "href": "workshop/workshop-10_2023-06-07.html#model-summary",
+    "title": "Coding workshop: Week 10",
+    "section": "Model summary",
+    "text": "Model summary\n\n# model object\nsalmod3\n\n\nCall:  glm.nb(formula = count ~ cover + mined + spp, data = salamanders, \n    init.theta = 0.8332590711, link = log)\n\nCoefficients:\n(Intercept)        cover     minedyes        sppDF        sppDM      sppEC-A  \n     1.4647      -0.1418      -2.1802      -0.4806      -0.3982      -1.4829  \n    sppEC-L        sppGP        sppPR  \n    -0.2155      -0.8030      -2.0647  \n\nDegrees of Freedom: 643 Total (i.e. Null);  635 Residual\nNull Deviance:      885.6 \nResidual Deviance: 549.2    AIC: 1692\n\n# summary \nsummary(salmod3)\n\n\nCall:\nglm.nb(formula = count ~ cover + mined + spp, data = salamanders, \n    init.theta = 0.8332590711, link = log)\n\nDeviance Residuals: \n    Min       1Q   Median       3Q      Max  \n-1.7966  -0.8511  -0.6062   0.0812   3.4038  \n\nCoefficients:\n            Estimate Std. Error z value Pr(&gt;|z|)    \n(Intercept)  1.46467    0.15733   9.309  &lt; 2e-16 ***\ncover       -0.14180    0.07715  -1.838 0.066062 .  \nminedyes    -2.18017    0.17186 -12.686  &lt; 2e-16 ***\nsppDF       -0.48061    0.21439  -2.242 0.024977 *  \nsppDM       -0.39819    0.21264  -1.873 0.061123 .  \nsppEC-A     -1.48291    0.24619  -6.023 1.71e-09 ***\nsppEC-L     -0.21550    0.20909  -1.031 0.302713    \nsppGP       -0.80299    0.22230  -3.612 0.000304 ***\nsppPR       -2.06472    0.27822  -7.421 1.16e-13 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for Negative Binomial(0.8333) family taken to be 1)\n\n    Null deviance: 885.60  on 643  degrees of freedom\nResidual deviance: 549.16  on 635  degrees of freedom\nAIC: 1692.1\n\nNumber of Fisher Scoring iterations: 1\n\n              Theta:  0.833 \n          Std. Err.:  0.108 \n\n 2 x log-likelihood:  -1672.078 \n\n# confidence intervals\nconfint(salmod3)\n\n                 2.5 %      97.5 %\n(Intercept)  1.1619452  1.78160994\ncover       -0.2951066  0.01123174\nminedyes    -2.5140207 -1.85565670\nsppDF       -0.9135120 -0.04834588\nsppDM       -0.8214220  0.02428889\nsppEC-A     -1.9694420 -1.00469459\nsppEC-L     -0.6235862  0.19129668\nsppGP       -1.2339240 -0.37486002\nsppPR       -2.6278646 -1.52359253\n\n# adjusted R2\nr.squaredGLMM(salmod3)\n\n                R2m       R2c\ndelta     0.4341864 0.4341864\nlognormal 0.5806880 0.5806880\ntrigamma  0.2400616 0.2400616\n\n\n\n# model object in table\nsalmod3 %&gt;% \n  as_flextable()\n\n\nEstimateStandard Errorz valuePr(&gt;|z|)(Intercept)1.4650.1579.3090.0000***cover-0.1420.077-1.8380.0661  .minedyes-2.1800.172-12.6860.0000***sppDF-0.4810.214-2.2420.0250  *sppDM-0.3980.213-1.8730.0611  .sppEC-A-1.4830.246-6.0230.0000***sppEC-L-0.2150.209-1.0310.3027   sppGP-0.8030.222-3.6120.0003***sppPR-2.0650.278-7.4210.0000***Signif. codes: 0 &lt;= '***' &lt; 0.001 &lt; '**' &lt; 0.01 &lt; '*' &lt; 0.05 (Dispersion parameter for Negative Binomial(0.8333) family taken to be 1)Null deviance: 885.6 on 643 degrees of freedomResidual deviance: 549.2 on 635 degrees of freedom"
+  },
+  {
+    "objectID": "workshop/workshop-10_2023-06-07.html#visualizing",
+    "href": "workshop/workshop-10_2023-06-07.html#visualizing",
+    "title": "Coding workshop: Week 10",
+    "section": "Visualizing:",
+    "text": "Visualizing:\n\npredictions &lt;- ggpredict(salmod3, terms = c(\"cover\", \"mined\", \"spp\")) %&gt;% \n  rename(mined = group,\n         spp = facet)\n\nggplot(salamanders, aes(x = cover, y = count, fill = mined)) +\n  geom_point(aes(color = mined), alpha = 0.5) +\n  facet_wrap(~spp, scales = \"free_y\") +\n  geom_line(data = predictions, aes(x = x, y = predicted, color = mined)) +\n  geom_ribbon(data = predictions, aes(x = x, y = predicted, ymin = conf.low, ymax = conf.high, fill = mined), alpha = 0.2) +\n  scale_fill_manual(values = c(\"yes\" = \"blue\", \"no\" = \"orange\")) +\n  scale_color_manual(values = c(\"yes\" = \"blue\", \"no\" = \"orange\")) +\n  theme_bw() +\n  facet_wrap(~spp, scales = \"free_y\") +\n  labs(fill = \"Mined\", color = \"Mined\")"
+  },
+  {
     "objectID": "workshop/workshop-01_2023-04-05.html",
     "href": "workshop/workshop-01_2023-04-05.html",
     "title": "Coding workshop: Week 1",
@@ -515,7 +585,7 @@
     "href": "workshop.html",
     "title": "Workshop documents",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Title\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\nDate\n\n\n\n\n\n\nCoding workshop: Week 8 and 9\n\n\nMay 24, 2023\n\n\n\n\n\nCoding workshop: Week 7\n\n\nMay 17, 2023\n\n\n\n\nCoding workshop: Week 6\n\n\nMay 10, 2023\n\n\n\n\nCoding workshop: Week 4\n\n\nApr 26, 2023\n\n\n\n\nCoding workshop: Week 3\n\n\nApr 19, 2023\n\n\n\n\nCoding workshop: Week 2\n\n\nApr 12, 2023\n\n\n\n\nCoding workshop: Week 1\n\n\nApr 5, 2023\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n       Default\n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Title\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\nDate\n\n\n\n\n\n\nCoding workshop: Week 10\n\n\nJun 7, 2023\n\n\n\n\nCoding workshop: Week 8 and 9\n\n\nMay 24, 2023\n\n\n\n\n\nCoding workshop: Week 7\n\n\nMay 17, 2023\n\n\n\n\nCoding workshop: Week 6\n\n\nMay 10, 2023\n\n\n\n\nCoding workshop: Week 4\n\n\nApr 26, 2023\n\n\n\n\nCoding workshop: Week 3\n\n\nApr 19, 2023\n\n\n\n\nCoding workshop: Week 2\n\n\nApr 12, 2023\n\n\n\n\nCoding workshop: Week 1\n\n\nApr 5, 2023\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "homework.html",

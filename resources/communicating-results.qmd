@@ -618,7 +618,7 @@ plant_model %>%
 ### Including tables and full tables with `{flextable}`
 When writing about models, you have to make decisions about whether or not you want to include a table of the model summary. In multiple linear regression (and for more complex models), it's a good idea to include a table of the model summary.  
 
-When you're doing multiple linear regression, the ANOVA table becomes a little harder to intepret because it presents so much information. If you wanted to only print out the model predictions _and_ the relevant information at the bottom of that summary (for example, $R^2$, F-statistic, degrees of freedom, etc.), you could use `flextable::as_flextable()` which takes the model object - this is Table 3. This skips the step of creating an intermediate data frame and just turns everything into a flextable object. However, this can be a bit tricky: the formatting to make it look "good" takes some getting used to. You can go either way, but this is one option if you'd rather condense the information from the model prediction table and ANOVA table into one. It is also somewhat easier to interpret than the model prediction + ANOVA table combo (Tables 4 + 5).
+If you wanted to make a table of the model estimates _and_ the relevant information at the bottom of that summary (for example, $R^2$, F-statistic, degrees of freedom, etc.), you could use `flextable::as_flextable()` which takes the model object - this is Table 3. This skips the step of creating an intermediate data frame and just turns everything into a flextable object. However, this can be a bit tricky: the formatting to make it look "good" takes some getting used to. You can go either way, but this is one option if you'd rather condense the information from the model prediction table and ANOVA table into one. It is also somewhat easier to interpret than the model prediction + ANOVA table combo (Tables 4 + 5).
 :::
 
 Table option 2:
@@ -662,7 +662,7 @@ ANOVA table:
 **Table 5. Model ANOVA table.** Bolded p-value indicates significant difference from 0.
 
 ```{r}
-anova(plant_model) %>% 
+Anova(plant_model) %>% 
   tidy() %>% 
   mutate(across(sumsq:p.value, ~round(.x, digits = 3))) %>% 
   mutate(p.value = case_when(
@@ -685,12 +685,11 @@ anova(plant_model) %>%
           )) %>% 
   # formatting header labels
   set_header_labels(term = "Source of variation",
-                    df = "Degrees of freedom",
                     sumsq = "Sum of squares",
-                    meansq = "Mean squares",
+                    df = "Degrees of freedom",
                     statistic = "F-statistic",
                     p.value = "p-value") %>% 
-  bold(j = 6, i = ~p.value == "< 0.001") %>% 
+  bold(j = 5, i = ~p.value == "< 0.001") %>% 
   autofit()
 ```
 
@@ -745,14 +744,7 @@ Remember that for multiple linear regression, the slopes represent change in the
 
 We found significant effects of light and temperature in predicting plant growth, but not of pH (Table 3). The overall model accounted for 87% of the variance in plant growth. For each 1 °C increase in temperature at constant light and pH, we expect 0.20 $\pm$ 0.01 increase in plant growth (Figure 4A). For each 1 watt/m<sup>2</sup> increase in light at constant temperature and pH, we expect a 0.35 $\pm$ 0.06 increase in plant growth (Figure 4B). 
 
-# Full repo example
-
-There is an example of a repository and a full report [here](). 
-
-
-
-
-
-
-
-
+:::{.callout-note collapse="true"}
+### Choosing which parameters to highlight
+With multiple linear regression and generalized linear models, you're usually working with pretty complex model structure. It'd be impossible (and not that interesting, necessarily) to discuss _all_ the predictors. You can choose which one(s) you want to highlight in your visualizations and text based on what _you_ think is most interesting/biologically relevant.
+:::

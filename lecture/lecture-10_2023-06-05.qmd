@@ -1,0 +1,218 @@
+---
+title: "Lecture 10 figures"
+editor: source
+execute:
+  message: false
+  warning: false
+author:
+  - name: An Bui
+    url: https://an-bui.com/
+    affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology
+    affiliation-url: https://www.eemb.ucsb.edu/
+date: 2023-06-05
+categories: [multiple linear regression, generalized linear models]
+citation:
+  url: https://an-bui.github.io/ES-193DS-W23/lecture/lecture-10_2023-06-05.html
+---
+
+```{r}
+library(tidyverse)
+library(showtext)
+font_add_google("Lato", "Lato")
+showtext_auto()
+library(patchwork)
+library(palmerpenguins)
+library(ggeffects)
+library(equatiomatic)
+library(lmtest)
+```
+
+# math notation
+
+## simple linear regression
+
+$$
+E[y_i] = a + bx_i
+$$
+
+$$
+var[y_i] = s^2
+$$
+
+## generalized form:
+
+$$
+E[y_i] = a + bx_i
+$$
+
+$$
+var[y_i] = v(E[y_i])
+$$
+
+# GLM structure using Gaussian example
+
+## random component
+
+$$
+Y_i \sim N(\mu_i, \sigma^2)
+$$
+
+## systematic component
+
+$$
+\eta_i = \sum^{p-1}_{n = 0}\beta_jx_{ij}
+$$
+
+## link
+
+$$
+g(\mu_i) = \eta_i
+$$
+
+# negative binomial example
+
+```{r nbinom-fig}
+set.seed(666)
+nbinom_df <- bind_cols(
+  size1 = rnbinom(mu = 10, size = 1, n = 100),
+  size10 = rnbinom(mu = 10, size = 10, n = 100),
+  size100 = rnbinom(mu = 10, size = 100, n = 100)
+)
+
+ggplot(data.frame(x = 1:20), aes(x)) +
+  stat_function(geom = "point", n = 20, fun = dnbinom, args = list(mu = 4, x = 5), size = 2) +
+  stat_function(geom = "line", n = 20, fun = dnbinom, args = list(mu = 4, x = 5))
+
+size1 <- ggplot(nbinom_df, aes(x = size1)) +
+  geom_histogram(bins = 8, fill = "cornflowerblue", color = "grey8") +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 40)) +
+  theme_classic() +
+  labs(title = expression(mu~"= 10, k = 1")) +
+  theme(axis.title.x = element_blank())
+
+size10 <- ggplot(nbinom_df, aes(x = size10)) +
+  geom_histogram(bins = 8, fill = "cornflowerblue", color = "grey8") +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 40)) +
+  theme_classic() +
+  labs(title = expression(mu~"= 10, k = 10")) +
+  theme(axis.title.x = element_blank())
+
+size100 <- ggplot(nbinom_df, aes(x = size100)) +
+  geom_histogram(bins = 8, fill = "cornflowerblue", color = "grey8") +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 40)) +
+  theme_classic() +
+  labs(title = expression(mu~"= 10, k = 100")) +
+  theme(axis.title.x = element_blank())
+
+size1 + size10 + size100
+
+```
+
+# poisson example
+
+```{r pois-fig}
+set.seed(666)
+pois_df <- bind_cols(
+  lambda1 = rpois(lambda = 1, n = 100),
+  lambda5 = rpois(lambda = 5, n = 100),
+  lambda20 = rpois(lambda = 20, n = 100)
+)
+
+lambda1 <- ggplot(pois_df, aes(x = lambda1)) +
+  geom_histogram(bins = 8, fill = "darkorange", color = "grey8") +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 40)) +
+  theme_classic() +
+  labs(title = expression(lambda~"= 1")) +
+  theme(axis.title.x = element_blank())
+
+lambda5 <- ggplot(pois_df, aes(x = lambda5)) +
+  geom_histogram(bins = 8, fill = "darkorange", color = "grey8") +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 40)) +
+  theme_classic() +
+  labs(title = expression(lambda~"= 5")) +
+  theme(axis.title.x = element_blank())
+
+lambda20 <- ggplot(pois_df, aes(x = lambda20)) +
+  geom_histogram(bins = 8, fill = "darkorange", color = "grey8") +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 40)) +
+  theme_classic() +
+  labs(title = expression(lambda~"= 20")) +
+  theme(axis.title.x = element_blank())
+
+lambda1 + lambda5 + lambda20
+```
+
+
+# simpson's paradox
+
+
+
+```{r}
+bill_model <- lm(bill_length_mm ~ bill_depth_mm, data = penguins)
+
+par(mfrow = c(2, 2))
+plot(bill_model)
+
+summary(bill_model)
+
+confint(bill_model)
+
+bill_model_preds <- ggpredict(bill_model, terms = "bill_depth_mm")
+
+model_plot <- ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) +
+  geom_point() +
+  geom_line(data = bill_model_preds, aes(x = x, y = predicted), color = "blue", linewidth = 2) +
+  geom_ribbon(data = bill_model_preds, aes(x = x, y = predicted, ymin = conf.low, ymax = conf.high), alpha = 0.2) +
+  theme_classic() +
+  labs(x = "Bill depth (mm)", y = "Bill length (mm)")
+```
+
+$$
+length = -0.65*depth + 55.07
+$$
+
+```{r}
+bill_model2 <- lm(bill_length_mm ~ bill_depth_mm*species, data = penguins)
+par(mfrow = c(2, 2))
+plot(bill_model2)
+
+summary(bill_model2)
+
+lrtest(bill_model2)
+anova(bill_model2)
+waldtest(bill_model2)
+
+plot(ggpredict(bill_model2, terms = c("bill_depth_mm", "species")), add.data = TRUE)
+
+bill_model2_preds <- ggpredict(bill_model2, terms = c("bill_depth_mm", "species"))
+
+model2_plot <- ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) +
+  geom_point(aes(color = species)) +
+  geom_line(data = bill_model2_preds, aes(x = x, y = predicted, color = group), linewidth = 2) +
+  geom_ribbon(data = bill_model2_preds, aes(x = x, y = predicted, ymin = conf.low, ymax = conf.high, fill = group), alpha = 0.2) +
+  scale_color_manual(values = c("cornflowerblue", "darkgreen", "darkorange")) +
+  scale_fill_manual(values = c("cornflowerblue", "darkgreen", "darkorange")) +
+  theme_classic() +
+  labs(x = "Bill depth (mm)", y = "Bill length (mm)",
+       color = "Species", fill = "Species") +
+  theme(legend.position = c(0.2, 0.8))
+
+model_plot + model2_plot
+
+extract_eq(bill_model)
+
+```
+
+
+$$
+\operatorname{bill\_length\_mm} = \alpha + \beta_{1}(\operatorname{bill\_depth\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}}) + \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \beta_{4}(\operatorname{bill\_depth\_mm} \times \operatorname{species}_{\operatorname{Chinstrap}}) + \beta_{5}(\operatorname{bill\_depth\_mm} \times \operatorname{species}_{\operatorname{Gentoo}}) + \epsilon
+$$
+
+$$
+\operatorname{bill\_length\_mm} = \alpha + \beta_{1}(\operatorname{bill\_depth\_mm}) + \epsilon 
+$$
+
+
+
+
+

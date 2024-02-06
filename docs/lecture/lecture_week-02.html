@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="An Bui">
-<meta name="dcterms.date" content="2023-04-17">
+<meta name="dcterms.date" content="2024-03-01">
 
-<title>Spring 2024 - Lecture 03 figures</title>
+<title>Spring 2024 - Week 2 figures - Lectures 3 and 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -149,11 +149,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Lecture 03 figures</h1>
+      <h1 class="title">Week 2 figures - Lectures 3 and 4</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">probability distribution</div>
                 <div class="quarto-category">normal</div>
                 <div class="quarto-category">Z-score</div>
+                <div class="quarto-category">comparing groups</div>
+                <div class="quarto-category">t-test</div>
                 <div class="quarto-category">Student’s t</div>
                 <div class="quarto-category">qqplot</div>
               </div>
@@ -182,7 +184,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 17, 2023</p>
+        <p class="date">March 1, 2024</p>
       </div>
     </div>
     
@@ -201,8 +203,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#rule" id="toc-rule" class="nav-link" data-scroll-target="#rule">1. 68-95-99.7 rule</a></li>
   <li><a href="#central-limit-theorem" id="toc-central-limit-theorem" class="nav-link" data-scroll-target="#central-limit-theorem">2. central limit theorem</a></li>
   <li><a href="#z--vs-t-distribution" id="toc-z--vs-t-distribution" class="nav-link" data-scroll-target="#z--vs-t-distribution">3. z- vs t-distribution</a></li>
-  <li><a href="#math-notation" id="toc-math-notation" class="nav-link" data-scroll-target="#math-notation">3. math notation</a></li>
-  <li><a href="#qqplot-examples" id="toc-qqplot-examples" class="nav-link" data-scroll-target="#qqplot-examples">4. qqplot examples</a></li>
+  <li><a href="#standard-error-math-notation" id="toc-standard-error-math-notation" class="nav-link" data-scroll-target="#standard-error-math-notation">4. standard error math notation</a></li>
+  <li><a href="#qqplot-examples" id="toc-qqplot-examples" class="nav-link" data-scroll-target="#qqplot-examples">5. qqplot examples</a></li>
+  <li><a href="#one-vs-two-tailed-figure" id="toc-one-vs-two-tailed-figure" class="nav-link" data-scroll-target="#one-vs-two-tailed-figure">6. one vs two tailed figure</a></li>
+  <li><a href="#acorn-example" id="toc-acorn-example" class="nav-link" data-scroll-target="#acorn-example">7. Acorn example</a>
+  <ul class="collapse">
+  <li><a href="#random-numbers-from-t-distribution" id="toc-random-numbers-from-t-distribution" class="nav-link" data-scroll-target="#random-numbers-from-t-distribution">random numbers from t-distribution</a></li>
+  <li><a href="#histogram" id="toc-histogram" class="nav-link" data-scroll-target="#histogram">histogram</a></li>
+  <li><a href="#qq-plot" id="toc-qq-plot" class="nav-link" data-scroll-target="#qq-plot">qq plot</a></li>
+  <li><a href="#calculating-a-critical-value" id="toc-calculating-a-critical-value" class="nav-link" data-scroll-target="#calculating-a-critical-value">calculating a critical value</a></li>
+  <li><a href="#calculating-t-score" id="toc-calculating-t-score" class="nav-link" data-scroll-target="#calculating-t-score">calculating t-score</a></li>
+  <li><a href="#visual-representation-of-sample-t-statistic-vs-t-critical" id="toc-visual-representation-of-sample-t-statistic-vs-t-critical" class="nav-link" data-scroll-target="#visual-representation-of-sample-t-statistic-vs-t-critical">visual representation of sample t-statistic vs t-critical</a></li>
+  <li><a href="#manually-calculating-p-value" id="toc-manually-calculating-p-value" class="nav-link" data-scroll-target="#manually-calculating-p-value">manually calculating p-value</a></li>
+  <li><a href="#doing-a-t-test" id="toc-doing-a-t-test" class="nav-link" data-scroll-target="#doing-a-t-test">doing a t-test</a></li>
+  </ul></li>
+  <li><a href="#two-sample-t-test" id="toc-two-sample-t-test" class="nav-link" data-scroll-target="#two-sample-t-test">8. two-sample t-test</a>
+  <ul class="collapse">
+  <li><a href="#same-differences-in-means-different-sd" id="toc-same-differences-in-means-different-sd" class="nav-link" data-scroll-target="#same-differences-in-means-different-sd">same differences in means, different SD</a></li>
+  </ul></li>
+  <li><a href="#cohens-d" id="toc-cohens-d" class="nav-link" data-scroll-target="#cohens-d">9. Cohen’s D</a></li>
   </ul>
 </nav>
 </nav>
@@ -226,15 +245,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.0     ✔ readr     2.1.4
+✔ dplyr     1.1.2     ✔ readr     2.1.4
 ✔ forcats   1.0.0     ✔ stringr   1.5.0
-✔ ggplot2   3.4.1     ✔ tibble    3.2.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
 ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
 ✔ purrr     1.0.1     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
-ℹ Use the ]8;;http://conflicted.r-lib.org/conflicted package]8;; to force all conflicts to become errors</code></pre>
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
 <details>
 <summary>Code</summary>
@@ -248,12 +267,19 @@ Loading required package: showtextdb</code></pre>
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">font_add_google</span>(<span class="st">"Lato"</span>, <span class="st">"Lato"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">showtext_auto</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">showtext_auto</span>()</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># panels together</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># cohen's d</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effsize)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="rule" class="level1">
 <h1>1. 68-95-99.7 rule</h1>
+<p>In a normal distribution, <strong>68%</strong> of values lie within 1 standard deviation of the mean, <strong>95%</strong> within 2 standard deviations, and <strong>99.7%</strong> within 3 standard deviations.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -282,12 +308,13 @@ Loading required package: showtextdb</code></pre>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="lecture-03_2023-04-17_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="1152"></p>
+<p><img src="lecture_week-02_files/figure-html/rule-68-95-99.7-1.png" class="img-fluid" width="1152"></p>
 </div>
 </div>
 </section>
 <section id="central-limit-theorem" class="level1">
 <h1>2. central limit theorem</h1>
+<p>If you were to sample a bunch of times from any distribution (i.e.&nbsp;take many observations within a sample, take many observations in another sample), the mean values for each sample will be normally distributed. Kareem Carr has a nice explainer of how this works <a href="https://twitter.com/kareem_carr/status/1754524686606626894">here</a>.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -310,7 +337,7 @@ Loading required package: showtextdb</code></pre>
 <span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="lecture-03_2023-04-17_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="1152"></p>
+<p><img src="lecture_week-02_files/figure-html/clt-setup-uniform-distribution-1.png" class="img-fluid" width="1152"></p>
 </div>
 </div>
 <div class="cell">
@@ -370,7 +397,7 @@ Loading required package: showtextdb</code></pre>
 <span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>), <span class="st">"cm"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="lecture-03_2023-04-17_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<p><img src="lecture_week-02_files/figure-html/clt-samples-1.png" class="img-fluid" width="1152"></p>
 </div>
 <details>
 <summary>Code</summary>
@@ -388,7 +415,7 @@ Loading required package: showtextdb</code></pre>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>), <span class="st">"cm"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="lecture-03_2023-04-17_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid" width="672"></p>
+<p><img src="lecture_week-02_files/figure-html/clt-samples-2.png" class="img-fluid" width="1152"></p>
 </div>
 <details>
 <summary>Code</summary>
@@ -406,7 +433,7 @@ Loading required package: showtextdb</code></pre>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>), <span class="st">"cm"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="lecture-03_2023-04-17_files/figure-html/unnamed-chunk-4-3.png" class="img-fluid" width="672"></p>
+<p><img src="lecture_week-02_files/figure-html/clt-samples-3.png" class="img-fluid" width="1152"></p>
 </div>
 <details>
 <summary>Code</summary>
@@ -424,7 +451,7 @@ Loading required package: showtextdb</code></pre>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>), <span class="st">"cm"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="lecture-03_2023-04-17_files/figure-html/unnamed-chunk-4-4.png" class="img-fluid" width="672"></p>
+<p><img src="lecture_week-02_files/figure-html/clt-samples-4.png" class="img-fluid" width="1152"></p>
 </div>
 <details>
 <summary>Code</summary>
@@ -442,12 +469,13 @@ Loading required package: showtextdb</code></pre>
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>), <span class="st">"cm"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="lecture-03_2023-04-17_files/figure-html/unnamed-chunk-4-5.png" class="img-fluid" width="672"></p>
+<p><img src="lecture_week-02_files/figure-html/clt-samples-5.png" class="img-fluid" width="1152"></p>
 </div>
 </div>
 </section>
 <section id="z--vs-t-distribution" class="level1">
 <h1>3. z- vs t-distribution</h1>
+<p>t-distributions allow for more uncertainty around the tails.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -467,18 +495,20 @@ Loading required package: showtextdb</code></pre>
 <span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Lato"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="lecture-03_2023-04-17_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="lecture_week-02_files/figure-html/comparison-plot-1.png" class="img-fluid" width="1152"></p>
 </div>
 </div>
 </section>
-<section id="math-notation" class="level1">
-<h1>3. math notation</h1>
+<section id="standard-error-math-notation" class="level1">
+<h1>4. standard error math notation</h1>
 <p><span class="math display">\[
 SE_{\bar{x}} = \frac{s}{\sqrt{n}}
 \]</span></p>
 </section>
 <section id="qqplot-examples" class="level1">
-<h1>4. qqplot examples</h1>
+<h1>5. qqplot examples</h1>
+<p>We use qqplots (quantile-quantile plots) to visually evaluate the normality of some variable. The x-axis is the “theoretical” quantile, and the y-axis is the “sample” quantile. If the points follow a 1:1 line, then the variable is normally distributed.</p>
+<p>The New Haven temperature data is normally distributed:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -496,7 +526,7 @@ SE_{\bar{x}} = \frac{s}{\sqrt{n}}
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>), <span class="st">"cm"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="lecture-03_2023-04-17_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="lecture_week-02_files/figure-html/nhtemp-histogram-and-qq-1.png" class="img-fluid" width="1152"></p>
 </div>
 <details>
 <summary>Code</summary>
@@ -515,9 +545,10 @@ SE_{\bar{x}} = \frac{s}{\sqrt{n}}
 to continuous.</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="lecture-03_2023-04-17_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
+<p><img src="lecture_week-02_files/figure-html/nhtemp-histogram-and-qq-2.png" class="img-fluid" width="1152"></p>
 </div>
 </div>
+<p>The sunspot data is not:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -535,7 +566,7 @@ to continuous.</code></pre>
 <span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>), <span class="st">"cm"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="lecture-03_2023-04-17_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="1344"></p>
+<p><img src="lecture_week-02_files/figure-html/sunspots-histogram-and-qq-1.png" class="img-fluid" width="1344"></p>
 </div>
 <details>
 <summary>Code</summary>
@@ -554,22 +585,399 @@ to continuous.</code></pre>
 to continuous.</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="lecture-03_2023-04-17_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid" width="1344"></p>
+<p><img src="lecture_week-02_files/figure-html/sunspots-histogram-and-qq-2.png" class="img-fluid" width="1344"></p>
+</div>
+</div>
+</section>
+<section id="one-vs-two-tailed-figure" class="level1">
+<h1>6. one vs two tailed figure</h1>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>two <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="sc">-</span><span class="dv">5</span><span class="sc">:</span><span class="dv">5</span>), <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"area"</span>, <span class="at">fun =</span> dt, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">df =</span> <span class="dv">1</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>), <span class="at">fill =</span> <span class="st">"darkgrey"</span>) <span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">3</span>, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="fl">0.032</span>), <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#000000"</span>) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"area"</span>, <span class="at">fun =</span> dt, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">df =</span> <span class="dv">1</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">3</span>), <span class="at">fill =</span> <span class="st">"darkgrey"</span>) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="sc">-</span><span class="dv">3</span>, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="fl">0.032</span>), <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#000000"</span>) <span class="sc">+</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">n =</span> <span class="dv">1000</span>, <span class="at">fun =</span> dt, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">df =</span> <span class="dv">1</span>), <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"#000000"</span>) <span class="sc">+</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.32</span>)) <span class="sc">+</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>one <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="sc">-</span><span class="dv">5</span><span class="sc">:</span><span class="dv">5</span>), <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"area"</span>, <span class="at">fun =</span> dt, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">df =</span> <span class="dv">1</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>), <span class="at">fill =</span> <span class="st">"darkgrey"</span>) <span class="sc">+</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">2</span>, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="fl">0.063</span>), <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#000000"</span>) <span class="sc">+</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">n =</span> <span class="dv">1000</span>, <span class="at">fun =</span> dt, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">df =</span> <span class="dv">1</span>), <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"#000000"</span>) <span class="sc">+</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.32</span>)) <span class="sc">+</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>one <span class="sc">+</span> two</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lecture_week-02_files/figure-html/one-two-tailed-test-comparison-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="acorn-example" class="level1">
+<h1>7. Acorn example</h1>
+<p><span class="math display">\[
+\begin{align}
+n &amp;= 41 \\
+\bar{x} &amp;= 2.29 \\
+s &amp;= 1.04
+\end{align}
+\]</span></p>
+<section id="random-numbers-from-t-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="random-numbers-from-t-distribution">random numbers from t-distribution</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># acorns &lt;- rt(n = 41, df = 40, ncp = 2.5) </span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>acorns <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">41</span>, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="histogram" class="level2">
+<h2 class="anchored" data-anchor-id="histogram">histogram</h2>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>hist <span class="ot">&lt;-</span> <span class="fu">enframe</span>(acorns) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> value)) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">7</span>, <span class="at">fill =</span> <span class="st">"cornflowerblue"</span>, <span class="at">color =</span> <span class="st">"#000000"</span>) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">11.5</span>), <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">12</span>)) <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Acorn mass (g)"</span>, <span class="at">y =</span> <span class="st">"Count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="qq-plot" class="level2">
+<h2 class="anchored" data-anchor-id="qq-plot">qq plot</h2>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>qq <span class="ot">&lt;-</span> <span class="fu">enframe</span>(acorns) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample =</span> value)) <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(<span class="fu">aes</span>(<span class="at">sample =</span> value)) <span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(<span class="fu">aes</span>(<span class="at">sample =</span> value), <span class="at">color =</span> <span class="st">"cornflowerblue"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Theoretical quantiles"</span>, <span class="at">y =</span> <span class="st">"Sample quantiles"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>hist <span class="sc">+</span> qq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="lecture_week-02_files/figure-html/acorn-histogram-and-qq-plot-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="calculating-a-critical-value" class="level2">
+<h2 class="anchored" data-anchor-id="calculating-a-critical-value">calculating a critical value</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="at">p =</span> .<span class="dv">05</span><span class="sc">/</span><span class="dv">2</span>, <span class="at">df =</span> <span class="dv">40</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -2.021075</code></pre>
+</div>
+</div>
+</section>
+<section id="calculating-t-score" class="level2">
+<h2 class="anchored" data-anchor-id="calculating-t-score">calculating t-score</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># population mean</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>mu0 <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># number of observations</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">41</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co"># sample mean</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">&lt;-</span> <span class="fu">mean</span>(acorns)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="co"># sample standard deviation</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">sd</span>(acorns)</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co"># sample standard error</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> s<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="co"># degrees of freedom</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> n <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="co"># t-score</span></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> (xbar<span class="sc">-</span>mu0)<span class="sc">/</span>se</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.803471</code></pre>
+</div>
+</div>
+<p><span class="math display">\[
+t_s = \frac{\bar{x} - \mu}{s/\sqrt{n}} = \frac{2.29 - 2}{1.04/\sqrt{41}} = 1.8
+\]</span></p>
+</section>
+<section id="visual-representation-of-sample-t-statistic-vs-t-critical" class="level2">
+<h2 class="anchored" data-anchor-id="visual-representation-of-sample-t-statistic-vs-t-critical">visual representation of sample t-statistic vs t-critical</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="sc">-</span><span class="dv">5</span><span class="sc">:</span><span class="dv">5</span>), <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"area"</span>, <span class="at">fun =</span> dt, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">df =</span> <span class="dv">1</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">1.8</span>, <span class="dv">5</span>), <span class="at">fill =</span> <span class="st">"darkgrey"</span>) <span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"area"</span>, <span class="at">fun =</span> dt, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">df =</span> <span class="dv">1</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="fl">1.8</span>), <span class="at">fill =</span> <span class="st">"darkgrey"</span>) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">1.8</span>, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="fl">0.075</span>), <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#000000"</span>) <span class="sc">+</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="sc">-</span><span class="fl">1.8</span>, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="fl">0.075</span>), <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#000000"</span>) <span class="sc">+</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">2.021</span>, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="fl">0.075</span>), <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"#FFFFFF"</span>) <span class="sc">+</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="sc">-</span><span class="fl">2.021</span>, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="fl">0.075</span>), <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"#FFFFFF"</span>) <span class="sc">+</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">n =</span> <span class="dv">1000</span>, <span class="at">fun =</span> dt, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">df =</span> <span class="dv">1</span>), <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"#000000"</span>) <span class="sc">+</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.32</span>)) <span class="sc">+</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="st">"cm"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="lecture_week-02_files/figure-html/sample-t-vs-t-crit-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="manually-calculating-p-value" class="level2">
+<h2 class="anchored" data-anchor-id="manually-calculating-p-value">manually calculating p-value</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># two-tailed: multiply probability by 2</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># lower = FALSE: probability of the value being more than t</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span><span class="fu">pt</span>(t, df, <span class="at">lower =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.07885024</code></pre>
+</div>
+</div>
+</section>
+<section id="doing-a-t-test" class="level2">
+<h2 class="anchored" data-anchor-id="doing-a-t-test">doing a t-test</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(acorns, <span class="at">mu =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  acorns
+t = 1.8035, df = 40, p-value = 0.07885
+alternative hypothesis: true mean is not equal to 2
+95 percent confidence interval:
+ 1.964535 2.623323
+sample estimates:
+mean of x 
+ 2.293929 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="two-sample-t-test" class="level1">
+<h1>8. two-sample t-test</h1>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>ex1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="sc">-</span><span class="dv">8</span><span class="sc">:</span><span class="dv">8</span>), <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>), <span class="at">linewidth =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#FF6B2B"</span>) <span class="sc">+</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">0</span>), <span class="at">color =</span> <span class="st">"#FF6B2B"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">1</span>, <span class="at">sd =</span> <span class="dv">2</span>), <span class="at">linewidth =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#00A38D"</span>) <span class="sc">+</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">1</span>), <span class="at">color =</span> <span class="st">"#00A38D"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.21</span>)) <span class="sc">+</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>))</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2</span>)</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">1</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  x and y
+t = -0.78852, df = 58, p-value = 0.4336
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -1.6721807  0.7270662
+sample estimates:
+mean of x mean of y 
+0.4573436 0.9299009 </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0.43</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>ex2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="sc">-</span><span class="dv">8</span><span class="sc">:</span><span class="dv">17</span>), <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>), <span class="at">linewidth =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#FF6B2B"</span>) <span class="sc">+</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">0</span>), <span class="at">color =</span> <span class="st">"#FF6B2B"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">2</span>), <span class="at">linewidth =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#00A38D"</span>) <span class="sc">+</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">2</span>), <span class="at">color =</span> <span class="st">"#00A38D"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.21</span>)) <span class="sc">+</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>))</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1000000000</span>)</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  x and y
+t = -3.7904, df = 58, p-value = 0.0003603
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -2.7905631 -0.8617609
+sample estimates:
+mean of x mean of y 
+0.1435745 1.9697364 </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0.6932</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>ex3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="sc">-</span><span class="dv">8</span><span class="sc">:</span><span class="dv">17</span>), <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>), <span class="at">linewidth =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#FF6B2B"</span>) <span class="sc">+</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">0</span>), <span class="at">color =</span> <span class="st">"#FF6B2B"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">2</span>), <span class="at">linewidth =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#00A38D"</span>) <span class="sc">+</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">10</span>), <span class="at">color =</span> <span class="st">"#00A38D"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.21</span>)) <span class="sc">+</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>))</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">40</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">40</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  x and y
+t = -21.69, df = 78, p-value &lt; 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -10.564878  -8.788488
+sample estimates:
+mean of x mean of y 
+0.2003543 9.8770375 </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># p &lt; 0.001</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>ex1 <span class="sc">+</span> ex2 <span class="sc">+</span> ex3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lecture_week-02_files/figure-html/two-sample-examples-together-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="same-differences-in-means-different-sd" class="level2">
+<h2 class="anchored" data-anchor-id="same-differences-in-means-different-sd">same differences in means, different SD</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>small <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="sc">-</span><span class="dv">6</span><span class="sc">:</span><span class="dv">9</span>), <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>), <span class="at">linewidth =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#FF6B2B"</span>) <span class="sc">+</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">0</span>), <span class="at">color =</span> <span class="st">"#FF6B2B"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">3</span>, <span class="at">sd =</span> <span class="dv">2</span>), <span class="at">linewidth =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#00A38D"</span>) <span class="sc">+</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">3</span>), <span class="at">color =</span> <span class="st">"#00A38D"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.21</span>)) <span class="sc">+</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>))</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>big <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="sc">-</span><span class="dv">6</span><span class="sc">:</span><span class="dv">9</span>), <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">0.5</span>), <span class="at">linewidth =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#FF6B2B"</span>) <span class="sc">+</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">0</span>), <span class="at">color =</span> <span class="st">"#FF6B2B"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">3</span>, <span class="at">sd =</span> <span class="fl">0.5</span>), <span class="at">linewidth =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#00A38D"</span>) <span class="sc">+</span></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">3</span>), <span class="at">color =</span> <span class="st">"#00A38D"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>))</span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>small <span class="sc">/</span> big</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="lecture_week-02_files/figure-html/two-sample-means-different-variances-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="cohens-d" class="level1">
+<h1>9. Cohen’s D</h1>
+<p><span class="math display">\[
+Cohen's d = \frac{\bar{x_A} - \bar{x_B}}{\sqrt{(s^2_A + s^2_B)/2}}
+\]</span></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohen.d</span>(acorns <span class="sc">~</span> ., <span class="at">mu =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Cohen's d (single sample)
+
+d estimate: 0.2816548 (small)
+Reference mu: 2
+95 percent confidence interval:
+     lower      upper 
+-0.3527453  0.9160549 </code></pre>
 </div>
 </div>
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{bui2023,
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{bui2024,
   author = {Bui, An},
-  title = {Lecture 03 Figures},
-  date = {2023-04-17},
-  url = {https://an-bui.github.io/ES-193DS-W23/lecture/lecture-03_2023-04-17.html},
+  title = {Week 2 Figures - {Lectures} 3 and 4},
+  date = {2024-03-01},
+  url = {https://spring-2024.envs-193ds.com//lecture/lecture_week-02html},
   langid = {en}
 }
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-bui2023" class="csl-entry quarto-appendix-citeas" role="listitem">
-Bui, An. 2023. <span>“Lecture 03 Figures.”</span> April 17, 2023. <a href="https://an-bui.github.io/ES-193DS-W23/lecture/lecture-03_2023-04-17.html">https://an-bui.github.io/ES-193DS-W23/lecture/lecture-03_2023-04-17.html</a>.
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-bui2024" class="csl-entry quarto-appendix-citeas" role="listitem">
+Bui, An. 2024. <span>“Week 2 Figures - Lectures 3 and 4.”</span> March
+1, 2024. <a href="https://spring-2024.envs-193ds.com//lecture/lecture_week-02html">https://spring-2024.envs-193ds.com//lecture/lecture_week-02html</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

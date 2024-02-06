@@ -1,0 +1,555 @@
+---
+title: "Week 2 figures - Lectures 3 and 4"
+editor: source
+freeze: auto
+author:
+  - name: An Bui
+    url: https://an-bui.com/
+    affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology
+    affiliation-url: https://www.eemb.ucsb.edu/
+date: 2024-03
+categories: [probability distribution, normal, Z-score, comparing groups, t-test, Student's t, qqplot]
+citation:
+  url: https://spring-2024.envs-193ds.com//lecture/lecture_week-02html
+---
+
+# 0. set up
+
+```{r}
+# cleaning
+library(tidyverse)
+
+# visualization
+library(showtext)
+font_add_google("Lato", "Lato")
+showtext_auto()
+
+# panels together
+library(patchwork)
+
+# cohen's d
+library(effsize)
+```
+
+# 1. 68-95-99.7 rule
+
+In a normal distribution, **68%** of values lie within 1 standard deviation of the mean, **95%** within 2 standard deviations, and **99.7%** within 3 standard deviations.  
+
+```{r rule-68-95-99.7}
+#| fig-width: 12
+#| fig-height: 8
+
+labels <- c(
+  "", "\U03BC - 3\U03C3", "\U03BC - 2\U03C3", "\U03BC - \U03C3", "\U03BC", "\U03BC + \U03C3", "\U03BC + 2\U03C3", "\U03BC + 3\U03C3", ""
+)
+
+ggplot(data.frame(x = -4:4), aes(x)) +
+  geom_linerange(x = 1, ymin = 0, ymax = 0.24) +
+  geom_linerange(x = -1, ymin = 0, ymax = 0.24) +
+  geom_linerange(x = 2, ymin = 0, ymax = 0.055) +
+  geom_linerange(x = -2, ymin = 0, ymax = 0.055) +
+  geom_linerange(x = 3, ymin = 0, ymax = 0.005) +
+  geom_linerange(x = -3, ymin = 0, ymax = 0.005) +
+  geom_linerange(x = 0, ymin = 0, ymax = 0.399) +
+  stat_function(geom = "line", n = 1000, fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1.5, color = "darkorange") +
+  scale_x_continuous(labels = labels, breaks = seq(-4, 4, by = 1)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.41)) +
+  labs(x = "") +
+  theme_classic() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 22),
+        axis.line.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank()) 
+```
+
+# 2. central limit theorem
+
+If you were to sample a bunch of times from any distribution (i.e. take many observations within a sample, take many observations in another sample), the mean values for each sample will be normally distributed. Kareem Carr has a nice explainer of how this works [here](https://twitter.com/kareem_carr/status/1754524686606626894).
+
+```{r clt-setup-uniform-distribution}
+#| fig-width: 12
+#| fig-height: 8
+
+# randomly select 10000 numbers from a uniform distribution for the population
+uniform <- runif(10000, min = 2, max = 8)
+
+# make a histogram for the population
+uniformdf <- as.data.frame(uniform)
+
+ggplot(uniformdf, aes(x = uniform)) +
+  geom_histogram(breaks = seq(2, 8, length.out = 41), fill = "firebrick", alpha = 0.7, color = "firebrick") +
+  geom_vline(xintercept = mean(uniform), linewidth = 2) +
+  annotate("text", x = 4, y = 290, label = "mean = 4.967", size = 10) +
+  scale_x_continuous(breaks = seq(from = 2, to = 8, by = 1)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 305)) +
+  labs(x = "Continuous value", y = "Count") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18))
+```
+
+
+```{r clt-samples}
+#| fig-width: 12
+#| fig-height: 8
+
+# for() loop to 
+store2 <- c()
+store5 <- c()
+store15 <- c()
+store30 <- c()
+store50 <- c()
+
+for(i in 1:100) {
+  
+  store2[i] <- mean(sample(uniform, 2, replace = FALSE))
+
+}
+
+
+for(i in 1:100) {
+  
+  store5[i] <- mean(sample(uniform, 5, replace = FALSE))
+
+}
+for(i in 1:100) {
+  
+  store15[i] <- mean(sample(uniform, 15, replace = FALSE))
+
+}
+
+for(i in 1:100) {
+  
+  store30[i] <- mean(sample(uniform, 30, replace = FALSE))
+
+}
+
+for(i in 1:100) {
+  
+  store50[i] <- mean(sample(uniform, 50, replace = FALSE))
+
+}
+
+df <- cbind(store2, store5, store15, store30, store50) %>% 
+  as.data.frame()
+  
+ggplot(df) +
+  geom_histogram(aes(x = store2), bins = 10, alpha = 0.7, fill = "chocolate1", color = "chocolate1") +
+  coord_cartesian(xlim = c(2, 8), ylim = c(0, 30)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  geom_vline(xintercept = mean(store2)) +
+  geom_vline(xintercept = mean(uniform), color = "red") +
+  labs(x = "Sample means", y = "Count") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        plot.margin = unit(c(0.5, 0.5, 0.1, 0.1), "cm"))
+
+
+ggplot(df) +
+  geom_histogram(aes(x = store5), bins = 10, alpha = 0.7, fill = "blue3", color = "blue3") +
+  coord_cartesian(xlim = c(2, 8), ylim = c(0, 30)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  geom_vline(xintercept = mean(store5)) +
+  geom_vline(xintercept = mean(uniform), color = "red") +
+  labs(x = "Sample means", y = "Count") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        plot.margin = unit(c(0.5, 0.5, 0.1, 0.1), "cm"))
+
+ggplot(df) +
+  geom_histogram(aes(x = store15), bins = 12, alpha = 0.7, fill = "darkorchid4", color = "darkorchid4") +
+  coord_cartesian(xlim = c(2, 8), ylim = c(0, 30)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  geom_vline(xintercept = mean(store15)) +
+  geom_vline(xintercept = mean(uniform), color = "red") +
+  labs(x = "Sample means", y = "Count") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        plot.margin = unit(c(0.5, 0.5, 0.1, 0.1), "cm"))
+
+ggplot(df) +
+  geom_histogram(aes(x = store30), bins = 12, alpha = 0.7, fill = "lightseagreen", color = "lightseagreen") +
+  coord_cartesian(xlim = c(2, 8), ylim = c(0, 30)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  geom_vline(xintercept = mean(store30)) +
+  geom_vline(xintercept = mean(uniform), color = "red") +
+  labs(x = "Sample means", y = "Count") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        plot.margin = unit(c(0.5, 0.5, 0.1, 0.1), "cm"))
+
+ggplot(df) +
+  geom_histogram(aes(x = store50), bins = 12, alpha = 0.7, fill = "violetred3", color = "violetred3") +
+  coord_cartesian(xlim = c(2, 8), ylim = c(0, 30)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  geom_vline(xintercept = mean(store50)) +
+  geom_vline(xintercept = mean(uniform), color = "red") +
+  labs(x = "Sample means", y = "Count") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        plot.margin = unit(c(0.5, 0.5, 0.1, 0.1), "cm"))
+
+```
+
+# 3. z- vs t-distribution
+
+t-distributions allow for more uncertainty around the tails.
+
+```{r comparison-plot}
+#| fig-width: 12
+#| fig-height: 8
+
+ggplot(data.frame(x = -5:5), aes(x)) +
+  stat_function(geom = "line", n = 1000, fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1, color = "darkorange") +
+  annotate("text", x = 2.5, y = 0.4, label = "normal", color = "darkorange", size = 6) +
+  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 1), linewidth = 1, color = "#856F33") +
+  annotate("text", x = 3, y = 0.32, label = "t-distribution (small n)", color = "#856F33", size = 6) +
+  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 10), linewidth = 1, color = "#56E9E7") +
+  annotate("text", x = 3, y = 0.37, label = "t-distribution (large n)", color = "#56E9E7", size = 6) +
+    scale_y_continuous(expand = c(0, 0), limits = c(0, 0.42)) +
+  labs(x = "Continuous value", y = "Density") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        text = element_text(family = "Lato")) 
+```
+
+# 4. standard error math notation
+
+$$
+SE_{\bar{x}} = \frac{s}{\sqrt{n}}
+$$
+
+# 5. qqplot examples
+
+We use qqplots (quantile-quantile plots) to visually evaluate the normality of some variable. The x-axis is the "theoretical" quantile, and the y-axis is the "sample" quantile. If the points follow a 1:1 line, then the variable is normally distributed.  
+
+The New Haven temperature data is normally distributed:
+
+```{r nhtemp-histogram-and-qq}
+#| fig-width: 12
+#| fig-height: 8
+
+as_tibble(nhtemp) %>% 
+  ggplot(aes(x = x)) +
+  geom_histogram(breaks = seq(47, 55, length.out = 9), fill = "turquoise3", color = "#000000") +
+  scale_x_continuous(breaks = seq(47, 55, length.out = 9), expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 23)) +
+  theme_classic() +
+  labs(x = "Bins", y = "Count") +
+    theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        text = element_text(family = "Lato"),
+        plot.margin = unit(c(0.1, 1, 0.1, 0.1), "cm")) 
+
+ggplot(as_tibble(nhtemp)) +
+  stat_qq(aes(sample = x), color = "turquoise3", size = 3) +
+  theme_classic() +
+  labs(x = "Theoretical", y = "Sample") +
+      theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        text = element_text(family = "Lato"),
+        plot.margin = unit(c(0.1, 1, 0.1, 0.1), "cm")) 
+```
+
+The sunspot data is not:
+
+```{r sunspots-histogram-and-qq}
+#| fig-width: 14
+#| fig-height: 8
+
+as_tibble(sunspots) %>% 
+  ggplot(aes(x = x)) +
+  geom_histogram(breaks = round(seq(0, 260, length.out = 30)), fill = "tomato2", color = "#000000") +
+  scale_x_continuous(breaks = round(seq(0, 260, length.out = 30)), expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 480)) +
+  theme_classic() +
+  labs(x = "Bins", y = "Count") +
+    theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        text = element_text(family = "Lato"),
+        plot.margin = unit(c(0.1, 1, 0.1, 0.1), "cm")) 
+
+ggplot(as_tibble(sunspots)) +
+  stat_qq(aes(sample = x), color = "tomato2", size = 3) +
+  theme_classic() +
+  labs(x = "Theoretical", y = "Sample") +
+      theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        text = element_text(family = "Lato"),
+        plot.margin = unit(c(0.1, 1, 0.1, 0.1), "cm")) 
+
+```
+
+# 6. one vs two tailed figure
+
+```{r one-two-tailed-test-comparison}
+#| fig-width: 10
+#| fig-height: 5
+#| fig-align: center
+
+two <- ggplot(data.frame(x = -5:5), aes(x)) +
+  stat_function(geom = "area", fun = dt, args = list(df = 1), xlim = c(3, 5), fill = "darkgrey") +
+  geom_linerange(aes(x = 3, ymin = 0, ymax = 0.032), linewidth = 1, lty = 2, color = "#000000") +
+  stat_function(geom = "area", fun = dt, args = list(df = 1), xlim = c(-5, -3), fill = "darkgrey") +
+  geom_linerange(aes(x = -3, ymin = 0, ymax = 0.032), linewidth = 1, lty = 2, color = "#000000") +
+  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 1), linewidth = 1, color = "#000000") +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.32)) +
+  theme_void() +
+  theme(panel.grid = element_blank())
+
+one <- ggplot(data.frame(x = -5:5), aes(x)) +
+  stat_function(geom = "area", fun = dt, args = list(df = 1), xlim = c(2, 5), fill = "darkgrey") +
+  geom_linerange(aes(x = 2, ymin = 0, ymax = 0.063), linewidth = 1, lty = 2, color = "#000000") +
+  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 1), linewidth = 1, color = "#000000") +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.32)) +
+  theme_void() +
+  theme(panel.grid = element_blank())
+
+one + two
+```
+
+
+# 7. Acorn example 
+
+$$
+\begin{align}
+n &= 41 \\
+\bar{x} &= 2.29 \\
+s &= 1.04
+\end{align}
+$$
+
+## random numbers from t-distribution
+
+```{r acorn-number-generation}
+set.seed(7)
+# acorns <- rt(n = 41, df = 40, ncp = 2.5) 
+acorns <- rnorm(n = 41, mean = 2, sd = 1)
+```
+
+## histogram
+
+```{r acorn-histogram}
+#| fig-width: 8
+#| fig-height: 6
+#| fig-align: center
+
+hist <- enframe(acorns) %>% 
+  ggplot(aes(x = value)) +
+  geom_histogram(bins = 7, fill = "cornflowerblue", color = "#000000") +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 11.5), breaks = c(0, 3, 6, 9, 12)) +
+  theme_classic() +
+  labs(x = "Acorn mass (g)", y = "Count")
+```
+
+## qq plot
+```{r acorn-qq-plot}
+#| fig-width: 8
+#| fig-height: 6
+#| fig-align: center
+
+qq <- enframe(acorns) %>% 
+  ggplot(aes(sample = value)) +
+  stat_qq_line(aes(sample = value)) +
+  stat_qq(aes(sample = value), color = "cornflowerblue", size = 3) +
+  theme_classic() +
+  labs(x = "Theoretical quantiles", y = "Sample quantiles")
+```
+
+```{r acorn-histogram-and-qq-plot}
+hist + qq
+```
+
+
+## calculating a critical value
+```{r acorn-crit-value}
+qt(p = .05/2, df = 40)
+```
+
+## calculating t-score
+
+```{r acorn-t-score}
+# population mean
+mu0 <- 2
+
+# number of observations
+n <- 41
+
+# sample mean
+xbar <- mean(acorns)
+
+# sample standard deviation
+s <- sd(acorns)
+
+# sample standard error
+se <- s/sqrt(n)
+
+# degrees of freedom
+df <- n - 1
+
+# t-score
+t <- (xbar-mu0)/se
+
+t
+```
+
+$$
+t_s = \frac{\bar{x} - \mu}{s/\sqrt{n}} = \frac{2.29 - 2}{1.04/\sqrt{41}} = 1.8
+$$
+
+## visual representation of sample t-statistic vs t-critical
+```{r sample-t-vs-t-crit}
+ggplot(data.frame(x = -5:5), aes(x)) +
+  stat_function(geom = "area", fun = dt, args = list(df = 1), xlim = c(1.8, 5), fill = "darkgrey") +
+  stat_function(geom = "area", fun = dt, args = list(df = 1), xlim = c(-5, -1.8), fill = "darkgrey") +
+  geom_linerange(aes(x = 1.8, ymin = 0, ymax = 0.075), linewidth = 1, lty = 2, color = "#000000") +
+  geom_linerange(aes(x = -1.8, ymin = 0, ymax = 0.075), linewidth = 1, lty = 2, color = "#000000") +
+  
+  geom_linerange(aes(x = 2.021, ymin = 0, ymax = 0.075), linewidth = 1, lty = 3, color = "#FFFFFF") +
+  geom_linerange(aes(x = -2.021, ymin = 0, ymax = 0.075), linewidth = 1, lty = 3, color = "#FFFFFF") +
+  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 1), linewidth = 1, color = "#000000") +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.32)) +
+  theme_void() +
+  theme(panel.grid = element_blank(),
+        plot.margin = unit(c(1, 0, 0, 0), "cm"))
+```
+
+## manually calculating p-value
+```{r acorn-calculate-p-value}
+# two-tailed: multiply probability by 2
+# lower = FALSE: probability of the value being more than t
+2*pt(t, df, lower = FALSE)
+```
+
+## doing a t-test
+```{r acorn-t-test}
+t.test(acorns, mu = 2)
+```
+
+# 8. two-sample t-test
+
+```{r two-sample-example-1}
+ex1 <- ggplot(data.frame(x = -8:8), aes(x)) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 2), linewidth = 2, color = "#FF6B2B") +
+  geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 1, sd = 2), linewidth = 2, color = "#00A38D") +
+  geom_vline(aes(xintercept = 1), color = "#00A38D", lty = 2, linewidth = 2) +
+    scale_y_continuous(expand = c(0, 0), limits = c(0, 0.21)) +
+  theme_void() +
+  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
+
+set.seed(2)
+x <- rnorm(30, mean = 0, sd = 2)
+y <- rnorm(30, mean = 1, sd = 2)
+
+t.test(x = x, y = y, var.equal = TRUE)
+
+# 0.43
+```
+
+```{r two-sample-example-2}
+ex2 <- ggplot(data.frame(x = -8:17), aes(x)) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 2), linewidth = 2, color = "#FF6B2B") +
+  geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 2, sd = 2), linewidth = 2, color = "#00A38D") +
+  geom_vline(aes(xintercept = 2), color = "#00A38D", lty = 2, linewidth = 2) +
+    scale_y_continuous(expand = c(0, 0), limits = c(0, 0.21)) +
+  theme_void() +
+  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
+
+set.seed(1000000000)
+x <- rnorm(30, mean = 0, sd = 2)
+y <- rnorm(30, mean = 2, sd = 2)
+
+t.test(x = x, y = y, var.equal = TRUE)
+# 0.6932
+```
+
+
+```{r two-sample-example-3}
+ex3 <- ggplot(data.frame(x = -8:17), aes(x)) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 2), linewidth = 2, color = "#FF6B2B") +
+  geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 10, sd = 2), linewidth = 2, color = "#00A38D") +
+  geom_vline(aes(xintercept = 10), color = "#00A38D", lty = 2, linewidth = 2) +
+    scale_y_continuous(expand = c(0, 0), limits = c(0, 0.21)) +
+  theme_void() +
+  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
+
+set.seed(100)
+x <- rnorm(40, mean = 0, sd = 2)
+y <- rnorm(40, mean = 10, sd = 2)
+
+t.test(x = x, y = y, var.equal = TRUE)
+# p < 0.001
+```
+
+```{r two-sample-examples-together}
+#| fig-width: 10
+#| fig-height: 3
+#| fig-align: center
+
+ex1 + ex2 + ex3
+```
+
+## same differences in means, different SD
+
+```{r two-sample-means-different-variances}
+small <- ggplot(data.frame(x = -6:9), aes(x)) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 2), linewidth = 2, color = "#FF6B2B") +
+  geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 3, sd = 2), linewidth = 2, color = "#00A38D") +
+  geom_vline(aes(xintercept = 3), color = "#00A38D", lty = 2, linewidth = 2) +
+    scale_y_continuous(expand = c(0, 0), limits = c(0, 0.21)) +
+  theme_void() +
+  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
+
+big <- ggplot(data.frame(x = -6:9), aes(x)) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 0.5), linewidth = 2, color = "#FF6B2B") +
+  geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 3, sd = 0.5), linewidth = 2, color = "#00A38D") +
+  geom_vline(aes(xintercept = 3), color = "#00A38D", lty = 2, linewidth = 2) +
+    scale_y_continuous(expand = c(0, 0), limits = c(0, 0.8)) +
+  theme_void() +
+  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
+
+small / big
+```
+
+# 9. Cohen's D
+
+$$
+Cohen's d = \frac{\bar{x_A} - \bar{x_B}}{\sqrt{(s^2_A + s^2_B)/2}}
+$$
+
+```{r}
+cohen.d(acorns ~ ., mu = 2)
+```
+
+
+
+
+
+
+
+
+

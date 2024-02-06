@@ -1,5 +1,5 @@
 ---
-title: "Lecture 02 figures"
+title: "Week 1 figures - Lectures 1 and 2"
 editor: source
 freeze: auto
 author:
@@ -7,10 +7,10 @@ author:
     url: https://an-bui.com/
     affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology
     affiliation-url: https://www.eemb.ucsb.edu/
-date: 2023-04-10
-categories: [probability mass, probability density, probability distribution, normal, Student's t, uniform, binomial, Poisson]
+date: 2024-03
+categories: [regression, histogram, probability mass, probability density]
 citation:
-  url: https://an-bui.github.io/ES-193DS-W23/lecture/lecture-02_2023-04-10.html
+  url: https://spring-2024.envs-193ds.com//lecture/lecture_week-01.html
 ---
 
 # 0. set up
@@ -24,9 +24,89 @@ library(showtext)
 font_add_google("Lato", "Lato")
 ```
 
-# 1. probability distribution
+# 1. anemone regression example
 
-```{r}
+```{r anemone-regression}
+# number of anemones in a clump
+clump <- seq(from = 1, to = 60, by = 1)
+
+# circumference: anemones can be up to 8 cm long
+set.seed(10)
+circ <- rnorm(length(clump), mean = seq(from = 1, to = 5, length = length(clump)), sd = 1) 
+
+# create a data frame
+df <- cbind(circ, clump) %>% 
+  as.data.frame() 
+
+# linear model
+lm(circ ~ clump, data = df) %>% summary()
+
+showtext_auto()
+ggplot(df, aes(x = clump, y = circ)) +
+  geom_point(size = 2) +
+  # just using geom smooth for the purposes of visualization
+  geom_smooth(method = "lm", se = FALSE, linewidth = 2) +
+  labs(x = "Number of anemones in a colony", y = "Circumference (cm)") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        text = element_text(family = "Lato"))
+```
+
+# 2. histogram example
+
+```{r histogram}
+ggplot(df, aes(x = circ)) +
+  scale_x_continuous(breaks = seq(from = 0, to = 7, by = 1)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 19), breaks = seq(from = 0, to = 18, by = 3)) +
+  geom_histogram(breaks = seq(from = 0, to = 7, by = 1), color = "#000000", fill = "lightblue") +
+  labs(x = "Anemone circumference (cm)", y = "Count") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        text = element_text(family = "Lato")) 
+```
+
+# 3. Probability mass example
+
+```{r prob-mass}
+ggplot(data.frame(x = 1:55), aes(x)) +
+  stat_function(geom = "bar", n = 55, fun = dpois, args = list(lambda = 10), fill = "coral") +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.13)) +
+  coord_cartesian(xlim = c(0, 22)) +
+  labs(x = "Mussel clump size (count)", y = "Probability mass") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        text = element_text(family = "Lato")) 
+```
+
+# 4. Probability density example
+
+```{r prob-density}
+ggplot(data.frame(x = 1:20), aes(x)) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 10, sd = 2), linewidth = 1) +
+  stat_function(geom = "area", fun = dnorm, args = list(mean = 10, sd = 2), xlim = c(12, 14), fill = "turquoise3") +
+  geom_vline(xintercept = 12, lty = 2, color = "grey", linewidth = 1) +
+  geom_vline(xintercept = 14, lty = 2, color = "grey", linewidth = 1) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.22)) +
+  # coord_cartesian(xlim = c(0, 22)) +
+  labs(x = "Individual mussel weight (g)", y = "Probability density") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        text = element_text(family = "Lato")) 
+  
+showtext_auto(FALSE)
+```
+
+# 5. probability distribution
+
+```{r prob-dist}
 set.seed(1)
 normdist <- rnorm(n = 100000, mean = 0, sd = 1) %>% 
   as_tibble(rownames = "x")
@@ -44,8 +124,9 @@ ggplot(normdist) +
         text = element_text(family = "Lato")) 
 ```
 
-# 2. normal distribution
-```{r}
+# 6. normal distribution
+
+```{r normal-dist}
 ggplot(data.frame(x = -10:25), aes(x)) +
   stat_function(geom = "line", n = 1000, fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1, color = "darkorange") +
   annotate("text", x = 4.5, y = 0.4, label = "\U03BC = 0, \U03C3 = 1", color = "darkorange", size = 6) +
@@ -63,8 +144,8 @@ ggplot(data.frame(x = -10:25), aes(x)) +
         text = element_text(family = "Lato")) 
 ```
 
-# 3. Student's t distribution
-```{r}
+# 7. Student's t distribution
+```{r t-dist}
 ggplot(data.frame(x = -10:10), aes(x)) +
   stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 1), linewidth = 1, color = "#856F33") +
   annotate("text", x = 3.5, y = 0.3, label = "\U03BD = 1", color = "#856F33", size = 6) +
@@ -83,8 +164,9 @@ ggplot(data.frame(x = -10:10), aes(x)) +
         text = element_text(family = "Lato")) 
 ```
 
-# 4. Uniform distribution
-```{r}
+# 8. Uniform distribution
+
+```{r uniform-dist}
 ggplot(data.frame(x = 0:10), aes(x)) +
   stat_function(geom = "line", n = 1000, fun = dunif, args = list(min = 2, max = 8), linewidth = 1, color = "firebrick4") +
   annotate("text", x = 2, y = 0.172, label = "a = 2", color = "firebrick4", size = 6) + 
@@ -99,9 +181,9 @@ ggplot(data.frame(x = 0:10), aes(x)) +
         text = element_text(family = "Lato")) 
 ```
 
-# 5. Binomial distribution
+# 9. Binomial distribution
 
-```{r}
+```{r binomial-dist}
 ggplot(data.frame(x = 1:20), aes(x)) +
   stat_function(geom = "line", n = 20, fun = dbinom, args = list(size = 20, p = 0.1), color = "black") +
   stat_function(geom = "point", n = 20, fun = dbinom, args = list(size = 20, p = 0.1), color = "#6D9929", size = 3) +
@@ -123,9 +205,9 @@ ggplot(data.frame(x = 1:20), aes(x)) +
 
 
 
-# 6. Poisson distribution
+# 10. Poisson distribution
 
-```{r}
+```{r poisson-dist}
 ggplot(data.frame(x = 1:20), aes(x)) +
   stat_function(geom = "line", n = 20, fun = dpois, args = list(lambda = 1), color = "black") +
   stat_function(geom = "point", n = 20, fun = dpois, args = list(lambda = 1), color = "coral", size = 4) +
@@ -146,4 +228,7 @@ ggplot(data.frame(x = 1:20), aes(x)) +
 
 showtext_auto(FALSE)
 ```
+
+
+
 

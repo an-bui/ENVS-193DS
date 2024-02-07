@@ -514,26 +514,82 @@ ex1 + ex2 + ex3
 ## same differences in means, different SD
 
 ```{r two-sample-means-different-variances}
+#| fig-width: 8
+#| fig-height: 10
+
 small <- ggplot(data.frame(x = -6:9), aes(x)) +
   stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 2), linewidth = 2, color = "#FF6B2B") +
   geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
-  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 3, sd = 2), linewidth = 2, color = "#00A38D") +
-  geom_vline(aes(xintercept = 3), color = "#00A38D", lty = 2, linewidth = 2) +
-    scale_y_continuous(expand = c(0, 0), limits = c(0, 0.21)) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 3, sd = 2), linewidth = 2, color = "#0070C0") +
+  geom_vline(aes(xintercept = 3), color = "#0070C0", lty = 2, linewidth = 2) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.21)) +
   theme_void() +
   theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
 
 big <- ggplot(data.frame(x = -6:9), aes(x)) +
   stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 0.5), linewidth = 2, color = "#FF6B2B") +
   geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
-  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 3, sd = 0.5), linewidth = 2, color = "#00A38D") +
-  geom_vline(aes(xintercept = 3), color = "#00A38D", lty = 2, linewidth = 2) +
-    scale_y_continuous(expand = c(0, 0), limits = c(0, 0.8)) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 3, sd = 0.5), linewidth = 2, color = "#0070C0") +
+  geom_vline(aes(xintercept = 3), color = "#0070C0", lty = 2, linewidth = 2) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.8)) +
   theme_void() +
   theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
 
-small / big
+diff <- ggplot(data.frame(x = -6:9), aes(x)) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 0.5), linewidth = 2, color = "#FF6B2B") +
+  geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 3, sd = 1.25), linewidth = 2, color = "#0070C0") +
+  geom_vline(aes(xintercept = 3), color = "#0070C0", lty = 2, linewidth = 2) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.85)) +
+  theme_void() +
+  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
+
+small / big / diff
 ```
+
+## test statistic math notation
+
+$$
+t = \frac{\bar{x_A} - \bar{x_B}}{\sqrt{\frac{s_A^2}{N_A}+\frac{s_B^2}{N_B}}}
+$$
+When you have unequal variances:
+
+$$
+df = \frac{(\frac{s_A^2}{N_A}+\frac{S_B^2}{N_B})^2}{\frac{(\frac{s_A^2}{N_A})^2}{N_A-1}+\frac{(\frac{s_B^2}{N_B})^2}{N_B-1}}
+$$
+
+
+so for two-sample t-test where you have equal variances:
+
+$$
+t = \frac{\bar{x_A} - \bar{x_B}}{s_p \times \sqrt{\frac{1}{N_A + N_B}}}
+$$
+
+the degrees of freedom are:
+
+$$
+df = (N_A - 1) + (N_B - 1)
+$$
+
+testing test statistic formula to compare against t-test from above:
+
+```{r}
+xa <- mean(x)
+xb <- mean(y)
+
+vara <- var(x)
+varb <- var(y)
+
+nA <- length(x)
+nB <- length(y)
+
+(xa - xb)/sqrt((vara/nA)+(varb/nB))
+(nA - 1) + (nB - 1)
+
+(((vara/nA)+(varb/nB))^2)/((vara/nA)^2/(nA-1)+(varb/nB)^2/(nB-1))
+```
+
+
 
 # 9. Cohen's D
 
@@ -545,7 +601,11 @@ $$
 cohen.d(acorns ~ ., mu = 2)
 ```
 
+# 10. Confidence interval for two sample t-test
 
+$$
+CI = (\bar{x_A} - \bar{x_B}) \pm t \times \sqrt{\frac{(n_A - 1)s_A^2 + (n_B - 1)s_B^2}{n_A+n_B-2}} \times \sqrt{\frac{1}{n_A}+\frac{1}{n_B}}
+$$
 
 
 

@@ -220,8 +220,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#two-sample-t-test" id="toc-two-sample-t-test" class="nav-link" data-scroll-target="#two-sample-t-test">8. two-sample t-test</a>
   <ul class="collapse">
   <li><a href="#same-differences-in-means-different-sd" id="toc-same-differences-in-means-different-sd" class="nav-link" data-scroll-target="#same-differences-in-means-different-sd">same differences in means, different SD</a></li>
+  <li><a href="#test-statistic-math-notation" id="toc-test-statistic-math-notation" class="nav-link" data-scroll-target="#test-statistic-math-notation">test statistic math notation</a></li>
   </ul></li>
   <li><a href="#cohens-d" id="toc-cohens-d" class="nav-link" data-scroll-target="#cohens-d">9. Cohen’s D</a></li>
+  <li><a href="#confidence-interval-for-two-sample-t-test" id="toc-confidence-interval-for-two-sample-t-test" class="nav-link" data-scroll-target="#confidence-interval-for-two-sample-t-test">10. Confidence interval for two sample t-test</a></li>
   </ul>
 </nav>
 </nav>
@@ -920,25 +922,84 @@ mean of x mean of y
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>small <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="sc">-</span><span class="dv">6</span><span class="sc">:</span><span class="dv">9</span>), <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>), <span class="at">linewidth =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#FF6B2B"</span>) <span class="sc">+</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">0</span>), <span class="at">color =</span> <span class="st">"#FF6B2B"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">3</span>, <span class="at">sd =</span> <span class="dv">2</span>), <span class="at">linewidth =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#00A38D"</span>) <span class="sc">+</span></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">3</span>), <span class="at">color =</span> <span class="st">"#00A38D"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.21</span>)) <span class="sc">+</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">3</span>, <span class="at">sd =</span> <span class="dv">2</span>), <span class="at">linewidth =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#0070C0"</span>) <span class="sc">+</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">3</span>), <span class="at">color =</span> <span class="st">"#0070C0"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.21</span>)) <span class="sc">+</span></span>
 <span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
 <span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>))</span>
 <span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>big <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="sc">-</span><span class="dv">6</span><span class="sc">:</span><span class="dv">9</span>), <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
 <span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">0.5</span>), <span class="at">linewidth =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#FF6B2B"</span>) <span class="sc">+</span></span>
 <span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">0</span>), <span class="at">color =</span> <span class="st">"#FF6B2B"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">3</span>, <span class="at">sd =</span> <span class="fl">0.5</span>), <span class="at">linewidth =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#00A38D"</span>) <span class="sc">+</span></span>
-<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">3</span>), <span class="at">color =</span> <span class="st">"#00A38D"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">3</span>, <span class="at">sd =</span> <span class="fl">0.5</span>), <span class="at">linewidth =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#0070C0"</span>) <span class="sc">+</span></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">3</span>), <span class="at">color =</span> <span class="st">"#0070C0"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.8</span>)) <span class="sc">+</span></span>
 <span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
 <span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>))</span>
 <span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>small <span class="sc">/</span> big</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>diff <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="sc">-</span><span class="dv">6</span><span class="sc">:</span><span class="dv">9</span>), <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">0.5</span>), <span class="at">linewidth =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#FF6B2B"</span>) <span class="sc">+</span></span>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">0</span>), <span class="at">color =</span> <span class="st">"#FF6B2B"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">3</span>, <span class="at">sd =</span> <span class="fl">1.25</span>), <span class="at">linewidth =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#0070C0"</span>) <span class="sc">+</span></span>
+<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">3</span>), <span class="at">color =</span> <span class="st">"#0070C0"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.85</span>)) <span class="sc">+</span></span>
+<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>))</span>
+<span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-28"><a href="#cb44-28" aria-hidden="true" tabindex="-1"></a>small <span class="sc">/</span> big <span class="sc">/</span> diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="lecture_week-02_files/figure-html/two-sample-means-different-variances-1.png" class="img-fluid" width="672"></p>
+<p><img src="lecture_week-02_files/figure-html/two-sample-means-different-variances-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+</section>
+<section id="test-statistic-math-notation" class="level2">
+<h2 class="anchored" data-anchor-id="test-statistic-math-notation">test statistic math notation</h2>
+<p><span class="math display">\[
+t = \frac{\bar{x_A} - \bar{x_B}}{\sqrt{\frac{s_A^2}{N_A}+\frac{s_B^2}{N_B}}}
+\]</span> When you have unequal variances:</p>
+<p><span class="math display">\[
+df = \frac{(\frac{s_A^2}{N_A}+\frac{S_B^2}{N_B})^2}{\frac{(\frac{s_A^2}{N_A})^2}{N_A-1}+\frac{(\frac{s_B^2}{N_B})^2}{N_B-1}}
+\]</span></p>
+<p>so for two-sample t-test where you have equal variances:</p>
+<p><span class="math display">\[
+t = \frac{\bar{x_A} - \bar{x_B}}{s_p \times \sqrt{\frac{1}{N_A + N_B}}}
+\]</span></p>
+<p>the degrees of freedom are:</p>
+<p><span class="math display">\[
+df = (N_A - 1) + (N_B - 1)
+\]</span></p>
+<p>testing test statistic formula to compare against t-test from above:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>xa <span class="ot">&lt;-</span> <span class="fu">mean</span>(x)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>xb <span class="ot">&lt;-</span> <span class="fu">mean</span>(y)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>vara <span class="ot">&lt;-</span> <span class="fu">var</span>(x)</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>varb <span class="ot">&lt;-</span> <span class="fu">var</span>(y)</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>nA <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>nB <span class="ot">&lt;-</span> <span class="fu">length</span>(y)</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>(xa <span class="sc">-</span> xb)<span class="sc">/</span><span class="fu">sqrt</span>((vara<span class="sc">/</span>nA)<span class="sc">+</span>(varb<span class="sc">/</span>nB))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -21.68982</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>(nA <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> (nB <span class="sc">-</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 78</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>(((vara<span class="sc">/</span>nA)<span class="sc">+</span>(varb<span class="sc">/</span>nB))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>((vara<span class="sc">/</span>nA)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>(nA<span class="dv">-1</span>)<span class="sc">+</span>(varb<span class="sc">/</span>nB)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>(nB<span class="dv">-1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 62.96963</code></pre>
 </div>
 </div>
 </section>
@@ -951,7 +1012,7 @@ Cohen's d = \frac{\bar{x_A} - \bar{x_B}}{\sqrt{(s^2_A + s^2_B)/2}}
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohen.d</span>(acorns <span class="sc">~</span> ., <span class="at">mu =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohen.d</span>(acorns <span class="sc">~</span> ., <span class="at">mu =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -964,6 +1025,12 @@ Reference mu: 2
 -0.3527453  0.9160549 </code></pre>
 </div>
 </div>
+</section>
+<section id="confidence-interval-for-two-sample-t-test" class="level1">
+<h1>10. Confidence interval for two sample t-test</h1>
+<p><span class="math display">\[
+CI = (\bar{x_A} - \bar{x_B}) \pm t \times \sqrt{\frac{(n_A - 1)s_A^2 + (n_B - 1)s_B^2}{n_A+n_B-2}} \times \sqrt{\frac{1}{n_A}+\frac{1}{n_B}}
+\]</span></p>
 
 
 </section>

@@ -302,16 +302,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 11
-   year watershed eleva…¹ trans…² sample stem_…³ leaf1…⁴ leaf2…⁵ leaf_…⁶ stem_…⁷
-  &lt;dbl&gt; &lt;chr&gt;     &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1  2003 Reference Low     R1      1         86.9   13.8    12.1   0.0453  0.03  
-2  2003 Reference Low     R1      2        114     14.6    15.3   0.0476  0.0338
-3  2003 Reference Low     R1      3         83.5   12.5     9.73  0.0423  0.0248
-4  2003 Reference Low     R1      4         68.1    9.97   10.1   0.0397  0.0194
-5  2003 Reference Low     R1      5         72.1    6.84    5.48  0.0204  0.018 
-# … with 1 more variable: corrected_leaf_area &lt;dbl&gt;, and abbreviated variable
-#   names ¹​elevation, ²​transect, ³​stem_length, ⁴​leaf1area, ⁵​leaf2area,
-#   ⁶​leaf_dry_mass, ⁷​stem_dry_mass</code></pre>
+   year watershed elevation transect sample stem_length leaf1area leaf2area
+  &lt;dbl&gt; &lt;chr&gt;     &lt;fct&gt;     &lt;fct&gt;    &lt;fct&gt;        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1  2003 Reference Low       R1       1             86.9     13.8      12.1 
+2  2003 Reference Low       R1       2            114       14.6      15.3 
+3  2003 Reference Low       R1       3             83.5     12.5       9.73
+4  2003 Reference Low       R1       4             68.1      9.97     10.1 
+5  2003 Reference Low       R1       5             72.1      6.84      5.48
+# ℹ 3 more variables: leaf_dry_mass &lt;dbl&gt;, stem_dry_mass &lt;dbl&gt;,
+#   corrected_leaf_area &lt;dbl&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -328,7 +327,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">var_l =</span> <span class="fu">var</span>(stem_length),</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">count_l =</span> <span class="fu">length</span>(stem_length),</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">se_l =</span> sd_l<span class="sc">/</span><span class="fu">sqrt</span>(count_l),</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">margin_l =</span> <span class="fu">qt</span>(<span class="fl">0.95</span>, <span class="at">df =</span> count_l <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> se_l) </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">margin_l =</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> count_l <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> se_l) </span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>lengths_2003_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -336,8 +335,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 2 × 7
   watershed       mean_l  sd_l var_l count_l  se_l margin_l
   &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;int&gt; &lt;dbl&gt;    &lt;dbl&gt;
-1 Calcium-treated   87.9  14.3  206.     120  1.31     2.17
-2 Reference         81.0  13.9  194.     120  1.27     2.11</code></pre>
+1 Calcium-treated   87.9  14.3  206.     120  1.31     2.59
+2 Reference         81.0  13.9  194.     120  1.27     2.52</code></pre>
 </div>
 <details>
 <summary>Code</summary>
@@ -352,12 +351,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> maples_2003) <span class="sc">+</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(<span class="fu">aes</span>(<span class="at">sample =</span> stem_length)) <span class="sc">+</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(<span class="fu">aes</span>(<span class="at">sample =</span> stem_length), <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> watershed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> stem_length, <span class="at">fill =</span> watershed), <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">position =</span> <span class="st">"identity"</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">bins =</span> <span class="dv">16</span>) <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Calcium-treated"</span> <span class="ot">=</span> <span class="st">"#FF6B2B"</span>, <span class="st">"Reference"</span> <span class="ot">=</span> <span class="st">"#00A38D"</span>)) <span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Stem length"</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="workshop-04_2023-04-26_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> maples_2003) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> stem_length, <span class="at">fill =</span> watershed), <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">position =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Calcium-treated"</span> <span class="ot">=</span> <span class="st">"#FF6B2B"</span>, <span class="st">"Reference"</span> <span class="ot">=</span> <span class="st">"#00A38D"</span>)) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="workshop-04_2023-04-26_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> maples_2003) <span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(<span class="fu">aes</span>(<span class="at">sample =</span> stem_length)) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(<span class="fu">aes</span>(<span class="at">sample =</span> stem_length), <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> watershed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="workshop-04_2023-04-26_files/figure-html/unnamed-chunk-6-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -372,9 +397,9 @@ H1: s^2_1 \neq s^2_2
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>length_var <span class="ot">&lt;-</span> <span class="fu">var.test</span>(stem_length <span class="sc">~</span> watershed, <span class="at">data =</span> maples_2003)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>length_var</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>length_var <span class="ot">&lt;-</span> <span class="fu">var.test</span>(stem_length <span class="sc">~</span> watershed, <span class="at">data =</span> maples_2003)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>length_var</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -397,7 +422,7 @@ ratio of variances
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="at">p =</span> .<span class="dv">05</span><span class="sc">/</span><span class="dv">2</span>, <span class="at">df =</span> <span class="dv">119</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="at">p =</span> .<span class="dv">05</span><span class="sc">/</span><span class="dv">2</span>, <span class="at">df =</span> <span class="dv">119</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -1.9801</code></pre>
@@ -410,9 +435,9 @@ ratio of variances
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>length_ttest <span class="ot">&lt;-</span> <span class="fu">t.test</span>(stem_length <span class="sc">~</span> watershed, <span class="at">data =</span> maples_2003, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>length_ttest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>length_ttest <span class="ot">&lt;-</span> <span class="fu">t.test</span>(stem_length <span class="sc">~</span> watershed, <span class="at">data =</span> maples_2003, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>length_ttest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -440,23 +465,44 @@ Cohen's d = \frac{\bar{x_1} - \bar{x_2}}{\sqrt{(s^2_1 + s^2_2)/2}}
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create a data frame in data table format from lengths_2003_summary</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>lengths_dt <span class="ot">&lt;-</span> <span class="fu">setDT</span>(lengths_2003_summary)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># pull out mean and variance values from the data table </span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>mean_ref_2003 <span class="ot">&lt;-</span> lengths_dt[watershed <span class="sc">==</span> <span class="st">"Reference"</span>, mean_l]</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>mean_w1_2003 <span class="ot">&lt;-</span> lengths_dt[watershed <span class="sc">==</span> <span class="st">"Calcium-treated"</span>, mean_l]</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>var_ref_2003 <span class="ot">&lt;-</span> lengths_dt[watershed <span class="sc">==</span> <span class="st">"Reference"</span>, var_l]</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>var_w1_2003 <span class="ot">&lt;-</span> lengths_dt[watershed <span class="sc">==</span> <span class="st">"Calcium-treated"</span>, var_l]</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate Cohen's d</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>d_byhand <span class="ot">&lt;-</span> (mean_w1_2003 <span class="sc">-</span> mean_ref_2003) <span class="sc">/</span> <span class="fu">sqrt</span>((var_w1_2003 <span class="sc">+</span> var_ref_2003)<span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>d_byhand</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create a data frame in data table format from lengths_2003_summary</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>lengths_dt <span class="ot">&lt;-</span> <span class="fu">setDT</span>(lengths_2003_summary)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># pull out mean and variance values from the data table </span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>mean_ref_2003 <span class="ot">&lt;-</span> lengths_dt[watershed <span class="sc">==</span> <span class="st">"Reference"</span>, mean_l]</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>mean_w1_2003 <span class="ot">&lt;-</span> lengths_dt[watershed <span class="sc">==</span> <span class="st">"Calcium-treated"</span>, mean_l]</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>var_ref_2003 <span class="ot">&lt;-</span> lengths_dt[watershed <span class="sc">==</span> <span class="st">"Reference"</span>, var_l] <span class="sc">*</span> <span class="dv">3</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>var_w1_2003 <span class="ot">&lt;-</span> lengths_dt[watershed <span class="sc">==</span> <span class="st">"Calcium-treated"</span>, var_l] <span class="sc">*</span> <span class="dv">3</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>me_ref_2003 <span class="ot">&lt;-</span> lengths_dt[watershed <span class="sc">==</span> <span class="st">"Reference"</span>, margin_l]</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>me_w1_2003 <span class="ot">&lt;-</span> lengths_dt[watershed <span class="sc">==</span> <span class="st">"Calcium-treated"</span>, margin_l]</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>n_ref_2003 <span class="ot">&lt;-</span> lengths_dt[watershed <span class="sc">==</span> <span class="st">"Reference"</span>, count_l] <span class="sc">*</span> <span class="dv">10</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>n_w1_2003 <span class="ot">&lt;-</span> lengths_dt[watershed <span class="sc">==</span> <span class="st">"Calcium-treated"</span>, count_l] <span class="sc">*</span> <span class="dv">10</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate Cohen's d</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>d_byhand <span class="ot">&lt;-</span> (mean_w1_2003 <span class="sc">-</span> mean_ref_2003) <span class="sc">/</span> <span class="fu">sqrt</span>((var_w1_2003 <span class="sc">+</span> var_ref_2003)<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>d_byhand</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.4879597</code></pre>
+<pre><code>[1] 0.2817237</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate confidence interval</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>xAxB <span class="ot">&lt;-</span> mean_w1_2003 <span class="sc">-</span> mean_ref_2003</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>xAxB<span class="sc">-</span><span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n_ref_2003 <span class="sc">+</span> n_w1_2003 <span class="sc">-</span> <span class="dv">2</span>)<span class="sc">*</span><span class="fu">sqrt</span>(((n_ref_2003 <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span>var_ref_2003 <span class="sc">+</span> (n_w1_2003 <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span>var_w1_2003)<span class="sc">/</span>(n_ref_2003 <span class="sc">+</span> n_w1_2003 <span class="sc">-</span> <span class="dv">2</span>))<span class="sc">*</span><span class="fu">sqrt</span>((<span class="dv">1</span><span class="sc">/</span>n_ref_2003) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span>n_w1_2003))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.939868</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>xAxB<span class="sc">+</span><span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n_ref_2003 <span class="sc">+</span> n_w1_2003 <span class="sc">-</span> <span class="dv">2</span>)<span class="sc">*</span><span class="fu">sqrt</span>(((n_ref_2003 <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span>var_ref_2003 <span class="sc">+</span> (n_w1_2003 <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span>var_w1_2003)<span class="sc">/</span>(n_ref_2003 <span class="sc">+</span> n_w1_2003 <span class="sc">-</span> <span class="dv">2</span>))<span class="sc">*</span><span class="fu">sqrt</span>((<span class="dv">1</span><span class="sc">/</span>n_ref_2003) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span>n_w1_2003))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8.861799</code></pre>
 </div>
 </div>
 <p>Or using a function in a package:</p>
@@ -464,32 +510,30 @@ Cohen's d = \frac{\bar{x_1} - \bar{x_2}}{\sqrt{(s^2_1 + s^2_2)/2}}
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effsize)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>d_effsize <span class="ot">&lt;-</span> <span class="fu">cohen.d</span>(stem_length <span class="sc">~</span> watershed, <span class="at">data =</span> maples_2003)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effectsize)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>d_effsize <span class="ot">&lt;-</span> <span class="fu">cohens_d</span>(stem_length <span class="sc">~</span> watershed, <span class="at">data =</span> maples_2003)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Compare the two calculations:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>d_byhand</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>d_byhand</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.4879597</code></pre>
+<pre><code>[1] 0.2817237</code></pre>
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>d_effsize</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>d_effsize</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-Cohen's d
+<pre><code>Cohen's d |       95% CI
+------------------------
+0.49      | [0.23, 0.74]
 
-d estimate: 0.4879597 (small)
-95 percent confidence interval:
-    lower     upper 
-0.2298792 0.7460402 </code></pre>
+- Estimated using pooled SD.</code></pre>
 </div>
 </div>
 </section>
@@ -498,20 +542,20 @@ d estimate: 0.4879597 (small)
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> lengths_2003_summary, <span class="fu">aes</span>(<span class="at">x =</span> watershed, <span class="at">y =</span> mean_l, <span class="at">color =</span> watershed)) <span class="sc">+</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> mean_l <span class="sc">-</span> margin_l, <span class="at">ymax =</span> mean_l <span class="sc">+</span> margin_l), <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">data =</span> maples_2003, <span class="fu">aes</span>(<span class="at">x =</span> watershed, <span class="at">y =</span> stem_length), <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Reference"</span> <span class="ot">=</span> <span class="st">"#E57B33"</span>, <span class="st">"Calcium-treated"</span> <span class="ot">=</span> <span class="st">"#039199"</span>)) <span class="sc">+</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Watershed"</span>, <span class="at">y =</span> <span class="st">"Stem length (mm)"</span>) <span class="sc">+</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Times New Roman"</span>),</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>),</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption.position =</span> <span class="st">"plot"</span>,</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title.position =</span> <span class="st">"plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> lengths_2003_summary, <span class="fu">aes</span>(<span class="at">x =</span> watershed, <span class="at">y =</span> mean_l, <span class="at">color =</span> watershed)) <span class="sc">+</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> mean_l <span class="sc">-</span> margin_l, <span class="at">ymax =</span> mean_l <span class="sc">+</span> margin_l), <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">data =</span> maples_2003, <span class="fu">aes</span>(<span class="at">x =</span> watershed, <span class="at">y =</span> stem_length), <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Reference"</span> <span class="ot">=</span> <span class="st">"#E57B33"</span>, <span class="st">"Calcium-treated"</span> <span class="ot">=</span> <span class="st">"#039199"</span>)) <span class="sc">+</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Watershed"</span>, <span class="at">y =</span> <span class="st">"Stem length (mm)"</span>) <span class="sc">+</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Times New Roman"</span>),</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>),</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption.position =</span> <span class="st">"plot"</span>,</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title.position =</span> <span class="st">"plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="workshop-04_2023-04-26_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="768"></p>

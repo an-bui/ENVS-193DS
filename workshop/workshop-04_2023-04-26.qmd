@@ -67,7 +67,7 @@ lengths_2003_summary <- maples_2003 %>%
             var_l = var(stem_length),
             count_l = length(stem_length),
             se_l = sd_l/sqrt(count_l),
-            margin_l = qt(0.95, df = count_l - 1) * se_l) 
+            margin_l = qt(0.975, df = count_l - 1) * se_l) 
 
 lengths_2003_summary
 
@@ -78,6 +78,22 @@ lengths_2003_summary
 ## c. check for normally distributed data
 
 ```{r}
+ggplot(data = maples_2003) +
+  geom_histogram(aes(x = stem_length, fill = watershed), alpha = 0.6, color = "black", position = "identity",
+                 bins = 16) +
+  scale_fill_manual(values = c("Calcium-treated" = "#FF6B2B", "Reference" = "#00A38D")) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 22)) +
+  labs(x = "Stem length",
+       y = "Count") +
+  theme_bw() +
+  theme(panel.grid = element_blank())
+
+ggplot(data = maples_2003) +
+  geom_density(aes(x = stem_length, fill = watershed), alpha = 0.6, color = "black", position = "identity") +
+  scale_fill_manual(values = c("Calcium-treated" = "#FF6B2B", "Reference" = "#00A38D")) +
+  theme_bw() +
+  theme(panel.grid = element_blank())
+
 ggplot(data = maples_2003) +
   stat_qq(aes(sample = stem_length)) +
   stat_qq_line(aes(sample = stem_length), color = "red") +
@@ -139,12 +155,24 @@ lengths_dt <- setDT(lengths_2003_summary)
 # pull out mean and variance values from the data table 
 mean_ref_2003 <- lengths_dt[watershed == "Reference", mean_l]
 mean_w1_2003 <- lengths_dt[watershed == "Calcium-treated", mean_l]
-var_ref_2003 <- lengths_dt[watershed == "Reference", var_l]
-var_w1_2003 <- lengths_dt[watershed == "Calcium-treated", var_l]
+var_ref_2003 <- lengths_dt[watershed == "Reference", var_l] * 3
+var_w1_2003 <- lengths_dt[watershed == "Calcium-treated", var_l] * 3
+me_ref_2003 <- lengths_dt[watershed == "Reference", margin_l]
+me_w1_2003 <- lengths_dt[watershed == "Calcium-treated", margin_l]
+n_ref_2003 <- lengths_dt[watershed == "Reference", count_l] * 10
+n_w1_2003 <- lengths_dt[watershed == "Calcium-treated", count_l] * 10
 
 # calculate Cohen's d
 d_byhand <- (mean_w1_2003 - mean_ref_2003) / sqrt((var_w1_2003 + var_ref_2003)/2)
 d_byhand
+
+# calculate confidence interval
+xAxB <- mean_w1_2003 - mean_ref_2003
+
+xAxB-qt(0.975, df = n_ref_2003 + n_w1_2003 - 2)*sqrt(((n_ref_2003 - 1)*var_ref_2003 + (n_w1_2003 - 1)*var_w1_2003)/(n_ref_2003 + n_w1_2003 - 2))*sqrt((1/n_ref_2003) + (1/n_w1_2003))
+
+xAxB+qt(0.975, df = n_ref_2003 + n_w1_2003 - 2)*sqrt(((n_ref_2003 - 1)*var_ref_2003 + (n_w1_2003 - 1)*var_w1_2003)/(n_ref_2003 + n_w1_2003 - 2))*sqrt((1/n_ref_2003) + (1/n_w1_2003))
+
 ```
 
 Or using a function in a package:  
@@ -152,9 +180,9 @@ Or using a function in a package:
 Use `install.packages("effsize")` in the console before running the chunk below.
 
 ```{r}
-library(effsize)
+library(effectsize)
 
-d_effsize <- cohen.d(stem_length ~ watershed, data = maples_2003)
+d_effsize <- cohens_d(stem_length ~ watershed, data = maples_2003)
 ```
 
 Compare the two calculations:
@@ -197,4 +225,4 @@ There is a moderate (Cohen's d = 0.49) but significant effect of calcium treatme
 
 **When rendering your document, compare the text above with the text below. Are there any differences?**  
 
-There is a moderate (Cohen's d = `r round(d_effsize$estimate, digits = 2)`) but significant effect of calcium treatment on sugar maple stem lengths (Student's t-test, t(`r length_ttest$parameter`) = `r round(length_ttest$statistic, digits = 1)`, _p_ < 0.001, $\alpha$ = 0.05). On average, sugar maple stem lengths in calcium-treated watersheds were `r round(mean_w1_2003 - mean_ref_2003, digits = 1)` mm longer than those in reference watersheds (CI = [`r round(length_ttest$conf.int, digits = 1)`] mm, Figure 1). 
+There is a moderate (Cohen's d = `r round(d_effsize$Cohens_d, digits = 2)`) but significant effect of calcium treatment on sugar maple stem lengths (Student's t-test, t(`r length_ttest$parameter`) = `r round(length_ttest$statistic, digits = 1)`, _p_ < 0.001, $\alpha$ = 0.05). On average, sugar maple stem lengths in calcium-treated watersheds were `r round(mean_w1_2003 - mean_ref_2003, digits = 1)` mm longer than those in reference watersheds (CI = [`r round(length_ttest$conf.int, digits = 1)`] mm, Figure 1). 

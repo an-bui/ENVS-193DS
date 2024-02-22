@@ -137,42 +137,77 @@
     "href": "lecture/lecture_week-02.html",
     "title": "Week 2 figures - Lectures 3 and 4",
     "section": "",
-    "text": "Code\n# cleaning\nlibrary(tidyverse)\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.2     ✔ readr     2.1.4\n✔ forcats   1.0.0     ✔ stringr   1.5.0\n✔ ggplot2   3.4.2     ✔ tibble    3.2.1\n✔ lubridate 1.9.2     ✔ tidyr     1.3.0\n✔ purrr     1.0.1     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\nCode\n# visualization\nlibrary(showtext)\n\n\nLoading required package: sysfonts\nLoading required package: showtextdb\n\n\nCode\nfont_add_google(\"Lato\", \"Lato\")\nshowtext_auto()\n\n# panels together\nlibrary(patchwork)\n\n# cohen's d\nlibrary(effsize)"
+    "text": "Code\n# cleaning\nlibrary(tidyverse)\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.2     ✔ readr     2.1.4\n✔ forcats   1.0.0     ✔ stringr   1.5.0\n✔ ggplot2   3.4.2     ✔ tibble    3.2.1\n✔ lubridate 1.9.2     ✔ tidyr     1.3.0\n✔ purrr     1.0.1     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\nCode\n# visualization\nlibrary(showtext)\n\n\nLoading required package: sysfonts\nLoading required package: showtextdb\n\n\nCode\nfont_add_google(\"Lato\", \"Lato\")\nshowtext_auto()\nlibrary(ggdist)\n\n\nWarning: package 'ggdist' was built under R version 4.2.3\n\n\nCode\n# panels together\nlibrary(patchwork)\n\n# cohen's d\nlibrary(effsize)"
+  },
+  {
+    "objectID": "lecture/lecture_week-02.html#a.-standard-error",
+    "href": "lecture/lecture_week-02.html#a.-standard-error",
+    "title": "Week 2 figures - Lectures 3 and 4",
+    "section": "a. standard error",
+    "text": "a. standard error\n\\[\nstandard \\: error = SE_{\\bar{x}} = \\frac{s}{\\sqrt{n}}\n\\]"
+  },
+  {
+    "objectID": "lecture/lecture_week-02.html#b.-confidence-interval",
+    "href": "lecture/lecture_week-02.html#b.-confidence-interval",
+    "title": "Week 2 figures - Lectures 3 and 4",
+    "section": "b. confidence interval",
+    "text": "b. confidence interval\n\\[\n\\begin{align}\nCI = estimate \\: &\\pm \\: margin \\: of \\: error \\\\\nCI = \\bar{x} \\: &\\pm \\: t_{\\alpha(2), df} \\times \\frac{s}{\\sqrt{n}}\n\\end{align}\n\\]\n\\[\nt_{\\alpha(2), df}\n\\]\n\\[\nt_{0.05(2), 19}\n\\]"
+  },
+  {
+    "objectID": "lecture/lecture_week-02.html#c.-visual-representation-of-t-distribution",
+    "href": "lecture/lecture_week-02.html#c.-visual-representation-of-t-distribution",
+    "title": "Week 2 figures - Lectures 3 and 4",
+    "section": "c. visual representation of t-distribution",
+    "text": "c. visual representation of t-distribution\n\n\nCode\nggplot(data.frame(x = -5:5), aes(x)) +\n  stat_function(geom = \"area\", fun = dt, args = list(df = 19), xlim = c(1.8, 5), fill = \"#0070c0\") +\n  stat_function(geom = \"area\", fun = dt, args = list(df = 19), xlim = c(-5, -1.8), fill = \"#0070c0\") +\n  stat_function(geom = \"line\", n = 1000, fun = dt, args = list(df = 19), linewidth = 1, color = \"#000000\") +\n  geom_hline(yintercept = 0) +\n  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.4)) +\n  theme_void() +\n  theme(panel.grid = element_blank(),\n        plot.margin = unit(c(1, 0, 0, 0), \"cm\"))"
   },
   {
     "objectID": "lecture/lecture_week-02.html#random-numbers-from-t-distribution",
     "href": "lecture/lecture_week-02.html#random-numbers-from-t-distribution",
     "title": "Week 2 figures - Lectures 3 and 4",
     "section": "random numbers from t-distribution",
-    "text": "random numbers from t-distribution\n\n\nCode\nset.seed(7)\n# acorns &lt;- rt(n = 41, df = 40, ncp = 2.5) \nacorns &lt;- rnorm(n = 41, mean = 2, sd = 1)"
+    "text": "random numbers from t-distribution\n\n\nCode\nset.seed(7)\n# snails &lt;- rt(n = 41, df = 40, ncp = 2.5) \nsnails &lt;- rnorm(n = 20, mean = 1.25, sd = 0.19)"
   },
   {
     "objectID": "lecture/lecture_week-02.html#histogram",
     "href": "lecture/lecture_week-02.html#histogram",
     "title": "Week 2 figures - Lectures 3 and 4",
     "section": "histogram",
-    "text": "histogram\n\n\nCode\nhist &lt;- enframe(acorns) %&gt;% \n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 7, fill = \"cornflowerblue\", color = \"#000000\") +\n  scale_y_continuous(expand = c(0, 0), limits = c(0, 11.5), breaks = c(0, 3, 6, 9, 12)) +\n  theme_classic() +\n  labs(x = \"Acorn mass (g)\", y = \"Count\")"
+    "text": "histogram\n\n\nCode\nbreakpoints &lt;- round(seq(from = min(snails), to = max(snails), length.out = 7), 2)\n\nhist &lt;- enframe(snails) %&gt;% \n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 7, fill = \"cornflowerblue\", color = \"#000000\", breaks = breakpoints) +\n  scale_x_continuous(breaks = breakpoints) +\n  scale_y_continuous(expand = c(0, 0), limits = c(0, 5.2), breaks = c(0, 1, 2, 3, 4, 5)) +\n  theme_classic() +\n  labs(x = \"Shell diameter (mm)\", y = \"Count\")\nhist"
+  },
+  {
+    "objectID": "lecture/lecture_week-02.html#density-plot",
+    "href": "lecture/lecture_week-02.html#density-plot",
+    "title": "Week 2 figures - Lectures 3 and 4",
+    "section": "density plot",
+    "text": "density plot\n\n\nCode\nenframe(snails) %&gt;% \n  ggplot(aes(x = value)) +\n  geom_density(fill = \"cornflowerblue\", color = \"#000000\", linewidth = 1) +\n  scale_x_continuous(limits = c(0.5, 2.2)) +\n  scale_y_continuous(expand = c(0, 0), limits = c(0, 1.7), breaks = c(0, 0.5, 1, 1.5)) +\n  geom_vline(xintercept = 1.33) +\n  theme_classic() +\n  labs(x = \"Shell diameter (mm)\", y = \"Density\")"
+  },
+  {
+    "objectID": "lecture/lecture_week-02.html#dot-and-whisker-plot",
+    "href": "lecture/lecture_week-02.html#dot-and-whisker-plot",
+    "title": "Week 2 figures - Lectures 3 and 4",
+    "section": "dot and whisker plot",
+    "text": "dot and whisker plot\n\n\nCode\nenframe(snails) %&gt;% \n  ggplot(aes(y = value)) +\n  stat_dots(side = \"left\") +\n  stat_halfeye(.width = 0)"
   },
   {
     "objectID": "lecture/lecture_week-02.html#qq-plot",
     "href": "lecture/lecture_week-02.html#qq-plot",
     "title": "Week 2 figures - Lectures 3 and 4",
     "section": "qq plot",
-    "text": "qq plot\n\n\nCode\nqq &lt;- enframe(acorns) %&gt;% \n  ggplot(aes(sample = value)) +\n  stat_qq_line(aes(sample = value)) +\n  stat_qq(aes(sample = value), color = \"cornflowerblue\", size = 3) +\n  theme_classic() +\n  labs(x = \"Theoretical quantiles\", y = \"Sample quantiles\")\n\n\n\n\nCode\nhist + qq"
+    "text": "qq plot\n\n\nCode\nqq &lt;- enframe(snails) %&gt;% \n  ggplot(aes(sample = value)) +\n  stat_qq_line(aes(sample = value)) +\n  stat_qq(aes(sample = value), color = \"cornflowerblue\", size = 3) +\n  theme_classic() +\n  labs(x = \"Theoretical quantiles\", y = \"Sample quantiles\")\n\n\n\n\nCode\nhist + qq"
   },
   {
     "objectID": "lecture/lecture_week-02.html#calculating-a-critical-value",
     "href": "lecture/lecture_week-02.html#calculating-a-critical-value",
     "title": "Week 2 figures - Lectures 3 and 4",
     "section": "calculating a critical value",
-    "text": "calculating a critical value\n\n\nCode\nqt(p = .05/2, df = 40)\n\n\n[1] -2.021075"
+    "text": "calculating a critical value\n\n\nCode\nqt(p = .05/2, df = 19)\n\n\n[1] -2.093024"
   },
   {
     "objectID": "lecture/lecture_week-02.html#calculating-t-score",
     "href": "lecture/lecture_week-02.html#calculating-t-score",
     "title": "Week 2 figures - Lectures 3 and 4",
     "section": "calculating t-score",
-    "text": "calculating t-score\n\n\nCode\n# population mean\nmu0 &lt;- 2\n\n# number of observations\nn &lt;- 41\n\n# sample mean\nxbar &lt;- mean(acorns)\n\n# sample standard deviation\ns &lt;- sd(acorns)\n\n# sample standard error\nse &lt;- s/sqrt(n)\n\n# degrees of freedom\ndf &lt;- n - 1\n\n# t-score\nt &lt;- (xbar-mu0)/se\n\nt\n\n\n[1] 1.803471\n\n\n\\[\nt_s = \\frac{\\bar{x} - \\mu}{s/\\sqrt{n}} = \\frac{2.29 - 2}{1.04/\\sqrt{41}} = 1.8\n\\]"
+    "text": "calculating t-score\n\n\nCode\n# population mean\nmu0 &lt;- 2\n\n# number of observations\nn &lt;- 20\n\n# sample mean\nxbar &lt;- mean(snails)\n\n# sample standard deviation\ns &lt;- sd(snails)\n\n# sample standard error\nse &lt;- s/sqrt(n)\n\n# degrees of freedom\ndf &lt;- n - 1\n\n# t-score\nt &lt;- (xbar-mu0)/se\n\nt\n\n\n[1] -12.65819\n\n\n\\[\nt_s = \\frac{\\bar{x} - \\mu}{s/\\sqrt{n}} = \\frac{2.29 - 2}{1.04/\\sqrt{41}} = 1.8\n\\]"
   },
   {
     "objectID": "lecture/lecture_week-02.html#visual-representation-of-sample-t-statistic-vs-t-critical",
@@ -186,14 +221,14 @@
     "href": "lecture/lecture_week-02.html#manually-calculating-p-value",
     "title": "Week 2 figures - Lectures 3 and 4",
     "section": "manually calculating p-value",
-    "text": "manually calculating p-value\n\n\nCode\n# two-tailed: multiply probability by 2\n# lower = FALSE: probability of the value being more than t\n2*pt(t, df, lower = FALSE)\n\n\n[1] 0.07885024"
+    "text": "manually calculating p-value\n\n\nCode\n# two-tailed: multiply probability by 2\n# lower = FALSE: probability of the value being more than t\n2*pt(t, df, lower = FALSE)\n\n\n[1] 2"
   },
   {
     "objectID": "lecture/lecture_week-02.html#doing-a-t-test",
     "href": "lecture/lecture_week-02.html#doing-a-t-test",
     "title": "Week 2 figures - Lectures 3 and 4",
     "section": "doing a t-test",
-    "text": "doing a t-test\n\n\nCode\nt.test(acorns, mu = 2)\n\n\n\n    One Sample t-test\n\ndata:  acorns\nt = 1.8035, df = 40, p-value = 0.07885\nalternative hypothesis: true mean is not equal to 2\n95 percent confidence interval:\n 1.964535 2.623323\nsample estimates:\nmean of x \n 2.293929"
+    "text": "doing a t-test\n\n\nCode\nt.test(snails, mu = 2)\n\n\n\n    One Sample t-test\n\ndata:  snails\nt = -12.658, df = 19, p-value = 1.046e-10\nalternative hypothesis: true mean is not equal to 2\n95 percent confidence interval:\n 1.224130 1.444304\nsample estimates:\nmean of x \n 1.334217"
   },
   {
     "objectID": "lecture/lecture_week-02.html#same-differences-in-means-different-sd",

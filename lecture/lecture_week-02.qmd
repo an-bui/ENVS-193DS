@@ -23,6 +23,7 @@ library(tidyverse)
 library(showtext)
 font_add_google("Lato", "Lato")
 showtext_auto()
+library(ggdist)
 
 # panels together
 library(patchwork)
@@ -228,11 +229,49 @@ ggplot(data.frame(x = -5:5), aes(x)) +
         text = element_text(family = "Lato")) 
 ```
 
-# 4. standard error math notation
+# 4. math notation
+
+## a. standard error
 
 $$
-SE_{\bar{x}} = \frac{s}{\sqrt{n}}
+standard \: error = SE_{\bar{x}} = \frac{s}{\sqrt{n}}
 $$
+
+## b. confidence interval
+
+$$
+\begin{align}
+CI = estimate \: &\pm \: margin \: of \: error \\
+CI = \bar{x} \: &\pm \: t_{\alpha(2), df} \times \frac{s}{\sqrt{n}}
+\end{align}
+$$
+
+$$
+t_{\alpha(2), df}
+$$
+
+$$
+t_{0.05(2), 19}
+$$
+
+## c. visual representation of t-distribution
+
+```{r t-dist-and-significance}
+#| fig-width: 14
+#| fig-height: 6
+#| fig-align: center
+
+ggplot(data.frame(x = -5:5), aes(x)) +
+  stat_function(geom = "area", fun = dt, args = list(df = 19), xlim = c(1.8, 5), fill = "#0070c0") +
+  stat_function(geom = "area", fun = dt, args = list(df = 19), xlim = c(-5, -1.8), fill = "#0070c0") +
+  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 19), linewidth = 1, color = "#000000") +
+  geom_hline(yintercept = 0) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.4)) +
+  theme_void() +
+  theme(panel.grid = element_blank(),
+        plot.margin = unit(c(1, 0, 0, 0), "cm"))
+```
+
 
 # 5. qqplot examples
 
@@ -328,7 +367,7 @@ one + two
 ```
 
 
-# 7. Acorn example 
+# 7. Snail example 
 
 $$
 \begin{align}
@@ -342,8 +381,8 @@ $$
 
 ```{r acorn-number-generation}
 set.seed(7)
-# acorns <- rt(n = 41, df = 40, ncp = 2.5) 
-acorns <- rnorm(n = 41, mean = 2, sd = 1)
+# snails <- rt(n = 41, df = 40, ncp = 2.5) 
+snails <- rnorm(n = 20, mean = 1.25, sd = 0.19)
 ```
 
 ## histogram
@@ -352,14 +391,38 @@ acorns <- rnorm(n = 41, mean = 2, sd = 1)
 #| fig-width: 8
 #| fig-height: 6
 #| fig-align: center
+breakpoints <- round(seq(from = min(snails), to = max(snails), length.out = 7), 2)
 
-hist <- enframe(acorns) %>% 
+hist <- enframe(snails) %>% 
   ggplot(aes(x = value)) +
-  geom_histogram(bins = 7, fill = "cornflowerblue", color = "#000000") +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 11.5), breaks = c(0, 3, 6, 9, 12)) +
+  geom_histogram(bins = 7, fill = "cornflowerblue", color = "#000000", breaks = breakpoints) +
+  scale_x_continuous(breaks = breakpoints) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 5.2), breaks = c(0, 1, 2, 3, 4, 5)) +
   theme_classic() +
-  labs(x = "Acorn mass (g)", y = "Count")
+  labs(x = "Shell diameter (mm)", y = "Count")
+hist
 ```
+
+## density plot
+```{r}
+enframe(snails) %>% 
+  ggplot(aes(x = value)) +
+  geom_density(fill = "cornflowerblue", color = "#000000", linewidth = 1) +
+  scale_x_continuous(limits = c(0.5, 2.2)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 1.7), breaks = c(0, 0.5, 1, 1.5)) +
+  geom_vline(xintercept = 1.33) +
+  theme_classic() +
+  labs(x = "Shell diameter (mm)", y = "Density")
+```
+
+## dot and whisker plot
+```{r}
+enframe(snails) %>% 
+  ggplot(aes(y = value)) +
+  stat_dots(side = "left") +
+  stat_halfeye(.width = 0)
+```
+
 
 ## qq plot
 ```{r acorn-qq-plot}
@@ -367,7 +430,7 @@ hist <- enframe(acorns) %>%
 #| fig-height: 6
 #| fig-align: center
 
-qq <- enframe(acorns) %>% 
+qq <- enframe(snails) %>% 
   ggplot(aes(sample = value)) +
   stat_qq_line(aes(sample = value)) +
   stat_qq(aes(sample = value), color = "cornflowerblue", size = 3) +
@@ -382,7 +445,7 @@ hist + qq
 
 ## calculating a critical value
 ```{r acorn-crit-value}
-qt(p = .05/2, df = 40)
+qt(p = .05/2, df = 19)
 ```
 
 ## calculating t-score
@@ -392,13 +455,13 @@ qt(p = .05/2, df = 40)
 mu0 <- 2
 
 # number of observations
-n <- 41
+n <- 20
 
 # sample mean
-xbar <- mean(acorns)
+xbar <- mean(snails)
 
 # sample standard deviation
-s <- sd(acorns)
+s <- sd(snails)
 
 # sample standard error
 se <- s/sqrt(n)
@@ -442,7 +505,7 @@ ggplot(data.frame(x = -5:5), aes(x)) +
 
 ## doing a t-test
 ```{r acorn-t-test}
-t.test(acorns, mu = 2)
+t.test(snails, mu = 2)
 ```
 
 # 8. two-sample t-test
@@ -598,7 +661,7 @@ Cohen's \; d = \frac{\bar{x_A} - \bar{x_B}}{\sqrt{(s^2_A + s^2_B)/2}}
 $$
 
 ```{r}
-cohen.d(acorns ~ ., mu = 2)
+cohen.d(snails ~ ., mu = 2)
 ```
 
 # 10. Confidence interval for two sample t-test

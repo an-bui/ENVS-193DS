@@ -421,6 +421,51 @@ enframe(snails) %>%
   ggplot(aes(y = value)) +
   stat_dots(side = "left") +
   stat_halfeye(.width = 0)
+
+snail_conflev <- tribble(
+  ~ conflev,
+  0.85,
+  0.90,
+  0.95,
+  0.99
+) %>% 
+  mutate(upper = case_when(
+    conflev == 0.85 ~ mean(snails) + qt(p = 0.15/2, df = 19)*sd(snails)/sqrt(length(snails)),
+    conflev == 0.90 ~ mean(snails) + qt(p = 0.1/2, df = 19)*sd(snails)/sqrt(length(snails)),
+    conflev == 0.95 ~ mean(snails) + qt(p = 0.05/2, df = 19)*sd(snails)/sqrt(length(snails)),
+    conflev == 0.99 ~ mean(snails) + qt(p = 0.01/2, df = 19)*sd(snails)/sqrt(length(snails))
+  ),
+  lower = case_when(
+    conflev == 0.85 ~ mean(snails) - qt(p = 0.15/2, df = 19)*sd(snails)/sqrt(length(snails)),
+    conflev == 0.90 ~ mean(snails) - qt(p = 0.1/2, df = 19)*sd(snails)/sqrt(length(snails)),
+    conflev == 0.95 ~ mean(snails) - qt(p = 0.05/2, df = 19)*sd(snails)/sqrt(length(snails)),
+    conflev == 0.99 ~ mean(snails) - qt(p = 0.01/2, df = 19)*sd(snails)/sqrt(length(snails)) 
+  )) %>% 
+  mutate(mean = mean(snails))
+  # se <- s/sqrt(n)
+
+ggplot() +
+  geom_point(data = enframe(snails), aes(x = 0.84, y = snails),
+             alpha = 0.6, shape = 21) +
+  geom_point(data = enframe(snails), aes(x = 0.89, y = snails),
+             alpha = 0.6, shape = 21) +
+  geom_point(data = enframe(snails), aes(x = 0.94, y = snails),
+             alpha = 0.6, shape = 21) +
+  geom_point(data = enframe(snails), aes(x = 0.98, y = snails),
+             alpha = 0.6, shape = 21) +
+  geom_point(data = snail_conflev, aes(x = conflev, y = mean), 
+             size = 3,
+             color = "cornflowerblue") +
+  geom_errorbar(data = snail_conflev, aes(x = conflev, y = mean, ymin = lower, ymax = upper), 
+                width = 0.006, 
+                linewidth = 1,
+                color = "cornflowerblue") +
+  theme_void() +
+  theme(panel.grid = element_blank()) +
+  labs(x = "Confidence levels", 
+       y = "Snail diameter (cm)") 
+
+
 ```
 
 
@@ -474,6 +519,10 @@ t <- (xbar-mu0)/se
 
 t
 ```
+
+$$
+SE = \frac{s}{\sqrt{n}} = \frac{0.235}{4.47} = 0.05
+$$
 
 $$
 t_s = \frac{\bar{x} - \mu}{s/\sqrt{n}} = \frac{2.29 - 2}{1.04/\sqrt{41}} = 1.8

@@ -137,7 +137,7 @@
     "href": "lecture/lecture_week-02.html",
     "title": "Week 2 figures - Lectures 3 and 4",
     "section": "",
-    "text": "Code\n# cleaning\nlibrary(tidyverse)\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.2     ✔ readr     2.1.4\n✔ forcats   1.0.0     ✔ stringr   1.5.0\n✔ ggplot2   3.4.2     ✔ tibble    3.2.1\n✔ lubridate 1.9.2     ✔ tidyr     1.3.0\n✔ purrr     1.0.1     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\nCode\n# visualization\nlibrary(showtext)\n\n\nLoading required package: sysfonts\nLoading required package: showtextdb\n\n\nCode\nfont_add_google(\"Lato\", \"Lato\")\nshowtext_auto()\nlibrary(ggdist)\n\n\nWarning: package 'ggdist' was built under R version 4.2.3\n\n\nCode\n# panels together\nlibrary(patchwork)\n\n# cohen's d\nlibrary(effsize)"
+    "text": "Code\n# cleaning\nlibrary(tidyverse)\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.2     ✔ readr     2.1.4\n✔ forcats   1.0.0     ✔ stringr   1.5.0\n✔ ggplot2   3.4.2     ✔ tibble    3.2.1\n✔ lubridate 1.9.2     ✔ tidyr     1.3.0\n✔ purrr     1.0.1     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\nCode\ntheme_set(theme_classic() +\n            theme(panel.grid = element_blank(),\n                  axis.text = element_text(size = 18),\n                  axis.title = element_text(size = 18)))\n\n# visualization\nlibrary(showtext)\n\n\nLoading required package: sysfonts\nLoading required package: showtextdb\n\n\nCode\nfont_add_google(\"Lato\", \"Lato\")\nshowtext_auto()\nlibrary(ggdist)\n\n\nWarning: package 'ggdist' was built under R version 4.2.3\n\n\nCode\n# panels together\nlibrary(patchwork)\n\n# cohen's d\nlibrary(effsize)"
   },
   {
     "objectID": "lecture/lecture_week-02.html#a.-standard-error",
@@ -873,5 +873,26 @@
     "title": "Resources",
     "section": "",
     "text": "Order By\n       Default\n         \n          Title\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\nDescription\n\n\n\n\n\n\nFinalizing plots\n\n\ntips for making your plots readable and professional\n\n\n\n\n\nClear communication = interpretable stats\n\n\nCommunicating about statistical results, a few ways\n\n\n\n\nGetting set up\n\n\nGetting your computer set up before workshop\n\n\n\n\nCitations in RStudio\n\n\nusing the visual editor to add citations using a DOI\n\n\n\n\nSetting up GitHub pages\n\n\nsimple options to turn your repository into a website\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "lecture/lecture_week-02.html#z-score",
+    "href": "lecture/lecture_week-02.html#z-score",
+    "title": "Week 2 figures - Lectures 3 and 4",
+    "section": "z-score",
+    "text": "z-score\n\\[\nz = \\frac{y_i - \\mu}{\\sigma}\n\\]"
+  },
+  {
+    "objectID": "lecture/lecture_week-02.html#figure",
+    "href": "lecture/lecture_week-02.html#figure",
+    "title": "Week 2 figures - Lectures 3 and 4",
+    "section": "figure",
+    "text": "figure\nWe’ll use z = -1.23 for this example.\n\n\nCode\n# z-score\nq &lt;- -1.23\n\nggplot(data.frame(x = -4:4), aes(x)) +\n  # zscore\n  geom_linerange(x = q, ymin = 0, ymax = 0.19) +\n  # area under the curve\n  stat_function(geom = \"area\", fun = dnorm, args = list(mean = 0, sd = 1), xlim = c(-4, -1.23), fill = \"turquoise3\") +\n  # Z distribution curve\n  stat_function(geom = \"line\", n = 1000, fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1.5, color = \"darkorange\") +\n  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.45)) +\n  theme(axis.text.y = element_blank(),\n        axis.ticks.y = element_blank(),\n        axis.title = element_blank(),\n        axis.line.y = element_blank())"
+  },
+  {
+    "objectID": "lecture/lecture_week-02.html#calculation",
+    "href": "lecture/lecture_week-02.html#calculation",
+    "title": "Week 2 figures - Lectures 3 and 4",
+    "section": "calculation",
+    "text": "calculation\n\n\nCode\npnorm(q, mean = 0, sd = 1)\n\n\n[1] 0.1093486\n\n\nYou can compare this with the Z-score table."
   }
 ]

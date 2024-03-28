@@ -7,7 +7,7 @@ author:
     url: https://an-bui.com/
     affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology
     affiliation-url: https://www.eemb.ucsb.edu/
-date: 2024-03
+date: 2024-04-08
 categories: [probability distribution, normal, Z-score, comparing groups, t-test, Student's t, qqplot]
 citation:
   url: https://spring-2024.envs-193ds.com//lecture/lecture_week-02.html
@@ -18,6 +18,10 @@ citation:
 ```{r}
 # cleaning
 library(tidyverse)
+theme_set(theme_classic() +
+            theme(panel.grid = element_blank(),
+                  axis.text = element_text(size = 18),
+                  axis.title = element_text(size = 18)))
 
 # visualization
 library(showtext)
@@ -32,38 +36,12 @@ library(patchwork)
 library(effsize)
 ```
 
-# 1. 68-95-99.7 rule
+# 1. Math
 
-In a normal distribution, **68%** of values lie within 1 standard deviation of the mean, **95%** within 2 standard deviations, and **99.7%** within 3 standard deviations.  
 
-```{r rule-68-95-99.7}
-#| fig-width: 16
-#| fig-height: 8
 
-labels <- c(
-  "", "\U03BC - 3\U03C3", "\U03BC - 2\U03C3", "\U03BC - \U03C3", "\U03BC", "\U03BC + \U03C3", "\U03BC + 2\U03C3", "\U03BC + 3\U03C3", ""
-)
 
-ggplot(data.frame(x = -4:4), aes(x)) +
-  geom_linerange(x = 1, ymin = 0, ymax = 0.24) +
-  geom_linerange(x = -1, ymin = 0, ymax = 0.24) +
-  geom_linerange(x = 2, ymin = 0, ymax = 0.055) +
-  geom_linerange(x = -2, ymin = 0, ymax = 0.055) +
-  geom_linerange(x = 3, ymin = 0, ymax = 0.005) +
-  geom_linerange(x = -3, ymin = 0, ymax = 0.005) +
-  geom_linerange(x = 0, ymin = 0, ymax = 0.399) +
-  stat_function(geom = "line", n = 1000, fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1.5, color = "darkorange") +
-  scale_x_continuous(labels = labels, breaks = seq(-4, 4, by = 1)) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.41)) +
-  labs(x = "") +
-  theme_classic() +
-  theme(panel.grid = element_blank(),
-        axis.text = element_text(size = 22),
-        axis.line.y = element_blank(),
-        axis.title.y = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks = element_blank()) 
-```
+
 
 # 2. central limit theorem
 
@@ -367,61 +345,47 @@ one + two
 ```
 
 
-# 7. Snail example 
-
-$$
-\begin{align}
-n &= 41 \\
-\bar{x} &= 2.29 \\
-s &= 1.04
-\end{align}
-$$
+# 7. Leaf example 
 
 ## random numbers from t-distribution
 
-```{r acorn-number-generation}
+```{r leaf-number-generation}
 set.seed(7)
-# snails <- rt(n = 41, df = 40, ncp = 2.5) 
-snails <- rnorm(n = 20, mean = 1.25, sd = 0.19)
+leaves <- rnorm(n = 20, mean = 4.92, sd = 0.3)
 ```
 
 ## histogram
 
-```{r acorn-histogram}
+```{r leaf-histogram}
 #| fig-width: 8
 #| fig-height: 6
 #| fig-align: center
-breakpoints <- round(seq(from = min(snails), to = max(snails), length.out = 7), 2)
+breakpoints <- round(seq(from = min(leaves), to = max(leaves), length.out = 7), 2)
 
-hist <- enframe(snails) %>% 
+hist <- enframe(leaves) %>% 
   ggplot(aes(x = value)) +
   geom_histogram(bins = 7, fill = "cornflowerblue", color = "#000000", breaks = breakpoints) +
   scale_x_continuous(breaks = breakpoints) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 5.2), breaks = c(0, 1, 2, 3, 4, 5)) +
   theme_classic() +
-  labs(x = "Shell diameter (mm)", y = "Count")
+  labs(x = "Leaf length (cm)", y = "Count")
 hist
 ```
 
 ## density plot
 ```{r}
-enframe(snails) %>% 
+enframe(leaves) %>% 
   ggplot(aes(x = value)) +
   geom_density(fill = "cornflowerblue", color = "#000000", linewidth = 1) +
-  scale_x_continuous(limits = c(0.5, 2.2)) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 1.7), breaks = c(0, 0.5, 1, 1.5)) +
+  scale_x_continuous(limits = c(3.5, 7)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 1.1)) +
   geom_vline(xintercept = 1.33) +
   theme_classic() +
-  labs(x = "Shell diameter (mm)", y = "Density")
+  labs(x = "Leaf length (cm)", y = "Density")
 ```
 
 ## dot and whisker plot
 ```{r}
-enframe(snails) %>% 
-  ggplot(aes(y = value)) +
-  stat_dots(side = "left") +
-  stat_halfeye(.width = 0)
-
 snail_conflev <- tribble(
   ~ conflev,
   0.85,
@@ -430,28 +394,28 @@ snail_conflev <- tribble(
   0.99
 ) %>% 
   mutate(upper = case_when(
-    conflev == 0.85 ~ mean(snails) + qt(p = 0.15/2, df = 19)*sd(snails)/sqrt(length(snails)),
-    conflev == 0.90 ~ mean(snails) + qt(p = 0.1/2, df = 19)*sd(snails)/sqrt(length(snails)),
-    conflev == 0.95 ~ mean(snails) + qt(p = 0.05/2, df = 19)*sd(snails)/sqrt(length(snails)),
-    conflev == 0.99 ~ mean(snails) + qt(p = 0.01/2, df = 19)*sd(snails)/sqrt(length(snails))
+    conflev == 0.85 ~ mean(leaves) + qt(p = 0.15/2, df = 19)*sd(leaves)/sqrt(length(leaves)),
+    conflev == 0.90 ~ mean(leaves) + qt(p = 0.1/2, df = 19)*sd(leaves)/sqrt(length(leaves)),
+    conflev == 0.95 ~ mean(leaves) + qt(p = 0.05/2, df = 19)*sd(leaves)/sqrt(length(leaves)),
+    conflev == 0.99 ~ mean(leaves) + qt(p = 0.01/2, df = 19)*sd(leaves)/sqrt(length(leaves))
   ),
   lower = case_when(
-    conflev == 0.85 ~ mean(snails) - qt(p = 0.15/2, df = 19)*sd(snails)/sqrt(length(snails)),
-    conflev == 0.90 ~ mean(snails) - qt(p = 0.1/2, df = 19)*sd(snails)/sqrt(length(snails)),
-    conflev == 0.95 ~ mean(snails) - qt(p = 0.05/2, df = 19)*sd(snails)/sqrt(length(snails)),
-    conflev == 0.99 ~ mean(snails) - qt(p = 0.01/2, df = 19)*sd(snails)/sqrt(length(snails)) 
+    conflev == 0.85 ~ mean(leaves) - qt(p = 0.15/2, df = 19)*sd(leaves)/sqrt(length(leaves)),
+    conflev == 0.90 ~ mean(leaves) - qt(p = 0.1/2, df = 19)*sd(leaves)/sqrt(length(leaves)),
+    conflev == 0.95 ~ mean(leaves) - qt(p = 0.05/2, df = 19)*sd(leaves)/sqrt(length(leaves)),
+    conflev == 0.99 ~ mean(leaves) - qt(p = 0.01/2, df = 19)*sd(leaves)/sqrt(length(leaves)) 
   )) %>% 
-  mutate(mean = mean(snails))
+  mutate(mean = mean(leaves))
   # se <- s/sqrt(n)
 
 ggplot() +
-  geom_point(data = enframe(snails), aes(x = 0.84, y = snails),
+  geom_point(data = enframe(leaves), aes(x = 0.84, y = leaves),
              alpha = 0.6, shape = 21) +
-  geom_point(data = enframe(snails), aes(x = 0.89, y = snails),
+  geom_point(data = enframe(leaves), aes(x = 0.89, y = leaves),
              alpha = 0.6, shape = 21) +
-  geom_point(data = enframe(snails), aes(x = 0.94, y = snails),
+  geom_point(data = enframe(leaves), aes(x = 0.94, y = leaves),
              alpha = 0.6, shape = 21) +
-  geom_point(data = enframe(snails), aes(x = 0.98, y = snails),
+  geom_point(data = enframe(leaves), aes(x = 0.98, y = leaves),
              alpha = 0.6, shape = 21) +
   geom_point(data = snail_conflev, aes(x = conflev, y = mean), 
              size = 3,
@@ -470,12 +434,12 @@ ggplot() +
 
 
 ## qq plot
-```{r acorn-qq-plot}
+```{r leaf-qq-plot}
 #| fig-width: 8
 #| fig-height: 6
 #| fig-align: center
 
-qq <- enframe(snails) %>% 
+qq <- enframe(leaves) %>% 
   ggplot(aes(sample = value)) +
   stat_qq_line(aes(sample = value)) +
   stat_qq(aes(sample = value), color = "cornflowerblue", size = 3) +
@@ -489,8 +453,8 @@ hist + qq
 
 
 ## calculating a critical value
-```{r acorn-crit-value}
-qt(p = .05/2, df = 19)
+```{r leaf-crit-value}
+qt(p = 0.05/2, df = 19)
 ```
 
 ## calculating t-score
@@ -503,10 +467,10 @@ mu0 <- 2
 n <- 20
 
 # sample mean
-xbar <- mean(snails)
+xbar <- mean(leaves)
 
 # sample standard deviation
-s <- sd(snails)
+s <- sd(leaves)
 
 # sample standard error
 se <- s/sqrt(n)
@@ -546,7 +510,7 @@ ggplot(data.frame(x = -5:5), aes(x)) +
 ```
 
 ## manually calculating p-value
-```{r acorn-calculate-p-value}
+```{r leaf-calculate-p-value}
 # two-tailed: multiply probability by 2
 # lower = FALSE: probability of the value being more than t
 2*pt(t, df, lower = FALSE)
@@ -554,7 +518,7 @@ ggplot(data.frame(x = -5:5), aes(x)) +
 
 ## doing a t-test
 ```{r acorn-t-test}
-t.test(snails, mu = 2)
+t.test(leaves, mu = 2)
 ```
 
 # 8. two-sample t-test
@@ -710,7 +674,7 @@ Cohen's \; d = \frac{\bar{x_A} - \bar{x_B}}{\sqrt{(s^2_A + s^2_B)/2}}
 $$
 
 ```{r}
-cohen.d(snails ~ ., mu = 2)
+cohen.d(leaves ~ ., mu = 2)
 ```
 
 # 10. Confidence interval for two sample t-test

@@ -55,6 +55,12 @@ $$
 CV = \frac{\sigma}{\mu}
 $$
 
+## z-score
+
+$$
+z = \frac{y_i - \mu}{\sigma}
+$$
+
 # 2. Mean and median
 
 ```{r}
@@ -252,6 +258,7 @@ showtext_auto(FALSE)
 
 # 9. probability distribution
 
+
 ```{r prob-dist}
 set.seed(1)
 normdist <- rnorm(n = 100000, mean = 0, sd = 1) %>% 
@@ -289,6 +296,89 @@ ggplot(data.frame(x = -10:25), aes(x)) +
         axis.title = element_text(size = 18),
         text = element_text(family = "Lato")) 
 ```
+
+# 1. z-score calculation
+
+## figure
+
+We'll use $z = -1.23$ for this example.
+
+```{r z-score-figure}
+#| fig-width: 10
+#| fig-height: 5
+
+# z-score
+q <- -1.23
+
+ggplot(data.frame(x = -4:4), aes(x)) +
+  # zscore
+  geom_linerange(x = q, ymin = 0, ymax = 0.19) +
+  # area under the curve
+  stat_function(geom = "area", fun = dnorm, args = list(mean = 0, sd = 1), xlim = c(-4, -1.23), fill = "turquoise3") +
+  # Z distribution curve
+  stat_function(geom = "line", n = 1000, fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1.5, color = "darkorange") +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.45)) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.title = element_blank(),
+        axis.line.y = element_blank())
+```
+
+## calculation
+
+```{r z-score calculation}
+pnorm(q, mean = 0, sd = 1)
+```
+
+You can compare this with the [Z-score table](https://www.ztable.net/).
+
+## whale example
+
+What is the probability of selecting a whale that is **less than 79 ft long** given a normally distributed population with $\mu = 82$ ft with $\sigma = 4$ ft?
+
+```{r}
+# calculate the z-score
+whale_z <- (79 - 82)/4
+  
+# calculate the probability under the curve
+pnorm(whale_z, mean = 0, sd = 1)
+```
+
+
+# 1. 68-95-99.7 rule
+
+In a normal distribution, **68%** of values lie within 1 standard deviation of the mean, **95%** within 2 standard deviations, and **99.7%** within 3 standard deviations.  
+
+```{r rule-68-95-99.7}
+#| fig-width: 16
+#| fig-height: 8
+
+labels <- c(
+  "", "\U03BC - 3\U03C3", "\U03BC - 2\U03C3", "\U03BC - \U03C3", "\U03BC", "\U03BC + \U03C3", "\U03BC + 2\U03C3", "\U03BC + 3\U03C3", ""
+)
+
+ggplot(data.frame(x = -4:4), aes(x)) +
+  geom_linerange(x = 1, ymin = 0, ymax = 0.24) +
+  geom_linerange(x = -1, ymin = 0, ymax = 0.24) +
+  geom_linerange(x = 2, ymin = 0, ymax = 0.055) +
+  geom_linerange(x = -2, ymin = 0, ymax = 0.055) +
+  geom_linerange(x = 3, ymin = 0, ymax = 0.005) +
+  geom_linerange(x = -3, ymin = 0, ymax = 0.005) +
+  geom_linerange(x = 0, ymin = 0, ymax = 0.399) +
+  stat_function(geom = "line", n = 1000, fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1.5, color = "darkorange") +
+  scale_x_continuous(labels = labels, breaks = seq(-4, 4, by = 1)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.41)) +
+  labs(x = "") +
+  theme_classic() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 24),
+        axis.line.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank()) 
+```
+
+
 
 # 11. Student's t distribution
 ```{r t-dist}

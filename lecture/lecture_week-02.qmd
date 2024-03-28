@@ -347,11 +347,12 @@ one + two
 
 # 7. Leaf example 
 
-## random numbers from t-distribution
+## random number generation
 
 ```{r leaf-number-generation}
 set.seed(7)
-leaves <- rnorm(n = 20, mean = 4.92, sd = 0.3)
+leaf_pop <- rnorm(n = 10000, mean = 4.92, sd = 0.5)
+leaves <- sample(leaf_pop, size = 20, replace = FALSE)
 ```
 
 ## histogram
@@ -366,7 +367,7 @@ hist <- enframe(leaves) %>%
   ggplot(aes(x = value)) +
   geom_histogram(bins = 7, fill = "cornflowerblue", color = "#000000", breaks = breakpoints) +
   scale_x_continuous(breaks = breakpoints) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 5.2), breaks = c(0, 1, 2, 3, 4, 5)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 6), breaks = c(0, 1, 2, 3, 4, 5, 6)) +
   theme_classic() +
   labs(x = "Leaf length (cm)", y = "Count")
 hist
@@ -377,8 +378,8 @@ hist
 enframe(leaves) %>% 
   ggplot(aes(x = value)) +
   geom_density(fill = "cornflowerblue", color = "#000000", linewidth = 1) +
-  scale_x_continuous(limits = c(3.5, 7)) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 1.1)) +
+  scale_x_continuous(limits = c(3, 7)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.65)) +
   geom_vline(xintercept = 1.33) +
   theme_classic() +
   labs(x = "Leaf length (cm)", y = "Density")
@@ -386,7 +387,7 @@ enframe(leaves) %>%
 
 ## dot and whisker plot
 ```{r}
-snail_conflev <- tribble(
+leaf_conflev <- tribble(
   ~ conflev,
   0.85,
   0.90,
@@ -417,17 +418,17 @@ ggplot() +
              alpha = 0.6, shape = 21) +
   geom_point(data = enframe(leaves), aes(x = 0.98, y = leaves),
              alpha = 0.6, shape = 21) +
-  geom_point(data = snail_conflev, aes(x = conflev, y = mean), 
+  geom_point(data = leaf_conflev, aes(x = conflev, y = mean), 
              size = 3,
              color = "cornflowerblue") +
-  geom_errorbar(data = snail_conflev, aes(x = conflev, y = mean, ymin = lower, ymax = upper), 
+  geom_errorbar(data = leaf_conflev, aes(x = conflev, y = mean, ymin = lower, ymax = upper), 
                 width = 0.006, 
                 linewidth = 1,
                 color = "cornflowerblue") +
   theme_void() +
   theme(panel.grid = element_blank()) +
   labs(x = "Confidence levels", 
-       y = "Snail diameter (cm)") 
+       y = "Leaf length (cm)") 
 
 
 ```
@@ -451,6 +452,113 @@ qq <- enframe(leaves) %>%
 hist + qq
 ```
 
+## resampling visual
+
+### population histogram
+
+```{r leaf-pop-hist}
+# population histogram
+enframe(leaf_pop) %>% 
+  ggplot(aes(x = value)) +
+  geom_histogram(fill = "darkgreen", 
+                 color = "darkgreen",
+                 alpha = 0.8) +
+  scale_y_continuous(expand = c(0, 0)) +
+  labs(x = "Leaf length (cm)",
+       y = "Count") +
+  theme(axis.title.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.line.y = element_blank())
+```
+
+### resampling with different sample sizes
+
+```{r}
+leaf_5 <- rep(NA, length = 1000)
+leaf_20 <- rep(NA, length = 1000)
+leaf_40 <- rep(NA, length = 1000)
+
+leaf_20_sd <- rep(NA, length = 1000)
+
+# sample 5 leaves from population 1000x
+for(i in 1:1000) {
+  
+  # sample 5 leaves from population
+  sample_5 <- sample(leaf_pop, size = 5, replace = FALSE) 
+  sample_20 <- sample(leaf_pop, size = 20, replace = FALSE) 
+  sample_40 <- sample(leaf_pop, size = 40, replace = FALSE) 
+  
+  leaf_5[i] <- mean(sample_5)
+  leaf_20[i] <- mean(sample_20)
+  leaf_40[i] <- mean(sample_40)
+  
+  leaf_20_sd[i] <- sd(sample_20)
+}
+
+leaf_5
+leaf_20
+leaf_40
+
+leaf_df <- cbind(leaf_5, leaf_20, leaf_40) %>% 
+  as_tibble() %>% 
+  pivot_longer(cols = 1:3) %>% 
+  mutate(name = case_when(
+    name == "leaf_5" ~ "n = 5",
+    name == "leaf_20" ~ "n = 20",
+    name == "leaf_40" ~ "n = 40"
+  ),
+  name = fct_relevel(name, "n = 5", "n = 20", "n = 40"))
+
+ggplot(leaf_df) +
+  geom_histogram(aes(x = value),
+                 color = "cornflowerblue",
+                 fill = "cornflowerblue",
+                 alpha = 0.8) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 280)) +
+  theme(axis.title.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.line.y = element_blank(),
+        strip.text = element_text(size = 18)) +
+  labs(x = "Leaf length (cm)") +
+  facet_wrap(~name, ncol = 1) 
+```
+
+### resampling confidence intervals
+
+```{r}
+#| fig-width: 8
+#| fig-height: 10
+
+leaf_20_ci <- cbind(leaf_20, leaf_20_sd) %>% 
+  as_tibble() %>% 
+  mutate(ci_low = leaf_20 - -qt(p = 0.05/2, df = 19)*leaf_20_sd/sqrt(20),
+         ci_high = leaf_20 + -qt(p = 0.05/2, df = 19)*leaf_20_sd/sqrt(20),
+         iter = rownames(.)) %>% 
+  mutate(color = case_when(
+    ci_low <= mean(leaf_pop) & ci_high >= mean(leaf_pop) ~ "yes",
+    TRUE ~ "no"
+  ))
+
+leaf_20_ci_sample <- leaf_20_ci %>% 
+  group_by(color) %>% 
+  sample_n(5) 
+
+leaf_20_ci_sample
+
+leaf_20_ci %>% 
+  group_by(color) %>% 
+  sample_n(5) %>% 
+  ggplot(aes(x = leaf_20, y = iter, color = color)) +
+  geom_vline(xintercept = mean(leaf_pop),
+             lty = 2) +
+  geom_pointrange(aes(xmin = ci_low, xmax = ci_high)) +
+  scale_color_manual(values = c("yes" = "darkgreen", "no" = "orange")) +
+  scale_x_continuous(limits = c(mean(leaf_pop)*0.85, mean(leaf_pop)*1.15)) +
+  theme(legend.position = "none") +
+  labs(x = "Leaf length (cm)")
+```
 
 ## calculating a critical value
 ```{r leaf-crit-value}
@@ -467,7 +575,7 @@ mu0 <- 2
 n <- 20
 
 # sample mean
-xbar <- mean(leaves)
+ybar <- mean(leaves)
 
 # sample standard deviation
 s <- sd(leaves)
@@ -479,17 +587,13 @@ se <- s/sqrt(n)
 df <- n - 1
 
 # t-score
-t <- (xbar-mu0)/se
+t <- (ybar-mu0)/se
 
 t
 ```
 
 $$
-SE = \frac{s}{\sqrt{n}} = \frac{0.235}{4.47} = 0.05
-$$
-
-$$
-t_s = \frac{\bar{x} - \mu}{s/\sqrt{n}} = \frac{2.29 - 2}{1.04/\sqrt{41}} = 1.8
+SE = \frac{s}{\sqrt{n}} = \frac{0.371}{4.47} = 0.08
 $$
 
 ## visual representation of sample t-statistic vs t-critical
@@ -517,7 +621,7 @@ ggplot(data.frame(x = -5:5), aes(x)) +
 ```
 
 ## doing a t-test
-```{r acorn-t-test}
+```{r leaf-t-test}
 t.test(leaves, mu = 2)
 ```
 

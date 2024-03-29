@@ -107,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     const options = {
       valueNames: ['listing-title','listing-date',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
       
-      searchColumns: ["listing-title","listing-author"],
+      searchColumns: ["listing-date","listing-title","listing-author"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -192,7 +192,7 @@ color: #375377;
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(1)</span></div><div class="category" data-category="starter code">starter code <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="starter code">starter code <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -227,10 +227,10 @@ color: #375377;
        <option value="" disabled="" selected="" hidden="">Order By</option>
        <option value="index" data-direction="asc">Default</option>
          <option value="listing-date-sort" data-direction="asc">
-          Date - Oldest
+          Due date - Oldest
         </option>
          <option value="listing-date-sort" data-direction="desc">
-          Date - Newest
+          Due date - Newest
         </option>
          <option value="listing-title-sort" data-direction="asc">
           Title
@@ -250,7 +250,7 @@ color: #375377;
 <a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
 </th>
 <th>
-<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Date</a>
+<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Due date</a>
 </th>
 </tr>
 </thead>
@@ -261,6 +261,14 @@ color: #375377;
 </td>
 <td>
 <span class="listing-date">undefined</span>
+</td>
+</tr>
+<tr data-index="1" data-listing-date-sort="1712732400000" data-listing-file-modified-sort="1711745971570" data-listing-date-modified-sort="1711745971000" data-listing-reading-time-sort="6" data-listing-title-sort="Homework 1" data-listing-filename-sort="homework-01.qmd">
+<td>
+<a href="./homework/homework-01.html" class="title listing-title">Homework 1</a>
+</td>
+<td>
+<span class="listing-date">Apr 10, 2024</span>
 </td>
 </tr>
 </tbody>
@@ -571,7 +579,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">  fields: [title, date]</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">  sort: "date desc" # can also sort on more than one field</span></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">  categories: true # allows you to sort posts by assigned categories </span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">  field-display-names:</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">    date: "Due date"</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

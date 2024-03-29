@@ -1,0 +1,131 @@
+---
+title: "Homework 1"
+editor: source
+freeze: auto
+published-title: "Due date"
+date: 2024-04-10
+date-modified: last-modified
+format: 
+   html:
+     include-in-header: 
+        text: |
+          <style>
+          #title-block-header.quarto-title-block.default .quarto-title .title {
+          color: #375377;
+          }
+          </style>
+---
+
+[Due on Wednesday April 10 (Week 3) at 11:59 PM]{style="color: #79ACBD; font-size: 24px;"}
+
+Read these instructions before starting your homework and follow them carefully. See the end of this assignment for a checklist of components that your assignment must have at minimum (i.e. to earn at least partial credit). Only submit the items in that list, in the order requested.
+
+## Part 1. Tasks
+
+:::{.callout-note}
+You will not need to submit any materials for tasks, but you are expected to complete the material.
+:::
+
+### Task 1. Beginning steps to configure Git/GitHub
+a. Check that Git is installed on your computer. It likely already is, but check anyway!  
+
+    - [Instructions for Macs](https://ucsb-meds.github.io/meds-install-mac.html#check-for-git) 
+    - [Instructions for Windows](https://ucsb-meds.github.io/meds-install-windows.html#check-for-git)  
+    - If you do _not_ have git installed, follow the instructions to install it.  
+    
+b. If you don’t have one already, create a GitHub account.  
+
+    - Read Jenny Brian’s Happy Git with R Section 4.1: [“Username advice”](https://happygitwithr.com/github-acct.html#username-advice) (for example, my GitHub username is an-bui)  
+    - Visit [GitHub](https://github.com/)  
+    - Create an account using your personal email (not your UCSB email, which you will lose access to once you graduate)  
+
+### Task 2. Read Julia Lowndes’ piece in Scientific American: [“Open Software Means Kinder Science”](https://blogs.scientificamerican.com/observations/open-software-means-kinder-science/)
+
+## Part 2. Problems, code, and figures
+
+Carefully read the checklist for the components that you will need to submit for each problem. Show all your work.
+
+### Problem 1. Measures of central tendency and data spread (8 points)
+
+After the major rains this winter, you’re interested in what’s happening with the Pacific treefrog (Pseudacris hypochondriaca) population at North Campus Open Space.  You’ve collected the following masses (in grams) for tree frogs in one night of sampling (frogs can be hard to catch!):  
+
+$$
+23, 32, 39, 25, 35, 28
+$$
+
+  a. In one sentence, categorize this data set: what type of data did you collect, and why is it that type? **(2 points)**  
+  b. Calculate the sample mean. Express your answer with the correct units. **(2 points)**  
+  c. Calculate the sample variance. Express your answer with the correct units. **(2 points)**  
+  d. Calculate the sample standard deviation. Express your answer with the correct units. **(2 points)**  
+
+### Problem 2. Visualizing data (9 points)
+
+In this problem, you’ll work with data collected by the National Snow and Ice Data Center on glacial mass and sea level rise. 
+
+Getting set up:  
+
+a. Read the overview information about the data set from the database.  
+b. Download the two data files from Canvas (linked in the Homework 1 assignment page) into your directory (aka folder) for this class.  
+
+    i. Data file 1: `glacial_volume_loss_copy.csv`  
+    ii. Data file 2: `glacial_volume_loss.csv`  
+  
+c. Open up the two data files and look at them side-by-side. In one sentence, explain how the data files are different. **(1 point)**  
+d. Read the metadata (data/information about the data) in data file 2 (`glacial_volume_loss.csv`) to understand what each column means.  
+
+Coding:
+
+e. Start a new folder and Rproject for this homework assignment.  Start a new Quarto Markdown or RMarkdown for this assignment (if you haven’t already). Make sure it is in the same folder as the data file.  
+f. Load the `tidyverse` package.  
+g. Read in data file 1 using `read_csv(“glacial_volume_loss_copy.csv”)` and store that as an object named `glaciers`.  
+h. Create a histogram of annual sea level rise. **(4 points)**  
+i. Create a scatterplot of cumulative sea level rise through time (year on the x-axis, cumulative sea level rise on the y-axis). **(4 points)**  
+
+:::{.callout-tip}
+### Hints
+
+**Hint 1:** the `geom` you’ll need to create a scatter plot is `geom_point()`.  
+**Hint 2:** the x-axis will be `Year` and the y-axis will be `Cumu_sea_rise`. Where do these go? Check out your workshop code from Wednesday the 12th.  
+:::
+
+### Problem 3. Setting up statistical critique (6 points)
+Throughout the quarter, you’ll engage in a critique of statistical methods for a published paper. Some methods are appropriate for the data and research questions, and some are not. You’ll be the judge!  
+
+For this homework assignment, you will find 3 candidate papers for your critique. Find 3 papers that speak to your interests - the paper could be on human health, plant restoration, agroecology, or more. Anything you might be interested in within the realm of environmental studies is fair game. Not all 3 papers have to be on the same topic.  
+
+a. For each paper, skim the Methods section, looking for information on statistical analysis. A paper is a good choice if it includes one of these terms (or something similar) in the analysis description:  
+
+    - t-test  
+    - Analysis of variance (ANOVA)  
+    - Mann-Whitney U  
+    - Kruskal-Wallis  
+    - Linear model or linear regression  
+    - Spearman correlation  
+    - Pearson correlation  
+    - Generalized linear mixed effect model  
+    
+b. Once you’ve verified that your paper includes one of the above listed terms, find the [digital object identifier (DOI)](https://www.doi.org/the-identifier/what-is-a-doi/), which is a unique identifier in the form of a URL for a paper. You will know it is a DOI if it has **doi.org** somewhere in the URL.  
+c. Once you find the DOI for your paper, add it to the [Google sheet](https://docs.google.com/spreadsheets/d/1sujv8-u_ABeR0EgNYhVXhZbrLZVuwKBI5fuSju2qJfY/edit?usp=sharing). Repeat this for all three papers. **(3 points)**  
+d. In your homework document, list the papers in alphabetical order by author last name. **(3 points)**  
+Your citations should take the form:  
+Last name, first name, et al. Year. “Paper title.” _Journal title_ volume:issue.  
+Example:  
+Sanford, E., et al. 2019. “Widespread shifts in the coastal biota of northern California during the 2014–2016 marine heatwaves.” _Scientific Reports_ 9:4216.  
+  
+## Checklist
+
+Your homework should
+
+- Include your name, the title (“Homework 1”), and the date you turned in the assignment **(3 points)**  
+- Include responses for Problem 1a-d and full work (hand written or R code) for parts b-d  
+- Include a written response to Problem 2c and all your code, annotations, and output for Problem 2h-i  
+- Include 3 citations for Problem 3c  
+- be uploaded to Canvas as a single PDF **(1 point)**  
+- be organized and readable **(2 points)**  
+
+Additionally, you should  
+
+- Paste 3 DOIs for the papers you’re interested in in the [Google sheet](https://docs.google.com/spreadsheets/d/1sujv8-u_ABeR0EgNYhVXhZbrLZVuwKBI5fuSju2qJfY/edit?usp=sharing)  
+
+**29 points total**  
+

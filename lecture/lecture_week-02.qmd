@@ -10,11 +10,12 @@ author:
     url: https://an-bui.com/
     affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology
     affiliation-url: https://www.eemb.ucsb.edu/
+published-title: "Lecture date"
 date: 2024-04-08
 date-modified: last-modified
 categories: [central limit theorem, z-distribution, t-distribution, confidence intervales, qqplot, one-tailed, two-tailed, t-test, cohen's d]
 citation:
-  url: https://spring-2024.envs-193ds.com//lecture/lecture_week-02.html
+  url: https://spring-2024.envs-193ds.com/lecture/lecture_week-02.html
 ---
 
 ## 0. set up
@@ -552,7 +553,7 @@ We use qqplots (quantile-quantile plots) to visually evaluate the normality of s
 The New Haven temperature data is normally distributed:
 
 ```{r nhtemp-histogram-and-qq}
-#| fig-width: 12
+#| fig-width: 16
 #| fig-height: 6
 
 nhtemp_hist <- as_tibble(nhtemp) %>% 
@@ -584,7 +585,7 @@ nhtemp_hist + nhtemp_qq
 The sunspot data is not:
 
 ```{r sunspots-histogram-and-qq}
-#| fig-width: 12
+#| fig-width: 16
 #| fig-height: 6
 
 sunspot_hist <- as_tibble(sunspots) %>% 
@@ -613,234 +614,4 @@ sunspot_qq <- ggplot(as_tibble(sunspots)) +
 sunspot_hist + sunspot_qq
 
 ```
-
-## 6. one vs two tailed figure
-
-```{r one-two-tailed-test-comparison}
-#| fig-width: 10
-#| fig-height: 5
-#| fig-align: center
-
-two <- ggplot(data.frame(x = -5:5), aes(x)) +
-  stat_function(geom = "area", fun = dt, args = list(df = 1), xlim = c(3, 5), fill = "darkgrey") +
-  geom_linerange(aes(x = 3, ymin = 0, ymax = 0.032), linewidth = 1, lty = 2, color = "#000000") +
-  stat_function(geom = "area", fun = dt, args = list(df = 1), xlim = c(-5, -3), fill = "darkgrey") +
-  geom_linerange(aes(x = -3, ymin = 0, ymax = 0.032), linewidth = 1, lty = 2, color = "#000000") +
-  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 1), linewidth = 1, color = "#000000") +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.32)) +
-  theme_void() +
-  theme(panel.grid = element_blank())
-
-one <- ggplot(data.frame(x = -5:5), aes(x)) +
-  stat_function(geom = "area", fun = dt, args = list(df = 1), xlim = c(2, 5), fill = "darkgrey") +
-  geom_linerange(aes(x = 2, ymin = 0, ymax = 0.063), linewidth = 1, lty = 2, color = "#000000") +
-  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 1), linewidth = 1, color = "#000000") +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.32)) +
-  theme_void() +
-  theme(panel.grid = element_blank())
-
-one + two
-```
-
-
-
-### calculating a critical value
-```{r leaf-crit-value}
-qt(p = 0.05/2, df = 19)
-```
-
-### calculating t-score
-
-```{r acorn-t-score}
-# population mean
-mu0 <- 2
-
-# number of observations
-n <- 20
-
-# sample mean
-ybar <- mean(leaves)
-
-# sample standard deviation
-s <- sd(leaves)
-
-# sample standard error
-se <- s/sqrt(n)
-
-# degrees of freedom
-df <- n - 1
-
-# t-score
-t <- (ybar-mu0)/se
-
-t
-```
-
-$$
-SE = \frac{s}{\sqrt{n}} = \frac{0.371}{4.47} = 0.08
-$$
-
-### visual representation of sample t-statistic vs t-critical
-```{r sample-t-vs-t-crit}
-ggplot(data.frame(x = -5:5), aes(x)) +
-  stat_function(geom = "area", fun = dt, args = list(df = 1), xlim = c(1.8, 5), fill = "darkgrey") +
-  stat_function(geom = "area", fun = dt, args = list(df = 1), xlim = c(-5, -1.8), fill = "darkgrey") +
-  geom_linerange(aes(x = 1.8, ymin = 0, ymax = 0.075), linewidth = 1, lty = 2, color = "#000000") +
-  geom_linerange(aes(x = -1.8, ymin = 0, ymax = 0.075), linewidth = 1, lty = 2, color = "#000000") +
-  
-  geom_linerange(aes(x = 2.021, ymin = 0, ymax = 0.075), linewidth = 1, lty = 3, color = "#FFFFFF") +
-  geom_linerange(aes(x = -2.021, ymin = 0, ymax = 0.075), linewidth = 1, lty = 3, color = "#FFFFFF") +
-  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 1), linewidth = 1, color = "#000000") +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.32)) +
-  theme_void() +
-  theme(panel.grid = element_blank(),
-        plot.margin = unit(c(1, 0, 0, 0), "cm"))
-```
-
-### manually calculating p-value
-```{r leaf-calculate-p-value}
-# two-tailed: multiply probability by 2
-# lower = FALSE: probability of the value being more than t
-2*pt(t, df, lower = FALSE)
-```
-
-### doing a t-test
-```{r leaf-t-test}
-t.test(leaves, mu = 0)
-```
-
-## 8. two-sample t-test
-
-```{r two-sample-example-1}
-ex1 <- ggplot(data.frame(x = -8:8), aes(x)) +
-  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 2), linewidth = 2, color = "#FF6B2B") +
-  geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
-  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 1, sd = 2), linewidth = 2, color = "#00A38D") +
-  geom_vline(aes(xintercept = 1), color = "#00A38D", lty = 2, linewidth = 2) +
-    scale_y_continuous(expand = c(0, 0), limits = c(0, 0.21)) +
-  theme_void() +
-  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
-
-set.seed(2)
-x <- rnorm(30, mean = 0, sd = 2)
-y <- rnorm(30, mean = 1, sd = 2)
-
-t.test(x = x, y = y, var.equal = TRUE)
-
-# 0.43
-```
-
-```{r two-sample-example-2}
-ex2 <- ggplot(data.frame(x = -8:17), aes(x)) +
-  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 2), linewidth = 2, color = "#FF6B2B") +
-  geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
-  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 2, sd = 2), linewidth = 2, color = "#00A38D") +
-  geom_vline(aes(xintercept = 2), color = "#00A38D", lty = 2, linewidth = 2) +
-    scale_y_continuous(expand = c(0, 0), limits = c(0, 0.21)) +
-  theme_void() +
-  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
-
-set.seed(1000000000)
-x <- rnorm(30, mean = 0, sd = 2)
-y <- rnorm(30, mean = 2, sd = 2)
-
-t.test(x = x, y = y, var.equal = TRUE)
-# 0.6932
-```
-
-
-```{r two-sample-example-3}
-ex3 <- ggplot(data.frame(x = -8:17), aes(x)) +
-  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 2), linewidth = 2, color = "#FF6B2B") +
-  geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
-  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 10, sd = 2), linewidth = 2, color = "#00A38D") +
-  geom_vline(aes(xintercept = 10), color = "#00A38D", lty = 2, linewidth = 2) +
-    scale_y_continuous(expand = c(0, 0), limits = c(0, 0.21)) +
-  theme_void() +
-  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
-
-set.seed(100)
-x <- rnorm(40, mean = 0, sd = 2)
-y <- rnorm(40, mean = 10, sd = 2)
-
-t.test(x = x, y = y, var.equal = TRUE)
-# p < 0.001
-```
-
-```{r two-sample-examples-together}
-#| fig-width: 12
-#| fig-height: 3
-#| fig-align: center
-
-ex1 + ex2 + ex3
-```
-
-### same differences in means, different SD
-
-```{r two-sample-means-different-variances}
-#| fig-width: 8
-#| fig-height: 10
-
-small <- ggplot(data.frame(x = -6:9), aes(x)) +
-  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 2), linewidth = 2, color = "#FF6B2B") +
-  geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
-  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 3, sd = 2), linewidth = 2, color = "#0070C0") +
-  geom_vline(aes(xintercept = 3), color = "#0070C0", lty = 2, linewidth = 2) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.21)) +
-  theme_void() +
-  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
-
-big <- ggplot(data.frame(x = -6:9), aes(x)) +
-  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 0.5), linewidth = 2, color = "#FF6B2B") +
-  geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
-  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 3, sd = 0.5), linewidth = 2, color = "#0070C0") +
-  geom_vline(aes(xintercept = 3), color = "#0070C0", lty = 2, linewidth = 2) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.8)) +
-  theme_void() +
-  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
-
-diff <- ggplot(data.frame(x = -6:9), aes(x)) +
-  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 0.5), linewidth = 2, color = "#FF6B2B") +
-  geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
-  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 3, sd = 1.25), linewidth = 2, color = "#0070C0") +
-  geom_vline(aes(xintercept = 3), color = "#0070C0", lty = 2, linewidth = 2) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.85)) +
-  theme_void() +
-  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
-
-small / big / diff
-```
-
-
-testing test statistic formula to compare against t-test from above:
-
-```{r}
-xa <- mean(x)
-xb <- mean(y)
-
-vara <- var(x)
-varb <- var(y)
-
-nA <- length(x)
-nB <- length(y)
-
-(xa - xb)/sqrt((vara/nA)+(varb/nB))
-(nA - 1) + (nB - 1)
-
-(((vara/nA)+(varb/nB))^2)/((vara/nA)^2/(nA-1)+(varb/nB)^2/(nB-1))
-```
-
-
-
-## 9. Cohen's D
-
-```{r}
-cohen.d(leaves ~ ., mu = 2)
-```
-
-
-
-
-
-
 

@@ -105,33 +105,15 @@ store50 <- c()
 
 for(i in 1:100) {
   
+  # sample 100x
   store2[i] <- mean(sample(uniform, 2, replace = FALSE))
-
-}
-
-
-for(i in 1:100) {
-  
   store5[i] <- mean(sample(uniform, 5, replace = FALSE))
-
-}
-for(i in 1:100) {
-  
   store15[i] <- mean(sample(uniform, 15, replace = FALSE))
-
-}
-
-for(i in 1:100) {
-  
   store30[i] <- mean(sample(uniform, 30, replace = FALSE))
-
-}
-
-for(i in 1:100) {
-  
   store50[i] <- mean(sample(uniform, 50, replace = FALSE))
 
 }
+
 
 df <- cbind(store2, store5, store15, store30, store50) %>% 
   as.data.frame()
@@ -270,6 +252,9 @@ enframe(leaf_pop) %>%
   geom_histogram(fill = "darkgreen", 
                  color = "darkgreen",
                  alpha = 0.8) +
+  geom_vline(xintercept = mean(leaf_pop),
+             linetype = 2,
+             linewidth = 2) +
   scale_y_continuous(expand = c(0, 0)) +
   labs(x = "Leaf length (cm)",
        y = "Count") +
@@ -302,11 +287,13 @@ hist
 enframe(leaves) %>% 
   ggplot(aes(x = value)) +
   geom_density(fill = "cornflowerblue", color = "#000000", linewidth = 1) +
-  scale_x_continuous(limits = c(3, 7)) +
+  scale_x_continuous(limits = c(2.5, 7)) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 0.65)) +
-  geom_vline(xintercept = 1.33) +
+  geom_vline(xintercept = mean(leaves)) +
+  annotate("text", x = 6, y = 0.6, label = "sample mean = 4.84 cm", size = 6) +
   theme_classic() +
-  labs(x = "Leaf length (cm)", y = "Density")
+  labs(x = "Leaf length (cm)", 
+       y = "Density")
 ```
 
 ## sample dot and whisker plot with confidence intervals
@@ -381,7 +368,7 @@ hist + qq
 
 ```{r sampling-distributions}
 #| fig.width: 6
-#| fig-height: 10
+#| fig-height: 8
 
 leaf_5 <- rep(NA, length = 1000)
 leaf_20 <- rep(NA, length = 1000)
@@ -414,11 +401,33 @@ leaf_df <- cbind(leaf_5, leaf_20, leaf_40) %>%
   ),
   name = fct_relevel(name, "n = 5", "n = 20", "n = 40"))
 
+leaf_df %>% 
+  filter(name == "n = 20") %>% 
+  ggplot() +
+  geom_histogram(aes(x = value),
+                 color = "cornflowerblue",
+                 fill = "cornflowerblue",
+                 alpha = 0.8) +
+  geom_vline(xintercept = mean(leaf_pop),
+             linetype = 2,
+             linewidth = 2) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 280)) +
+  theme(axis.title.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.line.y = element_blank(),
+        strip.text = element_text(size = 18)) +
+  labs(x = "Leaf length (cm)") +
+  facet_wrap(~name, ncol = 1) 
+
 ggplot(leaf_df) +
   geom_histogram(aes(x = value),
                  color = "cornflowerblue",
                  fill = "cornflowerblue",
                  alpha = 0.8) +
+  geom_vline(xintercept = mean(leaf_pop),
+             linetype = 2,
+             linewidth = 2) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 280)) +
   theme(axis.title.y = element_blank(),
         axis.text.y = element_blank(),
@@ -433,7 +442,7 @@ ggplot(leaf_df) +
 
 ```{r resampling-n-20}
 #| fig-width: 6
-#| fig-height: 10
+#| fig-height: 8
 
 leaf_20_ci <- cbind(leaf_20, leaf_20_sd) %>% 
   as_tibble() %>% 
@@ -446,6 +455,7 @@ leaf_20_ci <- cbind(leaf_20, leaf_20_sd) %>%
   ),
   color = fct_relevel(color, "yes", "no"))
 
+# selecting 8 resamples to plot
 leaf_20_ci_sample <- leaf_20_ci %>% 
   group_by(color) %>% 
   sample_n(4) %>% 
@@ -461,9 +471,37 @@ ggplot(data = leaf_20_ci_sample, aes(x = leaf_20, y = iter, color = color)) +
   scale_color_manual(values = c("yes" = "darkgreen", "no" = "orange")) +
   scale_x_continuous(limits = c(mean(leaf_pop)*0.85, mean(leaf_pop)*1.15)) +
   scale_y_discrete(limits = rev) +
+  theme(axis.title.y = element_blank(),
+        axis.line.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank()) +
   theme(legend.position = "none") +
   labs(x = "Leaf length (cm)")
 ```
+
+## plotting standard error
+
+```{r standard-error}
+#| fig-width: 4
+#| fig-height: 6
+enframe(leaves) %>% 
+  mutate(group = "Sample") %>% 
+  ggplot(aes(x = group, y = value)) +
+  geom_point(position = position_jitter(width = 0.2, height = 0, seed = 1),
+             shape = 21,
+             alpha = 0.8) +
+  geom_point(aes(x = group, y = mean(value)),
+             color = "cornflowerblue",
+             size = 3) +
+  geom_errorbar(aes(ymin = mean(value) - sd(value)/sqrt(20), 
+                    ymax = mean(value) + sd(value)/sqrt(20),
+                    width = 0.2),
+                color = "cornflowerblue",
+                size = 1) +
+  labs(y = "Leaf length (cm)") +
+  theme(axis.title.x = element_blank())
+```
+
 
 
 # 4. qqplot examples
@@ -623,7 +661,7 @@ ggplot(data.frame(x = -5:5), aes(x)) +
 
 ## doing a t-test
 ```{r leaf-t-test}
-t.test(leaves, mu = 2)
+t.test(leaves, mu = 0)
 ```
 
 # 8. two-sample t-test

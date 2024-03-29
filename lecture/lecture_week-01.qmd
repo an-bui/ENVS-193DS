@@ -2,18 +2,21 @@
 title: "Week 1 figures - Lectures 1 and 2"
 editor: source
 freeze: auto
+format:
+  html: 
+    code-fold: true
 author:
   - name: An Bui
     url: https://an-bui.com/
     affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology
     affiliation-url: https://www.eemb.ucsb.edu/
 date: 2024-03
-categories: [regression, histogram, probability mass, probability density]
+categories: [central tendency, spread, regression, histogram, jitterplot, box-and-whisker plot, probability mass, probability density, probability distribution, normal distribution, z-score calculation, t-distribution, uniform distribution, binomial distribution, poisson distribution]
 citation:
   url: https://spring-2024.envs-193ds.com//lecture/lecture_week-01.html
 ---
 
-# 0. set up
+## 0. set up
 
 ```{r message = FALSE}
 # cleaning
@@ -29,39 +32,39 @@ font_add_google("Lato", "Lato")
 library(patchwork)
 ```
 
-# 1. Math
+## 1. Math
 
-## sample mean
+### sample mean
 
 $$
 \bar{y} = \frac{1}{n}\sum_{i = 1}^ny_i
 $$
 
-## sample variance
+### sample variance
 
 $$
 s^2 = \frac{\Sigma(y_i - \bar{y})^2}{n - 1}
 $$
 
-## sample standard deviation
+### sample standard deviation
 
 $$
 s = \sqrt{\frac{\Sigma(y - \bar{y})^2}{n - 1}}
 $$
 
-## coefficient of variation
+### coefficient of variation
 
 $$
 CV = \frac{\sigma}{\mu}
 $$
 
-## z-score
+### z-score
 
 $$
 z = \frac{y_i - \mu}{\sigma}
 $$
 
-# 2. Mean and median
+## 2. Mean and median
 
 ```{r}
 set.seed(1)
@@ -82,7 +85,7 @@ rnorm(n = 40, mean = 6, sd = 1) %>%
         axis.line.y = element_blank())
 ```
 
-# 3. Range
+## 3. Range
 
 ```{r range-plots}
 #| fig-width: 10
@@ -125,10 +128,7 @@ wide <- rnorm(n = 30, mean = 6, sd = 2) %>%
 narrow + wide
 ```
 
-
-
-
-# 4. anemone regression example
+## 4. anemone regression example
 
 ```{r anemone-regression}
 # number of arms 
@@ -140,10 +140,7 @@ diam <- rnorm(length(arms), mean = seq(from = 1, to = 5, length = length(arms)),
 
 # create a data frame
 df <- cbind(diam, arms) %>% 
-  as.data.frame() 
-
-# linear model
-lm(diam ~ arms, data = df) %>% summary()
+  as.data.frame()
 
 showtext_auto()
 
@@ -168,7 +165,7 @@ ggplot(df, aes(x = arms, y = diam)) +
         text = element_text(family = "Lato"))
 ```
 
-# 5. histogram example
+## 5. histogram example
 
 ```{r histogram}
 ggplot(df, aes(x = diam)) +
@@ -183,7 +180,7 @@ ggplot(df, aes(x = diam)) +
         text = element_text(family = "Lato")) 
 ```
 
-# 6. jitter plot and box and whisker plot example
+## 6. jitter plot and box and whisker plot example
 
 ```{r}
 set.seed(1)
@@ -215,7 +212,7 @@ ggplot(pretend_lengths, aes(x = name, y = value, color = name, fill = name)) +
 ```
 
 
-# 7. Probability mass example
+## 7. Probability mass example
 
 ```{r prob-mass}
 #| fig-width: 8
@@ -233,7 +230,7 @@ ggplot(data.frame(x = 1:55), aes(x)) +
         text = element_text(family = "Lato")) 
 ```
 
-# 8. Probability density example
+## 8. Probability density example
 
 ```{r prob-density}
 #| fig-width: 8
@@ -256,7 +253,7 @@ ggplot(data.frame(x = 1:20), aes(x)) +
 showtext_auto(FALSE)
 ```
 
-# 9. probability distribution
+## 9. probability distribution
 
 
 ```{r prob-dist}
@@ -277,7 +274,7 @@ ggplot(normdist) +
         text = element_text(family = "Lato")) 
 ```
 
-# 10. normal distribution
+## 10. normal distribution
 
 ```{r normal-dist}
 ggplot(data.frame(x = -10:25), aes(x)) +
@@ -297,9 +294,9 @@ ggplot(data.frame(x = -10:25), aes(x)) +
         text = element_text(family = "Lato")) 
 ```
 
-# 1. z-score calculation
+## 11. z-score calculation
 
-## figure
+### figure
 
 We'll use $z = -1.23$ for this example.
 
@@ -324,7 +321,7 @@ ggplot(data.frame(x = -4:4), aes(x)) +
         axis.line.y = element_blank())
 ```
 
-## calculation
+### calculation
 
 ```{r z-score calculation}
 pnorm(q, mean = 0, sd = 1)
@@ -332,7 +329,7 @@ pnorm(q, mean = 0, sd = 1)
 
 You can compare this with the [Z-score table](https://www.ztable.net/).
 
-## whale example
+### whale example
 
 What is the probability of selecting a whale that is **less than 79 ft long** given a normally distributed population with $\mu = 82$ ft with $\sigma = 4$ ft?
 
@@ -345,7 +342,7 @@ pnorm(whale_z, mean = 0, sd = 1)
 ```
 
 
-# 1. 68-95-99.7 rule
+## 12. 68-95-99.7 rule
 
 In a normal distribution, **68%** of values lie within 1 standard deviation of the mean, **95%** within 2 standard deviations, and **99.7%** within 3 standard deviations.  
 
@@ -380,7 +377,7 @@ ggplot(data.frame(x = -4:4), aes(x)) +
 
 
 
-# 11. Student's t distribution
+## 13. Student's t distribution
 ```{r t-dist}
 ggplot(data.frame(x = -10:10), aes(x)) +
   stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 1), linewidth = 1, color = "#856F33") +
@@ -400,7 +397,7 @@ ggplot(data.frame(x = -10:10), aes(x)) +
         text = element_text(family = "Lato")) 
 ```
 
-# 12. Uniform distribution
+## 14. Uniform distribution
 
 ```{r uniform-dist}
 ggplot(data.frame(x = 0:10), aes(x)) +
@@ -417,7 +414,7 @@ ggplot(data.frame(x = 0:10), aes(x)) +
         text = element_text(family = "Lato")) 
 ```
 
-# 13. Binomial distribution
+## 14. Binomial distribution
 
 ```{r binomial-dist}
 ggplot(data.frame(x = 1:20), aes(x)) +
@@ -441,7 +438,7 @@ ggplot(data.frame(x = 1:20), aes(x)) +
 
 
 
-# 14. Poisson distribution
+## 15. Poisson distribution
 
 ```{r poisson-dist}
 ggplot(data.frame(x = 1:20), aes(x)) +

@@ -2,20 +2,26 @@
 title: "Week 2 figures - Lectures 3 and 4"
 editor: source
 freeze: auto
+format:
+  html: 
+    code-fold: true
 author:
   - name: An Bui
     url: https://an-bui.com/
     affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology
     affiliation-url: https://www.eemb.ucsb.edu/
 date: 2024-04-08
-categories: [probability distribution, normal, Z-score, comparing groups, t-test, Student's t, qqplot]
+categories: [central limit theorem, z-distribution, t-distribution, confidence intervales, qqplot, one-tailed, two-tailed, t-test, cohen's d]
 citation:
   url: https://spring-2024.envs-193ds.com//lecture/lecture_week-02.html
 ---
 
-# 0. set up
+## 0. set up
 
 ```{r set-up}
+#| echo: false
+#| warning: false
+
 # cleaning
 library(tidyverse)
 theme_set(theme_classic() +
@@ -36,15 +42,15 @@ library(patchwork)
 library(effsize)
 ```
 
-# 1. Math
+## 1. Math
 
-## a. standard error
+### a. standard error
 
 $$
 standard \: error = SE_{\bar{x}} = \frac{s}{\sqrt{n}}
 $$
 
-## b. confidence interval
+### b. confidence interval
 
 $$
 \begin{align}
@@ -53,7 +59,7 @@ CI = \bar{x} \: &\pm \: t_{\alpha(2), df} \times \frac{s}{\sqrt{n}}
 \end{align}
 $$
 
-## c. t-statistic
+### c. t-statistic
 
 $$
 t_{\alpha(2), df}
@@ -63,8 +69,44 @@ $$
 t_{0.05(2), 19}
 $$
 
+### d. test statistic math notation
 
-# 2. central limit theorem
+$$
+t = \frac{\bar{x_A} - \bar{x_B}}{\sqrt{\frac{s_A^2}{N_A}+\frac{s_B^2}{N_B}}}
+$$
+
+When you have unequal variances:
+
+$$
+df = \frac{(\frac{s_A^2}{N_A}+\frac{S_B^2}{N_B})^2}{\frac{(\frac{s_A^2}{N_A})^2}{N_A-1}+\frac{(\frac{s_B^2}{N_B})^2}{N_B-1}}
+$$
+
+
+so for two-sample t-test where you have equal variances:
+
+$$
+t = \frac{\bar{x_A} - \bar{x_B}}{s_p \times \sqrt{\frac{1}{N_A + N_B}}}
+$$
+
+the degrees of freedom are:
+
+$$
+df = (N_A - 1) + (N_B - 1)
+$$
+
+### e. Cohen's d
+
+$$
+Cohen's \; d = \frac{\bar{x_A} - \bar{x_B}}{\sqrt{(s^2_A + s^2_B)/2}}
+$$
+
+### f. confidence interval for two-sample t-test
+
+$$
+CI = (\bar{x_A} - \bar{x_B}) \pm t \times \sqrt{\frac{(n_A - 1)s_A^2 + (n_B - 1)s_B^2}{n_A+n_B-2}} \times \sqrt{\frac{1}{n_A}+\frac{1}{n_B}}
+$$
+
+## 2. central limit theorem
 
 If you were to sample a bunch of times from any distribution (i.e. take many observations within a sample, take many observations in another sample), the mean values for each sample will be normally distributed. Kareem Carr has a nice explainer of how this works [here](https://twitter.com/kareem_carr/status/1754524686606626894).
 
@@ -186,9 +228,9 @@ ggplot(df) +
 
 ```
 
-# 3. z- vs t-distribution
+## 3. z- vs t-distribution
 
-## a. comparison with normal
+### a. comparison with normal
 
 t-distributions allow for more uncertainty around the tails.
 
@@ -211,7 +253,7 @@ ggplot(data.frame(x = -5:5), aes(x)) +
         text = element_text(family = "Lato")) 
 ```
 
-## b. visual representation of significance and t-statistic
+### b. visual representation of significance and t-statistic
 
 ```{r t-dist-and-significance}
 #| fig-width: 14
@@ -229,11 +271,11 @@ ggplot(data.frame(x = -5:5), aes(x)) +
         plot.margin = unit(c(1, 0, 0, 0), "cm"))
 ```
 
-# 4. confidence intervals
+## 4. confidence intervals
 
 This is the leaf example from lecture.
 
-## random number generation
+### random number generation
 
 This generates the "population": 10000 trees.
 
@@ -243,7 +285,7 @@ leaf_pop <- rnorm(n = 10000, mean = 4.92, sd = 0.5)
 leaves <- sample(leaf_pop, size = 20, replace = FALSE)
 ```
 
-## population histogram
+### population histogram
 
 ```{r leaf-pop-hist}
 # population histogram
@@ -264,7 +306,7 @@ enframe(leaf_pop) %>%
         axis.line.y = element_blank())
 ```
 
-## sample histogram
+### sample histogram
 
 ```{r leaf-histogram}
 #| fig-width: 8
@@ -282,7 +324,7 @@ hist <- enframe(leaves) %>%
 hist
 ```
 
-## sample density plot
+### sample density plot
 ```{r sample-density}
 enframe(leaves) %>% 
   ggplot(aes(x = value)) +
@@ -296,7 +338,7 @@ enframe(leaves) %>%
        y = "Density")
 ```
 
-## sample dot and whisker plot with confidence intervals
+### sample dot and whisker plot with confidence intervals
 ```{r sample-dot-and-whisker}
 leaf_conflev <- tribble(
   ~ conflev,
@@ -344,7 +386,7 @@ ggplot() +
 
 ```
 
-## sample qq plot
+### sample qq plot
 ```{r leaf-qq-plot}
 #| fig-width: 8
 #| fig-height: 6
@@ -362,9 +404,9 @@ qq <- enframe(leaves) %>%
 hist + qq
 ```
 
-## resampling visual
+### resampling visual
 
-### resampling with different sample sizes
+#### resampling with different sample sizes
 
 ```{r sampling-distributions}
 #| fig.width: 6
@@ -438,7 +480,7 @@ ggplot(leaf_df) +
   facet_wrap(~name, ncol = 1) 
 ```
 
-### resampling confidence intervals
+#### resampling confidence intervals
 
 ```{r resampling-n-20}
 #| fig-width: 6
@@ -479,7 +521,7 @@ ggplot(data = leaf_20_ci_sample, aes(x = leaf_20, y = iter, color = color)) +
   labs(x = "Leaf length (cm)")
 ```
 
-## plotting standard error
+### plotting standard error
 
 ```{r standard-error}
 #| fig-width: 4
@@ -502,9 +544,7 @@ enframe(leaves) %>%
   theme(axis.title.x = element_blank())
 ```
 
-
-
-# 4. qqplot examples
+## 5. qqplot examples
 
 We use qqplots (quantile-quantile plots) to visually evaluate the normality of some variable. The x-axis is the "theoretical" quantile, and the y-axis is the "sample" quantile. If the points follow a 1:1 line, then the variable is normally distributed.  
 
@@ -512,9 +552,9 @@ The New Haven temperature data is normally distributed:
 
 ```{r nhtemp-histogram-and-qq}
 #| fig-width: 12
-#| fig-height: 8
+#| fig-height: 6
 
-as_tibble(nhtemp) %>% 
+nhtemp_hist <- as_tibble(nhtemp) %>% 
   ggplot(aes(x = x)) +
   geom_histogram(breaks = seq(47, 55, length.out = 9), fill = "turquoise3", color = "#000000") +
   scale_x_continuous(breaks = seq(47, 55, length.out = 9), expand = c(0, 0)) +
@@ -527,7 +567,7 @@ as_tibble(nhtemp) %>%
         text = element_text(family = "Lato"),
         plot.margin = unit(c(0.1, 1, 0.1, 0.1), "cm")) 
 
-ggplot(as_tibble(nhtemp)) +
+nhtemp_qq <- ggplot(as_tibble(nhtemp)) +
   stat_qq(aes(sample = x), color = "turquoise3", size = 3) +
   theme_classic() +
   labs(x = "Theoretical", y = "Sample") +
@@ -536,15 +576,17 @@ ggplot(as_tibble(nhtemp)) +
         axis.title = element_text(size = 18),
         text = element_text(family = "Lato"),
         plot.margin = unit(c(0.1, 1, 0.1, 0.1), "cm")) 
+
+nhtemp_hist + nhtemp_qq
 ```
 
 The sunspot data is not:
 
 ```{r sunspots-histogram-and-qq}
-#| fig-width: 14
-#| fig-height: 8
+#| fig-width: 12
+#| fig-height: 6
 
-as_tibble(sunspots) %>% 
+sunspot_hist <- as_tibble(sunspots) %>% 
   ggplot(aes(x = x)) +
   geom_histogram(breaks = round(seq(0, 260, length.out = 30)), fill = "tomato2", color = "#000000") +
   scale_x_continuous(breaks = round(seq(0, 260, length.out = 30)), expand = c(0, 0)) +
@@ -557,7 +599,7 @@ as_tibble(sunspots) %>%
         text = element_text(family = "Lato"),
         plot.margin = unit(c(0.1, 1, 0.1, 0.1), "cm")) 
 
-ggplot(as_tibble(sunspots)) +
+sunspot_qq <- ggplot(as_tibble(sunspots)) +
   stat_qq(aes(sample = x), color = "tomato2", size = 3) +
   theme_classic() +
   labs(x = "Theoretical", y = "Sample") +
@@ -567,9 +609,11 @@ ggplot(as_tibble(sunspots)) +
         text = element_text(family = "Lato"),
         plot.margin = unit(c(0.1, 1, 0.1, 0.1), "cm")) 
 
+sunspot_hist + sunspot_qq
+
 ```
 
-# 5. one vs two tailed figure
+## 6. one vs two tailed figure
 
 ```{r one-two-tailed-test-comparison}
 #| fig-width: 10
@@ -599,12 +643,12 @@ one + two
 
 
 
-## calculating a critical value
+### calculating a critical value
 ```{r leaf-crit-value}
 qt(p = 0.05/2, df = 19)
 ```
 
-## calculating t-score
+### calculating t-score
 
 ```{r acorn-t-score}
 # population mean
@@ -635,7 +679,7 @@ $$
 SE = \frac{s}{\sqrt{n}} = \frac{0.371}{4.47} = 0.08
 $$
 
-## visual representation of sample t-statistic vs t-critical
+### visual representation of sample t-statistic vs t-critical
 ```{r sample-t-vs-t-crit}
 ggplot(data.frame(x = -5:5), aes(x)) +
   stat_function(geom = "area", fun = dt, args = list(df = 1), xlim = c(1.8, 5), fill = "darkgrey") +
@@ -652,19 +696,19 @@ ggplot(data.frame(x = -5:5), aes(x)) +
         plot.margin = unit(c(1, 0, 0, 0), "cm"))
 ```
 
-## manually calculating p-value
+### manually calculating p-value
 ```{r leaf-calculate-p-value}
 # two-tailed: multiply probability by 2
 # lower = FALSE: probability of the value being more than t
 2*pt(t, df, lower = FALSE)
 ```
 
-## doing a t-test
+### doing a t-test
 ```{r leaf-t-test}
 t.test(leaves, mu = 0)
 ```
 
-# 8. two-sample t-test
+## 8. two-sample t-test
 
 ```{r two-sample-example-1}
 ex1 <- ggplot(data.frame(x = -8:8), aes(x)) +
@@ -730,7 +774,7 @@ t.test(x = x, y = y, var.equal = TRUE)
 ex1 + ex2 + ex3
 ```
 
-## same differences in means, different SD
+### same differences in means, different SD
 
 ```{r two-sample-means-different-variances}
 #| fig-width: 8
@@ -766,29 +810,6 @@ diff <- ggplot(data.frame(x = -6:9), aes(x)) +
 small / big / diff
 ```
 
-## test statistic math notation
-
-$$
-t = \frac{\bar{x_A} - \bar{x_B}}{\sqrt{\frac{s_A^2}{N_A}+\frac{s_B^2}{N_B}}}
-$$
-When you have unequal variances:
-
-$$
-df = \frac{(\frac{s_A^2}{N_A}+\frac{S_B^2}{N_B})^2}{\frac{(\frac{s_A^2}{N_A})^2}{N_A-1}+\frac{(\frac{s_B^2}{N_B})^2}{N_B-1}}
-$$
-
-
-so for two-sample t-test where you have equal variances:
-
-$$
-t = \frac{\bar{x_A} - \bar{x_B}}{s_p \times \sqrt{\frac{1}{N_A + N_B}}}
-$$
-
-the degrees of freedom are:
-
-$$
-df = (N_A - 1) + (N_B - 1)
-$$
 
 testing test statistic formula to compare against t-test from above:
 
@@ -810,21 +831,11 @@ nB <- length(y)
 
 
 
-# 9. Cohen's D
-
-$$
-Cohen's \; d = \frac{\bar{x_A} - \bar{x_B}}{\sqrt{(s^2_A + s^2_B)/2}}
-$$
+## 9. Cohen's D
 
 ```{r}
 cohen.d(leaves ~ ., mu = 2)
 ```
-
-# 10. Confidence interval for two sample t-test
-
-$$
-CI = (\bar{x_A} - \bar{x_B}) \pm t \times \sqrt{\frac{(n_A - 1)s_A^2 + (n_B - 1)s_B^2}{n_A+n_B-2}} \times \sqrt{\frac{1}{n_A}+\frac{1}{n_B}}
-$$
 
 
 

@@ -18,6 +18,25 @@ citation:
   url: https://spring-2024.envs-193ds.com/lecture/lecture_week-03.html
 ---
 
+## 0. set up
+
+```{r set-up, message = FALSE}
+# cleaning
+library(tidyverse)
+theme_set(theme_classic() +
+            theme(panel.grid = element_blank(),
+                  axis.text = element_text(size = 18),
+                  axis.title = element_text(size = 18)))
+
+# calculate effect size
+library(effsize)
+
+# visualization
+library(showtext)
+font_add_google("Lato", "Lato")
+library(patchwork)
+```
+
 ## 6. one vs two tailed figure
 
 ```{r one-two-tailed-test-comparison}
@@ -54,6 +73,8 @@ qt(p = 0.05/2, df = 19)
 ### calculating t-score
 
 ```{r acorn-t-score}
+#| eval: false
+
 # population mean
 mu0 <- 2
 
@@ -101,6 +122,8 @@ ggplot(data.frame(x = -5:5), aes(x)) +
 
 ### manually calculating p-value
 ```{r leaf-calculate-p-value}
+#| eval: false
+
 # two-tailed: multiply probability by 2
 # lower = FALSE: probability of the value being more than t
 2*pt(t, df, lower = FALSE)
@@ -108,6 +131,8 @@ ggplot(data.frame(x = -5:5), aes(x)) +
 
 ### doing a t-test
 ```{r leaf-t-test}
+#| eval: false
+
 t.test(leaves, mu = 0)
 ```
 
@@ -216,7 +241,9 @@ small / big / diff
 
 testing test statistic formula to compare against t-test from above:
 
-```{r}
+```{r test-statistic-test}
+#| eval: false
+
 xa <- mean(x)
 xb <- mean(y)
 
@@ -236,7 +263,9 @@ nB <- length(y)
 
 ## 9. Cohen's D
 
-```{r}
+```{r cohens-d}
+#| eval: false
+
 cohen.d(leaves ~ ., mu = 2)
 ```
 

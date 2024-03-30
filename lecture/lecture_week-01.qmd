@@ -20,7 +20,7 @@ citation:
 
 ## 0. set up
 
-```{r message = FALSE}
+```{r set-up, message = FALSE}
 # cleaning
 library(tidyverse)
 theme_set(theme_classic() +
@@ -45,13 +45,13 @@ $$
 ### sample variance
 
 $$
-s^2 = \frac{\Sigma(y_i - \bar{y})^2}{n - 1}
+s^2 = \frac{\sum(y_i - \bar{y})^2}{n - 1}
 $$
 
 ### sample standard deviation
 
 $$
-s = \sqrt{\frac{\Sigma(y - \bar{y})^2}{n - 1}}
+s = \sqrt{\frac{\sum(y_i - \bar{y})^2}{n - 1}}
 $$
 
 ### coefficient of variation
@@ -60,7 +60,7 @@ $$
 CV = \frac{\sigma}{\mu}
 $$
 
-### z-score
+### z-score for selecting a single individual
 
 $$
 z = \frac{y_i - \mu}{\sigma}
@@ -68,7 +68,9 @@ $$
 
 ## 2. Mean and median
 
-```{r}
+For data following a symmetrical distribution, the mean and median tend to be similar.
+
+```{r mean-med-comparison}
 set.seed(1)
 rnorm(n = 40, mean = 6, sd = 1) %>% 
   as_tibble() %>% 
@@ -169,22 +171,54 @@ ggplot(df, aes(x = arms, y = diam)) +
 
 ## 5. histogram example
 
+The **Rice rule** guidelines for the calculating the number of bins in a histogram:
+
+$$
+bins = 2n^{1/3}
+$$
+
+where $n$ is the number of observations. This is an example of a histogram that does follow the rice rule, where the bin number is 8.
+
 ```{r histogram}
 ggplot(df, aes(x = diam)) +
   scale_x_continuous(breaks = seq(from = 0, to = 8, by = 1)) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 19), breaks = seq(from = 0, to = 18, by = 3)) +
   geom_histogram(breaks = seq(from = 0, to = 8, by = 1), color = "#000000", fill = "lightblue") +
   labs(x = "Anemone diameter (cm)", y = "Count") +
-  theme_bw() +
   theme(panel.grid = element_blank(),
         axis.text = element_text(size = 18),
         axis.title = element_text(size = 18),
         text = element_text(family = "Lato")) 
 ```
 
+These histograms do not, and it proves difficult to see the distribution:
+
+```{r hist-too-many-bins}
+ggplot(df, aes(x = diam)) +
+  scale_x_continuous(breaks = seq(from = 0, to = 8, by = 1)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 19), breaks = seq(from = 0, to = 18, by = 3)) +
+  geom_histogram(color = "#000000", fill = "lightblue") +
+  labs(x = "Anemone diameter (cm)", y = "Count") +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        text = element_text(family = "Lato")) 
+
+ggplot(df, aes(x = diam)) +
+  scale_x_continuous(breaks = seq(from = 0, to = 8, by = 1)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  geom_histogram(color = "#000000", fill = "lightblue", bins = 3) +
+  labs(x = "Anemone diameter (cm)", y = "Count") +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        text = element_text(family = "Lato")) 
+```
+
+
 ## 6. jitter plot and box and whisker plot example
 
-```{r}
+```{r jitterplot}
 set.seed(1)
 
 pretend_lengths <- cbind(
@@ -335,7 +369,7 @@ You can compare this with the [Z-score table](https://www.ztable.net/).
 
 What is the probability of selecting a whale that is **less than 79 ft long** given a normally distributed population with $\mu = 82$ ft with $\sigma = 4$ ft?
 
-```{r}
+```{r whale-z-example}
 # calculate the z-score
 whale_z <- (79 - 82)/4
   

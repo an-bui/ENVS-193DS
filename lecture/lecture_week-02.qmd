@@ -108,6 +108,128 @@ $$
 CI = (\bar{x_A} - \bar{x_B}) \pm t \times \sqrt{\frac{(n_A - 1)s_A^2 + (n_B - 1)s_B^2}{n_A+n_B-2}} \times \sqrt{\frac{1}{n_A}+\frac{1}{n_B}}
 $$
 
+## 2. Hypothesis testing: z-distribution
+
+**Example:** You’re told that the mean weight of a coast live oak acorn is $2.1 g$. You question that claim.
+You then choose to randomly sample 30 acorns and calculate the sample mean: $\bar{y} = 2.6 g$. You also (miraculously) know the population standard deviation: $\sigma = 0.3 g$.  
+
+Do you have evidence to refute this claim? 
+
+First, store some numbers: 
+```{r acorn-values}
+acorn_mean <- 2.1
+acorn_sd <- 0.45
+sample_mean <- 2.2
+```
+
+Plotting the acorn population distribution:
+
+```{r acorn-pop-hist}
+min <- acorn_mean-(3*acorn_sd)
+max <- acorn_mean+(3*acorn_sd)
+
+acorn_pop_hist <- data.frame(x = min:max) %>% 
+  ggplot(aes(x)) +
+  stat_function(geom = "line", 
+                n = 1000, 
+                fun = dnorm, 
+                args = list(mean = acorn_mean, sd = acorn_sd), 
+                linewidth = 2, 
+                color = "darkgoldenrod") +
+  geom_vline(xintercept = acorn_mean, 
+             linetype = 2, 
+             linewidth = 2) +
+  scale_x_continuous(breaks = c(acorn_mean-3*acorn_sd,
+                                acorn_mean-2*acorn_sd, 
+                                acorn_mean-acorn_sd,
+                                acorn_mean, 
+                                acorn_mean+acorn_sd,
+                                acorn_mean+2*acorn_sd,
+                                acorn_mean+3*acorn_sd),
+                     limits = c(min, max)) +
+  labs(x = "Acorn mass (g)") +
+  theme(axis.title.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.line.y = element_blank())
+
+acorn_pop_hist
+```
+
+And with the sample mean:
+
+```{r acorn-pop-with-sample-mean}
+pop_with_sample <- acorn_pop_hist +
+  geom_vline(xintercept = sample_mean, 
+             color = "tomato3",
+             linewidth = 2)
+pop_with_sample
+```
+
+And with a sample mean at least that different: 
+```{r acorn-pop-with-sample-mean-at-least-that-different}
+pop_with_sample +
+  geom_vline(xintercept = acorn_mean - (sample_mean - acorn_mean), 
+             color = "tomato3",
+             linewidth = 2)
+```
+
+We can calculate a z-score using the formula:
+
+$$
+\begin{align}
+z &= \frac{y - \mu}{\sigma/\sqrt{n}} \\
+&= \frac{2.2 - 2.10}{0.45/\sqrt{30}} \\
+&= 1.22
+\end{align}
+$$
+
+In this version of the z-score formula, the number of observations $n$ is included; technically, the one from before also included $n$, but since we were only choosing one individual and asking about the probability of selecting that individual, $\sqrt{n} = 1$ so it cancelled out.
+
+```{r acorn-z}
+acorn_z <- (sample_mean - acorn_mean)/(acorn_sd/sqrt(30))
+acorn_z
+
+pnorm(acorn_z, mean = 0, sd = 1, lower.tail = FALSE)
+```
+
+We can plot the z-scores against each other:
+```{r plotting-z}
+data.frame(x = -3:3) %>% 
+  ggplot(aes(x)) +
+  stat_function(geom = "area",
+                fun = dnorm,
+                args = list(mean = 0, sd = 1),
+                xlim = c(1.96, 3),
+                fill = "lightgrey") +
+  stat_function(geom = "area",
+                fun = dnorm,
+                args = list(mean = 0, sd = 1),
+                xlim = c(-3, -1.96),
+                fill = "lightgrey") +
+  geom_linerange(x = 1.96, ymin = 0, ymax = 0.06) +
+  geom_linerange(x = -1.96, ymin = 0, ymax = 0.06) +
+  geom_linerange(x = acorn_z, linetype = 2, linewidth = 2,
+                 ymin = 0, ymax = 0.18) +
+  geom_linerange(x = -acorn_z, linetype = 2, linewidth = 2,
+                 ymin = 0, ymax = 0.18) +
+  stat_function(geom = "line", 
+                n = 1000, 
+                fun = dnorm, 
+                args = list(mean = 0, sd = 1), 
+                linewidth = 2, 
+                color = "darkgoldenrod") +
+  scale_x_continuous(breaks = seq(-3, 3, by = 1)) +
+  scale_y_continuous(expand = c(0, 0),
+                     limits = c(0, 0.45)) +
+  theme(axis.title.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.line.y = element_blank()) +
+  labs(x = "Z")
+```
+
+
 ## 2. central limit theorem
 
 If you were to sample a bunch of times from any distribution (i.e. take many observations within a sample, take many observations in another sample), the mean values for each sample will be normally distributed. Kareem Carr has a nice explainer of how this works [here](https://twitter.com/kareem_carr/status/1754524686606626894).
@@ -349,7 +471,7 @@ leaf_conflev <- tribble(
   0.95,
   0.99
 ) %>% 
-  mutate(  lower = case_when(
+  mutate(lower = case_when(
     conflev == 0.85 ~ mean(leaves) - -qt(p = 0.15/2, df = 19)*sd(leaves)/sqrt(length(leaves)),
     conflev == 0.90 ~ mean(leaves) - -qt(p = 0.1/2, df = 19)*sd(leaves)/sqrt(length(leaves)),
     conflev == 0.95 ~ mean(leaves) - -qt(p = 0.05/2, df = 19)*sd(leaves)/sqrt(length(leaves)),
@@ -545,6 +667,26 @@ enframe(leaves) %>%
   labs(y = "Leaf length (cm)") +
   theme(axis.title.x = element_blank())
 ```
+
+### plotting with "dry" trees
+
+```{r dry-comparison-plot}
+enframe(leaves) %>% 
+  mutate(group = "Sample") %>% 
+  ggplot() +
+  geom_point(aes(x = group, y = value),
+             position = position_jitter(width = 0.2, height = 0, seed = 1),
+             shape = 21,
+             alpha = 0.8) +
+  geom_point(aes(x = group, y = mean(value)),
+             color = "cornflowerblue",
+             size = 3) +
+  geom_errorbar(data = leaf_conflev %>% filter(conflev == 0.95),
+                aes(x = conflev, ymin = lower, ymax = upper)) +
+  labs(y = "Leaf length (cm)") +
+  theme(axis.title.x = element_blank())
+```
+
 
 ## 5. qqplot examples
 

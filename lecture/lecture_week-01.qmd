@@ -26,11 +26,10 @@ library(tidyverse)
 theme_set(theme_classic() +
             theme(panel.grid = element_blank(),
                   axis.text = element_text(size = 18),
-                  axis.title = element_text(size = 18)))
+                  axis.title = element_text(size = 18),
+                  text = element_text(family = "Lato")))
 
 # visualization
-library(showtext)
-font_add_google("Lato", "Lato")
 library(patchwork)
 ```
 
@@ -146,16 +145,10 @@ diam <- rnorm(length(arms), mean = seq(from = 1, to = 5, length = length(arms)),
 df <- cbind(diam, arms) %>% 
   as.data.frame()
 
-showtext_auto()
-
 ggplot(df, aes(x = arms, y = diam)) +
   geom_point(size = 2) +
-  labs(x = "Number of arms", y = "Diameter (cm)") +
-  theme_bw() +
-  theme(panel.grid = element_blank(),
-        axis.text = element_text(size = 18),
-        axis.title = element_text(size = 18),
-        text = element_text(family = "Lato"))
+  labs(x = "Number of arms", y = "Diameter (cm)")
+  
 
 ggplot(df, aes(x = arms, y = diam)) +
   geom_point(size = 2) +
@@ -279,14 +272,7 @@ ggplot(data.frame(x = 1:20), aes(x)) +
   geom_vline(xintercept = 14, lty = 2, color = "grey", linewidth = 1) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 0.22)) +
   # coord_cartesian(xlim = c(0, 22)) +
-  labs(x = "Individual mussel weight (g)", y = "Probability density") +
-  theme_bw() +
-  theme(panel.grid = element_blank(),
-        axis.text = element_text(size = 18),
-        axis.title = element_text(size = 18),
-        text = element_text(family = "Lato")) 
-  
-showtext_auto(FALSE)
+  labs(x = "Individual mussel weight (g)", y = "Probability density") 
 ```
 
 ## 9. probability distribution
@@ -297,17 +283,11 @@ set.seed(1)
 normdist <- rnorm(n = 100000, mean = 0, sd = 1) %>% 
   as_tibble(rownames = "x")
 
-showtext_auto()
 ggplot(normdist) +
   geom_histogram(aes(x = value, after_stat(density)), fill = "white", color = "black", bins = 100) +
   stat_function(fun = dnorm, args = list(mean = 0, sd = 1), color = "blue", linewidth = 2) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 0.42)) +
-  labs(x = "Continuous value", y = "Density") +
-  theme_bw() +
-  theme(panel.grid = element_blank(),
-        axis.text = element_text(size = 18),
-        axis.title = element_text(size = 18),
-        text = element_text(family = "Lato")) 
+  labs(x = "Continuous value", y = "Density") 
 ```
 
 ## 10. normal distribution
@@ -322,12 +302,7 @@ ggplot(data.frame(x = -10:25), aes(x)) +
   annotate("text", x = 7, y = 0.1, label = "\U03BC = 5, \U03C3 = 5", color = "darkgreen", size = 6) +
   scale_x_continuous(breaks = seq(-10, 25, 5)) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 0.42)) +
-  labs(x = "Continuous value", y = "Density") +
-  theme_bw() +
-  theme(panel.grid = element_blank(),
-        axis.text = element_text(size = 18),
-        axis.title = element_text(size = 18),
-        text = element_text(family = "Lato")) 
+  labs(x = "Continuous value", y = "Density") 
 ```
 
 ## 11. z-score calculation
@@ -488,14 +463,7 @@ ggplot(data.frame(x = 1:20), aes(x)) +
   stat_function(geom = "point", n = 20, fun = dpois, args = list(lambda = 10), color = "turquoise", size = 4) +
   annotate("text", x = 14, y = 0.12, label = "\U03BB = 10", color = "turquoise", size = 6) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 0.42)) +
-  labs(x = "Discrete value", y = "Mass") +
-  theme_bw() +
-  theme(panel.grid = element_blank(),
-        axis.text = element_text(size = 18),
-        axis.title = element_text(size = 18),
-        text = element_text(family = "Lato")) 
-
-showtext_auto(FALSE)
+  labs(x = "Discrete value", y = "Mass") 
 ```
 
 

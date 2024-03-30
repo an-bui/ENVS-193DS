@@ -1,0 +1,390 @@
+---
+title: "Week 4 figures - Lectures 7 and 8"
+editor: source
+freeze: auto
+execute:
+  message: false
+  warning: false
+format:
+  html: 
+    code-fold: true
+author:
+  - name: An Bui
+    url: https://an-bui.com/
+    affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology
+    affiliation-url: https://www.eemb.ucsb.edu/
+published-title: "Lecture date"
+date: 2024-04-24
+date-modified: last-modified
+categories: []
+citation:
+  url: https://spring-2024.envs-193ds.com/lecture/lecture_week-04.html
+---
+
+
+# 0. set up
+
+```{r}
+# cleaning
+library(tidyverse)
+
+# visualization
+theme_set(theme_classic() +
+            theme(panel.grid = element_blank(),
+                  axis.text = element_text(size = 18),
+                  axis.title = element_text(size = 18),
+                  text = element_text(family = "Lato")))
+library(patchwork)
+
+# cohen's d
+library(effsize)
+```
+
+# 1. one vs two tailed figure
+
+```{r fig.width = 10, fig.height = 5, fig.align = "center"}
+two <- ggplot(data.frame(x = -5:5), aes(x)) +
+  stat_function(geom = "area", fun = dt, args = list(df = 1), xlim = c(3, 5), fill = "darkgrey") +
+  geom_linerange(aes(x = 3, ymin = 0, ymax = 0.032), linewidth = 1, lty = 2, color = "#000000") +
+  stat_function(geom = "area", fun = dt, args = list(df = 1), xlim = c(-5, -3), fill = "darkgrey") +
+  geom_linerange(aes(x = -3, ymin = 0, ymax = 0.032), linewidth = 1, lty = 2, color = "#000000") +
+  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 1), linewidth = 1, color = "#000000") +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.32)) +
+  theme_void() +
+  theme(panel.grid = element_blank())
+
+one <- ggplot(data.frame(x = -5:5), aes(x)) +
+  stat_function(geom = "area", fun = dt, args = list(df = 1), xlim = c(2, 5), fill = "darkgrey") +
+  geom_linerange(aes(x = 2, ymin = 0, ymax = 0.063), linewidth = 1, lty = 2, color = "#000000") +
+  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 1), linewidth = 1, color = "#000000") +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.32)) +
+  theme_void() +
+  theme(panel.grid = element_blank())
+
+one + two
+```
+
+
+# 1. Acorn example
+
+$$
+\begin{align}
+n &= 41 \\
+\bar{x} &= 2.29 \\
+s &= 1.04
+\end{align}
+$$
+
+## random numbers from t-distribution
+
+```{r}
+set.seed(7)
+# acorns <- rt(n = 41, df = 40, ncp = 2.5) 
+acorns <- rnorm(n = 41, mean = 2, sd = 1)
+```
+
+## histogram
+
+```{r fig.width = 8, fig.height = 6, fig.align = "center"}
+hist <- enframe(acorns) %>% 
+  ggplot(aes(x = value)) +
+  geom_histogram(bins = 7, fill = "cornflowerblue", color = "#000000") +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 11.5), breaks = c(0, 3, 6, 9, 12)) +
+  theme_classic() +
+  labs(x = "Acorn mass (g)", y = "Count")
+```
+
+## qq plot
+```{r fig.width = 8, fig.height = 6, fig.align = "center"}
+qq <- enframe(acorns) %>% 
+  ggplot(aes(sample = value)) +
+  stat_qq_line(aes(sample = value)) +
+  stat_qq(aes(sample = value), color = "cornflowerblue", size = 3) +
+  theme_classic() +
+  labs(x = "Theoretical quantiles", y = "Sample quantiles")
+```
+
+```{r}
+hist + qq
+```
+
+
+## calculating a critical value
+```{r}
+qt(p = .05/2, df = 40)
+```
+
+## calculating t-score
+
+```{r}
+# population mean
+mu0 <- 2
+
+# number of observations
+n <- 41
+
+# sample mean
+xbar <- mean(acorns)
+
+# sample standard deviation
+s <- sd(acorns)
+
+# sample standard error
+se <- s/sqrt(n)
+
+# degrees of freedom
+df <- n - 1
+
+# t-score
+t <- (xbar-mu0)/se
+
+t
+```
+
+$$
+t_s = \frac{\bar{x} - \mu}{s/\sqrt{n}} = \frac{2.29 - 2}{1.04/\sqrt{41}} = 1.8
+$$
+## visual representation of sample t-statistic vs t-critical
+```{r}
+ggplot(data.frame(x = -5:5), aes(x)) +
+  stat_function(geom = "area", fun = dt, args = list(df = 1), xlim = c(1.8, 5), fill = "darkgrey") +
+  stat_function(geom = "area", fun = dt, args = list(df = 1), xlim = c(-5, -1.8), fill = "darkgrey") +
+  geom_linerange(aes(x = 1.8, ymin = 0, ymax = 0.075), linewidth = 1, lty = 2, color = "#000000") +
+  geom_linerange(aes(x = -1.8, ymin = 0, ymax = 0.075), linewidth = 1, lty = 2, color = "#000000") +
+  
+  geom_linerange(aes(x = 2.021, ymin = 0, ymax = 0.075), linewidth = 1, lty = 3, color = "#FFFFFF") +
+  geom_linerange(aes(x = -2.021, ymin = 0, ymax = 0.075), linewidth = 1, lty = 3, color = "#FFFFFF") +
+  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 1), linewidth = 1, color = "#000000") +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.32)) +
+  theme_void() +
+  theme(panel.grid = element_blank(),
+        plot.margin = unit(c(1, 0, 0, 0), "cm"))
+```
+
+## manually calculating p-value
+```{r}
+# two-tailed: multiply probability by 2
+# lower = FALSE: probability of the value being more than t
+2*pt(t, df, lower = FALSE)
+```
+
+## doing a t-test
+```{r}
+t.test(acorns, mu = 2)
+```
+
+# 2. two-sample t-test
+
+```{r}
+ex1 <- ggplot(data.frame(x = -8:8), aes(x)) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 2), linewidth = 2, color = "#FF6B2B") +
+  geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 1, sd = 2), linewidth = 2, color = "#00A38D") +
+  geom_vline(aes(xintercept = 1), color = "#00A38D", lty = 2, linewidth = 2) +
+    scale_y_continuous(expand = c(0, 0), limits = c(0, 0.21)) +
+  theme_void() +
+  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
+
+set.seed(2)
+x <- rnorm(30, mean = 0, sd = 2)
+y <- rnorm(30, mean = 1, sd = 2)
+
+t.test(x = x, y = y, var.equal = TRUE)
+
+# 0.43
+```
+
+```{r}
+ex2 <- ggplot(data.frame(x = -8:17), aes(x)) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 2), linewidth = 2, color = "#FF6B2B") +
+  geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 2, sd = 2), linewidth = 2, color = "#00A38D") +
+  geom_vline(aes(xintercept = 1), color = "#00A38D", lty = 2, linewidth = 2) +
+    scale_y_continuous(expand = c(0, 0), limits = c(0, 0.21)) +
+  theme_void() +
+  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
+
+set.seed(1000000000)
+x <- rnorm(30, mean = 0, sd = 2)
+y <- rnorm(30, mean = 2, sd = 2)
+
+t.test(x = x, y = y, var.equal = TRUE)
+# 0.6932
+```
+
+
+```{r}
+ex3 <- ggplot(data.frame(x = -8:17), aes(x)) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 2), linewidth = 2, color = "#FF6B2B") +
+  geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 10, sd = 2), linewidth = 2, color = "#00A38D") +
+  geom_vline(aes(xintercept = 10), color = "#00A38D", lty = 2, linewidth = 2) +
+    scale_y_continuous(expand = c(0, 0), limits = c(0, 0.21)) +
+  theme_void() +
+  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
+
+set.seed(100)
+x <- rnorm(40, mean = 0, sd = 2)
+y <- rnorm(40, mean = 10, sd = 2)
+
+t.test(x = x, y = y, var.equal = TRUE)
+# p < 0.001
+```
+
+```{r fig.width = 10, fig.height = 3, fig.align = "center"}
+ex1 + ex2 + ex3
+```
+
+## same differences in means, different SD
+```{r}
+small <- ggplot(data.frame(x = -6:9), aes(x)) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 2), linewidth = 2, color = "#FF6B2B") +
+  geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 3, sd = 2), linewidth = 2, color = "#00A38D") +
+  geom_vline(aes(xintercept = 3), color = "#00A38D", lty = 2, linewidth = 2) +
+    scale_y_continuous(expand = c(0, 0), limits = c(0, 0.21)) +
+  theme_void() +
+  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
+
+big <- ggplot(data.frame(x = -6:9), aes(x)) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 0.5), linewidth = 2, color = "#FF6B2B") +
+  geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 3, sd = 0.5), linewidth = 2, color = "#00A38D") +
+  geom_vline(aes(xintercept = 3), color = "#00A38D", lty = 2, linewidth = 2) +
+    scale_y_continuous(expand = c(0, 0), limits = c(0, 0.8)) +
+  theme_void() +
+  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
+
+small / big
+```
+
+# 3. Cohen's D
+
+
+$$
+Cohen's d = \frac{\bar{x_A} - \bar{x_B}}{\sqrt{(s^2_A + s^2_B)/2}}
+$$
+
+```{r}
+cohen.d(acorns ~ ., mu = 2)
+```
+
+
+
+
+
+
+
+test statistic for unequal variances (welch's)
+
+$$
+t_s = \frac{\bar{x}_A - \bar{x}_B}{\sqrt{\frac{s^2_A}{n_A} + \frac{s^2_B}{n_B}}}
+$$
+
+degrees of freedom for unequal variances (welch's)
+
+$$
+df = \frac{(\frac{s^2_A}{n_A} + \frac{s^2_B}{n_B})^2}{\frac{(s^2_A/n_A)^2}{n_A - 1} + \frac{(s^2_B/n_B)^2}{n_B - 1}}
+$$
+
+test statistic for equal variances (student's t)
+
+$$
+t_s = \frac{\bar{x}_A - \bar{x}_B}{s_p\sqrt{\frac{1}{n_A} + \frac{1}{n_B}}}
+$$
+
+
+test statistic for paired t-test
+
+$$
+t_s = \frac{\bar{x}_d - \mu_0}{s_d - \sqrt{n}}
+$$
+
+test statistic for F test
+$$
+F =  \frac{s^2_A}{s^2_B}
+$$
+
+differences in variances
+```{r fig.width = 8, fig.height = 10, fig.align = "center", message = FALSE}
+library(tidyverse)
+library(patchwork)
+
+small <- ggplot(data.frame(x = -6:9), aes(x)) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 2), linewidth = 2, color = "#FF6B2B") +
+  geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 3, sd = 2), linewidth = 2, color = "#00A38D") +
+  geom_vline(aes(xintercept = 3), color = "#00A38D", lty = 2, linewidth = 2) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.21)) +
+  theme_void() +
+  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
+
+big <- ggplot(data.frame(x = -6:9), aes(x)) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 0.5), linewidth = 2, color = "#FF6B2B") +
+  geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 3, sd = 0.5), linewidth = 2, color = "#00A38D") +
+  geom_vline(aes(xintercept = 3), color = "#00A38D", lty = 2, linewidth = 2) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.8)) +
+  theme_void() +
+  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
+
+unequal <- ggplot(data.frame(x = -6:9), aes(x)) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 0, sd = 2), linewidth = 2, color = "#FF6B2B") +
+  geom_vline(aes(xintercept = 0), color = "#FF6B2B", lty = 2, linewidth = 2) +
+  stat_function(geom = "line", n = 100, fun = dnorm, args = list(mean = 3, sd = 0.5), linewidth = 2, color = "#00A38D") +
+  geom_vline(aes(xintercept = 3), color = "#00A38D", lty = 2, linewidth = 2) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.8)) +
+  theme_void() +
+  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
+
+small/big/unequal
+```
+
+
+demonstration of power analysis:
+
+```{r}
+library(pwr)
+
+pwr.t.test(n = NULL, d = 0.5, sig.level = 0.05, power = 0.95)
+
+pwr.t.test(n = NULL, d = 0.7, sig.level = 0.05, power = 0.80)
+```
+
+
+U statistic:
+$$
+\begin{align}
+U_1 &= \Sigma R_1 - n_1(n_1 + 1)/2 = 17 - 5(5+1)/2 = 2 \\
+U_2 &= \Sigma R_2 - n_2(n_2 + 1)/2 = 38 - 5(5+1)/2 = 23
+\end{align}
+$$
+
+```{r}
+Sample1 <- c(1.1, 2.4, 1.8, 0.4, 1.6)
+Sample2 <- c(5.4, 3.1, 2.3, 1.9, 4.2)
+wilcox.test(Sample1, Sample2)
+```
+
+```{r eval = FALSE}
+# for a comparison of one group against a theoretical median
+wilcox.test(SampleA, mu = theoretical)
+
+# for a comparison of two groups
+wilcox.test(SampleA, SampleB, paired = TRUE)
+```
+
+
+balanced design using Student's t:
+
+$$
+\begin{align}
+SE_{\bar{x}_A-\bar{x}_B} &= s_p\sqrt{\frac{1}{n_A} + \frac{1}{n_B}} \\
+Scenario 1 &: s_p\sqrt{\frac{1}{5} + \frac{1}{25}} = s_p*0.49 \\
+Scenario 2 &: s_p\sqrt{\frac{1}{15} + \frac{1}{15}} = s_p*0.37
+\end{align}
+$$
+
+
+
+

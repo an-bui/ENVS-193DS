@@ -1,0 +1,73 @@
+---
+title: "Week 5 figures - Lectures 9 and 10"
+editor: source
+freeze: auto
+execute:
+  message: false
+  warning: false
+format:
+  html: 
+    code-fold: true
+author:
+  - name: An Bui
+    url: https://an-bui.com/
+    affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology
+    affiliation-url: https://www.eemb.ucsb.edu/
+published-title: "Lecture date"
+date: 2024-04-29
+date-modified: last-modified
+categories: []
+citation:
+  url: https://spring-2024.envs-193ds.com/lecture/lecture_week-05.html
+---
+
+
+```{r message = FALSE}
+# cleaning
+library(tidyverse)
+
+# visualization
+theme_set(theme_classic() +
+            theme(panel.grid = element_blank(),
+                  axis.text = element_text(size = 18),
+                  axis.title = element_text(size = 18),
+                  text = element_text(family = "Lato")))
+library(patchwork)
+
+# data
+library(palmerpenguins)
+
+# analysis
+library(car)
+```
+
+## Chi-square
+
+### test statistic:
+
+$$
+\chi^2 = \Sigma\frac{(O-E)^2}{E}
+$$
+### degrees of freedom
+$$
+df = (number\;of\;rows - 1) * (number\;of\;columns - 1)
+$$
+
+### expected counts:
+$$
+expected = \frac{row\;total * column\;total}{table\;total}
+$$
+
+### expected counts example from lecture
+$$
+\frac{126 * 118}{315} = 47.2
+$$
+
+### test statistic calculation example from lecture
+$$
+\begin{align}
+\chi^2 &= \Sigma\frac{(O-E)^2}{E} \\
+\chi^2 &= \frac{55-47.2}{47.2}+...+\frac{45-31.9}{31.9} \\
+&= 15.276
+\end{align}
+$$

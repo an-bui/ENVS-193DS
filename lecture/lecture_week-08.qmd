@@ -1,0 +1,313 @@
+---
+title: "Week 8 figures - Lectures 14 and 15"
+editor: source
+freeze: auto
+execute:
+  message: false
+  warning: false
+format:
+  html: 
+    code-fold: true
+author:
+  - name: An Bui
+    url: https://an-bui.com/
+    affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology
+    affiliation-url: https://www.eemb.ucsb.edu/
+published-title: "Lecture date"
+date: 2024-05-21
+date-modified: last-modified
+categories: []
+citation:
+  url: https://spring-2024.envs-193ds.com/lecture/lecture_week-08.html
+---
+
+```{r libraries}
+# cleaning
+library(tidyverse)
+
+# visualization
+theme_set(theme_classic() +
+            theme(panel.grid = element_blank(),
+                  axis.text = element_text(size = 18),
+                  axis.title = element_text(size = 18),
+                  text = element_text(family = "Lato")))
+library(patchwork)
+library(ggeffects)
+library(flextable)
+library(GGally)
+
+# data
+library(palmerpenguins)
+
+# analysis
+library(car)
+library(performance)
+library(broom)
+library(DHARMa)
+library(MuMIn)
+```
+
+# multiple linear regression equation
+
+$$
+\begin{align}
+y &= \beta_0 + \beta_1x_1 + \beta_2x_2 + ... \beta_kx_k + \epsilon
+\end{align}
+$$
+
+# formulas
+
+## sum of squares for linear regression
+
+### regression (or model)
+
+$$
+SS_{reg} = \sum_{i = 1}^{n}(\hat{y} - \bar{y})^2
+$$
+
+### error
+
+$$
+SS_{err} = \sum_{i = 1}^{n}(y_i - \hat{y})^2
+$$
+
+### total 
+
+$$
+SS_{tot} = \sum_{i = 1}^n(y_i - \bar{y})
+$$
+
+## mean square
+
+### regression
+
+$$
+MS_{reg} = \frac{SS_{reg}}{1}
+$$
+
+### error
+
+$$
+MS_{err} = \frac{SS_{err}}{n - 2}
+$$
+
+## F-statistic
+
+$$
+F = \frac{MS_{reg}}{MS_{err}}
+$$
+
+# plant example
+
+```{r plant-data}
+set.seed(666)
+# sample size
+n <- 64
+plant_df <- tibble(
+  # predictor variables
+  temperature = round(rnorm(n = n, mean = 28, sd = 1), digits = 1),
+  light = round(rnorm(n = n, mean = 1, sd = 0.2), digits = 1),
+  ph = rnorm(n = n, mean = 7, sd = 0.01),
+  
+  # response: growth in cm/week
+  growth = light*rnorm(n = n, mean = 0.3, sd = 0.1) + temperature/round(rnorm(n = n, mean = 5, sd = 0.1))
+) 
+```
+
+```{r plant-model}
+plant_model <- lm(growth ~ light + temperature + ph, data = plant_df)
+```
+
+```{r plant-diagnostics}
+par(mfrow = c(2, 2))
+plot(plant_model)
+```
+
+```{r plant-dev-off, results = FALSE, echo = FALSE}
+dev.off()
+```
+
+```{r plant-model-performance}
+check_model(plant_model)
+pairs(plant_df, upper.panel = NULL)
+ggpairs(plant_df)
+cor(plant_df)
+vif(plant_model)
+```
+
+
+```{r plant-summary}
+summary(plant_model)
+
+anova(plant_model)
+```
+
+For example, temperature F-value:
+
+```{r}
+2.85039/0.0083
+```
+
+$$
+\begin{align}
+F &= \frac{2.85039}{0.00830} \\
+&= 343.4205
+\end{align}
+$$
+
+# frog example
+
+## generating data
+
+```{r frog-data}
+set.seed(666)
+frog_n <- 87
+
+df <- cbind(
+  # predictor variables
+  color = sample(x = c("blue", "green", "red"), size = frog_n, replace = TRUE, prob = c(0.3, 0.3, 0.3)),
+  weight = (round(rnorm(n = frog_n, mean = 3, sd = 0.3), 2)),
+  pattern = sample(x = c("striped", "spotted", "none"), size = frog_n, replace = TRUE, prob = c(0.3, 0.3, 0.3))
+) %>% 
+  as_tibble() %>% 
+  mutate(weight = as.numeric(weight),
+         color = as.factor(color),
+         pattern = as.factor(pattern)) %>% 
+  group_by(color, pattern) %>% 
+  # response variable
+  mutate(toxicity = case_when(
+    color == "blue" & pattern == "striped" ~ rnorm(n = length(color), mean = 5, sd = 1),
+    color == "blue" & pattern == "spotted" ~ rnorm(n = length(color), mean = 4, sd = 1),
+    color == "green" & pattern == "striped" ~ rnorm(n = length(color), mean = 4, sd = 1),
+    color == "green" & pattern == "spotted" ~ rnorm(n = length(color), mean = 3, sd = 1),
+    color == "red" ~ rnorm(n = length(color), mean = 6, sd = 1),
+    TRUE ~ rnorm(n = length(color), mean = 2, sd = 1)
+  )) %>%
+  ungroup()
+```
+
+## plotting data
+
+```{r frog-plots}
+blue_col <- "cornflowerblue"
+green_col <- "darkgreen"
+red_col <- "maroon"
+
+striped_col <- "grey1"
+spotted_col <- "grey50"
+none_col <- "grey80"
+
+ggplot(data = df, aes(x = color, y = toxicity, color = color, fill = color)) +
+  geom_jitter(width = 0.2, height = 0, alpha = 0.3) +
+  scale_color_manual(values = c("blue" = blue_col, "green" = green_col, "red" = red_col)) +
+  scale_fill_manual(values = c("blue" = blue_col, "green" = green_col, "red" = red_col)) +
+  stat_summary(geom = "pointrange", fun = mean, fun.min = function(x) mean(x) - sd(x), fun.max = function(x) mean(x) + sd(x), shape = 21, size = 1) +
+ #  geom_point(position = position_jitter(width = 0.2, height = 0, seed = 666), alpha = 0.3) +
+  labs(title = "Color") +
+  theme_bw() +
+  theme(legend.position = "none",
+        axis.title.x = element_blank(),
+        text = element_text(size = 22))
+
+ggplot(data = df, aes(x = pattern, y = toxicity, shape = pattern)) +
+  geom_jitter(width = 0.2, height = 0, alpha = 0.3) +
+  # scale_color_manual(values = c("blue" = blue_col, "green" = green_col, "red" = red_col)) +
+  # scale_fill_manual(values = c("striped" = striped_col, "spotted" = spotted_col, "none" = none_col)) +
+  stat_summary(geom = "pointrange", fun = mean, fun.min = function(x) mean(x) - sd(x), fun.max = function(x) mean(x) + sd(x), size = 1) +
+  labs(title = "Pattern") +
+  theme_bw() +
+  theme(legend.position = "none",
+        axis.title.x = element_blank(),
+        text = element_text(size = 22))
+
+ggplot(data = df, aes(x = weight, y = toxicity)) +
+  geom_point() +
+  # geom_smooth(method = "lm") +
+  labs(title = "Weight") +
+  theme_bw() +
+  theme(legend.position = "none",
+        axis.title.x = element_blank(),
+        text = element_text(size = 22))
+
+ggplot(data = df, aes(x = weight, y = toxicity, color = color)) +
+  geom_point() +
+  scale_color_manual(values = c("blue" = blue_col, "green" = green_col, "red" = red_col)) +
+  geom_smooth(method = "lm") +
+  labs(title = "Weight")
+```
+
+## model
+```{r frog-model}
+model <- lm(toxicity ~ weight + color + pattern, data = df)
+simulateResiduals(model, plot = TRUE)
+```
+
+## diagnostics
+```{r frog-diagnostics}
+par(mfrow = c(2, 2))
+plot(model)
+```
+
+
+```{r frog-dev-off, results = FALSE, echo = FALSE}
+dev.off()
+```
+
+## model summary
+
+```{r}
+# F-statistic: 31.05 on 5 and 81 DF,  p-value: < 2.2e-16
+# total SSE - SSE of residuals divided by degrees of freedom
+totalSSE <- 6.932+140.09+21.63
+totaldf <- 1+2+2
+errorSSE <- 88
+model_fstat <- (totalSSE/5)/(errorSSE/81) 
+model_fstat
+
+# for a single coefficient
+weightMS <- 6.932
+weightdf <- 1
+errorMS <- 1.086
+fvalweight <- (weightMS/weightdf)/errorMS
+fvalweight
+
+colorMS <- 70.045
+colordf <- 2
+fvalcolor <- (colorMS/colordf)/errorMS
+fvalcolor
+# residual mean sq = 1.086 (denominator)
+# equation: t = 5.5 - 0.74*W - 0.97*green + 2.1*red + 0.85*spotted + 1.2*striped
+```
+
+```{r}
+model_summary <- summary(model)
+
+Anova(model)
+
+model.sel(model)
+
+```
+
+$$
+\hat{y}_h \pm t_{(1-\alpha/2, n-2)}*\sqrt{MSE*(\frac{1}{n}+\frac{(x_h-\bar{x})^2}{\sum(x_i-\bar{x})^2})}
+$$
+
+$$
+MSE = \frac{\sum(y_i-\hat{y})^2}{n}
+$$
+
+```{r}
+tidy(model, conf.int = TRUE, conf.level = 0.95)
+```
+
+
+```{r}
+c("lower" = model_summary$coef[2,1] - qt(0.975, df = model_summary$df[2]) * model_summary$coef[2, 2],
+  "upper" = model_summary$coef[2,1] + qt(0.975, df = model_summary$df[2]) * model_summary$coef[2, 2])
+```
+
+Confidence interval for a single coefficient:
+in words: estimate plus or minus the t-value at your confidence level * standard error
+
+
+

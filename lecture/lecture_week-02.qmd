@@ -711,21 +711,12 @@ nhtemp_hist <- as_tibble(nhtemp) %>%
   scale_y_continuous(expand = c(0, 0), limits = c(0, 23)) +
   theme_classic() +
   labs(x = "Bins", y = "Count") +
-    theme(panel.grid = element_blank(),
-        axis.text = element_text(size = 18),
-        axis.title = element_text(size = 18),
-        text = element_text(family = "Lato"),
-        plot.margin = unit(c(0.1, 1, 0.1, 0.1), "cm")) 
+  theme(plot.margin = unit(c(0.1, 1, 0.1, 0.1), "cm")) 
 
 nhtemp_qq <- ggplot(as_tibble(nhtemp)) +
   stat_qq(aes(sample = x), color = "turquoise3", size = 3) +
-  theme_classic() +
-  labs(x = "Theoretical", y = "Sample") +
-      theme(panel.grid = element_blank(),
-        axis.text = element_text(size = 18),
-        axis.title = element_text(size = 18),
-        text = element_text(family = "Lato"),
-        plot.margin = unit(c(0.1, 1, 0.1, 0.1), "cm")) 
+  labs(x = "Theoretical quantile", y = "Sample quantile") +
+  theme(plot.margin = unit(c(0.1, 1, 0.1, 0.1), "cm")) 
 
 nhtemp_hist + nhtemp_qq
 ```
@@ -733,7 +724,7 @@ nhtemp_hist + nhtemp_qq
 The sunspot data is not:
 
 ```{r sunspots-histogram-and-qq}
-#| fig-width: 16
+#| fig-width: 10
 #| fig-height: 6
 
 sunspot_hist <- as_tibble(sunspots) %>% 
@@ -743,23 +734,16 @@ sunspot_hist <- as_tibble(sunspots) %>%
   scale_y_continuous(expand = c(0, 0), limits = c(0, 480)) +
   theme_classic() +
   labs(x = "Bins", y = "Count") +
-    theme(panel.grid = element_blank(),
-        axis.text = element_text(size = 18),
-        axis.title = element_text(size = 18),
-        text = element_text(family = "Lato"),
-        plot.margin = unit(c(0.1, 1, 0.1, 0.1), "cm")) 
+  theme(plot.margin = unit(c(0.1, 1, 0.1, 0.1), "cm")) 
 
 sunspot_qq <- ggplot(as_tibble(sunspots)) +
   stat_qq(aes(sample = x), color = "tomato2", size = 3) +
   theme_classic() +
-  labs(x = "Theoretical", y = "Sample") +
-      theme(panel.grid = element_blank(),
-        axis.text = element_text(size = 18),
-        axis.title = element_text(size = 18),
-        text = element_text(family = "Lato"),
-        plot.margin = unit(c(0.1, 1, 0.1, 0.1), "cm")) 
+  labs(x = "Theoretical quantile", y = "Sample quantile") +
+  theme(plot.margin = unit(c(0.1, 1, 0.1, 0.1), "cm")) 
 
-sunspot_hist + sunspot_qq
+sunspot_hist 
+sunspot_qq
 
 ```
 

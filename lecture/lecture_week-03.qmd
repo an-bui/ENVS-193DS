@@ -39,6 +39,48 @@ library(effsize)
 library(patchwork)
 ```
 
+
+## 1. Math
+
+### a. one sample t-test
+
+$$
+t = \frac{\bar{y} - \mu}{s/\sqrt{n}}
+$$
+
+### b. when variances are equal (Student's)
+
+$$
+t = \frac{\bar{x_A} - \bar{x_B}}{s_p \times \sqrt{\frac{1}{N_A + N_B}}}
+$$
+
+$$
+df = (N_A - 1) + (N_B - 1)
+$$
+
+### c. when variances are not equal (Welch's)
+
+$$
+t = \frac{\bar{x_A} - \bar{x_B}}{\sqrt{\frac{s_A^2}{N_A}+\frac{s_B^2}{N_B}}}
+$$
+
+$$
+df = \frac{(\frac{s_A^2}{N_A}+\frac{S_B^2}{N_B})^2}{\frac{(\frac{s_A^2}{N_A})^2}{N_A-1}+\frac{(\frac{s_B^2}{N_B})^2}{N_B-1}}
+$$
+
+### d. Cohen's d
+
+$$
+Cohen's \; d = \frac{\bar{x_A} - \bar{x_B}}{\sqrt{(s^2_A + s^2_B)/2}}
+$$
+
+### e. confidence interval for two-sample t-test
+
+$$
+CI = (\bar{x_A} - \bar{x_B}) \pm t \times \sqrt{\frac{(n_A - 1)s_A^2 + (n_B - 1)s_B^2}{n_A+n_B-2}} \times \sqrt{\frac{1}{n_A}+\frac{1}{n_B}}
+$$
+
+
 ## 6. one vs two tailed figure
 
 ```{r one-two-tailed-test-comparison}
@@ -241,6 +283,49 @@ small / big / diff
 ```
 
 
+### F-distribution
+
+```{r f-distribution}
+ggplot(data.frame(x = seq(from = 0, to = 4, by = 0.1)), aes(x)) +
+  stat_function(geom = "line", fun = df, args = list(df1 = 20, df2 = 20), color = "#FF6B2B", linewidth = 1, xlim = c(0, 4)) +
+  stat_function(geom = "line", fun = df, args = list(df1 = 5, df2 = 5), color = "#0070C0", linewidth = 1, xlim = c(0, 4)) +
+  stat_function(geom = "line", fun = df, args = list(df1 = 1, df2 = 5), linewidth = 1, xlim = c(0, 4)) +
+  annotate("text", x = 1.5, y = 1, label = "20, 20", color = "#FF6B2B", size = 8) +
+  annotate("text", x = -0.2, y = 0.5, label = "5, 5", color = "#0070C0", size = 8) +
+  annotate("text", x = 0.5, y = 1.5, label = "1, 5", size = 8) + 
+  scale_y_continuous(expand = c(0, 0)) +
+  theme(axis.text = element_blank(),
+        axis.line = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title = element_blank())
+```
+
+### F-distribution example
+```{r}
+rats <- rnorm(n = 20, mean = 178, sd = 43)
+mice <- rnorm(n = 20, mean = 120, sd = 20)
+
+mean(rats)
+mean(mice)
+var(rats)
+var(mice)
+var(rats)/var(mice)
+var.test(rats, mice)
+```
+
+```{r}
+t.test(rats, mice, var.equal = FALSE)
+```
+
+```{r manual-calc}
+(mean(rats) - mean(mice))/sqrt((var(rats) + var(mice))/2)
+```
+
+```{r using-function}
+cohen.d(rats, mice)
+```
+
+
 testing test statistic formula to compare against t-test from above:
 
 ```{r test-statistic-test}
@@ -260,17 +345,6 @@ nB <- length(y)
 
 (((vara/nA)+(varb/nB))^2)/((vara/nA)^2/(nA-1)+(varb/nB)^2/(nB-1))
 ```
-
-
-
-## 9. Cohen's D
-
-```{r cohens-d}
-#| eval: false
-
-cohen.d(leaves ~ ., mu = 2)
-```
-
 
 
 

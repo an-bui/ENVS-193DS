@@ -134,6 +134,40 @@ wide <- rnorm(n = 30, mean = 6, sd = 2) %>%
 narrow + wide
 ```
 
+### How would you describe this data?
+
+```{r data-description}
+set.seed(1)
+ex1 <- rf(n = 100, df1 = 30, df2 = 10)
+mean(ex1)
+median(ex1)
+
+ex1 %>% 
+  enframe() %>% 
+  ggplot(aes(x = value)) +
+  geom_histogram(bins = 9,
+                 color = "#000000",
+                 fill = "orange") +
+  scale_y_continuous(expand = c(0, 0)) +
+  labs(x = "Hermit crab shell length (cm)")
+
+set.seed(1)
+ex2 <- rnorm(n = 100, mean = 15, sd = 2)
+mean(ex2)
+median(ex2)
+
+ex2 %>% 
+  enframe() %>% 
+  ggplot(aes(x = value)) +
+  geom_histogram(bins = 9,
+                 color = "#000000",
+                 fill = "darkgreen") +
+  scale_y_continuous(expand = c(0, 0)) +
+  labs(x = "Octopus arm length (m)")
+```
+
+
+
 ## 4. anemone regression example
 
 ```{r anemone-regression}
@@ -343,16 +377,16 @@ pnorm(q, mean = 0, sd = 1)
 
 You can compare this with the [Z-score table](https://www.ztable.net/).
 
-### whale example
+### chiton example
 
-What is the probability of selecting a whale that is **less than 79 ft long** given a normally distributed population with $\mu = 82$ ft with $\sigma = 4$ ft?
+What is the probability of selecting a chiton that is **less than 6 ft long** given a normally distributed population with $\mu = 12$ g with $\sigma = 3$ g?
 
-```{r whale-z-example}
+```{r chiton-z-example}
 # calculate the z-score
-whale_z <- (79 - 82)/4
+chiton_z <- (6 - 12)/3
   
 # calculate the probability under the curve
-pnorm(whale_z, mean = 0, sd = 1)
+pnorm(chiton_z, mean = 0, sd = 1)
 ```
 
 

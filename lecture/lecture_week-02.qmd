@@ -58,7 +58,8 @@ $$
 $$
 \begin{align}
 CI = estimate \: &\pm \: margin \: of \: error \\
-CI = \bar{x} \: &\pm \: t_{\alpha(2), df} \times \frac{s}{\sqrt{n}}
+CI = \bar{y} \: &\pm \: t_{\alpha(2), df} \times \frac{s}{\sqrt{n}} \\
+CI = \bar{y} \: &\pm \: z_{\alpha/2} \times \frac{\sigma}{\sqrt{n}}
 \end{align}
 $$
 
@@ -547,7 +548,7 @@ leaf_df %>%
         axis.ticks.y = element_blank(),
         axis.line.y = element_blank(),
         strip.text = element_text(size = 18)) +
-  labs(x = "Leaf length (cm)") +
+  labs(x = "Mean leaf length (cm)") +
   facet_wrap(~name, ncol = 1) 
 
 ggplot(leaf_df) +
@@ -561,10 +562,10 @@ ggplot(leaf_df) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 280)) +
   theme(axis.title.y = element_blank(),
         axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
         axis.line.y = element_blank(),
+        axis.ticks.y = element_blank(),
         strip.text = element_text(size = 18)) +
-  labs(x = "Leaf length (cm)") +
+  labs(x = "Mean leaf length (cm)") +
   facet_wrap(~name, ncol = 1) 
 ```
 

@@ -50,7 +50,7 @@ R allows you to apply functions to do calculations, from simple to complex struc
 Run code by putting your cursor on the line and hitting `Ctrl + Enter` or `Cmd + Enter`.
 
 ```{r mean-calc}
-mean(4, 5, 1, 2, 1)
+mean(c(4, 5, 1, 2, 1))
 ```
 
 You can store things you want to use over and over again as objects.
@@ -155,9 +155,10 @@ new_mexico <- ufo_sightings %>% # use the ufo_sightings data frame
 ```{r data-visualization}
 ggplot(data = df6, 
        aes(x = extracted_year, 
-           y = n)) +
-  geom_point(aes(color = shape)) +
-  geom_line(aes(color = shape)) +
+           y = n,
+           color = shape)) +
+  geom_point() +
+  geom_line() +
   labs(x = "Year",
        y = "Number of sightings",
        title = "UFOs in California are mostly light")

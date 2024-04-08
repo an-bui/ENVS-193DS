@@ -226,7 +226,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#problem-1.-raptor-abundance-between-restoration-plots-10-points" id="toc-problem-1.-raptor-abundance-between-restoration-plots-10-points" class="nav-link" data-scroll-target="#problem-1.-raptor-abundance-between-restoration-plots-10-points">Problem 1. Raptor abundance between restoration plots (10 points)</a></li>
   <li><a href="#problem-2.-sugar-maple-stem-masses-38-points" id="toc-problem-2.-sugar-maple-stem-masses-38-points" class="nav-link" data-scroll-target="#problem-2.-sugar-maple-stem-masses-38-points">Problem 2. Sugar maple stem masses (38 points)</a></li>
-  <li><a href="#problem-3.-personal-data-8-points" id="toc-problem-3.-personal-data-8-points" class="nav-link" data-scroll-target="#problem-3.-personal-data-8-points">Problem 3. Personal data (8 points)</a></li>
+  <li><a href="#problem-3.-personal-data-12-points" id="toc-problem-3.-personal-data-12-points" class="nav-link" data-scroll-target="#problem-3.-personal-data-12-points">Problem 3. Personal data (12 points)</a></li>
   <li><a href="#problem-4.-statistical-critique-10-points" id="toc-problem-4.-statistical-critique-10-points" class="nav-link" data-scroll-target="#problem-4.-statistical-critique-10-points">Problem 4. Statistical critique (10 points)</a></li>
   </ul></li>
   <li><a href="#checklist" id="toc-checklist" class="nav-link" data-scroll-target="#checklist">Checklist</a></li>
@@ -382,8 +382,8 @@ Hint
 </ol></li>
 </ol>
 </section>
-<section id="problem-3.-personal-data-8-points" class="level3">
-<h3 class="anchored" data-anchor-id="problem-3.-personal-data-8-points">Problem 3. Personal data (8 points)</h3>
+<section id="problem-3.-personal-data-12-points" class="level3">
+<h3 class="anchored" data-anchor-id="problem-3.-personal-data-12-points">Problem 3. Personal data (12 points)</h3>
 <p>By now, you have some observations on your data sheet for your personal data. Even though it’s early on in your data collection, it’s a good idea to practice good <strong>data management</strong>. For this problem, you’ll enter your data, read it into R, and create a visualization. If you get stuck at any step, you’ll know there’s something you need to fix.</p>
 <ol type="a">
 <li>Create a spreadsheet to enter your data. Two good options include Google Sheets or Microsoft Excel.<br>
@@ -412,8 +412,23 @@ Spreadsheet columns
 </li>
 <li>Create a visualization to explore your data. Finalize the plot. <strong>(4 points)</strong><br>
 </li>
-<li>In 1-2 sentences, describe what the “main message” of your visualization is. <strong>(4 points)</strong></li>
+<li>In 1-2 sentences, describe what the “main message” of your visualization is. <strong>(4 points)</strong><br>
+</li>
+<li>In 2-4 sentences, describe the process of getting your data from your spreadsheet into R. Did you encounter any challenges? If so, why do you think those challenges arose, and how did you fix them? If not, why do you think your system for collecting your data worked? <strong>(4 points)</strong></li>
 </ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Changing your data collection scheme
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you found that entering your data from your spreadsheet and getting it into the right format to be used in R was challenging, that’s ok! This happens a lot with data collection. Feel free to change your data sheet so that you’re collecting data in a way that makes your life easier as you’re reading your data into R and using it.</p>
+</div>
+</div>
 </section>
 <section id="problem-4.-statistical-critique-10-points" class="level3">
 <h3 class="anchored" data-anchor-id="problem-4.-statistical-critique-10-points">Problem 4. Statistical critique (10 points)</h3>
@@ -459,7 +474,7 @@ Spreadsheet columns
 <ul>
 <li>full work (R code) and output for part f<br>
 </li>
-<li>written response for part g<br>
+<li>written responses for parts g-h<br>
 </li>
 </ul></li>
 <li>Include for Problem 4:
@@ -473,7 +488,7 @@ Spreadsheet columns
 </li>
 <li>be organized and readable <strong>(5 points)</strong></li>
 </ul>
-<p><strong>75 points total</strong></p>
+<p><strong>79 points total</strong></p>
 
 
 <!-- -->
@@ -1041,7 +1056,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a><span class="in">    viii. Effect size  </span></span>
 <span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a><span class="in">    **(6 points)**  </span></span>
 <span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a><span class="fu">### Problem 3. Personal data (8 points)</span></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a><span class="fu">### Problem 3. Personal data (12 points)</span></span>
 <span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>By now, you have some observations on your data sheet for your personal data. Even though it's early on in your data collection, it's a good idea to practice good **data management**. For this problem, you'll enter your data, read it into R, and create a visualization. If you get stuck at any step, you'll know there's something you need to fix.  </span>
 <span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a></span>
@@ -1058,43 +1073,49 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>e. Read your data into R.  </span>
 <span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>f. Create a visualization to explore your data. Finalize the plot. **(4 points)**  </span>
 <span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>g. In 1-2 sentences, describe what the "main message" of your visualization is. **(4 points)**  </span>
-<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a><span class="fu">### Problem 4. Statistical critique (10 points)</span></span>
-<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a>Check the <span class="co">[</span><span class="ot">Google sheet</span><span class="co">](https://docs.google.com/spreadsheets/d/1iGh39-AZ0RoEuY3VqjUQ_JORli-2wQ_O6EPRl20iy6k/edit?usp=sharing)</span> and choose a paper to use for your critique based on An’s/Caitlin’s recommendations. Answer the following questions about the paper in 1-2 sentences each:  </span>
-<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a>a. Why were you interested in this paper? **(2 points)**  </span>
-<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a>b. What questions/hypotheses are the authors addressing? **(2 points)**  </span>
-<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a>c. What statistical tests are the authors doing? **(2 points)**  </span>
-<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a>d. Find the figure in the paper that is associated with the statistical tests from question (c). What are the x- and y-axes, and what does the figure show (i.e. what is the main message of the figure)? **(2 points)**  </span>
-<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a>e. Insert the figure into your homework document. **(2 points)**</span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>h. In 2-4 sentences, describe the process of getting your data from your spreadsheet into R. Did you encounter any challenges? If so, why do you think those challenges arose, and how did you fix them? If not, why do you think your system for collecting your data worked? **(4 points)**  </span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a>:::{.callout-note}</span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Changing your data collection scheme</span></span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a>If you found that entering your data from your spreadsheet and getting it into the right format to be used in R was challenging, that's ok! This happens a lot with data collection. Feel free to change your data sheet so that you're collecting data in a way that makes your life easier as you're reading your data into R and using it. </span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a><span class="fu">### Problem 4. Statistical critique (10 points)</span></span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a>Check the <span class="co">[</span><span class="ot">Google sheet</span><span class="co">](https://docs.google.com/spreadsheets/d/1iGh39-AZ0RoEuY3VqjUQ_JORli-2wQ_O6EPRl20iy6k/edit?usp=sharing)</span> and choose a paper to use for your critique based on An’s/Caitlin’s recommendations. Answer the following questions about the paper in 1-2 sentences each:  </span>
 <span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checklist</span></span>
-<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a>Your homework should </span>
-<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include your name, the title (“Homework 2”), and the date you turned in the assignment **(3 points)**  </span>
-<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include for Problem 1:</span>
-<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>responses for a-c </span>
-<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>full work (hand written or R code) for parts b-c</span>
-<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include for Problem 2:</span>
-<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>written response for part a  </span>
-<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>full work (R code), output, and written response for parts b-c  </span>
-<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>full work (R code) and output for parts d-f  </span>
-<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>full work (R code) and output for part g  </span>
-<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>written response for parts h-i  </span>
-<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include for Problem 3:  </span>
-<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>full work (R code) and output for part f  </span>
-<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>written response for part g  </span>
-<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include for Problem 4:</span>
-<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>written responses for parts a-d  </span>
-<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>figure for part e  </span>
-<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>be uploaded to Canvas as a single PDF **(1 point)**  </span>
-<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>be organized and readable **(5 points)**</span>
-<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>**75 points total**</span>
-<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a>a. Why were you interested in this paper? **(2 points)**  </span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a>b. What questions/hypotheses are the authors addressing? **(2 points)**  </span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a>c. What statistical tests are the authors doing? **(2 points)**  </span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a>d. Find the figure in the paper that is associated with the statistical tests from question (c). What are the x- and y-axes, and what does the figure show (i.e. what is the main message of the figure)? **(2 points)**  </span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a>e. Insert the figure into your homework document. **(2 points)**</span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checklist</span></span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a>Your homework should </span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include your name, the title (“Homework 2”), and the date you turned in the assignment **(3 points)**  </span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include for Problem 1:</span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>responses for a-c </span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>full work (hand written or R code) for parts b-c</span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include for Problem 2:</span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>written response for part a  </span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>full work (R code), output, and written response for parts b-c  </span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>full work (R code) and output for parts d-f  </span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>full work (R code) and output for part g  </span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>written response for parts h-i  </span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include for Problem 3:  </span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>full work (R code) and output for part f  </span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>written responses for parts g-h  </span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include for Problem 4:</span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>written responses for parts a-d  </span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>figure for part e  </span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>be uploaded to Canvas as a single PDF **(1 point)**  </span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>be organized and readable **(5 points)**</span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a>**79 points total**</span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

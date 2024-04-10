@@ -173,10 +173,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
                 <div class="quarto-category">pivot_longer</div>
                 <div class="quarto-category">rename</div>
                 <div class="quarto-category">group_by</div>
-                <div class="quarto-category">summarize</div>
+                <div class="quarto-category">reframe</div>
                 <div class="quarto-category">sd</div>
                 <div class="quarto-category">qt</div>
-                <div class="quarto-category">ungroup</div>
+                <div class="quarto-category">deframe</div>
                 <div class="quarto-category">ggplot</div>
                 <div class="quarto-category">geom_histogram</div>
                 <div class="quarto-category">geom_point</div>
@@ -217,7 +217,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">April 5, 2024</p>
+        <p class="date-modified">April 10, 2024</p>
       </div>
     </div>
       
@@ -288,13 +288,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
 <li>group data using <code>group_by()</code><br>
 </li>
-<li>summarize data using <code>summarize()</code><br>
+<li>summarize data using <code>reframe()</code><br>
 </li>
 <li>calculate standard deviation using <code>sd()</code><br>
 </li>
 <li>calculate t-values using <code>qt()</code><br>
 </li>
-<li>ungroup data using <code>ungroup()</code><br>
+<li>expand data frames using <code>deframe()</code><br>
 </li>
 <li>visualize data using <code>ggplot()</code><br>
 </li>
@@ -1029,7 +1029,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="an">published-title:</span><span class="co"> "Workshop date"</span></span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2024-04-11</span></span>
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="an">date-modified:</span><span class="co"> last-modified</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [tidyverse, janitor, read_csv, pipe (%&gt;%) operator, clean_names, mutate, select, pivot_longer, rename, group_by, summarize, sd, qt, ungroup, ggplot, geom_histogram, geom_point, geom_errorbar, geom_pointrange, extra stuff, fisheries]</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [tidyverse, janitor, read_csv, pipe (%&gt;%) operator, clean_names, mutate, select, pivot_longer, rename, group_by, reframe, sd, qt, deframe, ggplot, geom_histogram, geom_point, geom_errorbar, geom_pointrange, extra stuff, fisheries]</span></span>
 <span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Summary</span></span>
@@ -1047,10 +1047,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>make data frame longer using <span class="in">`pivot_longer()`</span>  </span>
 <span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>rename columns using <span class="in">`rename()`</span>  </span>
 <span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>group data using <span class="in">`group_by()`</span>  </span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>summarize data using <span class="in">`summarize()`</span>  </span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>summarize data using <span class="in">`reframe()`</span>  </span>
 <span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>calculate standard deviation using <span class="in">`sd()`</span>  </span>
 <span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>calculate t-values using <span class="in">`qt()`</span>  </span>
-<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ungroup data using <span class="in">`ungroup()`</span>  </span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>expand data frames using <span class="in">`deframe()`</span>    </span>
 <span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>visualize data using <span class="in">`ggplot()`</span>  </span>
 <span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>create histograms using <span class="in">`geom_histogram()`</span>  </span>
 <span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>visualize means and raw data using <span class="in">`geom_point()`</span>  </span>

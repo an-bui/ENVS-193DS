@@ -101,9 +101,10 @@ ggplot(data = global_catch_clean,
 #### a. Calculations
 
 ```{r calculations}
+# calculate the confidence interval "by hand"
 global_catch_summary <- global_catch_clean %>% 
   group_by(fishery_type) %>% 
-  summarize(mean = mean(catch_mil),
+  reframe(mean = mean(catch_mil), # calculate the mean
             n = length(catch_mil), # count the number of observations
             df = n - 1, # calculate the degrees of freedom
             sd = sd(catch_mil), # calculate the standard deviation
@@ -111,9 +112,24 @@ global_catch_summary <- global_catch_clean %>%
             tval = qt(p = 0.05/2, df = df, lower.tail = FALSE), # find the t value
             margin = tval*se, # calculate the margin of error
             ci_lower = mean - tval*se, # calculate the lower bound of the confidence interval
-            ci_higher = mean + tval*se) %>% # calculate the upper bound of the confidence interval
-  ungroup() # ungroup the data frame (good practice to do this after every group_by())
+            ci_higher = mean + tval*se # calculate the upper bound of the confidence interval
+          ) 
+
+# use a function to calculate the confidence interval
+global_catch_ci <- global_catch_clean %>% 
+  group_by(fishery_type) %>% 
+  summarize(ci = mean_cl_normal(catch_mil)) %>% # calculate the CI using a function
+  deframe() # expand the data frame
 ```
+
+This is what your data frames should look like:
+
+```{r df-previews}
+global_catch_summary
+
+global_catch_ci
+```
+
 
 #### b. Visualizations
 

@@ -1,0 +1,260 @@
+---
+title: "Coding workshop: Week 3"
+description: "two types of t-tests"
+freeze: auto
+author:
+  - name: An Bui
+    url: https://an-bui.com/
+    affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology
+    affiliation-url: https://www.eemb.ucsb.edu/
+published-title: "Workshop date"
+date: 2024-04-18
+date-modified: last-modified
+categories: [tidyverse, readxl, janitor, mutate, case_when, geom_qq, geom_qq_line, facet_wrap, position_jitter, geom_point, stat_summary, var.test, t.test, read_csv, pipe (%>%) operator, clean_names, select, pivot_longer, rename, group_by, reframe, sd, qt, ggplot, geom_histogram, geom_pointrange]
+---
+
+## 1. Summary
+
+### Packages
+- `tidyverse`  
+- `readxl`  
+- `janitor`  
+
+### Operations
+
+#### New functions
+- create new columns based on data in existing columns using `mutate()` and `case_when()`  
+- visualize QQ plots using `geom_qq()` and `geom_qq_line()`  
+- create multi-panel plots using `facet_wrap()`  
+- create jitter plots using `position = position_jitter()` within `geom_point()`  
+- visualize summary statistics using `stat_summary()`  
+- compare group variances using `var.test()`  
+- do t-tests using `t.test()`  
+
+#### Review
+- read in data using `read_csv()`  
+- chain functions together using ` %>% `  
+- clean column names using `clean_names()`  
+- select columns using `select()`  
+- make data frame longer using `pivot_longer()`  
+- rename columns using `rename()`  
+- group data using `group_by()`  
+- summarize data using `reframe()`  
+- calculate standard deviation using `sd()`  
+- calculate t-values using `qt()`  
+- visualize data using `ggplot()`  
+- create histograms using `geom_histogram()`  
+- visualize confidence intervals using `geom_pointrange()`  
+
+### General Quarto formatting tips
+
+If you're working in the source editor (as we did in class), you can control the appearance of text, links, images, etc. using this [guide](https://quarto.org/docs/authoring/markdown-basics.html).
+
+### Data source
+
+The bison data is a subsetted version of the bison weight data from Konza Prairie as presented in the `lterdatasampler` package (more about the data [here](https://lter.github.io/lterdatasampler/articles/knz_bison_vignette.html)). The Flint water data is from a massive citizen science sampling effort done in 2015 by the residents of Flint, Michigan - read more about this project [here](https://flintwaterstudy.org/2015/09/our-sampling-of-252-homes-demonstrates-a-high-lead-in-water-risk-flint-should-be-failing-to-meet-the-epa-lead-and-copper-rule/) and download the data [here](https://flintwaterstudy.org/2015/12/complete-dataset-lead-results-in-tap-water-for-271-flint-samples/).
+
+
+## 2. Code
+
+### 1. Set up
+
+```{r packages-and-data}
+#| eval: false
+
+# read in packages
+library(tidyverse)
+
+# Bison from Konza Prairie LTER
+knz_bison <- read_csv("knz_bison.csv")
+```
+
+
+```{r packages-and-data-website}
+#| message: false
+#| echo: false
+
+# read in packages
+library(tidyverse)
+
+# Bison from Konza Prairie LTER
+knz_bison <- read_csv(here::here("workshop", "data", "knz_bison.csv"))
+```
+
+### 2. Cleaning the bison data
+
+```{r bison-cleaning}
+knz_bison_clean <- knz_bison %>% 
+  mutate(animal_sex = case_when(
+    animal_sex == "F" ~ "female",
+    animal_sex == "M" ~ "male"
+  ))
+```
+
+The data frame should look something like this:
+
+```{r bison-df-preview}
+head(knz_bison_clean)
+```
+
+### 3. Exploring the bison data
+
+#### a. Histograms
+
+```{r bison-histogram}
+ggplot(knz_bison_clean,
+       aes(x = animal_weight,
+           fill = animal_sex)) +
+  geom_histogram(bins = 9) +
+  scale_y_continuous(expand = c(0, 0),
+                     limits = c(0, 30)) +
+  facet_wrap(~animal_sex) +
+  theme_minimal() +
+  theme(legend.position = "none") 
+```
+
+#### b. QQ plots
+
+```{r bison-qq-plot}
+ggplot(knz_bison_clean,
+       aes(sample = animal_weight,
+           color = animal_sex)) +
+  geom_qq() +
+  geom_qq_line() +
+  theme_bw() +
+  facet_wrap(~animal_sex)
+```
+
+#### c. Jitter plots and dot and whisker
+
+```{r bison-jitter-and-dot}
+ggplot(knz_bison_clean,
+       aes(x = animal_sex,
+           y = animal_weight,
+           color = animal_sex)) +
+  geom_point(position = position_jitter(width = 0.1, 
+                                        seed = 1),
+             alpha = 0.1) +
+  stat_summary(geom = "pointrange",
+               fun.data = mean_cl_normal) +
+  labs(x = "Sex",
+       y = "Weight (pounds)") +
+  theme_classic() +
+  theme(legend.position = "none")
+```
+
+### 3. t-test
+
+#### a. check variances
+
+```{r bison-variance-test}
+var.test(animal_weight ~ animal_sex, 
+         data = knz_bison_clean)
+```
+
+
+#### b. do the t-test
+
+```{r bison-t-test}
+t.test(animal_weight ~ animal_sex, 
+         data = knz_bison_clean,
+       var.equal = TRUE)
+```
+
+#### c. writing
+
+There is no significant difference in weights between male and female bison calves (two-sample t-test, t(138) = -1.74, p = 0.08).
+
+### 3. Paired t-tests
+
+#### a. read in data
+
+```{r flint-set-up}
+#| eval: false
+
+# read in packages here
+library(readxl)
+library(janitor)
+
+# Flint water lead data
+flint_pb <- read_xlsx("Flint-Samples-WORKING-COPY.xlsx", 
+                      sheet = "Samples from Flint Water homes")
+```
+
+```{r flint-set-up-website}
+#| echo: false
+#| message: false
+
+# read in packages here
+library(readxl)
+library(janitor)
+
+# Flint water lead data
+flint_pb <- read_xlsx(here::here("workshop", "data", "Flint-Samples-WORKING-COPY.xlsx"), 
+                      sheet = "Samples from Flint Water homes")
+```
+
+#### b. clean and wrangle the data
+
+```{r flint-clean-and-wrangle}
+flint_pb_clean <- flint_pb %>%
+  clean_names() %>% # clean names using janitor function
+  select(sample_id, pb_bottle_1_ppb_first_draw, pb_bottle_2_ppb_45_secs_flushing, pb_bottle_3_ppb_2_mins_flushing) %>% # select columns of interest
+  pivot_longer(cols = pb_bottle_1_ppb_first_draw:pb_bottle_3_ppb_2_mins_flushing) %>% # make data frame longer
+  rename(flushing_interval = name,
+         lead_ppb = value) %>% # rename columns
+  mutate(flushing_interval = case_when(
+    flushing_interval == "pb_bottle_1_ppb_first_draw" ~ "first",
+    flushing_interval == "pb_bottle_2_ppb_45_secs_flushing" ~ "45 seconds",
+    flushing_interval == "pb_bottle_3_ppb_2_mins_flushing" ~ "two minutes"
+  )) %>% # use mutate and case when to recode levels in flushing interval column
+  filter(flushing_interval != "45 seconds") # take out 45 seconds interval
+```
+
+#### c. plot the data with confidence intervals
+
+```{r flint-ci-plot}
+ggplot(flint_pb_clean,
+       aes(x = flushing_interval,
+           y = lead_ppb)) +
+  geom_point(position = position_jitter(width = 0.1, seed = 1),
+             alpha = 0.1,
+             shape = 21) +
+  stat_summary(geom = "pointrange",
+               fun.data = mean_cl_normal) +
+  theme_bw()
+```
+
+#### d. Summarize the data
+
+```{r flint-data-summarizing}
+flint_pb_summary <- flint_pb_clean %>% 
+  group_by(flushing_interval) %>% 
+  reframe(mean = mean(lead_ppb),
+          n = length(lead_ppb),
+          sd = sd(lead_ppb),
+          se = sd/sqrt(n),
+          tval = qt(p = 0.05/2, df = n - 1, lower.tail = FALSE),
+          margin = tval*se,
+          ci_lower = mean - margin,
+          ci_higher = mean + margin)
+```
+
+#### e. Do a paired t-test
+
+```{r flint-paired-t}
+t.test(lead_ppb ~ flushing_interval, 
+       data = flint_pb_clean,
+       paired = TRUE)
+```
+
+#### f. Writing
+
+In words: There was a significant difference in the amount of lead in parts per billion detected between samples collected immediately after turning the water on and after 2 minutes (paired t-test, t(270) = 6.37, p < 0.001).  
+
+On average, samples collected after 2 minutes had lead levels of 10.6 ppb [95% CI: 8.07, 13.2], while samples collected immediately had lead levels of 3.66 ppb [95% CI: 2.40, 4.92].  
+
+
+
+
+

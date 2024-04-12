@@ -111,43 +111,21 @@ global_catch_summary <- global_catch_clean %>%
             se = sd/sqrt(n), # calculate the standard error
             tval = qt(p = 0.05/2, df = df, lower.tail = FALSE), # find the t value
             margin = tval*se, # calculate the margin of error
-            ci_lower = mean - tval*se, # calculate the lower bound of the confidence interval
-            ci_higher = mean + tval*se # calculate the upper bound of the confidence interval
+            ci_lower = mean - margin, # calculate the lower bound of the confidence interval
+            ci_higher = mean + margin # calculate the upper bound of the confidence interval
           ) 
-
-# use a function to calculate the confidence interval
-global_catch_ci <- global_catch_clean %>% 
-  group_by(fishery_type) %>% 
-  summarize(ci = mean_cl_normal(catch_mil)) %>% # calculate the CI using a function
-  deframe() # expand the data frame
 ```
 
-This is what your data frames should look like:
+This is what your data frame should look like:
 
 ```{r df-previews}
 global_catch_summary
-
-global_catch_ci
 ```
 
 
 #### b. Visualizations
 
-First we want to visualize standard deviation.
-
-```{r sd-plot}
-ggplot(data = global_catch_summary, # use the summary data frame
-       aes(x = fishery_type, 
-           y = mean, 
-           color = fishery_type)) + # color the points by fishery type
-  geom_point(size = 2) + # plot the mean
-  geom_errorbar(aes(ymin = mean - sd, # plot the standard deviation
-                    ymax = mean + sd),
-                width = 0.1) +
-  labs(title = "Standard deviation")
-```
-
-Then, we want to visualize standard error.
+We want to visualized standard error:
 
 ```{r se-plot}
 ggplot(data = global_catch_summary,
@@ -161,7 +139,7 @@ ggplot(data = global_catch_summary,
   labs(title = "Standard error")
 ```
 
-Then, we want to visualize the 95% confidence interval.
+and the 95% confidence interval:
 
 ```{r ci-95-plot}
 ggplot(data = global_catch_summary,
@@ -175,28 +153,7 @@ ggplot(data = global_catch_summary,
   labs(title = "95% confidence interval")
 ```
 
-Lastly, we want to visualize the 95% confidence interval with the underlying data.
 
-```{r final-plot}
-ggplot(data = global_catch_clean,
-       aes(x = fishery_type, 
-           y = catch_mil, 
-           color = fishery_type)) +
-  geom_point(position = position_jitter(width = 0.05, 
-                                        seed = 1),
-             alpha = 0.2) +
-  geom_pointrange(data = global_catch_summary,
-                  aes(x = fishery_type, 
-                      y = mean, 
-                      ymin = mean - margin, 
-                      ymax = mean + margin)) +
-  scale_color_manual(values = c("artisanal" = "cornflowerblue",
-                                "industrial" = "orange")) +
-  labs(x = "Fishery type",
-       y = "Catch per million tonnes",
-       title = "Industrial fisheries catch more than artisanal fisheries") +
-  theme_light()
-```
 
 ### 5. Extra stuff
 
@@ -263,7 +220,55 @@ ggplot(data = global_catch_clean,
   labs(title = "95% confidence interval using stat_summary")
 ```
 
+#### c. calculating the confidence interval with `ggplot::mean_cl_normal`
+
+```{r}
+# use a function to calculate the confidence interval
+global_catch_ci <- global_catch_clean %>% 
+  group_by(fishery_type) %>% 
+  summarize(ci = mean_cl_normal(catch_mil)) %>% # calculate the CI using a function
+  deframe() # expand the data frame
+```
 
 
+#### d. Visualizing standard deviation
+
+:::{.callout-note}
+This is the same code that you would use if you were making a plot where your whiskers = standard error _or_ whiskers = confidence interval.
+:::
+
+```{r sd-plot}
+ggplot(data = global_catch_summary, # use the summary data frame
+       aes(x = fishery_type, 
+           y = mean, 
+           color = fishery_type)) + # color the points by fishery type
+  geom_point(size = 2) + # plot the mean
+  geom_errorbar(aes(ymin = mean - sd, # plot the standard deviation
+                    ymax = mean + sd),
+                width = 0.1) +
+  labs(title = "Standard deviation")
+```
 
 
+#### e. Visualizing the confidence interval with the underlying data
+
+```{r final-plot}
+ggplot(data = global_catch_clean,
+       aes(x = fishery_type, 
+           y = catch_mil, 
+           color = fishery_type)) +
+  geom_point(position = position_jitter(width = 0.05, 
+                                        seed = 1),
+             alpha = 0.2) +
+  geom_pointrange(data = global_catch_summary,
+                  aes(x = fishery_type, 
+                      y = mean, 
+                      ymin = mean - margin, 
+                      ymax = mean + margin)) +
+  scale_color_manual(values = c("artisanal" = "cornflowerblue",
+                                "industrial" = "orange")) +
+  labs(x = "Fishery type",
+       y = "Catch per million tonnes",
+       title = "Industrial fisheries catch more than artisanal fisheries") +
+  theme_light()
+```

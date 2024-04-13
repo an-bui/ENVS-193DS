@@ -40,7 +40,23 @@ library(patchwork)
 library(effsize)
 ```
 
-# 1. one vs two tailed figure
+# 1. Math
+
+
+### d. Cohen's d
+
+$$
+Cohen's \; d = \frac{\bar{y_A} - \bar{y_B}}{\sqrt{(s^2_A + s^2_B)/2}}
+$$
+
+### e. confidence interval for two-sample t-test
+
+$$
+CI = (\bar{y_A} - \bar{y_B}) \pm t \times \sqrt{\frac{(n_A - 1)s_A^2 + (n_B - 1)s_B^2}{n_A+n_B-2}} \times \sqrt{\frac{1}{n_A}+\frac{1}{n_B}}
+$$
+
+
+# 2. one vs two tailed figure
 
 ```{r fig.width = 10, fig.height = 5, fig.align = "center"}
 two <- ggplot(data.frame(x = -5:5), aes(x)) +

@@ -18,17 +18,18 @@ You don't have to follow these steps exactly (or at all), but this is a workflow
 ### a. Steps
 
 1. Create a script or Quarto document to work in.  
-2. Copy/paste the code in the Set up code chunk into your script.  
-3. Find the function that allows you to "sample" from a vector of numbers. If you don't know the function, one google search could be "r sample numbers".  
-4. Resample (i.e. take a sample multiple times) 20 times from the population, taking a sample of n = 2 each time.  
-5. Calculate the mean every time you take a sample. Store each mean in a list.  
-6. Create a histogram of your sample means.  
-7. Repeat steps 2-5 for n = 15, and n = 30.
+2. Copy/paste the code in the Set up code chunk into your script. Run the code.  
+3. Calculate the population mean. Store this as an object.  
+4. Find the function that allows you to "sample" from a vector of numbers. If you don't know the function, one google search could be "r sample numbers".  
+5. Resample (i.e. take a sample multiple times) 20 times from the population, taking a sample of n = 2 each time.  
+6. Calculate the mean every time you take a sample. Store each mean in a list.  
+7. Create a histogram of your sample means using the list from step 6.  
+8. Repeat steps 2-5 for n = 15, and n = 30.
 
 :::{.callout-tip}
 # `for()` loops
 
-Doing repetitive tasks like steps 4-5 can get tiresome. For that, you can write what's called a `for()` loop. One resource for writing `for()` loops is in the [chapter on Iteration](https://r4ds.had.co.nz/iteration.html) in _R for Data Science_.  
+Doing repetitive tasks like steps 5-6 can get tiresome. For that, you can write what's called a `for()` loop. One resource for writing `for()` loops is in the [chapter on Iteration](https://r4ds.had.co.nz/iteration.html) in _R for Data Science_.  
 
 If you write a `for()` loop, you can resample your population way more times than 20. Try resampling 100 times.
 :::
@@ -42,6 +43,9 @@ If you write a `for()` loop, you can resample your population way more times tha
 # read in the tidyverse
 library(tidyverse)
 
+# set seed: makes sure the "random" generation comes up with the same combination of numbers every time
+set.seed(1)
+
 # generate 10000 numbers from a uniform distribution for the population
 uniform <- runif(10000, min = 2, max = 8)
 
@@ -52,7 +56,6 @@ uniformdf <- as.data.frame(uniform)
 ggplot(uniformdf, aes(x = uniform)) +
   geom_histogram(breaks = seq(2, 8, length.out = 41), fill = "firebrick", alpha = 0.7, color = "firebrick") +
   geom_vline(xintercept = mean(uniform), linewidth = 2) +
-  annotate("text", x = 4, y = 290, label = "mean = 4.967", size = 10) +
   scale_x_continuous(breaks = seq(from = 2, to = 8, by = 1)) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 305)) +
   labs(x = "Continuous value", y = "Count") +

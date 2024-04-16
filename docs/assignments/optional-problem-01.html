@@ -6,10 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-04-02">
-<meta name="description" content="General use">
+<meta name="dcterms.date" content="2024-04-18">
 
-<title>Spring 2024 - Using the virtual machine</title>
+<title>Spring 2024 - OPTIONAL practice problem - Central Limit Theorem</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -76,9 +75,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -158,16 +154,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <div class="quarto-title-block"><div><h1 class="title">Using the virtual machine</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
-                  <div>
-        <div class="description">
-          General use
-        </div>
-      </div>
-                          <div class="quarto-categories">
-                <div class="quarto-category">virtual machine</div>
-              </div>
-                  </div>
+      <div class="quarto-title-block"><div><h1 class="title">OPTIONAL practice problem - Central Limit Theorem</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+                      </div>
   </div>
     
   
@@ -175,16 +163,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
       
       <div>
-      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-heading">Solution posted</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 2, 2024</p>
+        <p class="date">April 18, 2024</p>
       </div>
     </div>
     
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">April 2, 2024</p>
+        <p class="date-modified">April 15, 2024</p>
       </div>
     </div>
       
@@ -198,12 +186,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-is-the-virtual-machine" id="toc-what-is-the-virtual-machine" class="nav-link active" data-scroll-target="#what-is-the-virtual-machine">1. What is the virtual machine?</a></li>
-  <li><a href="#logging-in-and-opening-things-up" id="toc-logging-in-and-opening-things-up" class="nav-link" data-scroll-target="#logging-in-and-opening-things-up">2. Logging in and opening things up</a></li>
-  <li><a href="#setting-up" id="toc-setting-up" class="nav-link" data-scroll-target="#setting-up">3. Setting up</a></li>
-  <li><a href="#getting-files-into-the-machine" id="toc-getting-files-into-the-machine" class="nav-link" data-scroll-target="#getting-files-into-the-machine">4. Getting files into the machine</a></li>
-  <li><a href="#creating-a-project" id="toc-creating-a-project" class="nav-link" data-scroll-target="#creating-a-project">5. Creating a project</a></li>
-  <li><a href="#downloading-your-files" id="toc-downloading-your-files" class="nav-link" data-scroll-target="#downloading-your-files">6. Downloading your files</a></li>
+  <li><a href="#description" id="toc-description" class="nav-link active" data-scroll-target="#description">1. Description</a></li>
+  <li><a href="#general-guidance" id="toc-general-guidance" class="nav-link" data-scroll-target="#general-guidance">2. General guidance</a>
+  <ul class="collapse">
+  <li><a href="#a.-steps" id="toc-a.-steps" class="nav-link" data-scroll-target="#a.-steps">a. Steps</a></li>
+  <li><a href="#b.-set-up-code" id="toc-b.-set-up-code" class="nav-link" data-scroll-target="#b.-set-up-code">b. Set up code</a></li>
+  </ul></li>
   </ul>
 </nav>
 </nav>
@@ -218,59 +206,93 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="what-is-the-virtual-machine" class="level1">
-<h1>1. What is the virtual machine?</h1>
-<p>For this class, we have a virtual machine: it allows you to run R and RStudio in a browser (e.g.&nbsp;Google Chrome, Safari, Firefox). <a href="https://envs193ds.lsit.ucsb.edu/">Find the virtual machine here</a>!</p>
-<p>The benefits of using the virtual machine are plenty:</p>
+<section id="description" class="level2">
+<h2 class="anchored" data-anchor-id="description">1. Description</h2>
+<p>In this optional problem, you’ll test out the Central Limit Theorem by repeatedly “sampling” a population with a uniform distribution with sample sizes of n = 2, n = 15, and n = 30. You’ll create histograms of the sampling distributions (i.e.&nbsp;means from the samples you generate) to see how the spread of the sampling distribution gets narrower with increasing sample size.</p>
+</section>
+<section id="general-guidance" class="level2">
+<h2 class="anchored" data-anchor-id="general-guidance">2. General guidance</h2>
+<p>You don’t have to follow these steps exactly (or at all), but this is a workflow that might make sense. Try it out on your own!</p>
+<section id="a.-steps" class="level3">
+<h3 class="anchored" data-anchor-id="a.-steps">a. Steps</h3>
 <ol type="1">
-<li>you don’t have to download R, RStudio, and Quarto<br>
+<li>Create a script or Quarto document to work in.<br>
 </li>
-<li>the versions of all the software you need are updated<br>
+<li>Copy/paste the code in the Set up code chunk into your script.<br>
 </li>
-<li>the packages you need for the class are already installed<br>
+<li>Find the function that allows you to “sample” from a vector of numbers. If you don’t know the function, one google search could be “r sample numbers”.<br>
 </li>
-<li>you can download everything you’ve worked on</li>
+<li>Resample (i.e.&nbsp;take a sample multiple times) 20 times from the population, taking a sample of n = 2 each time.<br>
+</li>
+<li>Calculate the mean every time you take a sample. Store each mean in a list.<br>
+</li>
+<li>Create a histogram of your sample means.<br>
+</li>
+<li>Repeat steps 2-5 for n = 15, and n = 30.</li>
 </ol>
-<p>and more!</p>
-<p>The one con is that you do need to be connected to the internet. But compared to the benefits, this is hopefully not a major hurdle.</p>
-<p>Basically, if you’re having any issues with your versions of R, RStudio, or Quarto, try running your code on the virtual machine.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<code>for()</code> loops
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Doing repetitive tasks like steps 4-5 can get tiresome. For that, you can write what’s called a <code>for()</code> loop. One resource for writing <code>for()</code> loops is in the <a href="https://r4ds.had.co.nz/iteration.html">chapter on Iteration</a> in <em>R for Data Science</em>.</p>
+<p>If you write a <code>for()</code> loop, you can resample your population way more times than 20. Try resampling 100 times.</p>
+</div>
+</div>
 </section>
-<section id="logging-in-and-opening-things-up" class="level1">
-<h1>2. Logging in and opening things up</h1>
-<p>Once you open up the <a href="https://envs193ds.lsit.ucsb.edu/">virtual machine</a>, you’ll be asked to log in. Use your UCSB email to do that. You should then get a screen that looks like this:</p>
-<p><img src="../resources/images/using-virtual-machine/01_start-up-screen.png" class="img-fluid"> Click RStudio.</p>
-<p>You should then see a screen that looks exactly like an RStudio screen!</p>
-<p><a href="../resources/images/using-virtual-machine/02_rstudio-screen.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../resources/images/using-virtual-machine/02_rstudio-screen.png" class="img-fluid"></a></p>
-</section>
-<section id="setting-up" class="level1">
-<h1>3. Setting up</h1>
-<p>If you’re opening this up for the first time, do task 3 in the Getting set up guide: <a href="https://spring-2024.envs-193ds.com/assignments/getting-set-up#task-3.-change-your-workspace-save-settings">Change your workspace save settings</a>.</p>
-</section>
-<section id="getting-files-into-the-machine" class="level1">
-<h1>4. Getting files into the machine</h1>
-<p>Download the zipped file of workshop materials from Canvas. Hit the Upload button (yellow arrow pointing up against a white paper). You should see a window that looks like this:</p>
-<p><a href="../resources/images/using-virtual-machine/03_uploading-zip.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../resources/images/using-virtual-machine/03_uploading-zip.png" class="img-fluid"></a></p>
-<p>Hit Choose file and select the .zip file.</p>
-<p>The machine will automatically unzip the file and create a new folder with all the file contents.</p>
-<p><a href="../resources/images/using-virtual-machine/04_uploaded-directory.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../resources/images/using-virtual-machine/04_uploaded-directory.png" class="img-fluid"></a></p>
-</section>
-<section id="creating-a-project" class="level1">
-<h1>5. Creating a project</h1>
-<p>We’re going to create a lot of Rprojects in this class to get used to it. You can create a project in an existing directory (aka folder) in the same way that you would in the desktop version of RStudio. Go to the button in the top left that says Project: (None) and click. Hit New Project.</p>
-<p><img src="../resources/images/using-virtual-machine/05_new-project.png" class="img-fluid"> Then, select the “Existing Directory” option.</p>
-<p><a href="../resources/images/using-virtual-machine/06_existing-directory.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../resources/images/using-virtual-machine/06_existing-directory.png" class="img-fluid"></a></p>
-<p>You should now see the new Rproject in two locations: 1) in the upper left and 2) in the list of files in your directory.</p>
-<p><a href="../resources/images/using-virtual-machine/07_project-creation.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../resources/images/using-virtual-machine/07_project-creation.png" class="img-fluid"></a></p>
-</section>
-<section id="downloading-your-files" class="level1">
-<h1>6. Downloading your files</h1>
-<p>If you want to hold onto your files on your computer, you can download a whole directory. Click on the folder you want to download and go to More &gt; Export in the lower right pane.</p>
-<p><a href="../resources/images/using-virtual-machine/08_export.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../resources/images/using-virtual-machine/08_export.png" class="img-fluid"></a></p>
-<p>The machine will download the whole folder as a .zip file, which you can then unzip on your computer.</p>
+<section id="b.-set-up-code" class="level3">
+<h3 class="anchored" data-anchor-id="b.-set-up-code">b. Set up code</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in the tidyverse</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.0     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generate 10000 numbers from a uniform distribution for the population</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>uniform <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">10000</span>, <span class="at">min =</span> <span class="dv">2</span>, <span class="at">max =</span> <span class="dv">8</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># turn the vector into a data frame</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>uniformdf <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(uniform)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># make a histogram for the population</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(uniformdf, <span class="fu">aes</span>(<span class="at">x =</span> uniform)) <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">8</span>, <span class="at">length.out =</span> <span class="dv">41</span>), <span class="at">fill =</span> <span class="st">"firebrick"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">color =</span> <span class="st">"firebrick"</span>) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(uniform), <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">4</span>, <span class="at">y =</span> <span class="dv">290</span>, <span class="at">label =</span> <span class="st">"mean = 4.967"</span>, <span class="at">size =</span> <span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">2</span>, <span class="at">to =</span> <span class="dv">8</span>, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">305</span>)) <span class="sc">+</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Continuous value"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="optional-problem-01_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="1152"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 <!-- -->
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -734,118 +756,74 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Using the virtual machine"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "General use"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2024-04-02</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">date-modified:</span><span class="co"> last-modified</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="an">freeze:</span><span class="co"> auto</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">  html: </span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [virtual machine]</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="an">filters:</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">  - lightbox</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="an">lightbox:</span><span class="co"> auto</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu"># 1. What is the virtual machine?</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>For this class, we have a virtual machine: it allows you to run R and RStudio in a browser (e.g. Google Chrome, Safari, Firefox). <span class="co">[</span><span class="ot">Find the virtual machine here</span><span class="co">](https://envs193ds.lsit.ucsb.edu/)</span>!  </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>The benefits of using the virtual machine are plenty:  </span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>you don't have to download R, RStudio, and Quarto  </span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>the versions of all the software you need are updated  </span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>the packages you need for the class are already installed  </span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>you can download everything you've worked on  </span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>and more!  </span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>The one con is that you do need to be connected to the internet. But compared to the benefits, this is hopefully not a major hurdle.  </span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>Basically, if you're having any issues with your versions of R, RStudio, or Quarto, try running your code on the virtual machine.</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="fu"># 2. Logging in and opening things up</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>Once you open up the <span class="co">[</span><span class="ot">virtual machine</span><span class="co">](https://envs193ds.lsit.ucsb.edu/)</span>, you'll be asked to log in. Use your UCSB email to do that. You should then get a screen that looks like this:</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/using-virtual-machine/01_start-up-screen.png)</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>Click RStudio.</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>You should then see a screen that looks exactly like an RStudio screen!</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/using-virtual-machine/02_rstudio-screen.png)</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="fu"># 3. Setting up</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>If you're opening this up for the first time, do task 3 in the Getting set up guide: <span class="co">[</span><span class="ot">Change your workspace save settings</span><span class="co">](https://spring-2024.envs-193ds.com/assignments/getting-set-up#task-3.-change-your-workspace-save-settings)</span>.</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="fu"># 4. Getting files into the machine</span></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>Download the zipped file of workshop materials from Canvas. Hit the Upload button (yellow arrow pointing up against a white paper). You should see a window that looks like this:</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/using-virtual-machine/03_uploading-zip.png)</span></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>Hit Choose file and select the .zip file.  </span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>The machine will automatically unzip the file and create a new folder with all the file contents.  </span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/using-virtual-machine/04_uploaded-directory.png)</span></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="fu"># 5. Creating a project</span></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>We're going to create a lot of Rprojects in this class to get used to it. You can create a project in an existing directory (aka folder) in the same way that you would in the desktop version of RStudio. Go to the button in the top left that says Project: (None) and click. Hit New Project.</span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/using-virtual-machine/05_new-project.png)</span></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>Then, select the "Existing Directory" option. </span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/using-virtual-machine/06_existing-directory.png)</span></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>You should now see the new Rproject in two locations: 1) in the upper left and 2) in the list of files in your directory.</span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/using-virtual-machine/07_project-creation.png)</span></span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="fu"># 6. Downloading your files</span></span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>If you want to hold onto your files on your computer, you can download a whole directory. Click on the folder you want to download and go to More &gt; Export in the lower right pane.</span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/using-virtual-machine/08_export.png)</span></span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>The machine will download the whole folder as a .zip file, which you can then unzip on your computer.</span>
-<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "OPTIONAL practice problem - Central Limit Theorem"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> source</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="an">freeze:</span><span class="co"> auto</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="an">published-title:</span><span class="co"> "Solution posted"</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2024-04-18</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="an">date-modified:</span><span class="co"> last-modified</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Description</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>In this optional problem, you'll test out the Central Limit Theorem by repeatedly "sampling" a population with a uniform distribution with sample sizes of n = 2, n = 15, and n = 30. You'll create histograms of the sampling distributions (i.e. means from the samples you generate) to see how the spread of the sampling distribution gets narrower with increasing sample size.    </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. General guidance</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>You don't have to follow these steps exactly (or at all), but this is a workflow that might make sense. Try it out on your own!</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="fu">### a. Steps</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Create a script or Quarto document to work in.  </span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Copy/paste the code in the Set up code chunk into your script.  </span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Find the function that allows you to "sample" from a vector of numbers. If you don't know the function, one google search could be "r sample numbers".  </span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Resample (i.e. take a sample multiple times) 20 times from the population, taking a sample of n = 2 each time.  </span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Calculate the mean every time you take a sample. Store each mean in a list.  </span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Create a histogram of your sample means.  </span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>Repeat steps 2-5 for n = 15, and n = 30.</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>:::{.callout-tip}</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="fu"># `for()` loops</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>Doing repetitive tasks like steps 4-5 can get tiresome. For that, you can write what's called a <span class="in">`for()`</span> loop. One resource for writing <span class="in">`for()`</span> loops is in the <span class="co">[</span><span class="ot">chapter on Iteration</span><span class="co">](https://r4ds.had.co.nz/iteration.html)</span> in _R for Data Science_.  </span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>If you write a <span class="in">`for()`</span> loop, you can resample your population way more times than 20. Try resampling 100 times.</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="fu">### b. Set up code</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 8</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="co"># read in the tidyverse</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="co"># generate 10000 numbers from a uniform distribution for the population</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>uniform <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">10000</span>, <span class="at">min =</span> <span class="dv">2</span>, <span class="at">max =</span> <span class="dv">8</span>)</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="co"># turn the vector into a data frame</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>uniformdf <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(uniform)</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="co"># make a histogram for the population</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(uniformdf, <span class="fu">aes</span>(<span class="at">x =</span> uniform)) <span class="sc">+</span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">8</span>, <span class="at">length.out =</span> <span class="dv">41</span>), <span class="at">fill =</span> <span class="st">"firebrick"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">color =</span> <span class="st">"firebrick"</span>) <span class="sc">+</span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(uniform), <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">4</span>, <span class="at">y =</span> <span class="dv">290</span>, <span class="at">label =</span> <span class="st">"mean = 4.967"</span>, <span class="at">size =</span> <span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">2</span>, <span class="at">to =</span> <span class="dv">8</span>, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">305</span>)) <span class="sc">+</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Continuous value"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>),</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>))</span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a></span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom"});
-window.onload = () => {
-  lightboxQuarto.on('slide_before_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    const href = trigger.getAttribute('href');
-    if (href !== null) {
-      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-      if (imgEl !== null) {
-        const srcAttr = imgEl.getAttribute("src");
-        if (srcAttr && srcAttr.startsWith("data:")) {
-          slideConfig.href = srcAttr;
-        }
-      }
-    } 
-  });
-
-  lightboxQuarto.on('slide_after_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    if (window.Quarto?.typesetMath) {
-      window.Quarto.typesetMath(slideNode);
-    }
-  });
-
-};
-          </script>
 
 
 

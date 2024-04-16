@@ -1,0 +1,66 @@
+---
+title: "OPTIONAL practice problem - Central Limit Theorem"
+editor: source
+freeze: auto
+published-title: "Solution posted"
+date: 2024-04-18
+date-modified: last-modified
+---
+
+## 1. Description
+
+In this optional problem, you'll test out the Central Limit Theorem by repeatedly "sampling" a population with a uniform distribution with sample sizes of n = 2, n = 15, and n = 30. You'll create histograms of the sampling distributions (i.e. means from the samples you generate) to see how the spread of the sampling distribution gets narrower with increasing sample size.    
+
+## 2. General guidance
+
+You don't have to follow these steps exactly (or at all), but this is a workflow that might make sense. Try it out on your own!
+
+### a. Steps
+
+1. Create a script or Quarto document to work in.  
+2. Copy/paste the code in the Set up code chunk into your script.  
+3. Find the function that allows you to "sample" from a vector of numbers. If you don't know the function, one google search could be "r sample numbers".  
+4. Resample (i.e. take a sample multiple times) 20 times from the population, taking a sample of n = 2 each time.  
+5. Calculate the mean every time you take a sample. Store each mean in a list.  
+6. Create a histogram of your sample means.  
+7. Repeat steps 2-5 for n = 15, and n = 30.
+
+:::{.callout-tip}
+# `for()` loops
+
+Doing repetitive tasks like steps 4-5 can get tiresome. For that, you can write what's called a `for()` loop. One resource for writing `for()` loops is in the [chapter on Iteration](https://r4ds.had.co.nz/iteration.html) in _R for Data Science_.  
+
+If you write a `for()` loop, you can resample your population way more times than 20. Try resampling 100 times.
+:::
+
+### b. Set up code
+
+```{r}
+#| fig-width: 12
+#| fig-height: 8
+
+# read in the tidyverse
+library(tidyverse)
+
+# generate 10000 numbers from a uniform distribution for the population
+uniform <- runif(10000, min = 2, max = 8)
+
+# turn the vector into a data frame
+uniformdf <- as.data.frame(uniform)
+
+# make a histogram for the population
+ggplot(uniformdf, aes(x = uniform)) +
+  geom_histogram(breaks = seq(2, 8, length.out = 41), fill = "firebrick", alpha = 0.7, color = "firebrick") +
+  geom_vline(xintercept = mean(uniform), linewidth = 2) +
+  annotate("text", x = 4, y = 290, label = "mean = 4.967", size = 10) +
+  scale_x_continuous(breaks = seq(from = 2, to = 8, by = 1)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 305)) +
+  labs(x = "Continuous value", y = "Count") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18))
+```
+
+
+

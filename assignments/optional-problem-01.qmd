@@ -2,12 +2,9 @@
 title: "OPTIONAL practice problem - Central Limit Theorem"
 editor: source
 freeze: auto
-published-title: "Solution posted"
 date: 2024-04-18
 date-modified: last-modified
 ---
-
-[Solution will be posted on Friday April 18]{style="color: #79ACBD; font-size: 24px;"}
 
 ## 1. Description
 
@@ -23,7 +20,7 @@ You don't have to follow these steps exactly (or at all), but this is a workflow
 2. Copy/paste the code in the Set up code chunk into your script. Run the code.  
 3. Calculate the population mean. Store this as an object.  
 4. Find the function that allows you to "sample" from a vector of numbers. If you don't know the function, one google search could be "r sample numbers".  
-5. Resample (i.e. take a sample multiple times) 20 times from the population, taking a sample of n = 2 each time.  
+5. Resample (i.e. take a sample multiple times) 100 times from the population, taking a sample of n = 2 each time.  
 6. Calculate the mean every time you take a sample. Store each mean in a list.  
 7. Create a histogram of your sample means using the list from step 6.  
 8. Repeat steps 2-5 for n = 15, and n = 30.
@@ -31,9 +28,7 @@ You don't have to follow these steps exactly (or at all), but this is a workflow
 :::{.callout-tip}
 # `for()` loops
 
-Doing repetitive tasks like steps 5-6 can get tiresome. For that, you can write what's called a `for()` loop. One resource for writing `for()` loops is in the [chapter on Iteration](https://r4ds.had.co.nz/iteration.html) in _R for Data Science_.  
-
-If you write a `for()` loop, you can resample your population way more times than 20. Try resampling 100 times.
+Doing repetitive tasks like steps 5-6 can get tiresome. You probably do not want to sample and calculate a mean "by hand" 300 times. Instead, you can write what's called a `for()` loop. One resource for writing `for()` loops is in the [chapter on Iteration](https://r4ds.had.co.nz/iteration.html) in _R for Data Science_. There are other resources out there too! Try finding one that you like.  
 :::
 
 ### b. Set up code
@@ -41,6 +36,7 @@ If you write a `for()` loop, you can resample your population way more times tha
 ```{r}
 #| fig-width: 12
 #| fig-height: 8
+#| message: false
 
 # read in the tidyverse
 library(tidyverse)
@@ -55,11 +51,17 @@ uniform <- runif(10000, min = 2, max = 8)
 uniformdf <- as.data.frame(uniform)
 
 # make a histogram for the population
-ggplot(uniformdf, aes(x = uniform)) +
-  geom_histogram(breaks = seq(2, 8, length.out = 41), fill = "firebrick", alpha = 0.7, color = "firebrick") +
-  geom_vline(xintercept = mean(uniform), linewidth = 2) +
+ggplot(data = uniformdf, 
+       aes(x = uniform)) +
+  geom_histogram(breaks = seq(2, 8, length.out = 41), 
+                 fill = "firebrick", 
+                 alpha = 0.7, 
+                 color = "firebrick") +
+  geom_vline(xintercept = mean(uniform), 
+             linewidth = 2) +
   scale_x_continuous(breaks = seq(from = 2, to = 8, by = 1)) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 305)) +
+  scale_y_continuous(expand = c(0, 0), 
+                     limits = c(0, 305)) +
   labs(x = "Continuous value", y = "Count") +
   theme_bw() +
   theme(panel.grid = element_blank(),
@@ -67,5 +69,108 @@ ggplot(uniformdf, aes(x = uniform)) +
         axis.title = element_text(size = 18))
 ```
 
+## 3. Solution
 
+### a. Resampling using a `for()` loop
 
+```{r resampling-for}
+# for() loop to sample 100x and calculate the mean
+
+# creating holding vectors
+store2 <- c()
+store15 <- c()
+store30 <- c()
+
+for(i in 1:100) {
+  
+  # sample from the population, calculate the mean, store that mean in the vector
+  store2[i] <- mean(sample(uniform, 2, replace = FALSE))
+  store15[i] <- mean(sample(uniform, 15, replace = FALSE))
+  store30[i] <- mean(sample(uniform, 30, replace = FALSE))
+
+}
+
+# double checking that the holding vectors actually have values in them
+head(store2)
+head(store15)
+head(store30)
+```
+
+### b. n = 2 histogram
+
+Before plotting the histogram, I'll put the output from the `for()` loop into a data frame. 
+
+```{r making-df}
+# putting everything together in a data frame (not necessary but nice to do)
+df <- cbind(store2, store15, store30) %>% 
+  as.data.frame()
+```
+
+Then, I'll plot the first histogram for n = 2.
+
+```{r n2-histogram}
+# making a histogram for n = 2
+ggplot(data = df) +
+  # making a histogram
+  geom_histogram(aes(x = store2), 
+                 bins = 10, 
+                 alpha = 0.7, 
+                 fill = "chocolate1", 
+                 color = "chocolate1") +
+  # controlling the axes
+  coord_cartesian(xlim = c(2, 8), ylim = c(0, 30)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  # controlling plot aesthetics
+  labs(x = "Sample means", y = "Count") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        plot.margin = unit(c(0.5, 0.5, 0.1, 0.1), "cm"))
+```
+
+### c. n = 15 histogram
+
+```{r n15-histogram}
+# histogram for n = 15
+ggplot(data = df) +
+  # making a histogram
+  geom_histogram(aes(x = store15), 
+                 bins = 12, 
+                 alpha = 0.7, 
+                 fill = "darkorchid4", 
+                 color = "darkorchid4") +
+  # controlling the axes
+  coord_cartesian(xlim = c(2, 8), ylim = c(0, 30)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  # controlling plot aesthetics
+  labs(x = "Sample means", y = "Count") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        plot.margin = unit(c(0.5, 0.5, 0.1, 0.1), "cm"))
+```
+
+### d. n = 30 histogram
+
+```{r n30-histogram}
+# histogram for n = 30
+ggplot(data = df) +
+  # making a histogram
+  geom_histogram(aes(x = store30), 
+                 bins = 12, 
+                 alpha = 0.7, 
+                 fill = "lightseagreen", 
+                 color = "lightseagreen") +
+  # controlling the axes
+  coord_cartesian(xlim = c(2, 8), ylim = c(0, 30)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  # controlling plot aesthetics
+  labs(x = "Sample means", y = "Count") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        plot.margin = unit(c(0.5, 0.5, 0.1, 0.1), "cm"))
+```

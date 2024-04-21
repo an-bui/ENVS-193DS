@@ -126,6 +126,17 @@ needlegrass <- cbind(ungrazed = rnorm(n = 25, mean = 80, sd = 10),
   as_tibble() %>% 
   pivot_longer(cols = 1:2, names_to = "plot_type", values_to = "height_cm")
 
+# plot without all the adjustments
+ggplot(data = needlegrass,
+       aes(x = plot_type,
+           y = height_cm,
+           color = plot_type)) +
+  geom_point(position = position_jitter(width = 0.1, seed = 10),
+             alpha = 0.2) +
+  stat_summary(geom = "pointrange",
+               fun.data = mean_cl_normal) 
+
+# "finalized" plot
 ggplot(data = needlegrass,
        aes(x = plot_type,
            y = height_cm,

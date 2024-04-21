@@ -68,6 +68,12 @@ $$
 df = \frac{(\frac{s_A^2}{N_A}+\frac{S_B^2}{N_B})^2}{\frac{(\frac{s_A^2}{N_A})^2}{N_A-1}+\frac{(\frac{s_B^2}{N_B})^2}{N_B-1}}
 $$
 
+### d. test statistic for F test
+
+$$
+F =  \frac{s^2_A}{s^2_B}
+$$
+
 ## 2. central limit theorem
 
 If you were to sample a bunch of times from any distribution (i.e. take many observations within a sample, take many observations in another sample), the mean values for each sample will be normally distributed. Kareem Carr has a nice explainer of how this works [here](https://twitter.com/kareem_carr/status/1754524686606626894).
@@ -233,7 +239,31 @@ ggplot(data.frame(x = -5:5), aes(x)) +
         plot.margin = unit(c(1, 0, 0, 0), "cm"))
 ```
 
-## 4. qqplot examples
+# 4. one vs two tailed figure
+
+```{r fig.width = 10, fig.height = 5, fig.align = "center"}
+two <- ggplot(data.frame(x = -5:5), aes(x)) +
+  stat_function(geom = "area", fun = dt, args = list(df = 1), xlim = c(3, 5), fill = "darkgrey") +
+  geom_linerange(aes(x = 3, ymin = 0, ymax = 0.032), linewidth = 1, lty = 2, color = "#000000") +
+  stat_function(geom = "area", fun = dt, args = list(df = 1), xlim = c(-5, -3), fill = "darkgrey") +
+  geom_linerange(aes(x = -3, ymin = 0, ymax = 0.032), linewidth = 1, lty = 2, color = "#000000") +
+  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 1), linewidth = 1, color = "#000000") +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.32)) +
+  theme_void() +
+  theme(panel.grid = element_blank())
+
+one <- ggplot(data.frame(x = -5:5), aes(x)) +
+  stat_function(geom = "area", fun = dt, args = list(df = 1), xlim = c(2, 5), fill = "darkgrey") +
+  geom_linerange(aes(x = 2, ymin = 0, ymax = 0.063), linewidth = 1, lty = 2, color = "#000000") +
+  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 1), linewidth = 1, color = "#000000") +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.32)) +
+  theme_void() +
+  theme(panel.grid = element_blank())
+
+one + two
+```
+
+## 5. qqplot examples
 
 We use qqplots (quantile-quantile plots) to visually evaluate the normality of some variable. The x-axis is the "theoretical" quantile, and the y-axis is the "sample" quantile. If the points follow a 1:1 line, then the variable is normally distributed.  
 
@@ -287,7 +317,7 @@ sunspot_qq
 ```
 
 
-## 5. One sample t-test example
+## 6. One sample t-test example
 
 This is the creosote example from lecture.
 
@@ -416,7 +446,7 @@ ggplot(data.frame(x = -5:5), aes(x)) +
         plot.margin = unit(c(1, 0, 0, 0), "cm"))
 ```
 
-## 8. two-sample t-test
+## 7. two-sample t-test
 
 ```{r two-sample-example-1}
 ex1 <- ggplot(data.frame(x = -8:8), aes(x)) +

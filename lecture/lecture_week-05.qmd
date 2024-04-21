@@ -71,3 +71,35 @@ $$
 &= 15.276
 \end{align}
 $$
+
+
+
+
+
+
+U statistic:
+$$
+\begin{align}
+U_1 &= \Sigma R_1 - n_1(n_1 + 1)/2 = 17 - 5(5+1)/2 = 2 \\
+U_2 &= \Sigma R_2 - n_2(n_2 + 1)/2 = 38 - 5(5+1)/2 = 23
+\end{align}
+$$
+
+```{r}
+Sample1 <- c(1.1, 2.4, 1.8, 0.4, 1.6)
+Sample2 <- c(5.4, 3.1, 2.3, 1.9, 4.2)
+wilcox.test(Sample1, Sample2)
+```
+
+```{r eval = FALSE}
+# for a comparison of one group against a theoretical median
+wilcox.test(SampleA, mu = theoretical)
+
+# for a comparison of two groups
+wilcox.test(SampleA, SampleB, paired = TRUE)
+```
+
+
+
+
+

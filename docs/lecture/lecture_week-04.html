@@ -353,13 +353,13 @@ SE_{\bar{y_A} - \bar{y_B}} = \sqrt{\frac{s_A^2}{n_A}+\frac{s_B^2}{n_B}}
     F test to compare two variances
 
 data:  weight_g by sun_level
-F = 0.27041, num df = 32, denom df = 32, p-value = 0.0003828
+F = 0.18086, num df = 32, denom df = 32, p-value = 5.395e-06
 alternative hypothesis: true ratio of variances is not equal to 1
 95 percent confidence interval:
- 0.1335533 0.5475161
+ 0.08932403 0.36619345
 sample estimates:
 ratio of variances 
-         0.2704119 </code></pre>
+         0.1808587 </code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -372,13 +372,13 @@ ratio of variances
     Welch Two Sample t-test
 
 data:  weight_g by sun_level
-t = -5.832, df = 48.127, p-value = 4.486e-07
+t = -4.7037, df = 43.208, p-value = 2.632e-05
 alternative hypothesis: true difference in means between group shaded and group sunny is not equal to 0
 95 percent confidence interval:
- -26.75666 -13.03796
+ -26.85729 -10.73987
 sample estimates:
 mean in group shaded  mean in group sunny 
-            132.3540             152.2513 </code></pre>
+            130.9212             149.7197 </code></pre>
 </div>
 </div>
 </section>
@@ -454,13 +454,13 @@ NOTE: n is number in *each* group</code></pre>
     F test to compare two variances
 
 data:  weight_g by compost_bin
-F = 1.9613, num df = 33, denom df = 33, p-value = 0.0571
+F = 1.6649, num df = 33, denom df = 33, p-value = 0.1483
 alternative hypothesis: true ratio of variances is not equal to 1
 95 percent confidence interval:
- 0.9795004 3.9270284
+ 0.8314885 3.3336165
 sample estimates:
 ratio of variances 
-          1.961256 </code></pre>
+          1.664892 </code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -473,13 +473,13 @@ ratio of variances
     Welch Two Sample t-test
 
 data:  weight_g by compost_bin
-t = -5.5277, df = 59.708, p-value = 7.52e-07
+t = -5.3344, df = 62.132, p-value = 1.426e-06
 alternative hypothesis: true difference in means between group citrus and group non_citrus is not equal to 0
 95 percent confidence interval:
- -31.10719 -14.57482
+ -27.87176 -12.67741
 sample estimates:
     mean in group citrus mean in group non_citrus 
-                139.0542                 161.8952 </code></pre>
+                141.7282                 162.0028 </code></pre>
 </div>
 </div>
 </section>
@@ -554,7 +554,7 @@ mean in group a mean in group b
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> plot_type,</span>
 <span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> height_cm,</span>
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> plot_type)) <span class="sc">+</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">seed =</span> <span class="dv">10</span>),</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>, <span class="at">seed =</span> <span class="dv">10</span>),</span>
 <span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
 <span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">geom =</span> <span class="st">"pointrange"</span>,</span>
 <span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">fun.data =</span> mean_cl_normal) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -573,7 +573,7 @@ mean in group a mean in group b
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> plot_type,</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> height_cm,</span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> plot_type)) <span class="sc">+</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">seed =</span> <span class="dv">10</span>),</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>, <span class="at">seed =</span> <span class="dv">10</span>),</span>
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkgreen"</span>, <span class="st">"cornflowerblue"</span>)) <span class="sc">+</span></span>
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">geom =</span> <span class="st">"pointrange"</span>,</span>
@@ -1355,7 +1355,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb34-181"><a href="#cb34-181" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = plot_type,</span></span>
 <span id="cb34-182"><a href="#cb34-182" aria-hidden="true" tabindex="-1"></a><span class="in">           y = height_cm,</span></span>
 <span id="cb34-183"><a href="#cb34-183" aria-hidden="true" tabindex="-1"></a><span class="in">           color = plot_type)) +</span></span>
-<span id="cb34-184"><a href="#cb34-184" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(position = position_jitter(width = 0.1, seed = 10),</span></span>
+<span id="cb34-184"><a href="#cb34-184" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(position = position_jitter(width = 0.1, height = 0, seed = 10),</span></span>
 <span id="cb34-185"><a href="#cb34-185" aria-hidden="true" tabindex="-1"></a><span class="in">             alpha = 0.2) +</span></span>
 <span id="cb34-186"><a href="#cb34-186" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_summary(geom = "pointrange",</span></span>
 <span id="cb34-187"><a href="#cb34-187" aria-hidden="true" tabindex="-1"></a><span class="in">               fun.data = mean_cl_normal) </span></span>
@@ -1365,7 +1365,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb34-191"><a href="#cb34-191" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = plot_type,</span></span>
 <span id="cb34-192"><a href="#cb34-192" aria-hidden="true" tabindex="-1"></a><span class="in">           y = height_cm,</span></span>
 <span id="cb34-193"><a href="#cb34-193" aria-hidden="true" tabindex="-1"></a><span class="in">           color = plot_type)) +</span></span>
-<span id="cb34-194"><a href="#cb34-194" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(position = position_jitter(width = 0.1, seed = 10),</span></span>
+<span id="cb34-194"><a href="#cb34-194" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(position = position_jitter(width = 0.1, height = 0, seed = 10),</span></span>
 <span id="cb34-195"><a href="#cb34-195" aria-hidden="true" tabindex="-1"></a><span class="in">             alpha = 0.2) +</span></span>
 <span id="cb34-196"><a href="#cb34-196" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(values = c("darkgreen", "cornflowerblue")) +</span></span>
 <span id="cb34-197"><a href="#cb34-197" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_summary(geom = "pointrange",</span></span>

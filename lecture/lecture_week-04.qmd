@@ -82,7 +82,31 @@ $$
 SE_{\bar{y_A} - \bar{y_B}} = \sqrt{\frac{s_A^2}{n_A}+\frac{s_B^2}{n_B}}
 $$
 
-## 2. Power analysis
+## 2. Interpret this output
+
+You have two raised beds in which you're growing tomatoes. One bed is in the sun, but the other is in shade. You want to know if the weight of the tomatoes is different between beds. You measure 33 tomatoes from each bed.
+
+```{r tomatoes}
+tomatoes <- cbind(sunny = rnorm(n = 33, mean = 150, sd = 20),
+                  shaded = rnorm(n = 33, mean = 130, sd = 10)) %>% 
+  as_tibble() %>% 
+  pivot_longer(cols = 1:2, names_to = "sun_level", values_to = "weight_g")
+
+ggplot(data = tomatoes,
+       aes(x = sun_level,
+           y = weight_g)) +
+  geom_jitter(width = 0.1)
+
+var.test(weight_g ~ sun_level,
+         data = tomatoes)
+
+t.test(weight_g ~ sun_level,
+       data = tomatoes,
+       var.equal = FALSE)
+```
+
+
+## 3. Power analysis
 
 ```{r two-examples-power-analysis}
 # higher power
@@ -92,7 +116,31 @@ pwr.t.test(n = NULL, d = 0.7, sig.level = 0.05, power = 0.95)
 pwr.t.test(n = NULL, d = 0.7, sig.level = 0.05, power = 0.80)
 ```
 
-## 3. Effect size examples
+## 4. Write about this result
+
+You have two worm compost bins: one in which you throw citrus peels, and the other in which you don’t. You’re curious to see if the citrus worms are bigger than the non-citrus worms. You measure 34 worms from each bin and find this result:
+
+```{r worm-compost}
+worms <- cbind(citrus = rnorm(n = 34, mean = 140, sd = 20),
+               non_citrus = rnorm(n = 34, mean = 160, sd = 15)) %>% 
+  as_tibble() %>% 
+  pivot_longer(cols = 1:2, names_to = "compost_bin", values_to = "weight_g")
+
+ggplot(data = worms,
+       aes(x = compost_bin,
+           y = weight_g)) +
+  geom_boxplot()
+
+var.test(weight_g ~ compost_bin,
+         data = worms)
+
+t.test(weight_g ~ compost_bin,
+       data = worms,
+       var.equal = FALSE)
+```
+
+
+## 5. Effect size examples
 
 ### a. large sample size, small difference
 
@@ -121,8 +169,8 @@ t.test(value ~ group,
 
 ```{r needlegrass}
 set.seed(1)
-needlegrass <- cbind(ungrazed = rnorm(n = 25, mean = 80, sd = 10), 
-                     grazed = rnorm(n = 25, mean = 77, sd = 5)) %>% 
+needlegrass <- cbind(ungrazed = rnorm(n = 35, mean = 80, sd = 10), 
+                     grazed = rnorm(n = 35, mean = 77, sd = 5)) %>% 
   as_tibble() %>% 
   pivot_longer(cols = 1:2, names_to = "plot_type", values_to = "height_cm")
 

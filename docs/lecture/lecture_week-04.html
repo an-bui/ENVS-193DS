@@ -353,13 +353,13 @@ SE_{\bar{y_A} - \bar{y_B}} = \sqrt{\frac{s_A^2}{n_A}+\frac{s_B^2}{n_B}}
     F test to compare two variances
 
 data:  weight_g by sun_level
-F = 0.30386, num df = 32, denom df = 32, p-value = 0.001146
+F = 0.27041, num df = 32, denom df = 32, p-value = 0.0003828
 alternative hypothesis: true ratio of variances is not equal to 1
 95 percent confidence interval:
- 0.1500705 0.6152302
+ 0.1335533 0.5475161
 sample estimates:
 ratio of variances 
-         0.3038551 </code></pre>
+         0.2704119 </code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -372,13 +372,13 @@ ratio of variances
     Welch Two Sample t-test
 
 data:  weight_g by sun_level
-t = -5.3652, df = 49.803, p-value = 2.102e-06
+t = -5.832, df = 48.127, p-value = 4.486e-07
 alternative hypothesis: true difference in means between group shaded and group sunny is not equal to 0
 95 percent confidence interval:
- -25.77569 -11.73252
+ -26.75666 -13.03796
 sample estimates:
 mean in group shaded  mean in group sunny 
-            129.3133             148.0675 </code></pre>
+            132.3540             152.2513 </code></pre>
 </div>
 </div>
 </section>
@@ -454,13 +454,13 @@ NOTE: n is number in *each* group</code></pre>
     F test to compare two variances
 
 data:  weight_g by compost_bin
-F = 2.4378, num df = 33, denom df = 33, p-value = 0.01241
+F = 1.9613, num df = 33, denom df = 33, p-value = 0.0571
 alternative hypothesis: true ratio of variances is not equal to 1
 95 percent confidence interval:
- 1.217517 4.881286
+ 0.9795004 3.9270284
 sample estimates:
 ratio of variances 
-          2.437837 </code></pre>
+          1.961256 </code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -473,13 +473,13 @@ ratio of variances
     Welch Two Sample t-test
 
 data:  weight_g by compost_bin
-t = -3.731, df = 56.174, p-value = 0.0004462
+t = -5.5277, df = 59.708, p-value = 7.52e-07
 alternative hypothesis: true difference in means between group citrus and group non_citrus is not equal to 0
 95 percent confidence interval:
- -27.99445  -8.43583
+ -31.10719 -14.57482
 sample estimates:
     mean in group citrus mean in group non_citrus 
-                140.8332                 159.0483 </code></pre>
+                139.0542                 161.8952 </code></pre>
 </div>
 </div>
 </section>
@@ -545,7 +545,7 @@ mean in group a mean in group b
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>needlegrass <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">ungrazed =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">35</span>, <span class="at">mean =</span> <span class="dv">80</span>, <span class="at">sd =</span> <span class="dv">10</span>), </span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">grazed =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">35</span>, <span class="at">mean =</span> <span class="dv">77</span>, <span class="at">sd =</span> <span class="dv">5</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">grazed =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">35</span>, <span class="at">mean =</span> <span class="dv">74</span>, <span class="at">sd =</span> <span class="dv">5</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">names_to =</span> <span class="st">"plot_type"</span>, <span class="at">values_to =</span> <span class="st">"height_cm"</span>)</span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -623,13 +623,13 @@ ratio of variances
     Welch Two Sample t-test
 
 data:  height_cm by plot_type
-t = -1.4824, df = 50.644, p-value = 0.1444
+t = -3.2032, df = 50.644, p-value = 0.002351
 alternative hypothesis: true difference in means between group grazed and group ungrazed is not equal to 0
 95 percent confidence interval:
- -6.0848362  0.9161934
+ -9.084836 -2.083807
 sample estimates:
   mean in group grazed mean in group ungrazed 
-              78.18323               80.76756 </code></pre>
+              75.18323               80.76756 </code></pre>
 </div>
 </div>
 <p>Cohen’s d:</p>
@@ -641,9 +641,9 @@ sample estimates:
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> needlegrass)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Cohen's d |        95% CI
--------------------------
--0.35     | [-0.83, 0.12]
+<pre><code>Cohen's d |         95% CI
+--------------------------
+-0.77     | [-1.25, -0.28]
 
 - Estimated using pooled SD.</code></pre>
 </div>
@@ -655,9 +655,9 @@ sample estimates:
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">pooled_sd =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Cohen's d |        95% CI
--------------------------
--0.35     | [-0.83, 0.12]
+<pre><code>Cohen's d |         95% CI
+--------------------------
+-0.77     | [-1.25, -0.27]
 
 - Estimated using un-pooled SD.</code></pre>
 </div>
@@ -684,7 +684,7 @@ sample estimates:
 <span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>(ya <span class="sc">-</span> yb)<span class="sc">/</span><span class="fu">sqrt</span>((vara <span class="sc">+</span> varb)<span class="sc">/</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.3543589</code></pre>
+<pre><code>[1] -0.7657151</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -693,7 +693,7 @@ sample estimates:
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.3543589</code></pre>
+<pre><code>[1] -0.7657151</code></pre>
 </div>
 </div>
 
@@ -1346,7 +1346,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb34-172"><a href="#cb34-172" aria-hidden="true" tabindex="-1"></a><span class="in">```{r needlegrass}</span></span>
 <span id="cb34-173"><a href="#cb34-173" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(1)</span></span>
 <span id="cb34-174"><a href="#cb34-174" aria-hidden="true" tabindex="-1"></a><span class="in">needlegrass &lt;- cbind(ungrazed = rnorm(n = 35, mean = 80, sd = 10), </span></span>
-<span id="cb34-175"><a href="#cb34-175" aria-hidden="true" tabindex="-1"></a><span class="in">                     grazed = rnorm(n = 35, mean = 77, sd = 5)) %&gt;% </span></span>
+<span id="cb34-175"><a href="#cb34-175" aria-hidden="true" tabindex="-1"></a><span class="in">                     grazed = rnorm(n = 35, mean = 74, sd = 5)) %&gt;% </span></span>
 <span id="cb34-176"><a href="#cb34-176" aria-hidden="true" tabindex="-1"></a><span class="in">  as_tibble() %&gt;% </span></span>
 <span id="cb34-177"><a href="#cb34-177" aria-hidden="true" tabindex="-1"></a><span class="in">  pivot_longer(cols = 1:2, names_to = "plot_type", values_to = "height_cm")</span></span>
 <span id="cb34-178"><a href="#cb34-178" aria-hidden="true" tabindex="-1"></a></span>

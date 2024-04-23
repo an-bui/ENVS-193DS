@@ -32,7 +32,8 @@ _(adapted from Allison Horst)_
 
 - Axes must have **complete** labels with units (very few exceptions to this)
     - for example: body_mass_g should be "Body mass (g)"
-- If plotting regression or correlation lines, underlying data must be displayed on plot in addition to predicted lines
+- If plotting regression or correlation lines, underlying data must be displayed on plot in addition to predicted lines  
+- In all other cases (for example, comparing means between groups), underlying data must be displayed on plot when possible  
 - Concise, descriptive title (if presented alone and not in a report)
 
 ## Additional points  
@@ -50,7 +51,7 @@ In general, **the simpler you can make a plot, the better.**
 
 # Bad/better examples
 
-Some examples of bad and better plots follow using the `{palmerpenguins}` package.
+Some examples of bad and better plots follow using data from the `{palmerpenguins}` package.
 
 ```{r message = FALSE, echo = FALSE}
 library(palmerpenguins)
@@ -114,6 +115,47 @@ penguins %>%
 - complete axes  
 - grayscale color scheme (good for printing out and paper reports in black and white)
 
+## Bonus plot: lollipop plot
+
+One way to represent discrete (i.e. count) variables is to make a lollipop plot. This cuts down on visual clutter, as the bars in a bar chart are thick and take up a lot of space, but lollipop plots show the same thing but with smaller shapes.
+
+```{r}
+penguins %>% 
+  group_by(island, species) %>% 
+  count() %>% 
+  ggplot(aes(x = island, 
+             y = n)) +
+  # fill = fills in the shape, color = controls the outline
+  geom_point(size = 3) +
+  geom_segment(aes(y = 0,
+                   yend = n)) +
+  
+  # expand takes away the gap at the bottom and at the top of the plot
+  # limits sets the limits of the axis
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 130)) +
+  # change titles to be meaningful
+  labs(title = "Penguin counts differ across species and islands",
+       x = "Island", 
+       y = "Penguin count") +
+  # one of the built-in themes in ggplot
+  theme_bw() +
+  theme(# changing text sizes
+        axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14),
+        strip.text = element_text(size = 14),
+        # getting rid of gridlines
+        panel.grid = element_blank(),
+        # making the subplot titles (aka strips) have a transparent background
+        strip.background = element_blank(),
+        # making the plot title bigger and centering it
+        plot.title = element_text(size = 20, hjust = 0.5),
+        plot.title.position = "plot",
+        text = element_text(family = "Times")
+        ) +
+  facet_wrap(~species)
+```
+
+
 ## Scatterplot
 
 ```{r fig.width = 8, fig.height = 6, warning = FALSE}
@@ -165,17 +207,18 @@ ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm, color = species, sh
 
 # Other plots
 
-## violin + boxplot
+## boxplot and jitter
 
 ```{r}
 ggplot(data = penguins, aes(x = species, y = body_mass_g)) +
-  # fill the violin shape using the species column: every species has a different color
-  # alpha argument: makes the violin shape more transparent (scale of 0 to 1)
-  geom_violin(aes(fill = species), alpha = 0.5) +
   # fill the boxplot shape using the species column
   # make the boxplots narrower
   geom_boxplot(aes(fill = species), width = 0.2) +
+  # fill the violin shape using the species column: every species has a different color
+  # alpha argument: makes the violin shape more transparent (scale of 0 to 1)
+  geom_jitter(aes(color = species), alpha = 0.5) +
   # specify the colors you want to use for each species
+  scale_color_manual(values = c("#F56A56", "#3D83F5", "#A9A20B")) +
   scale_fill_manual(values = c("#F56A56", "#3D83F5", "#A9A20B")) +
   # relabel the axis titles, plot title, and caption
   labs(x = "Penguin species", y = "Body mass (g)",
@@ -189,38 +232,11 @@ ggplot(data = penguins, aes(x = species, y = body_mass_g)) +
         axis.text = element_text(size = 12),
         plot.title = element_text(size = 14),
         plot.caption = element_text(face = "italic"),
-        text = element_text(family = "Times New Roman"))
+        text = element_text(family = "Times New Roman"),
+        panel.grid = element_blank())
 ```
 
-## points with bars + jitter
 
-```{r}
-# summarizing penguin data set: calculating mean and SD body mass by species
-penguin_summary <- penguins %>% 
-  group_by(species) %>% 
-  summarize(mean_body_mass = mean(body_mass_g, na.rm = TRUE),
-            sd_body_mass = sd(body_mass_g, na.rm = TRUE))
-
-ggplot() +
-  # using two different data frames: penguins (raw data) and penguins_summary (mean and SD)
-  # raw data are jittered
-  geom_jitter(data = penguins, aes(x = species, y = body_mass_g, color = species), alpha = 0.4) +
-  # summary data: mean is a point, bars are standard deviation
-  geom_point(data = penguin_summary, aes(x = species, y = mean_body_mass, color = species), size = 5) +
-  geom_errorbar(data = penguin_summary, aes(x = species, ymin = mean_body_mass - sd_body_mass, ymax = mean_body_mass + sd_body_mass, color = species), width = 0.2) +
-  scale_color_manual(values = c("#F56A56", "#3D83F5", "#A9A20B")) +
-  labs(x = "Penguin species", y = "Body mass (g)",
-       title = "Gentoo penguins tend to be heavier than Adelie or Chinstrap",
-       caption = "Data source: {palmerpenguins}, \n Horst AM, Hill AP, Gorman KB.") +
-  theme_bw() +
-  theme(legend.position = "none", 
-        axis.title = element_text(size = 13),
-        axis.text = element_text(size = 12),
-        plot.title = element_text(size = 14),
-        plot.caption = element_text(face = "italic"),
-        text = element_text(family = "Times New Roman"))
-```
-```
 
 
 

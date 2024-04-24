@@ -249,3 +249,29 @@ nb <- pluck(needlegrass_sum, 4, 2)
 
 ```
 
+## 6. good and bad results statements
+
+```{r}
+managed <- rnorm(n = 33, mean = 5, sd = 1) %>% 
+  enframe() %>% 
+  mutate(treatment = "managed")
+nonintervention <- rnorm(n = 30, mean = 7, sd = 1) %>% 
+  enframe() %>% 
+  mutate(treatment = "non-intervention") 
+pools <- rbind(managed, nonintervention) %>% 
+  select(treatment, value) %>% 
+  rename(temp = value)
+var.test(temp ~ treatment,
+         data = pools)
+t.test(temp ~ treatment,
+       data = pools)
+cohens_d(temp ~ treatment,
+       data = pools)
+```
+
+Statement: Our data suggest a difference in water temperature between managed (n = 33) and non-intervention (i.e. control, n = 30) vernal pools, with a strong (Cohen’s d = 2.19) effect of management.  
+Temperatures in managed pools were different from those in non-intervention pools (two-tailed two-sample t-test, t(60.9) = -8.7, p < 0.001, ⍺ = 0.05); on average, managed pools were 5.3 °C, while control pools were 7.1 °C.
+
+
+
+

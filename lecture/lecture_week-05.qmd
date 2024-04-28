@@ -21,8 +21,11 @@ citation:
   url: https://spring-2024.envs-193ds.com/lecture/lecture_week-05.html
 ---
 
+## 0. Set up
 
-```{r message = FALSE}
+```{r set-up}
+#| message: false
+
 # cleaning
 library(tidyverse)
 
@@ -39,31 +42,81 @@ library(palmerpenguins)
 
 # analysis
 library(car)
+library(effectsize)
 ```
 
-## Chi-square
+## 1. Math
 
-### test statistic:
+### a. sum of squares
+
+Among groups:
+
+$$
+\sum^k_{i = 1}\sum^n_{j = 1}(\bar{y_i} - \bar{y})^2
+$$
+
+where k is the number of groups, i is ith group, n is the number of observations per group, j is the jth observation. $\bar{y_i}$ is the mean of group i, while $\bar{y}$ is the grand mean (of all samples pooled together).  
+
+Within groups:
+
+$$
+\sum^k_{i = 1}\sum^n_{j = 1}(y_{ij} - \bar{y_i})^2
+$$
+
+where $y_{ij}$ is the jth observation in the ith group, and $\bar{y_i}$ is the mean of group i.  
+
+Total sum of squares:  
+
+$$
+\sum^k_{i = 1}\sum^n_{j = 1}(y_{ij} - \bar{y})^2
+$$
+
+where $y_{ij}$ is the jth observation in the ith group, and $\bar{y}$ is the grand mean.
+
+### b. mean squares
+
+Among groups:
+
+$$
+\frac{SS_{among \ group}}{k - 1}
+$$
+
+Within groups:  
+
+$$
+\frac{SS_{within \ group}}{n - k}
+$$
+
+### c. F-ratio/F-statistic
+
+$$
+\frac{MS_{among \ group}}{MS_{within \ group}}
+$$
+
+Put another way, the F-ratio is the ratio of among group variance to within group variance. If the among group variance is larger than within group variance, the F-ratio is large, and therefore the probability of among group variance being equal to within group variance is small. Thus, you would reject the null hypothesis if the F-ratio is large.
+
+### d. Chi square test statistic:
 
 $$
 \chi^2 = \Sigma\frac{(O-E)^2}{E}
 $$
-### degrees of freedom
+
+### e. Chi square degrees of freedom
 $$
 df = (number\;of\;rows - 1) * (number\;of\;columns - 1)
 $$
 
-### expected counts:
+### f. Chi square expected counts
 $$
 expected = \frac{row\;total * column\;total}{table\;total}
 $$
 
-### expected counts example from lecture
+### g. expected counts example from lecture
 $$
 \frac{126 * 118}{315} = 47.2
 $$
 
-### test statistic calculation example from lecture
+### h. test statistic calculation example from lecture
 $$
 \begin{align}
 \chi^2 &= \Sigma\frac{(O-E)^2}{E} \\
@@ -72,18 +125,157 @@ $$
 \end{align}
 $$
 
-
-
-
-
-
-U statistic:
+### i. U statistic
 $$
 \begin{align}
 U_1 &= \Sigma R_1 - n_1(n_1 + 1)/2 = 17 - 5(5+1)/2 = 2 \\
 U_2 &= \Sigma R_2 - n_2(n_2 + 1)/2 = 38 - 5(5+1)/2 = 23
 \end{align}
 $$
+
+## 2. Warm up: code for a figure
+
+```{r chickwts-figure}
+# random sample of 10 rows from data frame
+sample_n(chickwts, 10) %>% 
+  arrange(feed)
+
+ggplot(data = chickwts,           # data frame: chickwts
+       aes(x = feed,              # x-axis: feed time
+           y = weight,            # y-axis: chick weight
+           fill = feed)) +        # fill by feed type  
+  geom_boxplot() +                # creates a boxplot
+  geom_jitter(height = 0,         # prevents jitter from moving points along y-axis
+              width = 0.2) +      # narrows spread of jitter along x-axis
+  theme(legend.position = "none") # removes legend
+```
+
+
+## 3. Analysis of variance
+
+Central question: How does bill length differ between penguin species?
+
+### a. Exploratory data visualization
+
+```{r penguins-explore}
+ggplot(data = penguins,
+       aes(x = species,
+           y = bill_length_mm,
+           color = species)) +
+  geom_point(position = position_jitter(width = 0.1, height = 0, seed = 1),
+             shape = 21) +
+  scale_color_manual(values = c("#209c90", "#018ca9", "#27c839")) +
+  labs(x = "Species",
+       y = "Bill length (mm)") +
+  theme(legend.position = "none")
+```
+
+### b. histogram and qq plots
+
+```{r penguins-hist-and-qq}
+#| fig-width: 8
+#| fig-height: 12
+
+hist <- ggplot(data = penguins,
+       aes(x = bill_length_mm,
+           fill = species)) +
+  geom_histogram(bins = 14,
+                 color = "black") +
+  scale_fill_manual(values = c("#209c90", "#018ca9", "#27c839")) +
+  scale_y_continuous(expand = c(0, 0)) +
+  facet_wrap(~ species, scales = "free", ncol = 1) +
+  labs(x = "Bill length (mm)",
+       y = "Count") +
+  theme(legend.position = "none",
+        strip.background = element_rect(color = "white"),
+        strip.text = element_text(size = 20))
+
+qq <- ggplot(data = penguins,
+       aes(sample = bill_length_mm)) +
+  geom_qq_line() +
+  geom_qq(aes(color = species)) +
+  scale_color_manual(values = c("#209c90", "#018ca9", "#27c839")) +
+  facet_wrap(~ species, scales = "free", ncol = 1) +
+  labs(x = "Theoretical quantile",
+       y = "Value") +
+  theme(legend.position = "none",
+        strip.background = element_rect(color = "white"),
+        strip.text = element_text(size = 20))
+```
+
+### c. Shapiro-Wilk normality test
+
+General: Is the response variable normally distributed?  
+Example: Is bill length normally distributed?
+
+```{r penguins-shapiro-wilk}
+# first, wrangle
+adelie <- penguins %>% 
+  filter(species == "Adelie") %>% 
+  pull(bill_length_mm)
+
+chinstrap <- penguins %>% 
+  filter(species == "Chinstrap") %>% 
+  pull(bill_length_mm)
+
+gentoo <- penguins %>% 
+  filter(species == "Gentoo") %>% 
+  pull(bill_length_mm)
+
+# then, do the shapiro-wilk test
+shapiro.test(adelie)
+shapiro.test(chinstrap)
+shapiro.test(gentoo)
+```
+
+### d. Levene test of variances
+
+General: Are the group variances equal?  
+Example: Are the species variances equal?
+
+```{r penguins-levene}
+leveneTest(bill_length_mm ~ species,
+           data = penguins)
+```
+
+### e. analysis of variance
+
+```{r penguins-anova}
+# do the actual test
+# model object stored as `penguins_anova`
+penguins_anova <- aov(bill_length_mm ~ species,
+                      data = penguins)
+
+# output of the test
+penguins_anova
+
+# more information
+summary(penguins_anova)
+```
+
+### f. post hoc test
+
+Which group comparisons are different?
+
+```{r penguins-tukey-hsd}
+TukeyHSD(penguins_anova)
+```
+
+### g. effect size
+
+```{r penguins-eta-squared}
+eta_squared(penguins_anova)
+```
+
+### h. example of writing
+
+Without the stats: Our results suggest a difference in bill length between species, with a large effect of species. Species differed in bill length, and pairwise comparisons between species showed that all three species differed from each other. Generally, Adelie penguins tend to have shorter bills than both Chinstrap and Gentoo penguins. Gentoo penguins tend to have shorter bills than  Chinstrap penguins.
+
+With the stats: Our results suggest a difference in bill length between species, with a large ($\eta^2$ = 0.71) effect of species. Species differed in bill length (one-way ANOVA, F(2, 339) = 410.6, p < 0.001, $\alpha$ = 0.05), and pairwise comparisons between species showed that all three species differed from each other. Generally, Adelie penguins tend to have 10.0 mm shorter bills than both Chinstrap (Tukey HSD, p < 0.001, 95% confidence interval: [9.0, 11.1] mm) and Gentoo (Tukey HSD, p < 0.001, 95% confidence interval: [7.9, 9.6] mm) penguins. Gentoo penguins tend to have shorter bills than Chinstrap penguins (Tukey HSD, p = 0.008, 95% confidence interval: [0.3, 2.4] mm).  
+
+
+
+## 4. Non parametric tests
 
 ```{r}
 Sample1 <- c(1.1, 2.4, 1.8, 0.4, 1.6)

@@ -136,12 +136,15 @@ $$
 ## 2. Warm up: code for a figure
 
 ```{r chickwts-figure}
+#| fig-width: 12
+#| fig-height: 8
+
 # random sample of 10 rows from data frame
 sample_n(chickwts, 10) %>% 
   arrange(feed)
 
 ggplot(data = chickwts,           # data frame: chickwts
-       aes(x = feed,              # x-axis: feed time
+       aes(x = feed,              # x-axis: feed type
            y = weight,            # y-axis: chick weight
            fill = feed)) +        # fill by feed type  
   geom_boxplot() +                # creates a boxplot

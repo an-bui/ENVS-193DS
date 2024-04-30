@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="An Bui">
-<meta name="dcterms.date" content="2024-04-25">
+<meta name="dcterms.date" content="2024-05-02">
 <meta name="description" content="Parametric and non-parametric tests">
 
 <title>Spring 2024 - Coding workshop: Week 5</title>
@@ -164,9 +164,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </div>
                           <div class="quarto-categories">
                 <div class="quarto-category">tidyverse</div>
-                <div class="quarto-category">janitor</div>
+                <div class="quarto-category">lterdatasampler</div>
+                <div class="quarto-category">effectsize</div>
+                <div class="quarto-category">rstatix</div>
+                <div class="quarto-category">car</div>
+                <div class="quarto-category">shapiro.test</div>
+                <div class="quarto-category">leveneTest</div>
+                <div class="quarto-category">aov</div>
+                <div class="quarto-category">summary</div>
+                <div class="quarto-category">TukeyHSD</div>
+                <div class="quarto-category">eta_squared</div>
+                <div class="quarto-category">kruskal.test</div>
+                <div class="quarto-category">dunn_test</div>
+                <div class="quarto-category">kruskal_effectsize</div>
                 <div class="quarto-category">read_csv</div>
+                <div class="quarto-category">pipe (%&gt;%) operator</div>
+                <div class="quarto-category">select</div>
+                <div class="quarto-category">rename</div>
                 <div class="quarto-category">ggplot</div>
+                <div class="quarto-category">geom_histogram</div>
+                <div class="quarto-category">geom_qq</div>
+                <div class="quarto-category">geom_qq_line</div>
+                <div class="quarto-category">facet_wrap</div>
+                <div class="quarto-category">group_by</div>
+                <div class="quarto-category">reframe</div>
               </div>
                   </div>
   </div>
@@ -193,7 +214,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Workshop date</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 25, 2024</p>
+        <p class="date">May 2, 2024</p>
       </div>
     </div>
     
@@ -232,11 +253,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#a.-cleaning-and-wrangling" id="toc-a.-cleaning-and-wrangling" class="nav-link" data-scroll-target="#a.-cleaning-and-wrangling">a. Cleaning and wrangling</a></li>
   <li><a href="#b.-exploring-the-data" id="toc-b.-exploring-the-data" class="nav-link" data-scroll-target="#b.-exploring-the-data">b. Exploring the data</a></li>
   <li><a href="#c.-check-1-normally-distributed-variable" id="toc-c.-check-1-normally-distributed-variable" class="nav-link" data-scroll-target="#c.-check-1-normally-distributed-variable">c.&nbsp;Check 1: normally distributed variable</a></li>
-  <li><a href="#c.-check-2-equal-variances" id="toc-c.-check-2-equal-variances" class="nav-link" data-scroll-target="#c.-check-2-equal-variances">c.&nbsp;Check 2: equal variances</a></li>
-  <li><a href="#d.-anova" id="toc-d.-anova" class="nav-link" data-scroll-target="#d.-anova">d.&nbsp;ANOVA</a></li>
-  <li><a href="#e.-post-hoc-tukey-hsd" id="toc-e.-post-hoc-tukey-hsd" class="nav-link" data-scroll-target="#e.-post-hoc-tukey-hsd">e. Post-hoc: Tukey HSD</a></li>
-  <li><a href="#f.-effect-size" id="toc-f.-effect-size" class="nav-link" data-scroll-target="#f.-effect-size">f.&nbsp;effect size</a></li>
-  <li><a href="#g.-putting-everything-together" id="toc-g.-putting-everything-together" class="nav-link" data-scroll-target="#g.-putting-everything-together">g. Putting everything together</a></li>
+  <li><a href="#d.-check-2-equal-variances" id="toc-d.-check-2-equal-variances" class="nav-link" data-scroll-target="#d.-check-2-equal-variances">d.&nbsp;Check 2: equal variances</a></li>
+  <li><a href="#e.-anova" id="toc-e.-anova" class="nav-link" data-scroll-target="#e.-anova">e. ANOVA</a></li>
+  <li><a href="#f.-post-hoc-tukey-hsd" id="toc-f.-post-hoc-tukey-hsd" class="nav-link" data-scroll-target="#f.-post-hoc-tukey-hsd">f.&nbsp;Post-hoc: Tukey HSD</a></li>
+  <li><a href="#g.-effect-size" id="toc-g.-effect-size" class="nav-link" data-scroll-target="#g.-effect-size">g. effect size</a></li>
+  <li><a href="#h.-putting-everything-together" id="toc-h.-putting-everything-together" class="nav-link" data-scroll-target="#h.-putting-everything-together">h. Putting everything together</a></li>
   </ul></li>
   <li><a href="#non-parametric-tests" id="toc-non-parametric-tests" class="nav-link" data-scroll-target="#non-parametric-tests">3. Non-parametric tests</a>
   <ul>
@@ -410,7 +431,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>And Shapiro-Wilk tests:</p>
+<p>What are the outcomes of your visual checks?</p>
+<p><strong>summarize outcomes here</strong></p>
+<p>Do Shapiro-Wilk tests:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>cc_crabs <span class="ot">&lt;-</span> pie_crab_clean <span class="sc">%&gt;%</span> <span class="co"># use the original data set</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(site_code <span class="sc">==</span> <span class="st">"CC"</span>) <span class="sc">%&gt;%</span> <span class="co"># filter to only include Cape Cod</span></span>
@@ -455,8 +478,8 @@ W = 0.97446, p-value = 0.5766</code></pre>
 <p>What are the outcomes of your statistical checks?</p>
 <p><strong>summarize outcomes here</strong></p>
 </section>
-<section id="c.-check-2-equal-variances" class="level4">
-<h4 class="anchored" data-anchor-id="c.-check-2-equal-variances">c.&nbsp;Check 2: equal variances</h4>
+<section id="d.-check-2-equal-variances" class="level4">
+<h4 class="anchored" data-anchor-id="d.-check-2-equal-variances">d.&nbsp;Check 2: equal variances</h4>
 <p>First, calculate the actual variances yourself:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># quick summary </span></span>
@@ -489,8 +512,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>What are the outcomes of your variance check?</p>
 <p><strong>insert outcomes here</strong></p>
 </section>
-<section id="d.-anova" class="level4">
-<h4 class="anchored" data-anchor-id="d.-anova">d.&nbsp;ANOVA</h4>
+<section id="e.-anova" class="level4">
+<h4 class="anchored" data-anchor-id="e.-anova">e. ANOVA</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating an object called crab_anova</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>crab_anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(size <span class="sc">~</span> site_name, <span class="co"># formula</span></span>
@@ -509,8 +532,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>Summarize results: is there a difference in crab size between the three sites?</p>
 <p><strong>insert results here</strong></p>
 </section>
-<section id="e.-post-hoc-tukey-hsd" class="level4">
-<h4 class="anchored" data-anchor-id="e.-post-hoc-tukey-hsd">e. Post-hoc: Tukey HSD</h4>
+<section id="f.-post-hoc-tukey-hsd" class="level4">
+<h4 class="anchored" data-anchor-id="f.-post-hoc-tukey-hsd">f.&nbsp;Post-hoc: Tukey HSD</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(crab_anova)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -533,8 +556,8 @@ Zeke's Island NERR-Virginia Coastal Reserve LTER 0.0000000</code></pre>
 <p>Which pairwise comparisons are actually different? Which ones are not different?</p>
 <p><strong>insert results here</strong></p>
 </section>
-<section id="f.-effect-size" class="level4">
-<h4 class="anchored" data-anchor-id="f.-effect-size">f.&nbsp;effect size</h4>
+<section id="g.-effect-size" class="level4">
+<h4 class="anchored" data-anchor-id="g.-effect-size">g. effect size</h4>
 <p>Using <code>eta_squared()</code> from <code>effectsize</code></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>effectsize<span class="sc">::</span><span class="fu">eta_squared</span>(crab_anova)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -551,8 +574,8 @@ site_name | 0.47 | [0.34, 1.00]
 <p>What is the magnitude of the effect of site on crab size?</p>
 <p><strong>insert results here</strong></p>
 </section>
-<section id="g.-putting-everything-together" class="level4">
-<h4 class="anchored" data-anchor-id="g.-putting-everything-together">g. Putting everything together</h4>
+<section id="h.-putting-everything-together" class="level4">
+<h4 class="anchored" data-anchor-id="h.-putting-everything-together">h. Putting everything together</h4>
 <p>We found a (insert effect size here) difference between sites in crab size (insert ANOVA info here). On average, crabs from Zeke’s Island NERR were smaller than crabs from Cape Cod and Virginia Coastal Reserve LTER (insert Tukey HSD info here).</p>
 </section>
 </section>
@@ -1139,9 +1162,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology</span></span>
 <span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation-url: https://www.eemb.ucsb.edu/</span></span>
 <span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="an">published-title:</span><span class="co"> "Workshop date"</span></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2024-04-25</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2024-05-02</span></span>
 <span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="an">date-modified:</span><span class="co"> last-modified</span></span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [tidyverse, janitor, read_csv, ggplot]</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [tidyverse, lterdatasampler, effectsize, rstatix, car, shapiro.test, leveneTest, aov, summary, TukeyHSD, eta_squared, kruskal.test, dunn_test, kruskal_effectsize, read_csv, pipe (%&gt;%) operator, select, rename, ggplot, geom_histogram, geom_qq, geom_qq_line, facet_wrap, group_by, reframe]</span></span>
 <span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
 <span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
 <span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
@@ -1250,182 +1273,186 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb32-119"><a href="#cb32-119" aria-hidden="true" tabindex="-1"></a><span class="in">             scales = "free") # let axes vary between panels</span></span>
 <span id="cb32-120"><a href="#cb32-120" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb32-121"><a href="#cb32-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-122"><a href="#cb32-122" aria-hidden="true" tabindex="-1"></a>And Shapiro-Wilk tests:</span>
+<span id="cb32-122"><a href="#cb32-122" aria-hidden="true" tabindex="-1"></a>What are the outcomes of your visual checks?  </span>
 <span id="cb32-123"><a href="#cb32-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-124"><a href="#cb32-124" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-normality-test}</span></span>
-<span id="cb32-125"><a href="#cb32-125" aria-hidden="true" tabindex="-1"></a><span class="in">cc_crabs &lt;- pie_crab_clean %&gt;% # use the original data set</span></span>
-<span id="cb32-126"><a href="#cb32-126" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(site_code == "CC") %&gt;% # filter to only include Cape Cod</span></span>
-<span id="cb32-127"><a href="#cb32-127" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(size) # extract the size column as a vector</span></span>
-<span id="cb32-128"><a href="#cb32-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-129"><a href="#cb32-129" aria-hidden="true" tabindex="-1"></a><span class="in">vcr_crabs &lt;- pie_crab_clean %&gt;% </span></span>
-<span id="cb32-130"><a href="#cb32-130" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(site_code == "VCR") %&gt;% # filter to only include Virginia Coastal</span></span>
-<span id="cb32-131"><a href="#cb32-131" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(size)</span></span>
+<span id="cb32-124"><a href="#cb32-124" aria-hidden="true" tabindex="-1"></a>**summarize outcomes here**  </span>
+<span id="cb32-125"><a href="#cb32-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-126"><a href="#cb32-126" aria-hidden="true" tabindex="-1"></a>Do Shapiro-Wilk tests:</span>
+<span id="cb32-127"><a href="#cb32-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-128"><a href="#cb32-128" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-normality-test}</span></span>
+<span id="cb32-129"><a href="#cb32-129" aria-hidden="true" tabindex="-1"></a><span class="in">cc_crabs &lt;- pie_crab_clean %&gt;% # use the original data set</span></span>
+<span id="cb32-130"><a href="#cb32-130" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(site_code == "CC") %&gt;% # filter to only include Cape Cod</span></span>
+<span id="cb32-131"><a href="#cb32-131" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(size) # extract the size column as a vector</span></span>
 <span id="cb32-132"><a href="#cb32-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-133"><a href="#cb32-133" aria-hidden="true" tabindex="-1"></a><span class="in">zi_crabs &lt;- pie_crab_clean %&gt;% </span></span>
-<span id="cb32-134"><a href="#cb32-134" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(site_code == "ZI") %&gt;% # filter to only include Zeke's Island</span></span>
+<span id="cb32-133"><a href="#cb32-133" aria-hidden="true" tabindex="-1"></a><span class="in">vcr_crabs &lt;- pie_crab_clean %&gt;% </span></span>
+<span id="cb32-134"><a href="#cb32-134" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(site_code == "VCR") %&gt;% # filter to only include Virginia Coastal</span></span>
 <span id="cb32-135"><a href="#cb32-135" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(size)</span></span>
 <span id="cb32-136"><a href="#cb32-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-137"><a href="#cb32-137" aria-hidden="true" tabindex="-1"></a><span class="in"># do the Shapiro-Wilk tests</span></span>
-<span id="cb32-138"><a href="#cb32-138" aria-hidden="true" tabindex="-1"></a><span class="in">shapiro.test(cc_crabs)</span></span>
-<span id="cb32-139"><a href="#cb32-139" aria-hidden="true" tabindex="-1"></a><span class="in">shapiro.test(vcr_crabs)</span></span>
-<span id="cb32-140"><a href="#cb32-140" aria-hidden="true" tabindex="-1"></a><span class="in">shapiro.test(zi_crabs)</span></span>
-<span id="cb32-141"><a href="#cb32-141" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-142"><a href="#cb32-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-143"><a href="#cb32-143" aria-hidden="true" tabindex="-1"></a>What are the outcomes of your visual checks?  </span>
-<span id="cb32-144"><a href="#cb32-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-145"><a href="#cb32-145" aria-hidden="true" tabindex="-1"></a>**summarize outcomes here**</span>
+<span id="cb32-137"><a href="#cb32-137" aria-hidden="true" tabindex="-1"></a><span class="in">zi_crabs &lt;- pie_crab_clean %&gt;% </span></span>
+<span id="cb32-138"><a href="#cb32-138" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(site_code == "ZI") %&gt;% # filter to only include Zeke's Island</span></span>
+<span id="cb32-139"><a href="#cb32-139" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(size)</span></span>
+<span id="cb32-140"><a href="#cb32-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-141"><a href="#cb32-141" aria-hidden="true" tabindex="-1"></a><span class="in"># do the Shapiro-Wilk tests</span></span>
+<span id="cb32-142"><a href="#cb32-142" aria-hidden="true" tabindex="-1"></a><span class="in">shapiro.test(cc_crabs)</span></span>
+<span id="cb32-143"><a href="#cb32-143" aria-hidden="true" tabindex="-1"></a><span class="in">shapiro.test(vcr_crabs)</span></span>
+<span id="cb32-144"><a href="#cb32-144" aria-hidden="true" tabindex="-1"></a><span class="in">shapiro.test(zi_crabs)</span></span>
+<span id="cb32-145"><a href="#cb32-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb32-146"><a href="#cb32-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-147"><a href="#cb32-147" aria-hidden="true" tabindex="-1"></a>What are the outcomes of your statistical checks?  </span>
+<span id="cb32-147"><a href="#cb32-147" aria-hidden="true" tabindex="-1"></a>What are the outcomes of your visual checks?  </span>
 <span id="cb32-148"><a href="#cb32-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-149"><a href="#cb32-149" aria-hidden="true" tabindex="-1"></a>**summarize outcomes here**  </span>
+<span id="cb32-149"><a href="#cb32-149" aria-hidden="true" tabindex="-1"></a>**summarize outcomes here**</span>
 <span id="cb32-150"><a href="#cb32-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-151"><a href="#cb32-151" aria-hidden="true" tabindex="-1"></a><span class="fu">#### c. Check 2: equal variances</span></span>
+<span id="cb32-151"><a href="#cb32-151" aria-hidden="true" tabindex="-1"></a>What are the outcomes of your statistical checks?  </span>
 <span id="cb32-152"><a href="#cb32-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-153"><a href="#cb32-153" aria-hidden="true" tabindex="-1"></a>First, calculate the actual variances yourself:</span>
+<span id="cb32-153"><a href="#cb32-153" aria-hidden="true" tabindex="-1"></a>**summarize outcomes here**  </span>
 <span id="cb32-154"><a href="#cb32-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-155"><a href="#cb32-155" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-variances}</span></span>
-<span id="cb32-156"><a href="#cb32-156" aria-hidden="true" tabindex="-1"></a><span class="in"># quick summary </span></span>
-<span id="cb32-157"><a href="#cb32-157" aria-hidden="true" tabindex="-1"></a><span class="in">pie_crab_clean %&gt;% # use the clean data frame</span></span>
-<span id="cb32-158"><a href="#cb32-158" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(site_name) %&gt;% # group by site</span></span>
-<span id="cb32-159"><a href="#cb32-159" aria-hidden="true" tabindex="-1"></a><span class="in">  reframe(var = var(size)) # calculate variance at each site</span></span>
-<span id="cb32-160"><a href="#cb32-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-161"><a href="#cb32-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-162"><a href="#cb32-162" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`leveneTest()`</span> from <span class="in">`car`</span></span>
-<span id="cb32-163"><a href="#cb32-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-164"><a href="#cb32-164" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-levene}</span></span>
-<span id="cb32-165"><a href="#cb32-165" aria-hidden="true" tabindex="-1"></a><span class="in"># do the Levene test</span></span>
-<span id="cb32-166"><a href="#cb32-166" aria-hidden="true" tabindex="-1"></a><span class="in">leveneTest(size ~ site_name, # formula</span></span>
-<span id="cb32-167"><a href="#cb32-167" aria-hidden="true" tabindex="-1"></a><span class="in">           data = pie_crab_clean) # data</span></span>
-<span id="cb32-168"><a href="#cb32-168" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-169"><a href="#cb32-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-170"><a href="#cb32-170" aria-hidden="true" tabindex="-1"></a>What are the outcomes of your variance check?  </span>
-<span id="cb32-171"><a href="#cb32-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-172"><a href="#cb32-172" aria-hidden="true" tabindex="-1"></a>**insert outcomes here**</span>
+<span id="cb32-155"><a href="#cb32-155" aria-hidden="true" tabindex="-1"></a><span class="fu">#### d. Check 2: equal variances</span></span>
+<span id="cb32-156"><a href="#cb32-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-157"><a href="#cb32-157" aria-hidden="true" tabindex="-1"></a>First, calculate the actual variances yourself:</span>
+<span id="cb32-158"><a href="#cb32-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-159"><a href="#cb32-159" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-variances}</span></span>
+<span id="cb32-160"><a href="#cb32-160" aria-hidden="true" tabindex="-1"></a><span class="in"># quick summary </span></span>
+<span id="cb32-161"><a href="#cb32-161" aria-hidden="true" tabindex="-1"></a><span class="in">pie_crab_clean %&gt;% # use the clean data frame</span></span>
+<span id="cb32-162"><a href="#cb32-162" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(site_name) %&gt;% # group by site</span></span>
+<span id="cb32-163"><a href="#cb32-163" aria-hidden="true" tabindex="-1"></a><span class="in">  reframe(var = var(size)) # calculate variance at each site</span></span>
+<span id="cb32-164"><a href="#cb32-164" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-165"><a href="#cb32-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-166"><a href="#cb32-166" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`leveneTest()`</span> from <span class="in">`car`</span></span>
+<span id="cb32-167"><a href="#cb32-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-168"><a href="#cb32-168" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-levene}</span></span>
+<span id="cb32-169"><a href="#cb32-169" aria-hidden="true" tabindex="-1"></a><span class="in"># do the Levene test</span></span>
+<span id="cb32-170"><a href="#cb32-170" aria-hidden="true" tabindex="-1"></a><span class="in">leveneTest(size ~ site_name, # formula</span></span>
+<span id="cb32-171"><a href="#cb32-171" aria-hidden="true" tabindex="-1"></a><span class="in">           data = pie_crab_clean) # data</span></span>
+<span id="cb32-172"><a href="#cb32-172" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb32-173"><a href="#cb32-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-174"><a href="#cb32-174" aria-hidden="true" tabindex="-1"></a><span class="fu">#### d. ANOVA</span></span>
+<span id="cb32-174"><a href="#cb32-174" aria-hidden="true" tabindex="-1"></a>What are the outcomes of your variance check?  </span>
 <span id="cb32-175"><a href="#cb32-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-176"><a href="#cb32-176" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-anova}</span></span>
-<span id="cb32-177"><a href="#cb32-177" aria-hidden="true" tabindex="-1"></a><span class="in"># creating an object called crab_anova</span></span>
-<span id="cb32-178"><a href="#cb32-178" aria-hidden="true" tabindex="-1"></a><span class="in">crab_anova &lt;- aov(size ~ site_name, # formula</span></span>
-<span id="cb32-179"><a href="#cb32-179" aria-hidden="true" tabindex="-1"></a><span class="in">                  data = pie_crab_clean) # data</span></span>
-<span id="cb32-180"><a href="#cb32-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-181"><a href="#cb32-181" aria-hidden="true" tabindex="-1"></a><span class="in"># gives more information</span></span>
-<span id="cb32-182"><a href="#cb32-182" aria-hidden="true" tabindex="-1"></a><span class="in">summary(crab_anova)</span></span>
-<span id="cb32-183"><a href="#cb32-183" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-176"><a href="#cb32-176" aria-hidden="true" tabindex="-1"></a>**insert outcomes here**</span>
+<span id="cb32-177"><a href="#cb32-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-178"><a href="#cb32-178" aria-hidden="true" tabindex="-1"></a><span class="fu">#### e. ANOVA</span></span>
+<span id="cb32-179"><a href="#cb32-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-180"><a href="#cb32-180" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-anova}</span></span>
+<span id="cb32-181"><a href="#cb32-181" aria-hidden="true" tabindex="-1"></a><span class="in"># creating an object called crab_anova</span></span>
+<span id="cb32-182"><a href="#cb32-182" aria-hidden="true" tabindex="-1"></a><span class="in">crab_anova &lt;- aov(size ~ site_name, # formula</span></span>
+<span id="cb32-183"><a href="#cb32-183" aria-hidden="true" tabindex="-1"></a><span class="in">                  data = pie_crab_clean) # data</span></span>
 <span id="cb32-184"><a href="#cb32-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-185"><a href="#cb32-185" aria-hidden="true" tabindex="-1"></a>Summarize results: is there a difference in crab size between the three sites?  </span>
-<span id="cb32-186"><a href="#cb32-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-187"><a href="#cb32-187" aria-hidden="true" tabindex="-1"></a>**insert results here**</span>
+<span id="cb32-185"><a href="#cb32-185" aria-hidden="true" tabindex="-1"></a><span class="in"># gives more information</span></span>
+<span id="cb32-186"><a href="#cb32-186" aria-hidden="true" tabindex="-1"></a><span class="in">summary(crab_anova)</span></span>
+<span id="cb32-187"><a href="#cb32-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb32-188"><a href="#cb32-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-189"><a href="#cb32-189" aria-hidden="true" tabindex="-1"></a><span class="fu">#### e. Post-hoc: Tukey HSD</span></span>
+<span id="cb32-189"><a href="#cb32-189" aria-hidden="true" tabindex="-1"></a>Summarize results: is there a difference in crab size between the three sites?  </span>
 <span id="cb32-190"><a href="#cb32-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-191"><a href="#cb32-191" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-tukey}</span></span>
-<span id="cb32-192"><a href="#cb32-192" aria-hidden="true" tabindex="-1"></a><span class="in">TukeyHSD(crab_anova)</span></span>
-<span id="cb32-193"><a href="#cb32-193" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-191"><a href="#cb32-191" aria-hidden="true" tabindex="-1"></a>**insert results here**</span>
+<span id="cb32-192"><a href="#cb32-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-193"><a href="#cb32-193" aria-hidden="true" tabindex="-1"></a><span class="fu">#### f. Post-hoc: Tukey HSD</span></span>
 <span id="cb32-194"><a href="#cb32-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-195"><a href="#cb32-195" aria-hidden="true" tabindex="-1"></a>Which pairwise comparisons are actually different? Which ones are not different?  </span>
-<span id="cb32-196"><a href="#cb32-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-197"><a href="#cb32-197" aria-hidden="true" tabindex="-1"></a>**insert results here**</span>
+<span id="cb32-195"><a href="#cb32-195" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-tukey}</span></span>
+<span id="cb32-196"><a href="#cb32-196" aria-hidden="true" tabindex="-1"></a><span class="in">TukeyHSD(crab_anova)</span></span>
+<span id="cb32-197"><a href="#cb32-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb32-198"><a href="#cb32-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-199"><a href="#cb32-199" aria-hidden="true" tabindex="-1"></a><span class="fu">#### f. effect size</span></span>
+<span id="cb32-199"><a href="#cb32-199" aria-hidden="true" tabindex="-1"></a>Which pairwise comparisons are actually different? Which ones are not different?  </span>
 <span id="cb32-200"><a href="#cb32-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-201"><a href="#cb32-201" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`eta_squared()`</span> from <span class="in">`effectsize`</span></span>
+<span id="cb32-201"><a href="#cb32-201" aria-hidden="true" tabindex="-1"></a>**insert results here**</span>
 <span id="cb32-202"><a href="#cb32-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-203"><a href="#cb32-203" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-effectsize}</span></span>
-<span id="cb32-204"><a href="#cb32-204" aria-hidden="true" tabindex="-1"></a><span class="in">effectsize::eta_squared(crab_anova)</span></span>
-<span id="cb32-205"><a href="#cb32-205" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-203"><a href="#cb32-203" aria-hidden="true" tabindex="-1"></a><span class="fu">#### g. effect size</span></span>
+<span id="cb32-204"><a href="#cb32-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-205"><a href="#cb32-205" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`eta_squared()`</span> from <span class="in">`effectsize`</span></span>
 <span id="cb32-206"><a href="#cb32-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-207"><a href="#cb32-207" aria-hidden="true" tabindex="-1"></a>What is the magnitude of the effect of site on crab size?  </span>
-<span id="cb32-208"><a href="#cb32-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-209"><a href="#cb32-209" aria-hidden="true" tabindex="-1"></a>**insert results here**</span>
+<span id="cb32-207"><a href="#cb32-207" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-effectsize}</span></span>
+<span id="cb32-208"><a href="#cb32-208" aria-hidden="true" tabindex="-1"></a><span class="in">effectsize::eta_squared(crab_anova)</span></span>
+<span id="cb32-209"><a href="#cb32-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb32-210"><a href="#cb32-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-211"><a href="#cb32-211" aria-hidden="true" tabindex="-1"></a><span class="fu">#### g. Putting everything together</span></span>
+<span id="cb32-211"><a href="#cb32-211" aria-hidden="true" tabindex="-1"></a>What is the magnitude of the effect of site on crab size?  </span>
 <span id="cb32-212"><a href="#cb32-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-213"><a href="#cb32-213" aria-hidden="true" tabindex="-1"></a>We found a (insert effect size here) difference between sites in crab size (insert ANOVA info here). On average, crabs from Zeke's Island NERR were smaller than crabs from Cape Cod and Virginia Coastal Reserve LTER (insert Tukey HSD info here).  </span>
+<span id="cb32-213"><a href="#cb32-213" aria-hidden="true" tabindex="-1"></a>**insert results here**</span>
 <span id="cb32-214"><a href="#cb32-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-215"><a href="#cb32-215" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3. Non-parametric tests</span></span>
+<span id="cb32-215"><a href="#cb32-215" aria-hidden="true" tabindex="-1"></a><span class="fu">#### h. Putting everything together</span></span>
 <span id="cb32-216"><a href="#cb32-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-217"><a href="#cb32-217" aria-hidden="true" tabindex="-1"></a><span class="fu">#### a. Set up</span></span>
+<span id="cb32-217"><a href="#cb32-217" aria-hidden="true" tabindex="-1"></a>We found a (insert effect size here) difference between sites in crab size (insert ANOVA info here). On average, crabs from Zeke's Island NERR were smaller than crabs from Cape Cod and Virginia Coastal Reserve LTER (insert Tukey HSD info here).  </span>
 <span id="cb32-218"><a href="#cb32-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-219"><a href="#cb32-219" aria-hidden="true" tabindex="-1"></a><span class="in">```{r read-in-ramen-data}</span></span>
-<span id="cb32-220"><a href="#cb32-220" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
-<span id="cb32-221"><a href="#cb32-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-222"><a href="#cb32-222" aria-hidden="true" tabindex="-1"></a><span class="in">ramen_ratings &lt;- read_csv("ramen_ratings.csv")</span></span>
-<span id="cb32-223"><a href="#cb32-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-224"><a href="#cb32-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-225"><a href="#cb32-225" aria-hidden="true" tabindex="-1"></a><span class="in">```{r read-in-ramen-data-website}</span></span>
-<span id="cb32-226"><a href="#cb32-226" aria-hidden="true" tabindex="-1"></a><span class="in">#| message: false</span></span>
-<span id="cb32-227"><a href="#cb32-227" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
+<span id="cb32-219"><a href="#cb32-219" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3. Non-parametric tests</span></span>
+<span id="cb32-220"><a href="#cb32-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-221"><a href="#cb32-221" aria-hidden="true" tabindex="-1"></a><span class="fu">#### a. Set up</span></span>
+<span id="cb32-222"><a href="#cb32-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-223"><a href="#cb32-223" aria-hidden="true" tabindex="-1"></a><span class="in">```{r read-in-ramen-data}</span></span>
+<span id="cb32-224"><a href="#cb32-224" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb32-225"><a href="#cb32-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-226"><a href="#cb32-226" aria-hidden="true" tabindex="-1"></a><span class="in">ramen_ratings &lt;- read_csv("ramen_ratings.csv")</span></span>
+<span id="cb32-227"><a href="#cb32-227" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb32-228"><a href="#cb32-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-229"><a href="#cb32-229" aria-hidden="true" tabindex="-1"></a><span class="in"># ramen_ratings &lt;- read_csv("ramen_ratings.csv")</span></span>
-<span id="cb32-230"><a href="#cb32-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-231"><a href="#cb32-231" aria-hidden="true" tabindex="-1"></a><span class="in">ramen_ratings &lt;- read_csv(here::here("workshop", "data", "ramen_ratings.csv"))</span></span>
-<span id="cb32-232"><a href="#cb32-232" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-233"><a href="#cb32-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-234"><a href="#cb32-234" aria-hidden="true" tabindex="-1"></a><span class="fu">#### b. Clean and wrangle the data</span></span>
-<span id="cb32-235"><a href="#cb32-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-236"><a href="#cb32-236" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-wrangle}</span></span>
-<span id="cb32-237"><a href="#cb32-237" aria-hidden="true" tabindex="-1"></a><span class="in">ramen_ratings_clean &lt;- ramen_ratings %&gt;% # use the ramen_ratings dataframe</span></span>
-<span id="cb32-238"><a href="#cb32-238" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(brand == "Maruchan") %&gt;% # filter to only include Maruchan ramen</span></span>
-<span id="cb32-239"><a href="#cb32-239" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(style = fct_relevel(style, "Bowl", "Pack", "Tray", "Cup")) # reorder style factor</span></span>
-<span id="cb32-240"><a href="#cb32-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-241"><a href="#cb32-241" aria-hidden="true" tabindex="-1"></a><span class="in"># look at the structure</span></span>
-<span id="cb32-242"><a href="#cb32-242" aria-hidden="true" tabindex="-1"></a><span class="in">str(ramen_ratings_clean)</span></span>
-<span id="cb32-243"><a href="#cb32-243" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-229"><a href="#cb32-229" aria-hidden="true" tabindex="-1"></a><span class="in">```{r read-in-ramen-data-website}</span></span>
+<span id="cb32-230"><a href="#cb32-230" aria-hidden="true" tabindex="-1"></a><span class="in">#| message: false</span></span>
+<span id="cb32-231"><a href="#cb32-231" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
+<span id="cb32-232"><a href="#cb32-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-233"><a href="#cb32-233" aria-hidden="true" tabindex="-1"></a><span class="in"># ramen_ratings &lt;- read_csv("ramen_ratings.csv")</span></span>
+<span id="cb32-234"><a href="#cb32-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-235"><a href="#cb32-235" aria-hidden="true" tabindex="-1"></a><span class="in">ramen_ratings &lt;- read_csv(here::here("workshop", "data", "ramen_ratings.csv"))</span></span>
+<span id="cb32-236"><a href="#cb32-236" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-237"><a href="#cb32-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-238"><a href="#cb32-238" aria-hidden="true" tabindex="-1"></a><span class="fu">#### b. Clean and wrangle the data</span></span>
+<span id="cb32-239"><a href="#cb32-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-240"><a href="#cb32-240" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-wrangle}</span></span>
+<span id="cb32-241"><a href="#cb32-241" aria-hidden="true" tabindex="-1"></a><span class="in">ramen_ratings_clean &lt;- ramen_ratings %&gt;% # use the ramen_ratings dataframe</span></span>
+<span id="cb32-242"><a href="#cb32-242" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(brand == "Maruchan") %&gt;% # filter to only include Maruchan ramen</span></span>
+<span id="cb32-243"><a href="#cb32-243" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(style = fct_relevel(style, "Bowl", "Pack", "Tray", "Cup")) # reorder style factor</span></span>
 <span id="cb32-244"><a href="#cb32-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-245"><a href="#cb32-245" aria-hidden="true" tabindex="-1"></a><span class="fu">#### c. Make a boxplot to compare star ratings across ramen styles</span></span>
-<span id="cb32-246"><a href="#cb32-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-247"><a href="#cb32-247" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-explore-viz}</span></span>
-<span id="cb32-248"><a href="#cb32-248" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data = ramen_ratings_clean, # use the clean data frame</span></span>
-<span id="cb32-249"><a href="#cb32-249" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = style, # x-axis</span></span>
-<span id="cb32-250"><a href="#cb32-250" aria-hidden="true" tabindex="-1"></a><span class="in">           y = stars, # y-axis</span></span>
-<span id="cb32-251"><a href="#cb32-251" aria-hidden="true" tabindex="-1"></a><span class="in">           fill = style)) + # fill geoms by ramen style</span></span>
-<span id="cb32-252"><a href="#cb32-252" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_boxplot() + # make a boxplot</span></span>
-<span id="cb32-253"><a href="#cb32-253" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_manual(values = c("firebrick4", "orange", "gold", "darkgreen")) + # define the colors</span></span>
-<span id="cb32-254"><a href="#cb32-254" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal() + # minimal theme</span></span>
-<span id="cb32-255"><a href="#cb32-255" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none") # take out the legend</span></span>
-<span id="cb32-256"><a href="#cb32-256" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-257"><a href="#cb32-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-258"><a href="#cb32-258" aria-hidden="true" tabindex="-1"></a><span class="fu">#### d. Do the Kruskal-Wallis test</span></span>
-<span id="cb32-259"><a href="#cb32-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-260"><a href="#cb32-260" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-kw}</span></span>
-<span id="cb32-261"><a href="#cb32-261" aria-hidden="true" tabindex="-1"></a><span class="in">kruskal.test(stars ~ style, # formula</span></span>
-<span id="cb32-262"><a href="#cb32-262" aria-hidden="true" tabindex="-1"></a><span class="in">             data = ramen_ratings_clean) # data</span></span>
-<span id="cb32-263"><a href="#cb32-263" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-264"><a href="#cb32-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-265"><a href="#cb32-265" aria-hidden="true" tabindex="-1"></a>Is there a difference in ratings between ramen styles?  </span>
-<span id="cb32-266"><a href="#cb32-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-267"><a href="#cb32-267" aria-hidden="true" tabindex="-1"></a>**summarize results here**</span>
+<span id="cb32-245"><a href="#cb32-245" aria-hidden="true" tabindex="-1"></a><span class="in"># look at the structure</span></span>
+<span id="cb32-246"><a href="#cb32-246" aria-hidden="true" tabindex="-1"></a><span class="in">str(ramen_ratings_clean)</span></span>
+<span id="cb32-247"><a href="#cb32-247" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-248"><a href="#cb32-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-249"><a href="#cb32-249" aria-hidden="true" tabindex="-1"></a><span class="fu">#### c. Make a boxplot to compare star ratings across ramen styles</span></span>
+<span id="cb32-250"><a href="#cb32-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-251"><a href="#cb32-251" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-explore-viz}</span></span>
+<span id="cb32-252"><a href="#cb32-252" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data = ramen_ratings_clean, # use the clean data frame</span></span>
+<span id="cb32-253"><a href="#cb32-253" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = style, # x-axis</span></span>
+<span id="cb32-254"><a href="#cb32-254" aria-hidden="true" tabindex="-1"></a><span class="in">           y = stars, # y-axis</span></span>
+<span id="cb32-255"><a href="#cb32-255" aria-hidden="true" tabindex="-1"></a><span class="in">           fill = style)) + # fill geoms by ramen style</span></span>
+<span id="cb32-256"><a href="#cb32-256" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_boxplot() + # make a boxplot</span></span>
+<span id="cb32-257"><a href="#cb32-257" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_manual(values = c("firebrick4", "orange", "gold", "darkgreen")) + # define the colors</span></span>
+<span id="cb32-258"><a href="#cb32-258" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal() + # minimal theme</span></span>
+<span id="cb32-259"><a href="#cb32-259" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none") # take out the legend</span></span>
+<span id="cb32-260"><a href="#cb32-260" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb32-261"><a href="#cb32-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-262"><a href="#cb32-262" aria-hidden="true" tabindex="-1"></a><span class="fu">#### d. Do the Kruskal-Wallis test</span></span>
+<span id="cb32-263"><a href="#cb32-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-264"><a href="#cb32-264" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-kw}</span></span>
+<span id="cb32-265"><a href="#cb32-265" aria-hidden="true" tabindex="-1"></a><span class="in">kruskal.test(stars ~ style, # formula</span></span>
+<span id="cb32-266"><a href="#cb32-266" aria-hidden="true" tabindex="-1"></a><span class="in">             data = ramen_ratings_clean) # data</span></span>
+<span id="cb32-267"><a href="#cb32-267" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb32-268"><a href="#cb32-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-269"><a href="#cb32-269" aria-hidden="true" tabindex="-1"></a><span class="fu">#### e. Do a Dunn's post-hoc test</span></span>
+<span id="cb32-269"><a href="#cb32-269" aria-hidden="true" tabindex="-1"></a>Is there a difference in ratings between ramen styles?  </span>
 <span id="cb32-270"><a href="#cb32-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-271"><a href="#cb32-271" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`dunn_test()`</span> from <span class="in">`rstatix`</span></span>
+<span id="cb32-271"><a href="#cb32-271" aria-hidden="true" tabindex="-1"></a>**summarize results here**</span>
 <span id="cb32-272"><a href="#cb32-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-273"><a href="#cb32-273" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-post-hoc}</span></span>
-<span id="cb32-274"><a href="#cb32-274" aria-hidden="true" tabindex="-1"></a><span class="in">dunn_test(stars ~ style, # formula</span></span>
-<span id="cb32-275"><a href="#cb32-275" aria-hidden="true" tabindex="-1"></a><span class="in">          data = ramen_ratings_clean) # data</span></span>
-<span id="cb32-276"><a href="#cb32-276" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-277"><a href="#cb32-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-278"><a href="#cb32-278" aria-hidden="true" tabindex="-1"></a>Which pairwise comparisons of ramen styles are different from each other?  </span>
-<span id="cb32-279"><a href="#cb32-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-280"><a href="#cb32-280" aria-hidden="true" tabindex="-1"></a>**summarize results here**</span>
+<span id="cb32-273"><a href="#cb32-273" aria-hidden="true" tabindex="-1"></a><span class="fu">#### e. Do a Dunn's post-hoc test</span></span>
+<span id="cb32-274"><a href="#cb32-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-275"><a href="#cb32-275" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`dunn_test()`</span> from <span class="in">`rstatix`</span></span>
+<span id="cb32-276"><a href="#cb32-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-277"><a href="#cb32-277" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-post-hoc}</span></span>
+<span id="cb32-278"><a href="#cb32-278" aria-hidden="true" tabindex="-1"></a><span class="in">dunn_test(stars ~ style, # formula</span></span>
+<span id="cb32-279"><a href="#cb32-279" aria-hidden="true" tabindex="-1"></a><span class="in">          data = ramen_ratings_clean) # data</span></span>
+<span id="cb32-280"><a href="#cb32-280" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb32-281"><a href="#cb32-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-282"><a href="#cb32-282" aria-hidden="true" tabindex="-1"></a><span class="fu">#### f. Calculate an effect size</span></span>
+<span id="cb32-282"><a href="#cb32-282" aria-hidden="true" tabindex="-1"></a>Which pairwise comparisons of ramen styles are different from each other?  </span>
 <span id="cb32-283"><a href="#cb32-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-284"><a href="#cb32-284" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`kruskal_effsize()`</span> from <span class="in">`rstatix`</span></span>
+<span id="cb32-284"><a href="#cb32-284" aria-hidden="true" tabindex="-1"></a>**summarize results here**</span>
 <span id="cb32-285"><a href="#cb32-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-286"><a href="#cb32-286" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-effect-size}</span></span>
-<span id="cb32-287"><a href="#cb32-287" aria-hidden="true" tabindex="-1"></a><span class="in">kruskal_effsize(stars ~ style, # formula</span></span>
-<span id="cb32-288"><a href="#cb32-288" aria-hidden="true" tabindex="-1"></a><span class="in">                data = ramen_ratings_clean) # data</span></span>
-<span id="cb32-289"><a href="#cb32-289" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb32-290"><a href="#cb32-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-291"><a href="#cb32-291" aria-hidden="true" tabindex="-1"></a>What is the magnitude of the effect of ramen style on ratings?  </span>
-<span id="cb32-292"><a href="#cb32-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-293"><a href="#cb32-293" aria-hidden="true" tabindex="-1"></a>**summarize results here**</span>
+<span id="cb32-286"><a href="#cb32-286" aria-hidden="true" tabindex="-1"></a><span class="fu">#### f. Calculate an effect size</span></span>
+<span id="cb32-287"><a href="#cb32-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-288"><a href="#cb32-288" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`kruskal_effsize()`</span> from <span class="in">`rstatix`</span></span>
+<span id="cb32-289"><a href="#cb32-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-290"><a href="#cb32-290" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-effect-size}</span></span>
+<span id="cb32-291"><a href="#cb32-291" aria-hidden="true" tabindex="-1"></a><span class="in">kruskal_effsize(stars ~ style, # formula</span></span>
+<span id="cb32-292"><a href="#cb32-292" aria-hidden="true" tabindex="-1"></a><span class="in">                data = ramen_ratings_clean) # data</span></span>
+<span id="cb32-293"><a href="#cb32-293" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb32-294"><a href="#cb32-294" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-295"><a href="#cb32-295" aria-hidden="true" tabindex="-1"></a><span class="fu">#### g. Putting it all together</span></span>
+<span id="cb32-295"><a href="#cb32-295" aria-hidden="true" tabindex="-1"></a>What is the magnitude of the effect of ramen style on ratings?  </span>
 <span id="cb32-296"><a href="#cb32-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-297"><a href="#cb32-297" aria-hidden="true" tabindex="-1"></a>We found a difference in ratings between ramen styles (insert KW info here). There was a large effect of style on rating (insert eta info here), with bowl-style ramen tending to be more highly rated than pack, tray, or cup style ramen (insert Dunn's post-hoc info here).</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-297"><a href="#cb32-297" aria-hidden="true" tabindex="-1"></a>**summarize results here**</span>
+<span id="cb32-298"><a href="#cb32-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-299"><a href="#cb32-299" aria-hidden="true" tabindex="-1"></a><span class="fu">#### g. Putting it all together</span></span>
+<span id="cb32-300"><a href="#cb32-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-301"><a href="#cb32-301" aria-hidden="true" tabindex="-1"></a>We found a difference in ratings between ramen styles (insert KW info here). There was a large effect of style on rating (insert eta info here), with bowl-style ramen tending to be more highly rated than pack, tray, or cup style ramen (insert Dunn's post-hoc info here).</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

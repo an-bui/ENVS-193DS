@@ -8,9 +8,9 @@ author:
     affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology
     affiliation-url: https://www.eemb.ucsb.edu/
 published-title: "Workshop date"
-date: 2024-04-25
+date: 2024-05-02
 date-modified: last-modified
-categories: [tidyverse, janitor, read_csv, ggplot]
+categories: [tidyverse, lterdatasampler, effectsize, rstatix, car, shapiro.test, leveneTest, aov, summary, TukeyHSD, eta_squared, kruskal.test, dunn_test, kruskal_effectsize, read_csv, pipe (%>%) operator, select, rename, ggplot, geom_histogram, geom_qq, geom_qq_line, facet_wrap, group_by, reframe]
 format:
   html:
     toc: true
@@ -119,7 +119,11 @@ ggplot(data = pie_crab_clean, # using the clean data frame
              scales = "free") # let axes vary between panels
 ```
 
-And Shapiro-Wilk tests:
+What are the outcomes of your visual checks?  
+
+**summarize outcomes here**  
+
+Do Shapiro-Wilk tests:
 
 ```{r crab-normality-test}
 cc_crabs <- pie_crab_clean %>% # use the original data set
@@ -148,7 +152,7 @@ What are the outcomes of your statistical checks?
 
 **summarize outcomes here**  
 
-#### c. Check 2: equal variances
+#### d. Check 2: equal variances
 
 First, calculate the actual variances yourself:
 
@@ -171,7 +175,7 @@ What are the outcomes of your variance check?
 
 **insert outcomes here**
 
-#### d. ANOVA
+#### e. ANOVA
 
 ```{r crab-anova}
 # creating an object called crab_anova
@@ -186,7 +190,7 @@ Summarize results: is there a difference in crab size between the three sites?
 
 **insert results here**
 
-#### e. Post-hoc: Tukey HSD
+#### f. Post-hoc: Tukey HSD
 
 ```{r crab-tukey}
 TukeyHSD(crab_anova)
@@ -196,7 +200,7 @@ Which pairwise comparisons are actually different? Which ones are not different?
 
 **insert results here**
 
-#### f. effect size
+#### g. effect size
 
 Using `eta_squared()` from `effectsize`
 
@@ -208,7 +212,7 @@ What is the magnitude of the effect of site on crab size?
 
 **insert results here**
 
-#### g. Putting everything together
+#### h. Putting everything together
 
 We found a (insert effect size here) difference between sites in crab size (insert ANOVA info here). On average, crabs from Zeke's Island NERR were smaller than crabs from Cape Cod and Virginia Coastal Reserve LTER (insert Tukey HSD info here).  
 

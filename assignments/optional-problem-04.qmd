@@ -1,0 +1,212 @@
+---
+title: "OPTIONAL practice problem - Do a Wilcoxon signed rank test by hand"
+editor: source
+freeze: auto
+date: 2024-04-25
+date-modified: last-modified
+---
+
+```{r document-set-up}
+#| echo: false
+#| message: false
+
+# package
+library(tidyverse)
+
+theme_set(theme_bw() +
+            theme(text = element_text(family = "Lato", size = 12)))
+```
+
+## 1. Description
+
+In this practice problem, you'll do a Wilcoxon signed rank test comparing paired samples to each other by hand, then double check your work with R. This is the non-parametric version of the paired t-test.  
+
+## 2. Steps
+
+### a. Values
+
+Start with these values:  
+
+:::: {.columns}
+::: {.column width="40%"}
+
+| Before | After |
+|:------:|:-----:|
+| 1.2    | 1.6   |
+| 2.0    | 2.8   |
+| 0.8    | 0.7   |
+| 0.6    | 0.6   |
+| 1.3    | 1.5   |
+| 3.2    | 2.7   |
+| 0.9    | 1.1   |
+
+:::
+::::
+
+### b. Calculate the differences between samples
+
+Then, calculate the differences between those values. You should get something that looks like this:
+
+:::: {.columns}
+::: {.column width="40%"}
+
+| Differences    |
+|:--------------:|
+| -0.4           |
+| -0.8           |
+| 0.1            |
+| 0.0            |
+| -0.2           |
+| 0.5            |
+| -0.2           |
+
+:::
+::::
+
+### c. Take out 0, arrange by magnitude
+
+Then, omit all observations of 0 and arrange your numbers by magnitude. You should get something that looks like this:
+
+:::: {.columns}
+::: {.column width="40%"}
+
+| Ordered magnitude    |
+|:--------------------:|
+| 0.1                  |
+| -0.2                 |
+| -0.2                 |
+| -0.4                 |
+| 0.5                  |
+| -0.8                 |
+
+:::
+::::
+
+### d. Give each value a "sign" and a "rank"
+
+This is the "signed rank" part of the test: assign each value a sign (+ or -), then rank (1, 2, 3, 4, etc.) You should get something that looks like this:
+
+:::: {.columns}
+::: {.column width="40%"}
+
+| Ordered magnitude    |   Signed rank        |
+|:--------------------:|:--------------------:|
+| 0.1                  |      + 1             |
+| -0.2                 |      - 2             |
+| -0.2                 |      - 2             |
+| -0.4                 |      - 4             |
+| 0.5                  |      + 5             |
+| -0.8                 |      - 6             |
+
+:::
+::::
+
+### e. Sum the magnitudes of the + and - values
+
+Sum the magnitudes of the + and - values. This will be the -W and +W statistic. You then choose the lower statistic.
+
+In this case, you should get:  
+
++W = 1 + 5 = 6  
+-W = 2 + 2 + 4 + 6 = 14  
+
+Pick the lowest one: +W = 6.  
+
+### e. Run the test in R to check your work.
+
+Start with this data frame:
+
+```{r}
+# creating a long format data frame
+df <- tibble(before = c(1.2, 2.0, 0.8, 0.6, 1.3, 3.2, 0.9), # original values
+             after = c(1.6, 2.8, 0.7, 0.6, 1.5, 2.7, 1.1)) %>% 
+  pivot_longer(cols = before:after, # making this long format
+               names_to = "sample", # creating a column called "sample" that has before and after
+               values_to = "value") %>% # creating a column called value that has the values
+  mutate(sample = fct_relevel(sample, "before", "after")) %>% # making sure that before appears in the data frame first
+  arrange(sample) # arranging the data frame so that before and after are all sitting 
+```
+
+Then run a Wilcoxon signed rank test (note the `paired = TRUE` argument).
+
+```{r}
+wilcox.test(value ~ sample, # formula
+            data = df, # data
+            paired = TRUE) # argument for a paired test
+```
+
+### f. Try a one-sample test.
+
+Compare the following values to $\mu = 7$:
+
+:::: {.columns}
+::: {.column width="40%"}
+
+| Sample |
+|:------:|
+| 2.8    |
+| 8.3    |
+| 4.5    |
+| 6.7    |
+| 8.1    |
+| 7.2    |
+| 7.8    |
+
+:::
+::::
+
+
+First, calculate the difference between each observation and the $\mu$, which is 7:
+
+:::: {.columns}
+::: {.column width="40%"}
+
+| Sample |  Difference  |
+|:------:|:------------:|
+| 2.8    |  -4.2        |
+| 8.3    |  1.3         |
+| 4.5    |  -2.5        |
+| 6.7    |  -0.3        |
+| 8.1    |  1.1         |
+| 7.2    |  0.2         |
+| 7.8    |  0.8         |
+
+:::
+::::
+
+
+Then order each difference and assign a sign and rank:
+
+:::: {.columns}
+::: {.column width="40%"}
+
+| Ordered magnitude    |   Signed rank        |
+|:--------------------:|:--------------------:|
+| 0.2                  |      + 1             |
+| -0.3                 |      - 2             |
+| 0.8                  |      + 3             |
+| 1.1                  |      + 4             |
+| 1.3                  |      + 5             |
+| -2.5                 |      - 6             |
+| -4.2                 |      - 7             |
+
+:::
+::::
+
+
+Then sum the magnitudes:  
+
++W = 1 + 3 + 4 + 5 = 13   
+-W = 2 + 6 + 7 = 15  
+
+For this example, W = 13.  
+
+Then, double check your work in R:
+
+```{r}
+wilcox.test(c(2.8, 8.3, 4.5, 6.7, 8.1, 7.2, 7.8),
+            mu = 7)
+```
+
+
+

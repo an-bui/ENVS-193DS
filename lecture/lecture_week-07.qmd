@@ -21,6 +21,7 @@ citation:
   url: https://spring-2024.envs-193ds.com/lecture/lecture_week-07.html
 ---
 
+## 0. Set up
 
 ```{r libraries}
 # cleaning
@@ -45,16 +46,47 @@ library(performance)
 library(broom)
 ```
 
-# what is a residual?
+## 1. Math
+
+### a. Residuals
+
+Residuals are the difference between the actual observed value ($y_i$) and the model prediction ($\hat{y}$) at some value of $x$.
 
 $$
 residual = y_i - \hat{y}
 $$
 
+Ordinary least squares minimizes the sum of squares of the residuals.
+
+### b. Model equations
+
+OLS gives you an equation for a line.
+
 $$
-SS_{residuals} = (-1)^2 + (4)^2 + (-2)^2 + (-3)^2 = 30
+\begin{align}
+y &= b + mx \\
+
+y &= \beta_0 + \beta_1x + \epsilon \\
+
+\end{align}
 $$
-# R2
+$\beta$ terms ("betas") are often referred to as "model estimates". 
+
+### c. Mathematical hypothesis
+
+Statistically, the hypotheses are:  
+
+H_0_: the predictor variable does not predict the response  
+H_A_: the predictor variable does predict the response  
+
+Mathematically, you might express that as:
+
+$$
+H_0: \beta_1 = 0  \\
+H_A: \beta_1 \neq 0
+$$
+
+### d. R2
 
 $$
 \begin{align}
@@ -63,59 +95,7 @@ R^2 &= 1 - \frac{\sum_{i = 1}^{n}(y_i - \hat{y})^2}{\sum_{i = 1}^{n}(y_i - \bar{
 \end{align}
 $$
 
-# linear model equation
-$$
-\begin{align}
-y &= mx + b \\
-y &= b_1x + b_0 + \epsilon = b_0 + b_1x + \epsilon \\
-y &= \beta_1x + \beta_0 + \epsilon = \beta_0 + \beta_1x + \epsilon
-\end{align}
-$$
-
-# linear model hypotheses
-$$
-\begin{align}
-H_0 &: \beta_1 = 0 \\
-H_A &: \beta_1 \not = 0
-\end{align}
-$$
-
-# what are we doing when we fit a linear model?
-
-```{r what-is-a-linear-model}
-set.seed(666)
-data <- cbind(x = 1:5, y = rnorm(5, mean = 2, sd = 1)*1:5) %>% 
-  as.data.frame()
-
-noline <- ggplot(data, aes(x = x, y = y)) +
-  geom_point(size = 5, color = "darkgreen", fill = "slategrey", shape = 21, stroke = 3) +
-  theme_classic() +
-  labs(x = "Predictor", y = "Response") +
-  theme(text = element_text(size = 14))
-
-opt1 <- ggplot(data, aes(x = x, y = y)) +
-  geom_point(size = 5, color = "darkgreen", fill = "slategrey", shape = 21, stroke = 3) +
-  geom_function(fun = function(x) 2*x, color = "coral2", linewidth = 2, lty = 2) +
-  theme_classic() +
-  labs(x = "Predictor", y = "Response") +
-  theme(text = element_text(size = 14))
-
-opt2 <- ggplot(data, aes(x = x, y = y)) +
-  geom_point(size = 5, color = "darkgreen", fill = "slategrey", shape = 21, stroke = 3) +
-  geom_function(fun = function(x) -2*x + 10, color = "coral2", linewidth = 2, lty = 2) +
-  theme_classic() +
-  labs(x = "Predictor", y = "Response") +
-  theme(text = element_text(size = 14))
-```
-
-```{r noline-plot}
-noline
-```
-
-```{r option-plot, fig.wdith = 8, fig.height = 4}
-opt1 / opt2
-```
-
+## 2. Examples
 
 # actual linear relationship example
 

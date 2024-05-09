@@ -1,0 +1,97 @@
+---
+title: "Week 6 figures - Lecture 11"
+editor: source
+freeze: auto
+execute:
+  message: false
+  warning: false
+format:
+  html: 
+    code-fold: true
+author:
+  - name: An Bui
+    url: https://an-bui.com/
+    affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology
+    affiliation-url: https://www.eemb.ucsb.edu/
+published-title: "Lecture date"
+date: 2024-05-06
+date-modified: last-modified
+categories: [chi-square, qchisq, pchisq, chisq.test]
+citation:
+  url: https://spring-2024.envs-193ds.com/lecture/lecture_week-06.html
+---
+
+## 1. Math
+
+### a. Chi-square test statistic with example
+
+$$
+\begin{align}
+\chi^2 &= \sum\frac{(O - E)^2}{E} \\
+&= \frac{55 - 47.2}{47.2} +...+\frac{45-31.9}{31.9} \\
+&= 15.276
+\end{align}
+$$
+
+### b. expected counts with example
+
+$$
+\begin{align}
+expected &= \frac{row \, total \times column \, total}{table \, total} \\
+&= \frac{126 \times 118}{315} \\
+&= 47.2
+\end{align}
+$$
+
+### c. degrees of freedom
+
+$$
+df = (number\;of\;rows - 1) \times (number\;of\;columns - 1)
+$$
+
+## 2. Code
+
+### a. data
+
+```{r data-matrix}
+# creating matrix of survey results
+survey <- matrix(
+  c(55, 38, 33, 41, 25, 29, 22, 27, 45),
+  nrow = 3,
+  ncol = 3,
+  byrow = TRUE,
+  dimnames = list(c("walking_distance", "driving_distance", "out_of_town"),
+                  c("trails", "dog_access", "wildlife_viewing"))
+)
+
+# displaying survey results
+survey
+```
+
+### b. calculating critical value
+
+```{r critical-value}
+critical_value <- qchisq(p = 0.05, # probability (area under curve)
+                         df = 4, # degrees of freedom
+                         lower.tail = FALSE) # calculate boundary where 0.05 is to the right
+
+critical_value
+```
+
+### c. calculating p-value
+
+```{r p-value}
+p_value <- pchisq(q = 15.276, # test statistic
+       df = 4, # degrees of freedom
+       lower.tail = FALSE) # calculate probability (area under the curve) to the RIGHT of the test statistic
+
+p_value
+```
+
+### d. using `chisq.test()` function
+
+```{r function}
+chisq.test(survey)
+```
+
+

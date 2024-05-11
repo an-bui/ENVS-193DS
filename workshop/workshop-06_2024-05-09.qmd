@@ -10,7 +10,7 @@ author:
 published-title: "Workshop date"
 date: 2024-05-09
 date-modified: last-modified
-categories: []
+categories: [tidyverse, lterdatasampler, paletteer, ggthemes, tvthemes, ggpomological, gghighlight, patchwork, gganimate, ggimage, plotly, mutate, filter, ggplot, geom_point, geom_line, case_when, fct_relevel, theme]
 format:
   html:
     toc: true
@@ -21,13 +21,34 @@ format:
 
 ### Packages
 
+- `tidyverse`  
+- `lterdatasampler`  
+- `paletteer`  
+- `ggthemes`  
+- `tvthemes`  
+- `ggpomological`  
+- `gghighlight`  
+- `patchwork`  
+- `gganimate`  
+- `ggimage`  
+- `plotly`  
+
 ### Operations
 
 #### New functions
 
+- use color palettes with `paletteer::paletteer_c()` and `paletteer::paletteer_d()`  
+- use themes from `tvthemes` (amongst other packages)  
+- highlight elements using `gghighlight()`  
+- make figures into gifs using `gganimate::transition_reveal()`  
+- insert images into figures using `ggimage::geom_image()`  
+- make figures interactive using `plotly::ggplotly()`  
+
 #### Review
 
 ### Data sources
+
+These are all datasets from the `lterdatasampler` package.
 
 ## 2. Code
 
@@ -45,6 +66,8 @@ library(paletteer)
 # use theme packages to change plot aesthetics
 # insert theme package here
 library(ggthemes)
+library(tvthemes)
+library(ggpomological)
 
 # highlight figure components
 library(gghighlight)
@@ -223,6 +246,26 @@ knz_bison_theme <- knz_bison_plot +
   scale_color_economist()
 
 knz_bison_theme
+
+# note that you have to install the "Homemade Apple" font before running this code
+# download it here: https://fonts.google.com/share?selection.family=Homemade+Apple
+knz_bison_pomological_theme <- knz_bison_plot +
+  scale_color_pomological() +
+  theme_pomological_fancy()
+
+knz_bison_pomological_theme
+
+# note that you have to install the "Slayer" font before running this code
+# download it here: https://github.com/Ryo-N7/tvthemes/tree/master/inst/fonts/Slayer
+# click through to the font, then hit the download button
+knz_bison_avatar_theme <- knz_bison_plot +
+  scale_color_avatar(palette = "WaterTribe") +
+  theme_avatar(title.font = "Slayer",
+               text.font = "Slayer",
+               title.size = 8,
+               subtitle.size = 8)
+
+knz_bison_avatar_theme
 
 # run this to save your plot!
 # ggsave("knz_bison_theme.png", # what you want your plot file to be called

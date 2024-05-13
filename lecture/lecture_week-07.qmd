@@ -16,7 +16,7 @@ author:
 published-title: "Lecture date"
 date: 2024-05-13
 date-modified: last-modified
-categories: []
+categories: [linear models]
 citation:
   url: https://spring-2024.envs-193ds.com/lecture/lecture_week-07.html
 ---
@@ -36,9 +36,8 @@ theme_set(theme_classic() +
 library(patchwork)
 library(ggeffects)
 library(flextable)
-
-# data
-library(palmerpenguins)
+library(modelsummary)
+library(gtsummary)
 
 # analysis
 library(car)
@@ -70,7 +69,7 @@ y &= \beta_0 + \beta_1x + \epsilon \\
 
 \end{align}
 $$
-$\beta$ terms ("betas") are often referred to as "model estimates". 
+$\beta$ terms ("betas") are often referred to as "model coefficients". 
 
 ### c. Mathematical hypothesis
 
@@ -95,50 +94,285 @@ R^2 &= 1 - \frac{\sum_{i = 1}^{n}(y_i - \hat{y})^2}{\sum_{i = 1}^{n}(y_i - \bar{
 \end{align}
 $$
 
-## 2. Examples
+## 2. R2
 
-# actual linear relationship example
+```{r r2-1}
+df <- tibble(
+  x = seq(from = 1, to = 20, by = 1),
+  r2_1 = 3*x + 1,
+  r2_between = runif(n = 20, min = 1, max = 5)*x + runif(n = 20, min = 1, max = 5),
+  r2_0 = runif(n = 20, min = 1, max = 20)
+)
 
-## generating data and model
+lm(r2_1 ~ x, data = df) %>% 
+  summary()
 
-```{r linear-relationship}
-x_lm <- seq(from = 1, to = 30, by = 1)
+ggplot(df,
+       aes(x = x,
+           y = r2_1)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm")
 
+lm(r2_between ~ x, data = df) %>% 
+  summary()
+
+ggplot(df,
+       aes(x = x,
+           y = r2_between)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm",
+              se = FALSE)
+
+lm(r2_0 ~ x, data = df) %>% 
+  summary()
+
+ggplot(df,
+       aes(x = x,
+           y = r2_0)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm",
+              se = FALSE)
+```
+
+
+## 3. White abalone example
+
+You’re working on white abalone conservation and you’re concerned about warming temperatures on abalone growth.  
+
+You keep abalone in tanks at different temperatures that range from cold (10 °C) to warm (18 °C) for 4 weeks. You measure growth as the difference in mass between the beginning to the end of your experiment.  
+
+How does water temperature affect abalone growth?
+
+### a. generating the data
+
+```{r abalone-growth-data}
 set.seed(666)
-y_lm <- round(runif(length(x_lm), min = 1, max = 1.5), 1)*x_lm + runif(length(x_lm), min = 1, max = 10)
-
-df_lm <- cbind(
-  x = x_lm,
-  y = y_lm
+abalone <- tibble(
+  temperature = seq(from = 10, to = 18, by = 1),
+  growth1 = runif(length(temperature), min = -0.7, max = -0.63)*temperature + runif(length(temperature), min = 15, max = 17),
+  growth2 = runif(length(temperature), min = -0.7, max = -0.63)*temperature + runif(length(temperature), min = 15, max = 17),
+  growth3 = runif(length(temperature), min = -0.7, max = -0.63)*temperature + runif(length(temperature), min = 15, max = 17)
 ) %>% 
-  as_tibble() %>% 
-  mutate(outlier = case_when(
-    rownames(.) %in% c(23, 27, 28) ~ "outlier",
-    TRUE ~ "ok"
-  ))
+  pivot_longer(cols = growth1:growth3,
+               names_to = "rep",
+               values_to = "growth") %>% 
+  mutate(growth = round(growth, digits = 1)) %>% 
+  select(temperature, growth)
+
+# look at your data:
+head(abalone, 10)
+
+ggplot(data = abalone,
+       aes(x = temperature,
+           y = growth)) +
+  geom_point() 
 ```
 
-## model summaries
+Seems like there is a linear relationship between temperature and abalone growth. As temperature increases, abalone growth decreases.
 
-```{r model-summaries}
-model1 <- lm(y ~ x, data = df_lm)
-model1
-summary(model1)
-anova(model1)
+### b. fitting a model
 
-model1_nooutliers <- lm(y ~ x, data = df_lm %>% filter(outlier == "ok"))
-summary(model1_nooutliers)
+```{r abalone-model-and-checks}
+abalone_model <- lm(growth ~ temperature,
+                    data = abalone)
+
+# just checking DHARMa residuals just in case
+DHARMa::simulateResiduals(abalone_model, plot = TRUE)
+
+# base R residuals
+par(mfrow = c(2, 2))
+plot(abalone_model)
 ```
 
-$$
-\begin{align}
-R^2 &= 1 - \frac{SS_{residuals}}{SS_{total}} \\
-&= 1 - \frac{359.64}{359.64 + 3003.92} \\
-&= 0.8931
-\end{align}
-$$
+### c. looking at model coefficients
+
+```{r abalone-summary}
+summary(abalone_model)
+
+# common way of representing model summaries
+# from flextable package
+flextable::as_flextable(abalone_model)
+
+# better table
+flextable::as_flextable(abalone_model) %>% 
+  set_formatter(values = list("p.value" = function(x){ # special function to represent p < 0.001
+    z <- scales::label_pvalue()(x)
+    z[!is.finite(x)] <- ""
+    z
+  }))
+
+# somewhat more customizable way
+# from modelsummary package
+modelsummary(abalone_model)
+
+# better table
+modelsummary(list("Abalone model" = abalone_model), # naming the model
+             fmt = 2, # rounding digits to 2 decimal places
+             estimate = "{estimate} [{conf.low}, {conf.high}] ({p.value})", # customizing appearance
+             statistic = NULL, # not displaying standard error
+             gof_omit = 'DF|AIC|BIC|Log.Lik.|RMSE') # taking out some extraneous info
+
+# using gtsummary package
+tbl_regression(abalone_model,
+               intercept = TRUE)
+
+# more customizing
+tbl_regression(abalone_model, # model object
+               intercept = TRUE) %>% # show the intercept
+  as_flex_table() # turn it into a flextable (easier to save)
+```
+
+
+```{r abalone-anova}
+anova(abalone_model)
+```
+
+### d. visualizing the model
+
+```{r abalone-plot}
+model_preds <- ggpredict(abalone_model,
+                         terms = "temperature")
+
+# look at the output:
+model_preds
+
+# plotting without 95% CI
+ggplot(abalone, # using the actual data
+       aes(x = temperature, # x-axis
+           y = growth)) + # y-axis
+  geom_point(color = "cornflowerblue", # each point is an individual abalone
+             size = 3) +
+  
+  # model prediction: actual model line
+  geom_line(data = model_preds, # model prediction table
+            aes(x = x, # x-axis
+                y = predicted), # y-axis
+            linewidth = 1) # line width
+
+# plotting
+ggplot(abalone, # using the actual data
+       aes(x = temperature, # x-axis
+           y = growth)) + # y-axis
+  
+  # plot the data first
+  # each point is an individual abalone
+  geom_point(color = "cornflowerblue",
+             size = 3) + 
+  
+  # model prediction: 95% CI
+  geom_ribbon(data = model_preds, # model prediction table
+              aes(x = x, # x-axis
+                  y = predicted, # y-axis
+                  ymin = conf.low, # lower bound of 95% CI
+                  ymax = conf.high), # upper bound of 95% CI
+              alpha = 0.2) + # transparency) 
+  
+  # model prediction: actual model line
+  geom_line(data = model_preds, # model prediction table
+            aes(x = x, # x-axis
+                y = predicted), # y-axis
+            linewidth = 1) # line width
+
+# compare with:
+ggplot(abalone,
+       aes(x = temperature,
+           y = growth)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+### e. outliers
 
 ```{r}
+
+abalone %>% 
+  mutate(outlier = ifelse(row_number() %in% c(19, 21, 27), "yes", "no")) %>% 
+  ggplot(aes(x = temperature,
+             y = growth)) +
+  geom_point(aes(color = outlier), 
+             size = 3) + 
+  geom_line(data = model_preds,
+            aes(x = x,
+                y = predicted),
+            linewidth = 1) +
+  scale_color_manual(values = c("yes" = "red", "no" = "cornflowerblue")) +
+  theme(legend.position = "none")
+
+# new abalone data frame
+abalone2 <- abalone %>% 
+  slice(-c(19, 21, 27))
+
+abalone_model2 <- lm(growth ~ temperature,
+                    data = abalone2)
+
+summary(abalone_model2)
+
+model_preds2 <- ggpredict(abalone_model2, terms = "temperature")
+
+ggplot(data = abalone2,
+       aes(x = temperature,
+           y = growth)) +
+  geom_point(color = "cornflowerblue",
+             size = 3) +
+  geom_line(data = model_preds2,
+            aes(x = x,
+                y = predicted), 
+            linewidth = 1)
+```
+
+
+## 4. Exponential growth example
+
+To compare with abalone example
+
+```{r exp-data-and-model}
+df_ex <- tibble(
+  x = seq(from = 10, to = 18, length = 27),
+  y = c(15, 15, 15, 
+        15, 14.3, 14.2, 
+        14.1, 14, 13.9,
+        13.9, 13.8, 13.7,
+        13.2, 13.1, 13,
+        12.5, 11.1, 10,
+        9.9, 7, 5,
+        3, 1.7, 1,
+        0.5, 0.3, 0.1)
+) 
+
+lm_ex <- lm(y ~ x, data = df_ex)
+
+summary(lm_ex)
+
+ggplot(data = df_ex,
+       aes(x = x,
+           y = y)) +
+  geom_point()
+
+lm_pred <- ggpredict(lm_ex, terms = ~x)
+
+ex_plot_noline <- ggplot(df_ex, aes(x= x, y = y)) +
+  geom_point(size = 3, color = "orange") +
+  theme_classic() +
+  theme(text = element_text(size = 14))
+
+ex_plot_noline
+
+ex_plot <- ggplot(df_ex, aes(x= x, y = y)) +
+  geom_point(size = 3, color = "orange") +
+  geom_line(data = lm_pred, aes(x = x, y = predicted), linewidth = 1) +
+  theme(text = element_text(size = 14))
+
+ex_plot
+```
+
+```{r}
+par(mfrow = c(2, 2))
+plot(lm_ex)
+```
+
+```{r}
+#| eval: false
+
 # if using quarto, don't label chunk with a table... so weird
 anova_tbl <- broom::tidy(anova(model1)) %>% 
   mutate(across(where(is.numeric), ~ round(.x, digits = 2))) %>% 
@@ -157,42 +391,74 @@ flextable(anova_tbl) %>%
 ```
 
 
-## model plots
+# 5. Temperature/elevation example
 
-```{r linear-model-plots, fig.width = 8, fig.height = 6}
-model1_pred <- ggpredict(model1, terms = ~ x)
-model1_nooutliers_pred <- ggpredict(model1_nooutliers, terms = ~ x)
+```{r sonadora-temperature}
 
-model1_plot_noline <- ggplot(data = df_lm, aes(x = x, y = y)) +
-  geom_point(shape = 19, size = 3, color = "cornflowerblue") +
-  theme_classic() +
-  theme(text = element_text(size = 14))
+# data
+sonadora <- read_csv(here::here("data", "knb-lter-luq.183.877108", "Temp_SonadoraGradient_Daily.csv"))
 
-model1_plot <- ggplot(data = df_lm, aes(x = x, y = y)) +
-  geom_point(shape = 19, size = 3, color = "cornflowerblue") +
-  geom_line(data = model1_pred, aes(x = x, y = predicted), linewidth = 1) +
-  theme_classic() +
-  theme(text = element_text(size = 14))
+# cleaning
+sonadora_clean <- sonadora %>% 
+  janitor::clean_names() %>% 
+  pivot_longer(cols = plot_250:plot_1000,
+               names_to = "plot_name",
+               values_to = "temp_c") %>% 
+  separate_wider_delim(cols = plot_name,
+                       delim = "_",
+                       names = c("plot", "elevation_m"),
+                       cols_remove = FALSE) %>% 
+  select(-plot) %>% 
+  mutate(elevation_m = as.numeric(elevation_m))
 
-model1_plot_nooutliers <- ggplot(data = df_lm %>% filter(outlier == "ok"), aes(x = x, y = y)) +
-  geom_point(aes(color = outlier), shape = 19, size = 3) +
-  scale_color_manual(values = c("ok" = "cornflowerblue", "outlier" = "red")) +
-  geom_line(data = model1_nooutliers_pred, aes(x = x, y = predicted), linewidth = 1) +
-  theme_classic() +
-  theme(text = element_text(size = 14),
-        legend.position = "none") 
+# summarizing
+sonadora_sum <- sonadora_clean %>% 
+  group_by(plot_name, elevation_m) %>% 
+  reframe(mean_temp_c = mean(temp_c, na.rm = TRUE)) %>% 
+  arrange(elevation_m)
+
+# model
+model <- lm(mean_temp_c ~ elevation_m, data = sonadora_sum)
+
+# visualization
+ggplot(data = sonadora_sum, 
+       aes(x = elevation_m,
+           y = mean_temp_c)) +
+  geom_point(size = 3) +
+  labs(x = "Elevation (m)",
+       y = "Temperature (°C)")
+
+# diagnostics from DHARMa
+DHARMa::simulateResiduals(model, plot = TRUE)
+
+# summary
+summary(model)
+tidy(model)
+
+# model predictions
+ggpredict(model) %>% plot(show_data = TRUE)
 ```
+
+```{r sonadora-diagnostics}
+#| fig-width: 12
+#| fig-height: 12
+
+# diagnostics
+par(mfrow = c(2, 2))
+plot(model)
+```
+
 
 # exponential growth example
 
-```{r exp-data-and-model}
+```{r old-exp-data-and-model}
 x_ex <- seq(from = 5, to = 9, length = 30)
 
 y_ex <- exp(x_ex)
 
 df_ex <- cbind(
   x = x_ex,
-  y = exp(x_ex)
+  y = -exp(x_ex)
 ) %>% 
   as_tibble()
 
@@ -225,6 +491,8 @@ ex_plot <- ggplot(df_ex, aes(x= x, y = y)) +
 
 # diagnostic plots
 ```{r diagnostics}
+#| eval: false
+#| 
 par(mfrow = c(2, 4))
 plot(model1, which = c(1), col = "cornflowerblue", pch = 19)
 plot(lm_ex, which = c(1), col = "orange", pch = 17)
@@ -237,21 +505,17 @@ plot(lm_ex, which = c(5), col = "orange", pch = 17)
 dev.off()
 ```
 
-# comparison plots
-
-```{r plots-for-comparison}
-model1_plot_noline + ex_plot_noline
-model1_plot + ex_plot
-```
 
 # correlation?
 
 ```{r}
+#| eval: false
 x <- x_lm
 y <- y_lm
 ```
 
 ```{r}
+#| eval: false
 cor.test(x, y, method = "pearson")
 ```
 
@@ -276,6 +540,7 @@ uses a t-distribution
 ## no correlation but clear relationship
 
 ```{r}
+#| eval: false
 x_lm <- seq(from = 1, to = 30, length.out = 50)
 # y = a( x – h) 2 + k
 df_para <- cbind(

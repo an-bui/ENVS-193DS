@@ -323,6 +323,72 @@ Directory names
 </div>
 </div>
 <p>Then, select the folder on your computer where you are keeping all your repositories for Git/GitHub. If you created a folder called “Git” or “GitHub” in your root directory, use that folder. This is something that you only have to do once; for each subsequent repo you clone from GitHub, the file path will be automatically filled in.</p>
+<p>After you have created your repository, a new RStudio window will open. Verify that the clone has worked by seeing that you have:</p>
+<ul>
+<li>a project (should be the same as the directory name)<br>
+</li>
+<li>the “Git” tab<br>
+</li>
+<li>a <code>.gitignore</code> file (a file that tells git which files to ignore when tracking changes)</li>
+</ul>
+<p><a href="../resources/images/github/07_after-cloning.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../resources/images/github/07_after-cloning.png" class="img-fluid" style="width:80.0%"></a></p>
+</section>
+<section id="make-changes-to-your-repository." class="level4">
+<h4 class="anchored" data-anchor-id="make-changes-to-your-repository.">4. Make changes to your repository.</h4>
+<p>Create a new Quarto document. Make sure the output is set to “html”. Type in some code.</p>
+<p>Save your document. Open up the “Git” tab. You should see your new <code>.qmd</code> file along with any other new files (the <code>.gitignore</code> and the <code>.Rproj</code> file.).</p>
+<p><a href="../resources/images/github/08_making-changes.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../resources/images/github/08_making-changes.png" class="img-fluid" style="width:80.0%"></a></p>
+</section>
+<section id="commit-your-changes." class="level4">
+<h4 class="anchored" data-anchor-id="commit-your-changes.">5. Commit your changes.</h4>
+<p>In the Status column, you will see two yellow question marks. This means that the files are new, and git isn’t tracking them yet. Check the boxes next to each file, which turns the two yellow question marks to a green “A” for “added”.</p>
+<p>Click “Commit”. A new screen will pop up that looks like this:</p>
+<p><a href="../resources/images/github/10_writing-commit-message.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../resources/images/github/10_writing-commit-message.png" class="img-fluid" style="width:80.0%"></a></p>
+<p>If you click through each file in the top left pane, you will see the changes to the file in the lower pane.</p>
+<p>The top right pane is where your commit message goes.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Writing a useful commit message
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Commit messages accompany each git commit and push. They should describe the changes to the file since the last version. They’re best as short phrases describing the changes. For a first commit/push, you could just write something like “initial commit”, as in the example.</p>
+</div>
+</div>
+<p>Write a commit message, then hit “Commit”. You should see a window that shows your commit message and a summary of the file changes.</p>
+<p><a href="../resources/images/github/11_committing-done.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../resources/images/github/11_committing-done.png" class="img-fluid" style="width:80.0%"></a></p>
+<p>Congratulations! Your files are now being tracked by git.</p>
+</section>
+<section id="push-your-changes." class="level4">
+<h4 class="anchored" data-anchor-id="push-your-changes.">6. Push your changes.</h4>
+<p>Your file is now being tracked, but it’s not on GitHub yet.</p>
+<p>To get your files on GitHub, <strong>push</strong> the commit. Click the “Push” button. You should see a window that looks like this:</p>
+<p><a href="../resources/images/github/12_pushing-done.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../resources/images/github/12_pushing-done.png" class="img-fluid" style="width:80.0%"></a></p>
+<p>Double check that your push to GitHub by looking back at your remote. Refresh the repository page. You should see your new files in the repository, and your commit message showing up next to the files that you changed.</p>
+<p><a href="../resources/images/github/13_remote-after-pushing.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="../resources/images/github/13_remote-after-pushing.png" class="img-fluid" style="width:80.0%"></a></p>
+<p>Congratulations! Your files are now on GitHub.</p>
+</section>
+<section id="make-more-changes." class="level4">
+<h4 class="anchored" data-anchor-id="make-more-changes.">7. Make more changes.</h4>
+<p>Version control only works if you actually use it. That means you should commit and push with each change you make. The frequency of committing/pushing you do depends on you. Some people are totally commit-happy and commit/push with every chunk of code they write; you might find it more reasonable to commit/push after each coding session.</p>
+<p>Every time you make a change, your modified file will show up in the “Git” tab with a blue M for “modified”. The process for changes is the same as for new files:</p>
+<ul>
+<li>Click the check box,<br>
+</li>
+<li>hit “Commit”,<br>
+</li>
+<li>fill in a commit message,<br>
+</li>
+<li>commit,<br>
+</li>
+<li>then push.</li>
+</ul>
+<p>In the commit window, you’ll see any modified files with changes highlighted in green, as before.</p>
+<p><a href="../resources/images/github/14_committing-new-changes.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="../resources/images/github/14_committing-new-changes.png" class="img-fluid" style="width:80.0%"></a></p>
 
 
 <!-- -->
@@ -880,16 +946,87 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>It is **very important** that your remote and local repositories have the _same name_. The easiest way to ensure this is by not typing anything into the second box. Paste the url into the first box, then hit Tab.</span>
 <span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>Then, select the folder on your computer where you are keeping all your repositories for Git/GitHub. If you created a folder called "Git" or "GitHub" in your root directory, use that folder. This is something that you only have to do once; for each subsequent repo you clone from GitHub, the file path will be automatically filled in.</span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>Then, select the folder on your computer where you are keeping all your repositories for Git/GitHub. If you created a folder called "Git" or "GitHub" in your root directory, use that folder. This is something that you only have to do once; for each subsequent repo you clone from GitHub, the file path will be automatically filled in.  </span>
 <span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>After you have created your repository, a new RStudio window will open. Verify that the clone has worked by seeing that you have:  </span>
 <span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>a project (should be the same as the directory name)  </span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>the "Git" tab  </span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>a <span class="in">`.gitignore`</span> file (a file that tells git which files to ignore when tracking changes)  </span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/github/07_after-cloning.png)</span>{width=80%}</span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 4. Make changes to your repository.</span></span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>Create a new Quarto document. Make sure the output is set to "html". Type in some code.  </span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>Save your document. Open up the "Git" tab. You should see your new <span class="in">`.qmd`</span> file along with any other new files (the <span class="in">`.gitignore`</span> and the <span class="in">`.Rproj`</span> file.).  </span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/github/08_making-changes.png)</span>{width=80%}</span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 5. Commit your changes.</span></span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>In the Status column, you will see two yellow question marks. This means that the files are new, and git isn't tracking them yet. Check the boxes next to each file, which turns the two yellow question marks to a green "A" for "added". </span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>Click "Commit". A new screen will pop up that looks like this: </span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/github/10_writing-commit-message.png)</span>{width=80%}</span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>If you click through each file in the top left pane, you will see the changes to the file in the lower pane.  </span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>The top right pane is where your commit message goes. </span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>:::{.callout-tip}</span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Writing a useful commit message</span></span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a>Commit messages accompany each git commit and push. They should describe the changes to the file since the last version. They're best as short phrases describing the changes. For a first commit/push, you could just write something like "initial commit", as in the example.</span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a>Write a commit message, then hit "Commit". You should see a window that shows your commit message and a summary of the file changes.  </span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/github/11_committing-done.png)</span>{width=80%}</span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a>Congratulations! Your files are now being tracked by git.</span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 6. Push your changes.</span></span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a>Your file is now being tracked, but it's not on GitHub yet.  </span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a>To get your files on GitHub, **push** the commit. Click the "Push" button. You should see a window that looks like this:</span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/github/12_pushing-done.png)</span>{width=80%}</span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a>Double check that your push to GitHub by looking back at your remote. Refresh the repository page. You should see your new files in the repository, and your commit message showing up next to the files that you changed. </span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/github/13_remote-after-pushing.png)</span>{width=80%}</span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a>Congratulations! Your files are now on GitHub.  </span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 7. Make more changes.</span></span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a>Version control only works if you actually use it. That means you should commit and push with each change you make. The frequency of committing/pushing you do depends on you. Some people are totally commit-happy and commit/push with every chunk of code they write; you might find it more reasonable to commit/push after each coding session.  </span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a>Every time you make a change, your modified file will show up in the "Git" tab with a blue M for "modified". The process for changes is the same as for new files:  </span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Click the check box,  </span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>hit "Commit",  </span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>fill in a commit message,  </span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>commit,  </span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>then push.  </span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a>In the commit window, you'll see any modified files with changes highlighted in green, as before.</span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/github/14_committing-new-changes.png)</span>{width=80%}</span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","loop":false,"descPosition":"bottom","openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","closeEffect":"zoom","descPosition":"bottom","loop":false});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

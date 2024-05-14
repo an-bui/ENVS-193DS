@@ -86,7 +86,78 @@ Paste the clone url into the first box. Keep your cursor in that box, then hit t
 It is **very important** that your remote and local repositories have the _same name_. The easiest way to ensure this is by not typing anything into the second box. Paste the url into the first box, then hit Tab.
 :::
 
-Then, select the folder on your computer where you are keeping all your repositories for Git/GitHub. If you created a folder called "Git" or "GitHub" in your root directory, use that folder. This is something that you only have to do once; for each subsequent repo you clone from GitHub, the file path will be automatically filled in.
+Then, select the folder on your computer where you are keeping all your repositories for Git/GitHub. If you created a folder called "Git" or "GitHub" in your root directory, use that folder. This is something that you only have to do once; for each subsequent repo you clone from GitHub, the file path will be automatically filled in.  
+
+After you have created your repository, a new RStudio window will open. Verify that the clone has worked by seeing that you have:  
+
+- a project (should be the same as the directory name)  
+- the "Git" tab  
+- a `.gitignore` file (a file that tells git which files to ignore when tracking changes)  
+
+![](/resources/images/github/07_after-cloning.png){width=80%}
+
+#### 4. Make changes to your repository.
+
+Create a new Quarto document. Make sure the output is set to "html". Type in some code.  
+
+Save your document. Open up the "Git" tab. You should see your new `.qmd` file along with any other new files (the `.gitignore` and the `.Rproj` file.).  
+
+![](/resources/images/github/08_making-changes.png){width=80%}
+
+#### 5. Commit your changes.
+
+In the Status column, you will see two yellow question marks. This means that the files are new, and git isn't tracking them yet. Check the boxes next to each file, which turns the two yellow question marks to a green "A" for "added". 
+
+Click "Commit". A new screen will pop up that looks like this: 
+
+![](/resources/images/github/10_writing-commit-message.png){width=80%}
+
+If you click through each file in the top left pane, you will see the changes to the file in the lower pane.  
+
+The top right pane is where your commit message goes. 
+
+:::{.callout-tip}
+#### Writing a useful commit message
+Commit messages accompany each git commit and push. They should describe the changes to the file since the last version. They're best as short phrases describing the changes. For a first commit/push, you could just write something like "initial commit", as in the example.
+:::
+
+Write a commit message, then hit "Commit". You should see a window that shows your commit message and a summary of the file changes.  
+
+![](/resources/images/github/11_committing-done.png){width=80%}
+
+Congratulations! Your files are now being tracked by git.
+
+#### 6. Push your changes.
+
+Your file is now being tracked, but it's not on GitHub yet.  
+
+To get your files on GitHub, **push** the commit. Click the "Push" button. You should see a window that looks like this:
+
+![](/resources/images/github/12_pushing-done.png){width=80%}
+
+Double check that your push to GitHub by looking back at your remote. Refresh the repository page. You should see your new files in the repository, and your commit message showing up next to the files that you changed. 
+
+![](/resources/images/github/13_remote-after-pushing.png){width=80%}
+
+Congratulations! Your files are now on GitHub.  
+
+#### 7. Make more changes.
+
+Version control only works if you actually use it. That means you should commit and push with each change you make. The frequency of committing/pushing you do depends on you. Some people are totally commit-happy and commit/push with every chunk of code they write; you might find it more reasonable to commit/push after each coding session.  
+
+Every time you make a change, your modified file will show up in the "Git" tab with a blue M for "modified". The process for changes is the same as for new files:  
+
+- Click the check box,  
+- hit "Commit",  
+- fill in a commit message,  
+- commit,  
+- then push.  
+
+In the commit window, you'll see any modified files with changes highlighted in green, as before.
+
+![](/resources/images/github/14_committing-new-changes.png){width=80%}
+
+
 
 
 

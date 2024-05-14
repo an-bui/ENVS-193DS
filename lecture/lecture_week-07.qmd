@@ -94,6 +94,24 @@ R^2 &= 1 - \frac{\sum_{i = 1}^{n}(y_i - \hat{y})^2}{\sum_{i = 1}^{n}(y_i - \bar{
 \end{align}
 $$
 
+### e. Pearson's correlation
+
+## formula for Pearson's correlation
+
+$$
+r = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum(x_i-\bar{x})^2}\sqrt{\sum(y_i - \bar{y})^2}}
+$$
+
+
+## test statistic for pearson correlation
+
+$$
+\begin{align}
+t &= \frac{r\sqrt{n - 2}}{\sqrt{1-r^2}} \\
+df &= n -2
+\end{align}
+$$
+
 ## 2. R2
 
 ```{r r2-1}
@@ -448,6 +466,64 @@ par(mfrow = c(2, 2))
 plot(model)
 ```
 
+# 6. correlation
+
+### a. abalone correlation
+
+```{r abalone-correlation}
+cor.test(abalone$growth, abalone$temperature,
+         method = "pearson")
+```
+
+### b. correlation but different slopes
+
+```{r correlation}
+#| fig-width: 12
+#| fig-height: 8
+
+corr_df <- tibble(
+  x = seq(from = 1, to = 10, by = 0.5),
+  y1 = 0.25*x,
+  y2 = 1*x
+) 
+
+corr_0.25 <- ggplot(data = corr_df,
+                    aes(x = x,
+                        y = y1)) +
+  geom_point(size = 3) +
+  scale_y_continuous(limits = c(0, 10))
+
+corr_1 <- ggplot(data = corr_df,
+                 aes(x = x,
+                     y = y2)) +
+  geom_point(size = 3) +
+  scale_y_continuous(limits = c(0, 10))
+
+corr_0.25 + corr_1
+
+```
+
+
+### c. no correlation but clear relationship
+
+```{r parabola}
+x_lm <- seq(from = 1, to = 30, length.out = 50)
+# y = a( x – h) 2 + k
+df_para <- cbind(
+  x = x_lm,
+  y = 0.1*(x_lm - 15)^2 + 12
+) %>% 
+  as_tibble()
+
+ggplot(data = df_para, 
+       aes(x = x, 
+           y = y)) +
+  geom_point(size = 3) 
+
+cor.test(df_para$x, df_para$y, method = "pearson")
+
+```
+
 
 # exponential growth example
 
@@ -503,58 +579,6 @@ plot(lm_ex, which = c(3), col = "orange", pch = 17)
 plot(model1, which = c(5), col = "cornflowerblue", pch = 19)
 plot(lm_ex, which = c(5), col = "orange", pch = 17)
 dev.off()
-```
-
-
-# correlation?
-
-```{r}
-#| eval: false
-x <- x_lm
-y <- y_lm
-```
-
-```{r}
-#| eval: false
-cor.test(x, y, method = "pearson")
-```
-
-## formula for Pearson's correlation
-
-$$
-r = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum(x_i-\bar{x})^2}\sqrt{\sum(y_i - \bar{y})^2}}
-$$
-
-
-## test statistic for pearson correlation
-
-$$
-\begin{align}
-t &= \frac{r\sqrt{n - 2}}{\sqrt{1-r^2}} \\
-df &= n -2
-\end{align}
-$$
-
-uses a t-distribution
-
-## no correlation but clear relationship
-
-```{r}
-#| eval: false
-x_lm <- seq(from = 1, to = 30, length.out = 50)
-# y = a( x – h) 2 + k
-df_para <- cbind(
-  x = x_lm,
-  y = 0.1*(x_lm - 15)^2 + 12
-) %>% 
-  as_tibble()
-
-ggplot(df_para, aes(x = x, y = y)) +
-  geom_point(size = 3) +
-  theme_bw()
-
-cor.test(df_para$x, df_para$y, method = "pearson")
-
 ```
 
 

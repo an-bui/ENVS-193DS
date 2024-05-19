@@ -1,0 +1,190 @@
+---
+title: "OPTIONAL practice problem - everything is a linear model"
+editor: source
+freeze: auto
+date: 2024-05-01
+date-modified: last-modified
+---
+
+## Description
+
+Linear models share the same parametric base as ANOVAs (and t-tests!). This means that if you were to compare your results from an ANOVA to a linear model, you would see the same result.  
+
+However, the presentation of those results is slightly different, so it's not always obvious if you're just looking at R output. For example, with a linear model, you would see the estimates for each level of a factor relative to a reference level. Compare this with an ANOVA, where you would see sum of squares, mean squares, F-statistic, and p-value.  
+
+Prove to yourself that ANOVAs are actually just linear models!
+
+## Set up
+
+Install `palmerpenguins` if you don't have it already. Read in the data using `data(penguins)`.  
+
+The question we will ask is: [**How does body mass differ between penguin species?**]{style="color: #008080;"}
+
+```{r}
+#| message: false
+
+library(tidyverse)
+library(palmerpenguins)
+library(car)
+library(ggeffects)
+
+data(penguins)
+```
+
+
+## Problem
+
+### 1. Calculate the mean body masses and lower and upper bounds of the 95% CI around the mean for each penguins species.
+
+```{r}
+penguins %>% 
+  group_by(species) %>% # group by species
+  reframe(mean = mean(body_mass_g, na.rm = TRUE), # calculating mean
+          se = sd(body_mass_g, na.rm = TRUE)/sqrt(length(body_mass_g)), # calculating SE
+          tval = qt(p = 0.05/2, df = length(body_mass_g), lower.tail = FALSE), # finding t-value
+          margin = se*tval, # calculating margin of error
+          conf_low = mean - margin, # calculating the lower bound of the CI
+          conf_high = mean + margin, # calculating the upper bound of the CI
+          var = var(body_mass_g, na.rm = TRUE) # also calculating variance here for efficiency
+          ) 
+```
+
+:::{.callout-note}
+Stop and think: keep in mind what those means and 95% CI around the means are!
+:::
+
+### 2. Create a figure with species on the x-axis and body mass on the y-axis, with means, 95% CIs, and the underlying data.
+
+```{r}
+#| warning: false
+
+ggplot(data = penguins, # penguins data
+       aes(x = species, # x-axis
+           y = body_mass_g)) + # y-axis
+  geom_point(position = position_jitter(width = 0.2, # shake points left and right
+                                        height = 0), # not up and down
+             alpha = 0.2) + # transparency
+  stat_summary(geom = "pointrange", # plot means and CIs
+               fun.data = mean_cl_normal) # calculating mean and 95% confidence interval
+```
+
+:::{.callout-note}
+Stop and think: do you think there's a difference between species in body mass?
+:::
+
+### 3. Use ANOVA to determine the difference in body mass between penguin species.  
+
+Do any assumption checks as needed.  
+
+First, Levene's test:
+
+```{r}
+leveneTest(body_mass_g ~ species, # formula
+           data = penguins) # data
+```
+
+Significantly different variances in body mass between species! But looking at the calculated variances, they are for practical purposes equal.  
+
+Visually evaluating normality:  
+
+```{r}
+#| warning: false
+
+ggplot(data = penguins,
+       aes(sample = body_mass_g)) + # argument for a QQ plot
+  geom_qq_line(lty = 2, 
+               color = "grey") + # adding a reference line
+  geom_qq() + # QQ
+  theme_classic() + # cleaner background, easier to see things
+  facet_wrap(~species)
+```
+
+Statistically evaluating normality:   
+
+```{r}
+adelie <- penguins %>% 
+  filter(species == "Adelie") %>% # filtering for Adelie
+  pull(body_mass_g) # pulling body mass as a vector
+
+shapiro.test(adelie)
+
+chinstrap <- penguins %>% 
+  filter(species == "Chinstrap") %>% # filtering for chinstrap
+  pull(body_mass_g)
+
+shapiro.test(chinstrap)
+
+gentoo <- penguins %>% 
+  filter(species == "Gentoo") %>% # filtering for Gentoo
+  pull(body_mass_g)
+
+shapiro.test(gentoo)
+```
+
+Probably ok.
+
+```{r}
+penguins_anova <- aov(body_mass_g ~ species, # formula
+                      data = penguins) # data
+
+# show the ANOVA table: sums of squares, mean squares, f-statistic, p-value
+summary(penguins_anova)
+```
+
+:::{.callout-note}
+Stop and think: what is the result of your ANOVA?
+:::
+
+Then, do a post-hoc:  
+
+```{r}
+TukeyHSD(penguins_anova)
+```
+
+:::{.callout-note}
+Stop and think: what is the result of your post-hoc test?
+:::
+
+### 4. Use a linear model to determine the difference in body mass between penguin species.
+
+```{r}
+penguins_lm <- lm(body_mass_g ~ species,
+                  data = penguins)
+
+par(mfrow = c(2, 2)) # displaying all diagnostic plots in 2x2 grid
+plot(penguins_lm) # diagnostic plots
+
+summary(penguins_lm) # model estimates and information
+```
+
+:::{.callout-note}
+
+Stop and think about this result.
+
+- How do the estimates compare to your calculated means?  
+- How do the F-statistic, degrees of freedom, and p-value for the model compare to the ANOVA summary?  
+- What components of the ANOVA summary go into the R^2^?  
+
+:::
+
+Then, get the model predictions:
+
+```{r}
+ggpredict(penguins_lm, 
+          terms = c("species")) # only predictor in the model is species
+```
+
+:::{.callout-note}
+Stop and think: compare these with your calculated means and 95% CIs.
+:::
+
+Then, plot for good measure!
+
+```{r}
+ggpredict(penguins_lm, # getting model predictions
+          terms = c("species")) %>% # only predictor is species
+  # quick option to plot from ggpredict
+  plot(show_data = TRUE, # show the underlying data
+       jitter = TRUE) # shake the points around a bit
+```
+

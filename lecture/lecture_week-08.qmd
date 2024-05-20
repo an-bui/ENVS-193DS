@@ -14,9 +14,9 @@ author:
     affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology
     affiliation-url: https://www.eemb.ucsb.edu/
 published-title: "Lecture date"
-date: 2024-05-21
+date: 2024-05-20
 date-modified: last-modified
-categories: []
+categories: [multiple linear regression, AIC]
 citation:
   url: https://spring-2024.envs-193ds.com/lecture/lecture_week-08.html
 ---
@@ -97,6 +97,53 @@ $$
 F = \frac{MS_{reg}}{MS_{err}}
 $$
 
+# soil example
+
+```{r}
+set.seed(666)
+# sample size
+n <- 64
+
+soil_df <- tibble(
+  # compaction
+  force_mpa = round(rnorm(n = n, mean = 0.7, sd = 0.03), 3),
+  # root length
+  root_mm = round(rnorm(n = n, mean = -1, sd = 0.02)*force_mpa, 3) + 5
+) 
+
+ggplot(data = soil_df,
+       aes(x = force_mpa,
+           y = root_mm)) +
+  geom_point()
+
+soil_lm <- lm(root_mm ~ force_mpa,
+              data = soil_df)
+
+par(mfrow = c(2, 2))
+plot(soil_lm)
+
+summary(soil_lm)
+
+cor.test(soil_df$root_mm, soil_df$force_mpa)
+
+ggpredict(soil_lm,
+          terms = "force_mpa") %>% 
+  plot(show_data = TRUE)
+
+flextable::as_flextable(soil_lm) 
+
+flextable::as_flextable(soil_lm) %>% 
+  set_formatter(
+    # special function to represent p < 0.001
+    values = list("p.value" = function(x){ 
+      z <- scales::label_pvalue()(x)
+      z[!is.finite(x)] <- ""
+      z
+    })
+  )
+```
+
+
 # plant example
 
 ```{r plant-data}
@@ -112,19 +159,31 @@ plant_df <- tibble(
   # response: growth in cm/week
   growth = light*rnorm(n = n, mean = 0.3, sd = 0.1) + temperature/round(rnorm(n = n, mean = 5, sd = 0.1))
 ) 
+
+ggplot(data = plant_df,
+       aes(x = temperature,
+           y = growth)) +
+  geom_point()
+
+ggplot(data = plant_df,
+       aes(x = ph,
+           y = light)) +
+  geom_point()
+
+ggplot(data = plant_df,
+       aes(x = light,
+           y = growth)) +
+  geom_point()
 ```
 
 ```{r plant-model}
-plant_model <- lm(growth ~ light + temperature + ph, data = plant_df)
+plant_model <- lm(growth ~ light + temperature, 
+                  data = plant_df)
 ```
 
 ```{r plant-diagnostics}
-par(mfrow = c(2, 2))
-plot(plant_model)
-```
-
-```{r plant-dev-off, results = FALSE, echo = FALSE}
-dev.off()
+simulateResiduals(plant_model,
+                  plot = TRUE)
 ```
 
 ```{r plant-model-performance}
@@ -139,7 +198,7 @@ vif(plant_model)
 ```{r plant-summary}
 summary(plant_model)
 
-anova(plant_model)
+# anova(plant_model)
 ```
 
 For example, temperature F-value:
@@ -155,6 +214,26 @@ F &= \frac{2.85039}{0.00830} \\
 \end{align}
 $$
 
+# dummy variable examples
+
+```{r}
+tibble(
+  herbivores = sample(x = c("absent", "present"), size = 10, replace = TRUE, prob = c(0.5, 0.5))
+)
+
+tibble(
+  fertilizer = sample(x = c("low", "medium", "high"), size = 10, replace = TRUE, prob = c(0.3, 0.3, 0.3))
+)
+
+df <- tibble(
+  year = sample(x = c("1st", "2nd", "3rd", "4th", "5th"), size = 10, replace = TRUE, prob = c(0.2, 0.2, 0.2, 0.2, 0.2))
+)
+
+df %>% 
+  mutate(year = as_factor(year))
+```
+
+
 # frog example
 
 ## generating data
@@ -165,25 +244,36 @@ frog_n <- 87
 
 df <- cbind(
   # predictor variables
-  color = sample(x = c("blue", "green", "red"), size = frog_n, replace = TRUE, prob = c(0.3, 0.3, 0.3)),
-  weight = (round(rnorm(n = frog_n, mean = 3, sd = 0.3), 2)),
-  pattern = sample(x = c("striped", "spotted", "none"), size = frog_n, replace = TRUE, prob = c(0.3, 0.3, 0.3))
-) %>% 
-  as_tibble() %>% 
-  mutate(weight = as.numeric(weight),
-         color = as.factor(color),
-         pattern = as.factor(pattern)) %>% 
-  group_by(color, pattern) %>% 
-  # response variable
+  # color = sample(x = c("blue", "green", "red"), size = frog_n, replace = TRUE, prob = c(0.3, 0.3, 0.3)),
+  weight = (round(rnorm(n = frog_n, mean = 3, sd = 0.1), 2))
+  #pattern = sample(x = c("striped", "spotted", "none"), size = frog_n, replace = TRUE, prob = c(0.3, 0.3, 0.3))
+) %>%
+  as_tibble() %>%
+  mutate(toxicity = round(rnorm(n = frog_n, mean = 1.5, sd = 0.06)*weight, 3)) %>%
+  mutate(color = case_when(
+    between(toxicity, 2.5, 4.4) ~ "blue",
+    between(toxicity, 4.4, 4.6) ~ "green",
+    between(toxicity, 4.6, 5.5) ~ "red"
+  )) %>% 
   mutate(toxicity = case_when(
-    color == "blue" & pattern == "striped" ~ rnorm(n = length(color), mean = 5, sd = 1),
-    color == "blue" & pattern == "spotted" ~ rnorm(n = length(color), mean = 4, sd = 1),
-    color == "green" & pattern == "striped" ~ rnorm(n = length(color), mean = 4, sd = 1),
-    color == "green" & pattern == "spotted" ~ rnorm(n = length(color), mean = 3, sd = 1),
-    color == "red" ~ rnorm(n = length(color), mean = 6, sd = 1),
-    TRUE ~ rnorm(n = length(color), mean = 2, sd = 1)
-  )) %>%
-  ungroup()
+    color == "blue" ~ round(rnorm(n = frog_n, mean = 2.5, sd = 0.09)*weight, 3),
+    color == "green" ~ round(rnorm(n = frog_n, mean = 3, sd = 0.05)*weight, 3),
+    color == "red" ~ round(rnorm(n = frog_n, mean = 2.3, sd = 0.05)*weight, 3)
+  )) %>% 
+  mutate(color = as_factor(color),
+         color = fct_relevel(color, "red", "blue", "green"))
+
+
+# df <- cbind(
+#   color = sample(x = c("blue", "green", "red"), size = frog_n, replace = TRUE, prob = c(0.3, 0.3, 0.3))
+# ) %>% 
+#   as_tibble() %>% 
+#   mutate(weight = (round(rnorm(n = frog_n, mean = 3.5, sd = 0.1), 2))) %>% 
+#   mutate(toxicity = case_when(
+#     color == "blue" ~ round(rnorm(n = frog_n, mean = 3, sd = 0.4)*weight, 2),
+#     color == "green" ~ round(rnorm(n = frog_n, mean = 2, sd = 0.5)*weight, 2),
+#     color == "red" ~ round(rnorm(n = frog_n, mean = 1, sd = 0.03)*weight, 2)
+#   ))
 ```
 
 ## plotting data
@@ -204,18 +294,6 @@ ggplot(data = df, aes(x = color, y = toxicity, color = color, fill = color)) +
   stat_summary(geom = "pointrange", fun = mean, fun.min = function(x) mean(x) - sd(x), fun.max = function(x) mean(x) + sd(x), shape = 21, size = 1) +
  #  geom_point(position = position_jitter(width = 0.2, height = 0, seed = 666), alpha = 0.3) +
   labs(title = "Color") +
-  theme_bw() +
-  theme(legend.position = "none",
-        axis.title.x = element_blank(),
-        text = element_text(size = 22))
-
-ggplot(data = df, aes(x = pattern, y = toxicity, shape = pattern)) +
-  geom_jitter(width = 0.2, height = 0, alpha = 0.3) +
-  # scale_color_manual(values = c("blue" = blue_col, "green" = green_col, "red" = red_col)) +
-  # scale_fill_manual(values = c("striped" = striped_col, "spotted" = spotted_col, "none" = none_col)) +
-  stat_summary(geom = "pointrange", fun = mean, fun.min = function(x) mean(x) - sd(x), fun.max = function(x) mean(x) + sd(x), size = 1) +
-  labs(title = "Pattern") +
-  theme_bw() +
   theme(legend.position = "none",
         axis.title.x = element_blank(),
         text = element_text(size = 22))
@@ -224,7 +302,6 @@ ggplot(data = df, aes(x = weight, y = toxicity)) +
   geom_point() +
   # geom_smooth(method = "lm") +
   labs(title = "Weight") +
-  theme_bw() +
   theme(legend.position = "none",
         axis.title.x = element_blank(),
         text = element_text(size = 22))
@@ -234,58 +311,63 @@ ggplot(data = df, aes(x = weight, y = toxicity, color = color)) +
   scale_color_manual(values = c("blue" = blue_col, "green" = green_col, "red" = red_col)) +
   geom_smooth(method = "lm") +
   labs(title = "Weight")
+
+head(df, 10)
 ```
 
 ## model
 ```{r frog-model}
-model <- lm(toxicity ~ weight + color + pattern, data = df)
-simulateResiduals(model, plot = TRUE)
+model1 <- lm(toxicity ~ weight + color, 
+             data = df)
+
+model2 <- lm(toxicity ~ weight * color, 
+             data = df)
+
+simulateResiduals(model1, plot = TRUE)
+simulateResiduals(model2, plot = TRUE)
+check_model(model2)
+testOutliers(model2)
 ```
 
 ## diagnostics
 ```{r frog-diagnostics}
 par(mfrow = c(2, 2))
-plot(model)
-```
-
-
-```{r frog-dev-off, results = FALSE, echo = FALSE}
-dev.off()
+plot(model1)
+plot(model2)
 ```
 
 ## model summary
 
 ```{r}
-# F-statistic: 31.05 on 5 and 81 DF,  p-value: < 2.2e-16
-# total SSE - SSE of residuals divided by degrees of freedom
-totalSSE <- 6.932+140.09+21.63
-totaldf <- 1+2+2
-errorSSE <- 88
-model_fstat <- (totalSSE/5)/(errorSSE/81) 
-model_fstat
+summary(model1)
+summary(model2)
+model.sel(model1, model2)
 
-# for a single coefficient
-weightMS <- 6.932
-weightdf <- 1
-errorMS <- 1.086
-fvalweight <- (weightMS/weightdf)/errorMS
-fvalweight
+ggpredict(model1,
+          terms = c("weight [2:4 by = 0.01]", 
+                    "color")) %>% 
+  plot(show_data = TRUE,
+       limit_range = TRUE) +
+  scale_color_manual(values = c("green" = green_col, 
+                                "red" = red_col, 
+                                "blue" = blue_col)) +
+  scale_fill_manual(values = c("green" = green_col, 
+                               "red" = red_col, 
+                               "blue" = blue_col)) +
+  theme_classic()
 
-colorMS <- 70.045
-colordf <- 2
-fvalcolor <- (colorMS/colordf)/errorMS
-fvalcolor
-# residual mean sq = 1.086 (denominator)
-# equation: t = 5.5 - 0.74*W - 0.97*green + 2.1*red + 0.85*spotted + 1.2*striped
-```
-
-```{r}
-model_summary <- summary(model)
-
-Anova(model)
-
-model.sel(model)
-
+ggpredict(model2,
+          terms = c("weight [2:4 by = 0.01]", 
+                    "color")) %>% 
+  plot(show_data = TRUE,
+       limit_range = TRUE) +
+  scale_color_manual(values = c("green" = green_col, 
+                                "red" = red_col, 
+                                "blue" = blue_col)) +
+  scale_fill_manual(values = c("green" = green_col, 
+                               "red" = red_col, 
+                               "blue" = blue_col)) +
+  theme_classic()
 ```
 
 $$
@@ -297,11 +379,12 @@ MSE = \frac{\sum(y_i-\hat{y})^2}{n}
 $$
 
 ```{r}
-tidy(model, conf.int = TRUE, conf.level = 0.95)
+tidy(model2, conf.int = TRUE, conf.level = 0.95)
 ```
 
 
 ```{r}
+model_summary <- summary(model2)
 c("lower" = model_summary$coef[2,1] - qt(0.975, df = model_summary$df[2]) * model_summary$coef[2, 2],
   "upper" = model_summary$coef[2,1] + qt(0.975, df = model_summary$df[2]) * model_summary$coef[2, 2])
 ```

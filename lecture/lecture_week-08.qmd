@@ -126,8 +126,11 @@ summary(soil_lm)
 
 cor.test(soil_df$root_mm, soil_df$force_mpa)
 
+model_preds <- ggpredict(soil_lm,
+                         terms = "force_mpa [0.63:0.77 by = 0.01]") 
+
 ggpredict(soil_lm,
-          terms = "force_mpa") %>% 
+          terms = "force_mpa [0.63:0.77 by = 0.01]") %>% 
   plot(show_data = TRUE)
 
 flextable::as_flextable(soil_lm) 
@@ -174,6 +177,24 @@ ggplot(data = plant_df,
        aes(x = light,
            y = growth)) +
   geom_point()
+
+plant_lm <- lm(growth ~ temperature + ph + light,
+               data = plant_df)
+simulateResiduals(plant_lm) %>% plot()
+
+summary(plant_lm)
+
+ggpredict(plant_lm,
+          terms = c("temperature")) %>% 
+  plot(show_data = TRUE)
+
+ggpredict(plant_lm,
+          terms = c("ph")) %>% 
+  plot(show_data = TRUE)
+
+ggpredict(plant_lm,
+          terms = c("light")) %>% 
+  plot(show_data = TRUE)
 ```
 
 ```{r plant-model}
@@ -226,11 +247,100 @@ tibble(
 )
 
 df <- tibble(
-  year = sample(x = c("1st", "2nd", "3rd", "4th", "5th"), size = 10, replace = TRUE, prob = c(0.2, 0.2, 0.2, 0.2, 0.2))
-)
+  year = sample(x = c("1st", "2nd", "3rd", "4th", "5th"), size = 20, replace = TRUE, prob = c(0.2, 0.2, 0.2, 0.2, 0.2))
+) %>% 
+  mutate(year = as_factor(year),
+         year = fct_relevel(year, "1st", "2nd", "3rd", "4th", "5th"))
 
-df %>% 
-  mutate(year = as_factor(year))
+df 
+
+str(df)
+```
+
+## plant growth dummy variable
+
+```{r}
+# humidity units: %
+# plant growth: cm / week
+
+low_col <- "#2176ae"
+medium_col <- "#fbb13c"
+high_col <- "#fe6847"
+
+n <- 30
+set.seed(10)
+plant_df <- tibble(
+  humidity = round(rnorm(n = n, mean = 60, sd = 15), 0),
+  low = humidity*rnorm(n = n, mean = 0.025, sd = 0.012) + 1,
+  medium = humidity*rnorm(n = n, mean = 0.025, sd = 0.015) + 1.5,
+  high = humidity*rnorm(n = n, mean = 0.025, sd = 0.017) + 2
+) %>% 
+  pivot_longer(cols = low:high,
+               names_to = "fertilizer", 
+               values_to = "growth") %>% 
+  mutate(fertilizer = fct_relevel(fertilizer, "low", "medium", "high"))
+
+# gives you a random sample
+sample_n(plant_df, 10)
+
+# look at the structure
+str(plant_df)
+
+ggplot(data = plant_df,
+       aes(x = humidity,
+           y = growth)) +
+  geom_point() 
+
+ggplot(data = plant_df,
+       aes(x = fertilizer,
+           y = growth,
+           color = fertilizer)) +
+  geom_jitter(width = 0.2,
+              height = 0,
+              alpha = 0.3) +
+  stat_summary(fun.data = mean_cl_normal,
+               geom = "pointrange",
+               size = 1,
+               linewidth = 1) +
+  scale_color_manual(values = c(low_col, medium_col, high_col)) +
+  theme(legend.position = "none")
+
+plant_df %>% 
+  group_by(fertilizer) %>% 
+  summarize(mean = mean(growth))
+
+plant_df %>% 
+  summarize(mean = mean(growth))
+
+plant_lm <- lm(growth ~ humidity + fertilizer,
+               data = plant_df)
+
+# am i broken because i can't look at anything other than dharma residuals
+simulateResiduals(plant_lm) %>% plot()
+
+par(mfrow = c(2, 2))
+plot(plant_lm)
+
+ggpredict(plant_lm,
+          terms = c("humidity",
+                    "fertilizer")) %>% 
+  plot(show_data = TRUE) +
+  scale_color_manual(values = c(low_col, medium_col, high_col)) +
+  scale_fill_manual(values = c(low_col, medium_col, high_col)) +
+  theme_classic()
+
+ggpredict(plant_lm,
+          terms = c("humidity")) %>% 
+  plot(show_data = TRUE) +
+  theme_classic()
+
+ggpredict(lm(growth ~ humidity, data = plant_df),
+          terms = "humidity") %>% 
+  plot(show_data = TRUE) +
+  theme_classic()
+
+summary(plant_lm)
+summary(lm(growth ~ humidity, data = plant_df))
 ```
 
 
@@ -241,6 +351,16 @@ df %>%
 ```{r frog-data}
 set.seed(666)
 frog_n <- 87
+
+frog_df <- tibble(
+  weight = (round(rnorm(n = frog_n, mean = 3, sd = 0.1), 2)),
+  blue = round(rnorm(n = frog_n, mean = 2.5, sd = 0.09)*(round(rnorm(n = frog_n, mean = 3, sd = 0.1), 2)), 2),
+  green = round(rnorm(n = frog_n, mean = 3, sd = 0.05)*(round(rnorm(n = frog_n, mean = 3, sd = 0.1), 2)), 2),
+  red = round(rnorm(n = frog_n, mean = 2.3, sd = 0.05)*(round(rnorm(n = frog_n, mean = 3, sd = 0.1), 2)), 2)
+) %>% 
+  pivot_longer(cols = blue:red,
+               names_to = "color",
+               values_to = "toxicity")
 
 df <- cbind(
   # predictor variables
@@ -287,18 +407,23 @@ striped_col <- "grey1"
 spotted_col <- "grey50"
 none_col <- "grey80"
 
-ggplot(data = df, aes(x = color, y = toxicity, color = color, fill = color)) +
+ggplot(data = frog_df, aes(x = color, y = toxicity, color = color, fill = color)) +
   geom_jitter(width = 0.2, height = 0, alpha = 0.3) +
   scale_color_manual(values = c("blue" = blue_col, "green" = green_col, "red" = red_col)) +
   scale_fill_manual(values = c("blue" = blue_col, "green" = green_col, "red" = red_col)) +
-  stat_summary(geom = "pointrange", fun = mean, fun.min = function(x) mean(x) - sd(x), fun.max = function(x) mean(x) + sd(x), shape = 21, size = 1) +
+  stat_summary(geom = "pointrange", 
+               fun = mean, 
+               fun.min = function(x) mean(x) - sd(x), 
+               fun.max = function(x) mean(x) + sd(x), 
+               shape = 21, 
+               size = 1) +
  #  geom_point(position = position_jitter(width = 0.2, height = 0, seed = 666), alpha = 0.3) +
   labs(title = "Color") +
   theme(legend.position = "none",
         axis.title.x = element_blank(),
         text = element_text(size = 22))
 
-ggplot(data = df, aes(x = weight, y = toxicity)) +
+ggplot(data = frog_df, aes(x = weight, y = toxicity)) +
   geom_point() +
   # geom_smooth(method = "lm") +
   labs(title = "Weight") +
@@ -306,7 +431,7 @@ ggplot(data = df, aes(x = weight, y = toxicity)) +
         axis.title.x = element_blank(),
         text = element_text(size = 22))
 
-ggplot(data = df, aes(x = weight, y = toxicity, color = color)) +
+ggplot(data = frog_df, aes(x = weight, y = toxicity, color = color)) +
   geom_point() +
   scale_color_manual(values = c("blue" = blue_col, "green" = green_col, "red" = red_col)) +
   geom_smooth(method = "lm") +
@@ -318,10 +443,10 @@ head(df, 10)
 ## model
 ```{r frog-model}
 model1 <- lm(toxicity ~ weight + color, 
-             data = df)
+             data = frog_df)
 
 model2 <- lm(toxicity ~ weight * color, 
-             data = df)
+             data = frog_df)
 
 simulateResiduals(model1, plot = TRUE)
 simulateResiduals(model2, plot = TRUE)

@@ -1,0 +1,81 @@
+---
+title: Storing your personal access token (PAT)
+description: "make sure your PAT is stored!!!"
+freeze: auto
+execute: 
+  eval: false
+author:
+  - name: An Bui
+    url: https://an-bui.com/
+    affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology
+    affiliation-url: https://www.eemb.ucsb.edu/
+date: 2024-05-22
+categories: [GitHub, Git, personal access token]
+format:
+  html:
+    toc: true
+    toc-expand: true
+---
+
+## Part 1: in RStudio console
+
+### 1. install `usethis`
+
+Do this in the console!
+
+```{r}
+install.packages("usethis")
+```
+
+### 2. Generate a personal access token using `usethis`
+
+Again, do this in the console!
+
+```{r}
+usethis::create_github_token()
+```
+
+This will lead you to a web browser.
+
+## Part 2. In the GitHub webpage
+
+### 1. (if prompted) in the web browser, enter your GitHub password
+
+### 2. Fill in the info about your new personal access token
+
+### 3. Scroll to the bottom of the page, hit Generate token
+
+### 4. Copy the personal access token to your clipboard
+
+## Part 3. In the RStudio console
+
+### 1. Set the personal access token.
+
+Run this in the console!
+
+```{r}
+gitcreds::gitcreds_set()
+```
+
+### 2. Paste your personal access token when prompted
+
+Paste your PERSONAL ACCESS TOKEN. NOT YOUR GITHUB PASSWORD. NOT YOUR COMPUTER PASSWORD.  
+
+**PASTE YOUR PERSONAL ACCESS TOKEN.**
+
+### 3. Double check that the personal access token is stored
+
+Again, run this in the console:
+
+```{r}
+usethis::git_sitrep()
+```
+
+### 4. Look for `Personal access token` under `GitHub`
+
+This should say `<discovered>`.
+
+### 5. Look at Name and Email under `Git global (user)`
+
+- Name should be your GitHub username  
+- Email should be your GitHub account email

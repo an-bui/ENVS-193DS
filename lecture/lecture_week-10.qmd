@@ -79,17 +79,148 @@ $$
 Y_i \sim N(\mu_i, \sigma^2)
 $$
 
+$$
+Y_i \sim Normal(\mu_i, \sigma^2)
+$$
+
 ## systematic component
 
 $$
 \eta_i = \sum^{p-1}_{n = 0}\beta_jx_{ij}
 $$
 
+$$
+\mu_i = \beta_0 + \beta x_i
+$$
+
 ## link
 
 $$
-g(\mu_i) = \eta_i
+\eta = g(\mu_i) 
 $$
+
+# GLM structure using binary example
+
+## random
+
+$$
+E(Y) = p
+$$
+
+## systematic
+
+## link
+
+$$
+\eta = g(p) = log(\frac{p_i}{1 - p_i})
+$$
+
+$$
+log(\frac{p_i}{1 - p_i}) = \beta_0 + \beta_1 x_i
+$$
+
+$$
+Y_i \sim Binomial(p_i)
+$$
+
+$$
+\eta = logit(p_i) = log(\frac{p_i}{1 - p_i})
+$$
+
+# binomial/bernoulli example
+
+```{r}
+set.seed(666)
+lizard <- tibble(
+  pushup = c(rep(1, 30), rep(0, 30)),
+  distance = c(rnorm(n = 20, mean = 10, sd = 2), 
+               rnorm(n = 20, mean = 20, sd = 2), 
+               rnorm(n = 20, mean = 30, sd = 2))
+) %>% 
+  mutate(distance = round(distance, 1))
+
+slice_sample(lizard, n = 10)
+
+ggplot(lizard,
+       aes(x = distance,
+           y = pushup)) +
+  geom_point(size = 3,
+             shape = 21) +
+  scale_y_continuous(limits = c(0, 1),
+                     breaks = c(0, 1)) +
+  geom_smooth(method = "glm",
+              method.args = list(family = "binomial"),
+              se = FALSE,
+              linewidth = 1)
+
+ggplot(lizard,
+       aes(x = distance,
+           y = pushup)) +
+  geom_point(size = 3,
+             shape = 21) +
+  scale_y_continuous(limits = c(0, 1),
+                     breaks = c(0, 1)) +
+  geom_smooth(method = "lm",
+              se = FALSE,
+              linewidth = 1)
+
+liz_mod <- glm(pushup ~ distance,
+               data = lizard,
+               family = "binomial")
+
+summary(liz_mod)
+
+simulateResiduals(liz_mod) %>% plot()
+
+confint(liz_mod)
+
+mod_preds <- ggpredict(liz_mod,
+          terms = "distance [3:40 by = 1]") 
+
+ggplot(lizard,
+       aes(x = distance,
+           y = pushup)) +
+  geom_point(size = 3,
+             alpha = 0.4) +
+  geom_ribbon(data = mod_preds,
+              aes(x = x,
+                  y = predicted,
+                  ymin = conf.low,
+                  ymax = conf.high),
+              alpha = 0.4) +
+  geom_line(data = mod_preds,
+            aes(x = x,
+                y = predicted)) +
+  scale_y_continuous(limits = c(0, 1),
+                     breaks = c(0, 1)) 
+
+# what is the probability of a pushup at 20cm?
+ggpredict(liz_mod,
+          terms = "distance [20]")
+
+# what is the probability of a pushup at 10cm?
+ggpredict(liz_mod,
+          terms = "distance [10]")
+
+# what is the probability of a pushup at 30cm?
+ggpredict(liz_mod,
+          terms = "distance [30]")
+
+# what is the probability of a pushup at 20cm?
+predict(liz_mod, 
+        newdata = data.frame(distance = 20), 
+        type = "response")
+
+r.squaredLR(liz_mod)
+
+gtsummary::tbl_regression(liz_mod)
+
+gtsummary::tbl_regression(liz_mod,
+                          exponentiate = TRUE)
+
+as_flextable(liz_mod)
+```
+
 
 # negative binomial example
 

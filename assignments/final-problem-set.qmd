@@ -53,6 +53,9 @@ This part of the final is open communication, open note, open internet, etc.
 #| echo: false
 
 library(tidyverse)
+library(DHARMa)
+library(ggeffects)
+library(flextable)
 ```
 
 ## Problem 1. Research writing (17 points)
@@ -292,3 +295,233 @@ Your submission should
 - include an informative README **(10 points)** with a "General information" section, "Data and file overview" section, and a "Rendered output" section
 
 **128 points total**
+
+## Solutions
+
+## Problem 1. Research writing
+
+### a. Transparent statistical methods
+
+Answer: 
+
+- what kind of test is this?  
+
+This is a linear model (or simple linear regression).  
+
+- what is the distribution?  
+
+The distribution is an F-distribution.  
+
+### b. More information needed
+
+- correlation coefficient  
+
+Describes the strength of the relationship between variables; you can interpret this as an effect size
+
+- model estimate for slope  
+
+it's the slope in the equation describing the model; for each 1 unit increase in plant density, you expect a change in soil temperature equivalent to the slope 
+
+- model estimate for intercept  
+
+it's the intercept in the equation describing the model; when plant density = 0, you expect soil temperature to be equivalent to the intercept
+
+### c. Suggestions for rewriting
+
+Example answer:
+
+We found a **(strong/medium/weak)** relationship between plant density on soil temperature **(Pearson's r = ____)**, where plant density significantly predicted soil temperature **(linear model, F(degrees of freedom) = test statistic, p-value, ⍺ = 0.05)**. **Some percent** of the variation in plant density explained the variation in soil temperature **(R^2^ = ____)**. With each 1 unit increase in plant density, we expect an decrease in soil temperature of **(model slope estimate ± standard error)**.
+
+## Problem 2. Data presentation
+
+### a. Figure improvements
+
+- take out the legend
+
+The legend is redundant with the x-axis
+
+- show the underlying data
+
+You're calculating summary statistics (mean and SE) but don't show where the mean and SE come from 
+
+- change the axis titles/labels
+
+This makes the figure more interpretable
+
+- rearrange the x-axis
+
+This makes it easier to see that calcification differs between treatments 
+
+- take out the gridlines
+
+This takes out visual clutter
+
+- use different colors
+
+This makes the plot look nicer!
+
+### b. Give an example
+
+```{r}
+ggplot(data = data,
+       aes(x = reorder(treatment, diff_mass_g, fun.data = mean), # reordering x-axis in order of increasing mean mass
+           y = diff_mass_g, # y axis
+           color = treatment)) + # coloring by treatment
+  # plotting the underlying data (observations)
+  geom_point(position = position_jitter(
+                        width = 0.1,
+                        height = 0,
+                        seed = 1),
+             # making the points transparent
+             alpha = 0.4) +
+  # plotting the mean and standard error
+  stat_summary(geom = "pointrange", # plotting the point (mean) and range (whiskers)
+               fun.data = mean_se, # calculating mean and standard error
+               size = 1, # making the size of the mean points bigger
+               linewidth = 1) + # making the width of the whiskers wider
+  # changing the x-axis labels
+  scale_x_discrete(labels = c("High", "Medium", "Low")) +
+  # changing the colors
+  scale_color_manual(values = c(treatment_high = "#b2d8d8",
+                                treatment_medium = "#008080",
+                                treatment_low = "#004c4c")) +
+  # changing the x- and y-axis titles
+  labs(x = "Experimental pH treatment", 
+       y = "Difference in mass (g)") +
+  # cleaner theme
+  theme_bw() +
+  theme(legend.position = "none", # taking out legend
+        panel.grid = element_blank()) # taking out gridlines
+```
+
+## Problem 3. Data analysis
+
+#### a. What do the 1s and 0s mean in this data set?  
+
+In the data set, 1 means that the bat was recaptured, and 0 means that the bat was not recaptured.
+
+#### b. In this data set, what does "recapture" represent biologically?
+
+Recapture is a proxy for bat survival; if the bat was recaptured, that means it survived.
+
+#### c. Clean the data
+
+```{r}
+#| echo: false
+
+bats <- read_csv(here::here("data", "Cleaned Inf MYLU Band Recap Data for Ecotraps Analysis.csv")) 
+```
+
+
+```{r}
+bats_clean <- bats %>% 
+  # create categories for disease load based on log-transformed values
+  mutate(disease_load = case_when(
+    logearlyloads < -3 ~ "low",
+    between(logearlyloads, -3, -2) ~ "moderate",
+    between(logearlyloads, -2, 0) ~ "high",
+  ),
+  # reorder factor levels: low, moderate, high
+  disease_load = fct_relevel(disease_load, "low", "moderate", "high")) %>% 
+  # rename columns
+  rename(recapture_prob = EverRecapturedYN.x,
+         temp = earlytemp) %>% 
+  # select columns of interest
+  select(recapture_prob, temp, disease_load) %>% 
+  drop_na(temp)
+```
+
+### Analysis.
+
+#### d. Run the model.  
+
+```{r}
+bat_model <- glm(recapture_prob ~ temp*disease_load, # formula
+                 data = bats_clean, # data
+                 family = binomial) # family
+```
+
+#### e. Check the diagnostics. 
+
+```{r}
+simulateResiduals(bat_model) %>% plot()
+```
+
+#### f. Make a decision about your diagnostics.  
+
+The residuals look uniformly distributed according to the QQ plot, and there is no change in the variance of the residuals acros the range of fitted values.
+
+#### g. Visualize the model predictions. 
+
+```{r}
+# using ggpredict in this example
+ggpredict(bat_model,
+          # two predictors: temperature (continuous), and disease load (categorical)
+          terms = c("temp [all]", 
+                    "disease_load")) %>% 
+  # show the underlying data (observations)
+  # using the plot() function that is part of `ggeffects`
+  plot(show_data = TRUE) +
+  # everything below this point is `ggplot()` customization
+  # custom color and fill colors
+  scale_color_manual(values = c("#00a0b0", "#eb6841", "#edc951")) +
+  scale_fill_manual(values = c("#00a0b0", "#eb6841", "#edc951")) +
+  # changing titles
+  labs(x = "Temperature (°C)", # x-axis
+       y = "Recapture probability", # y-axis
+       color = "Disease load", # legend
+       fill = "Disease load", # legend
+       title = "Predicted probabilities of recapture") + # plot title
+  theme(panel.grid = element_blank()) # taking out gridlines
+```
+
+#### h. Write a caption for your plot.
+
+**Figure 1. Probability of bat recapture declines as temperature increases, but this depends on disease load.** Points represent individual bats that were recaptured (1) or not recaptured (0). Lines represent model predictions and ribbons represent 95% confidence intervals around predictions. Colors represent disease load. 
+
+#### i. Calculate model predictions
+
+```{r}
+predictions <- rbind( # using rbind to put predictions into a data frame
+  # getting predictions at temp = 6 and temp = 12
+  ggpredict(bat_model, 
+            terms = c("temp [6]",
+                      "disease_load")), 
+  ggpredict(bat_model, 
+            terms = c("temp [12]",
+                      "disease_load"))
+) %>% 
+  # making sure this is a data frame
+  as_tibble() %>% 
+  # renaming columns
+  rename(temperature = x,
+         disease_load = group) %>% 
+  # selecting columns
+  select(disease_load, temperature, predicted, conf.low, conf.high) %>% 
+  # rounding values to 2 decimal points
+  mutate(across(predicted:conf.high, ~ round(., 2)))
+
+# using flextable to make a table
+flextable(predictions) %>% 
+  # changing the column names for easier interpretation
+  set_header_labels(
+    disease_load = "Disease load",
+    temperature = "Temperature", 
+    predicted = "Recapture probability",
+    conf.low = "95% CI (low)",
+    conf.high = "95% CI (high)"
+  ) %>% 
+  # making the table fit the viewer window
+  autofit()
+```
+
+#### j. Write a caption for your table. 
+
+Table 1. Probability of recapture at low (6 °C) and high (12 °C) temperatures. Recapture probabilities for 6 °C and 12 °C shown with 95% confidence intervals around model predictions. 
+
+#### k. Interpret your results.
+
+There was an interactive effect of temperature and disease load on recapture probability (Figure 1). As temperature increased, recapture probability decreased, though this depended on disease load. At high temperatures, the probability of recapture is low for all disease loads (Table 1); at low temperatures, the probability of recapture is higher for low disease loads than moderate and high disease loads. This suggests that at lower temperatures, bats are more likely to be recaptured (i.e. survive) if they have low levels of disease than if they have moderate or high levels of disease.
+
+
+

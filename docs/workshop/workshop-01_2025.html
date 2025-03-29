@@ -159,17 +159,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
                                 <div class="quarto-categories">
                 <div class="quarto-category">tidyverse</div>
                 <div class="quarto-category">mean</div>
-                <div class="quarto-category">max</div>
+                <div class="quarto-category">median</div>
                 <div class="quarto-category">read_csv</div>
                 <div class="quarto-category">filter</div>
-                <div class="quarto-category">arrange</div>
-                <div class="quarto-category">mutate</div>
                 <div class="quarto-category">group_by</div>
-                <div class="quarto-category">pipe (%&gt;%) operator</div>
+                <div class="quarto-category">mutate</div>
+                <div class="quarto-category">summarize</div>
+                <div class="quarto-category">pipe operators</div>
+                <div class="quarto-category">|&gt;</div>
                 <div class="quarto-category">ggplot</div>
+                <div class="quarto-category">geom_boxplot</div>
                 <div class="quarto-category">geom_point</div>
                 <div class="quarto-category">geom_line</div>
-                <div class="quarto-category">ufos</div>
+                <div class="quarto-category">labs</div>
               </div>
                   </div>
   </div>
@@ -197,7 +199,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">March 28, 2025</p>
+        <p class="date-modified">March 29, 2025</p>
       </div>
     </div>
       
@@ -220,11 +222,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">2. Code</a>
   <ul class="collapse">
   <li><a href="#intro-to-scripts" id="toc-intro-to-scripts" class="nav-link" data-scroll-target="#intro-to-scripts">1. Intro to scripts</a></li>
-  <li><a href="#intro-to-functions" id="toc-intro-to-functions" class="nav-link" data-scroll-target="#intro-to-functions">2. Intro to functions</a></li>
-  <li><a href="#loading-in-packages-and-data" id="toc-loading-in-packages-and-data" class="nav-link" data-scroll-target="#loading-in-packages-and-data">3. loading in packages and data</a></li>
-  <li><a href="#cleaning-and-wranging" id="toc-cleaning-and-wranging" class="nav-link" data-scroll-target="#cleaning-and-wranging">4. cleaning and wranging</a></li>
-  <li><a href="#an-easier-way-to-clean-and-wrangle" id="toc-an-easier-way-to-clean-and-wrangle" class="nav-link" data-scroll-target="#an-easier-way-to-clean-and-wrangle">5. an easier way to clean and wrangle</a></li>
-  <li><a href="#data-visualization" id="toc-data-visualization" class="nav-link" data-scroll-target="#data-visualization">6. data visualization</a></li>
+  <li><a href="#intro-to-objects" id="toc-intro-to-objects" class="nav-link" data-scroll-target="#intro-to-objects">2. Intro to objects</a></li>
+  <li><a href="#intro-to-functions" id="toc-intro-to-functions" class="nav-link" data-scroll-target="#intro-to-functions">3. Intro to functions</a></li>
+  <li><a href="#intro-to-packages-and-data" id="toc-intro-to-packages-and-data" class="nav-link" data-scroll-target="#intro-to-packages-and-data">4. Intro to packages and data</a></li>
+  <li><a href="#cleaning-and-wranging" id="toc-cleaning-and-wranging" class="nav-link" data-scroll-target="#cleaning-and-wranging">5. cleaning and wranging</a></li>
+  <li><a href="#an-easier-way-to-clean-and-wrangle" id="toc-an-easier-way-to-clean-and-wrangle" class="nav-link" data-scroll-target="#an-easier-way-to-clean-and-wrangle">6. an easier way to clean and wrangle</a></li>
+  <li><a href="#visualizing-data" id="toc-visualizing-data" class="nav-link" data-scroll-target="#visualizing-data">7. Visualizing data</a></li>
+  <li><a href="#grouping-data-using-group_by" id="toc-grouping-data-using-group_by" class="nav-link" data-scroll-target="#grouping-data-using-group_by">8. Grouping data using <code>group_by()</code></a></li>
+  <li><a href="#cleaning-wrangling-and-visualizing-all-together" id="toc-cleaning-wrangling-and-visualizing-all-together" class="nav-link" data-scroll-target="#cleaning-wrangling-and-visualizing-all-together">9. Cleaning, wrangling, and visualizing all together</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -240,20 +245,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p><strong>Workshop dates: April 3 (Thursday), April 4 (Friday)</strong></p>
-<div class="callout callout-style-default callout-warning callout-titled" title="WORK IN PROGRESS">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-WORK IN PROGRESS
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Still working on this - subject to change before Thursday/Friday!</p>
-</div>
-</div>
+<p><strong>Workshop dates: April 3 (Thursday), April 4 (Friday)</strong>:</p>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">1. Summary</h2>
 <section id="packages" class="level3">
@@ -265,30 +257,32 @@ WORK IN PROGRESS
 <section id="operations" class="level3">
 <h3 class="anchored" data-anchor-id="operations">Operations</h3>
 <ul>
-<li>calculations using <code>mean()</code> and <code>max()</code><br>
+<li>calculations using <code>mean()</code> and <code>median()</code><br>
 </li>
 <li>read in data using <code>read_csv()</code><br>
 </li>
 <li>filter data using <code>filter()</code><br>
 </li>
-<li>arrange data using <code>arrange()</code><br>
+<li>group data using <code>group_by()</code><br>
 </li>
 <li>create new column using <code>mutate()</code><br>
 </li>
-<li>group data using <code>group_by()</code><br>
+<li>calculate summary statistics using <code>summarize()</code><br>
 </li>
-<li>count observations using <code>count()</code><br>
-</li>
-<li>chain functions together using <code>%&gt;%</code><br>
+<li>chain functions together using <code>|&gt;</code><br>
 </li>
 <li>visualize data using <code>ggplot()</code><br>
 </li>
-<li>creating points and lines using <code>geom_point()</code> and <code>geom_line()</code></li>
+<li>create boxplots using <code>geom_boxplot()</code><br>
+</li>
+<li>create line plots (a type of scatterplot) using <code>geom_point()</code> and <code>geom_line()</code><br>
+</li>
+<li>label plots using <code>labs()</code></li>
 </ul>
 </section>
 <section id="data-source" class="level3">
 <h3 class="anchored" data-anchor-id="data-source">Data source</h3>
-<p>This workshop’s data comes from <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-06-20/readme.md">Tidy Tuesday 2023-06-20</a>, which was from the <a href="https://nuforc.org/ndx/?id=shape">National UFO Reporting Center</a> and <a href="https://sunrise-sunset.org/">sunrise-sunset.org</a> by <a href="https://github.com/jonthegeek/apis/">Jon Harmon</a>.</p>
+<p>This workshop’s data comes from <a href="https://irma.nps.gov/Stats/">National Parks Service Stats</a>, which is the official repository for all data relating to national parks visits. Today, we are working with data from Channel Islands (unceded Chumash land), Death Valley (unceded Serrano and Cahuilla land), and Joshua Tree (unceded Shoshone, Kawaiisu, and Southern Paiute land). You can orient yourself on <a href="https://www.arcgis.com/apps/webappviewer/index.html?id=f178c6d7581e4d45ad7ce68c52a1863e&amp;extent=-13593425.3853%2C4085629.1882%2C-13117987.0693%2C4385568.0871%2C102100">this map</a>.</p>
 </section>
 </section>
 <section id="code" class="level2">
@@ -296,111 +290,231 @@ WORK IN PROGRESS
 <section id="intro-to-scripts" class="level3">
 <h3 class="anchored" data-anchor-id="intro-to-scripts">1. Intro to scripts</h3>
 <p>In class, we use an R Script. It allows you to write your code (recipe) and run the code in the console (kitchen).</p>
-<p>R considers everything in the script as code to run, so you can write comments in the R Script by putting a pound sign at the beginning of the line. This is especially useful when you want to explain what your code is doing at each line in plain language.</p>
-<p>Try writing a comment of your own in the line below.</p>
+<p>R considers everything in the script as code to run. Try writing code to calculate the sum of 5 and 7 multiplied by 2.</p>
+<p>Run code by putting your cursor on the line and hitting <code>Ctrl + Enter</code> or <code>Cmd + Enter</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is a comment!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">5</span><span class="sc">+</span><span class="dv">7</span>)<span class="sc">*</span><span class="dv">2</span> <span class="co"># basic math: adding and multiplying</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 24</code></pre>
+</div>
+</div>
+<p>Everything in colored text is considered code, and that is what R will run in the console. If you don’t want to run code, you can put a pound sign/hashtag at the beginning of the line. This is especially useful when you want to explain what your code is doing at each line in plain language.</p>
+<p>Go back up to the code you wrote to do the simple calculation and write a comment describing what the code is doing.</p>
+</section>
+<section id="intro-to-objects" class="level3">
+<h3 class="anchored" data-anchor-id="intro-to-objects">2. Intro to objects</h3>
+<p>It’s often useful to save things called “objects.” These are stored numbers, lists of numbers, or anything else that appears in the “Environment” tab in the top right.</p>
+<p>To save (aka store) an object, the general form is:</p>
+<p><code>object name &lt;- what you want to store</code></p>
+<p>Read aloud, this is “object name, left arrow operator, what you want to store”.</p>
+<p>In this code, we are creating an object called <code>visitors</code> and storing a list of numbers: 31, 15, 20, 50.</p>
+<p>In code, you know that something is a list if it is within a <code>c()</code> function (we’ll get to functions in the next section).</p>
+<p>Write a comment at the end of this line describing what it does.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>visits <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">31</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">50</span>) <span class="co"># saving a list of numbers as an object called visits</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="intro-to-functions" class="level3">
-<h3 class="anchored" data-anchor-id="intro-to-functions">2. Intro to functions</h3>
-<p>R allows you to apply functions to do calculations, from simple to complex structures. Run code by putting your cursor on the line and hitting <code>Ctrl + Enter</code> or <code>Cmd + Enter</code>.</p>
+<h3 class="anchored" data-anchor-id="intro-to-functions">3. Intro to functions</h3>
+<p>R allows you to apply functions to do calculations, from simple to complex structures.</p>
+<p>Let’s say we want to find the mean of the numbers in <code>visits</code>. We could do the calculation by hand, or we could as R to do it for us.</p>
+<p>Functions are really powerful tools in R. In this class, we’ll get comfortable learning new functions and applying them to different scenarios.</p>
+<p>In this next line, we’ll calculate the mean of the numbers in <code>visits</code> using the function <code>mean()</code>.</p>
+<p>All functions take the general form <code>function()</code>. Read aloud, this is “function, parentheses”.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(visits) <span class="co"># calculating mean of numbers in visits</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.6</code></pre>
+<pre><code>[1] 29</code></pre>
 </div>
 </div>
-<p>You can store things you want to use over and over again as objects.</p>
+<p>Write a comment at the end of the line so that you know what it is doing!</p>
+<p>There is also a function for calculating the median, another measure of central tendency we talked about in class. You can probably guess what it is called!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>and then you can use those objects in functions.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(numbers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(visits)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 10</code></pre>
+<pre><code>[1] 25.5</code></pre>
 </div>
 </div>
 </section>
-<section id="loading-in-packages-and-data" class="level3">
-<h3 class="anchored" data-anchor-id="loading-in-packages-and-data">3. loading in packages and data</h3>
+<section id="intro-to-packages-and-data" class="level3">
+<h3 class="anchored" data-anchor-id="intro-to-packages-and-data">4. Intro to packages and data</h3>
+<p>Packages are collections of functions that you can bring into R to use. You’ve already installed a package (using the <code>install.packages()</code> function) if you did the set up steps!</p>
+<p>Today (and most days), we’ll use the <code>tidyverse</code> package. The <code>tidyverse</code> is actually a package of packages, and they all have functions that are really useful for us to use in working with data and analyzing it.</p>
+<p>In this next line, we’ll “read in the package” using the function <code>library()</code>. You only have to install a package once, but you have to read in a package every time you start a new script or restart R.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>To work with data, we can also “read it in” the way we would a package. Basically, we are getting the data into R for us to work with. The function we’ll use for that is <code>read_csv()</code>, which is from the <code>tidyverse</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ufo_sightings <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"ufo_sightings.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>parks_visits <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"parks_visits.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>We’ve already looked at the data in Excel, but let’s make sure it’s actually in R.</p>
+<p>First, if you look at the “Environment” tab, you should see an object called <code>park_visits</code>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Is my data actually in R?">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Is my data actually in R?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If you’re not sure if your data is in R, the first thing to check is the “Environment”. If you’ve read in everything correctly, you should see an object in there. If not, you know something is wrong!</p>
+</div>
+</div>
+</div>
+<p>Second, you can use the <code>View()</code> function to look at the actual data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(ufo_sightings)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(parks_visits)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="cleaning-and-wranging" class="level3">
-<h3 class="anchored" data-anchor-id="cleaning-and-wranging">4. cleaning and wranging</h3>
-<p>These are all functions in the <code>tidyverse</code> that allow you to work with your data in R.</p>
-<p>First, you can filter by state to only include California.</p>
+<h3 class="anchored" data-anchor-id="cleaning-and-wranging">5. cleaning and wranging</h3>
+<p>Let’s say we want to figure out what the average (mean) number of visits is for Joshua Tree is across all years and months.</p>
+<p>First, you can filter by park to only include <code>jtnp</code> (or Joshua Tree) using the <code>filter()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(ufo_sightings, </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>              state <span class="sc">==</span> <span class="st">"CA"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(parks_visits, <span class="co"># use the parks_visits data frame</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>              park <span class="sc">==</span> <span class="st">"jtnp"</span>) <span class="co"># only include rows where `jtnp` is in the `park` column</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Then, you can arrange the data frame by date.</p>
+<p>Then, you can calculate the total visits for Joshua Tree across all years using the <code>summarize()</code> and <code>sum()</code> functions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">arrange</span>(df1,</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>               reported_date_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">summarize</span>(df1, <span class="co"># use the df1 data frame</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">mean_visits =</span> <span class="fu">mean</span>(visits)) <span class="co"># calculate the mean number of visits</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Then, you can make a new column just with the year.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(df2,</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">extracted_year =</span> <span class="fu">year</span>(reported_date_time)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Then, you can group the data frame by year and shape.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df4 <span class="ot">&lt;-</span> <span class="fu">group_by</span>(df3, </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                extracted_year, shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Then, you can count the number of occurrences by year and shape.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df5 <span class="ot">&lt;-</span> <span class="fu">count</span>(df4) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Then, you can filter the data frame by the shapes you’re interested in.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df6 <span class="ot">&lt;-</span> <span class="fu">filter</span>(df5, </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>              shape <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"formation"</span>, <span class="st">"circle"</span>, <span class="st">"orb"</span>, <span class="st">"changing"</span>, <span class="st">"light"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p>This can get tedious if you have a bunch of filtering and summarizing to do! So instead, we can use…</p>
 </section>
 <section id="an-easier-way-to-clean-and-wrangle" class="level3">
-<h3 class="anchored" data-anchor-id="an-easier-way-to-clean-and-wrangle">5. an easier way to clean and wrangle</h3>
+<h3 class="anchored" data-anchor-id="an-easier-way-to-clean-and-wrangle">6. an easier way to clean and wrangle</h3>
 <p>You can use what’s called a pipe operator to chain functions together. The keyboard shortcut for a pipe is <code>Ctrl + Shift + M</code> or <code>Cmd + Shift + M</code>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Which pipe to use?">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Which pipe to use?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If you did the set up steps, you should see a pipe operator that looks like this: <code>|&gt;</code>.</p>
+<p>If you don’t, you might see a pipe operator that looks like this: <code>%&gt;%</code>.</p>
+<p>These both do the same thing, though the <code>|&gt;</code> is from <code>baseR</code> (or, a package of pre-loaded R functions and operators) and the <code>%&gt;%</code> is from the <code>magrittr</code> package in the <code>tidyverse</code>.</p>
+</div>
+</div>
+</div>
 <p>When reading your code aloud, you can read the pipe as “and then”</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>new_mexico <span class="ot">&lt;-</span> ufo_sightings <span class="sc">%&gt;%</span> <span class="co"># use the ufo_sightings data frame</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"NM"</span>) <span class="sc">%&gt;%</span> <span class="co"># and then, filter by state to only include New Mexico</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(reported_date_time) <span class="sc">%&gt;%</span> <span class="co"># and then, arrange by date</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">extracted_year =</span> <span class="fu">year</span>(reported_date_time)) <span class="sc">%&gt;%</span> <span class="co"># and then, create a new column for the year</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(extracted_year, shape) <span class="sc">%&gt;%</span> <span class="co"># and then, group by extracted_year and shape</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="co"># and then, count occurrences</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new object called `jtnp`</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>jtnp <span class="ot">&lt;-</span> parks_visits <span class="sc">|&gt;</span> <span class="co"># start with the `parks_visits` data frame</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(park <span class="sc">==</span> <span class="st">"jtnp"</span>) <span class="sc">|&gt;</span> <span class="co"># filter to only include Joshua tree</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_visits =</span> <span class="fu">mean</span>(visits)) <span class="co"># calculate the mean number of visits at Joshua Tree</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="data-visualization" class="level3">
-<h3 class="anchored" data-anchor-id="data-visualization">6. data visualization</h3>
+<section id="visualizing-data" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-data">7. Visualizing data</h3>
+<p>Let’s say we want to visualize the average monthly visits for Channel Islands, Joshua Tree, and Death Valley. We can use a boxplot to do that. Remember that a boxplot is an easy way to represent the <strong>central tendency</strong> (using the median) and <strong>spread</strong> (using quantiles) of a variable.</p>
+<p>Before you move on, write your best guess for which park has, on average, the greatest number of visitors (out of these three).</p>
+<p>To visualize the data, we’ll use <code>ggplot()</code> and its associated functions, which are all in the <code>ggplot2</code> package in the <code>tidyverse</code>.</p>
+<p>The main parts of creating a plot in <code>ggplot()</code> are:<br>
+1. the “global call”: you have to tell R that you want to use <code>ggplot()</code> by actually naming the function<br>
+2. the “aesthetics”: you have the tell R the data frame name (in this case, <code>parks_visits</code>) and what the x- and y-axes should be (using the aesthetics function called <code>aes()</code>)<br>
+3. the “geometries”: this is the <em>type</em> of plot you are making. In this case, we’re using the function <code>geom_boxplot()</code> because we want to make a boxplot. Most <code>geom_()</code> functions are named after the plot they make.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df6, </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> extracted_year, </span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> n,</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> shape)) <span class="sc">+</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>,</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Number of sightings"</span>,</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"UFOs in California are mostly light"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. start with the global call</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> parks_visits, <span class="co"># using the data frame parks_visits</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> park, <span class="co"># 2. naming the aesthetics: the x-axis should be the 3 parks</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> visits)) <span class="sc">+</span> <span class="co"># the y-axis should be monthly visits</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="co"># 3. the plot should be a boxplot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="workshop-01_2025_files/figure-html/data-visualization-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="workshop-01_2025_files/figure-html/first-boxplot-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Getting a warning?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Getting a warning?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When you run the code to create this figure, you will get a warning message that looks like this: <code>Warning message: Removed 1 row containing non-finite outside the scale range (</code>stat_boxplot()<code>).</code></p>
+<p>This means that there is a number <em>missing</em> in the data frame. Can you find it? (Hint: you’ll need to look at CNPS visit numbers from 2005).</p>
+<p>Missing data is often not a big deal - things happen during data collection! However, we do want to be aware of missing data when we analyze it. That’s why making visualizations is so important; it can help us identify gaps in the dataset if there are any.</p>
+</div>
+</div>
+<p>Which park do you think receives, <em>on average</em>, the greatest number of visitors?</p>
+<p>We can check that using math!</p>
+</section>
+<section id="grouping-data-using-group_by" class="level3">
+<h3 class="anchored" data-anchor-id="grouping-data-using-group_by">8. Grouping data using <code>group_by()</code></h3>
+<p>In the <code>parks_visits</code> data frame, there are 3 parks. We could do everything in section 5 for each park individually, or we could use a function called <code>group_by()</code> from the <code>tidyverse</code>. When you use <code>group_by()</code>, you are basically telling R, “there are groups in this dataset that I want you to pay attention to.”</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>parks_summary <span class="ot">&lt;-</span> parks_visits <span class="sc">|&gt;</span> <span class="co"># start with the parks_visits data frame</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(park) <span class="sc">|&gt;</span> <span class="co"># group by each park</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">median_visits =</span> <span class="fu">median</span>(visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="co"># summarize the median number of visits</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>parks_summary <span class="co"># display the final data frame</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  park  median_visits
+  &lt;chr&gt;         &lt;dbl&gt;
+1 cnps         25698 
+2 dvnp         84672.
+3 jtnp        144762.</code></pre>
+</div>
+</div>
+</section>
+<section id="cleaning-wrangling-and-visualizing-all-together" class="level3">
+<h3 class="anchored" data-anchor-id="cleaning-wrangling-and-visualizing-all-together">9. Cleaning, wrangling, and visualizing all together</h3>
+<p>Let’s say we want to create a figure of total <em>annual</em> visits through time. That would mean we would need to add up all the monthly visits for a given park in a given year. We can take advantage of the functions we’ve gone through to do that work!</p>
+<p>We’ll also add in a new function here: <code>mutate()</code>. <code>mutate()</code> is a function that allows you to add new columns or manipulate existing columns in a data frame. In this case, we’ll use mutate to do two things:<br>
+1. add a new column called <code>park_name</code> that has the full name of each park (instead of the abbreviation)<br>
+2. add a new column called <code>visits_millions</code> that calculates the annual number of visits in millions</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>annual_visits <span class="ot">&lt;-</span> parks_visits <span class="sc">|&gt;</span> <span class="co"># start with the parks_visits data frame</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(park, year) <span class="sc">|&gt;</span> <span class="co"># group by park AND year</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total_visits =</span> <span class="fu">sum</span>(visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> <span class="co"># calculate total visits per year</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">park_name =</span> <span class="fu">case_when</span>( <span class="co"># create a new column called park_name</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    park <span class="sc">==</span> <span class="st">"cnps"</span> <span class="sc">~</span> <span class="st">"Channel Islands"</span>, <span class="co"># when cnps appears in the park column, fill in Channel Islands</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    park <span class="sc">==</span> <span class="st">"dvnp"</span> <span class="sc">~</span> <span class="st">"Death Valley"</span>, <span class="co"># when dvnp appears in the park column, fill in Death Valley</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    park <span class="sc">==</span> <span class="st">"jtnp"</span> <span class="sc">~</span> <span class="st">"Joshua Tree"</span> <span class="co"># when jtnp appears in the park column, fill in Joshua Tree</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span> </span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">visits_millions =</span> total_visits<span class="sc">/</span><span class="dv">1000000</span>) <span class="co"># add a new column called visits_millions, where the total visits are divided by 1000000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, we can visualize the data in a <em>line plot</em>, which is a type of scatter plot except the points are connected with lines. We can do that using <code>ggplot()</code> again, but this time with two new “geometries”: <code>geom_point()</code> and <code>geom_line()</code>.</p>
+<p>We’ll also add some color to the plot to make it more interesting to look at!</p>
+<p>Lastly, we’ll add in a new function called <code>labs()</code>, which allows us to change the labels on the axes and legend and add a title to the plot, to make things more clear.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> annual_visits, <span class="co"># use the annual_visits data frame</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="co"># the x-axis should be year</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> visits_millions, <span class="co"># the y-axis should be visits in millions</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> park_name)) <span class="sc">+</span> <span class="co"># color all geometries by park_name</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="co"># adding points</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="co"># adding lines</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>, <span class="co"># relabelling the x-axis</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Recreation visits (in millions)"</span>, <span class="co"># and the y-axis</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Joshua Tree receives more visits than Death Valley and Channel Islands"</span>, <span class="co"># adding a title</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Park name"</span>) <span class="co"># relabelling the legend</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="workshop-01_2025_files/figure-html/annual-visits-plot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>END OF WORKSHOP 1</strong></p>
 
 
 <!-- -->
@@ -869,184 +983,274 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb18" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Coding workshop: Week 1"</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "basics of using RStudio, intro to `tidyverse`"</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [tidyverse, mean, max, read_csv, filter, arrange, mutate, group_by, pipe (%&gt;%) operator, ggplot, geom_point, geom_line, ufos]</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>**Workshop dates: April 3 (Thursday), April 4 (Friday)**</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>:::{.callout-warning title="WORK IN PROGRESS"}</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>Still working on this - subject to change before Thursday/Friday!</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Summary</span></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="fu">### Packages</span></span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`tidyverse`</span></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="fu">### Operations</span></span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>calculations using <span class="in">`mean()`</span> and <span class="in">`max()`</span>  </span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>read in data using <span class="in">`read_csv()`</span>  </span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>filter data using <span class="in">`filter()`</span>  </span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>arrange data using <span class="in">`arrange()`</span>  </span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>create new column using <span class="in">`mutate()`</span>  </span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>group data using <span class="in">`group_by()`</span>  </span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>count observations using <span class="in">`count()`</span>  </span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>chain functions together using <span class="in">` %&gt;% `</span>  </span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>visualize data using <span class="in">`ggplot()`</span>  </span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>creating points and lines using <span class="in">`geom_point()`</span> and <span class="in">`geom_line()`</span>  </span>
-<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data source</span></span>
-<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>This workshop's data comes from <span class="co">[</span><span class="ot">Tidy Tuesday 2023-06-20</span><span class="co">](https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-06-20/readme.md)</span>, which was from the <span class="co">[</span><span class="ot">National UFO Reporting Center</span><span class="co">](https://nuforc.org/ndx/?id=shape)</span> and  <span class="co">[</span><span class="ot">sunrise-sunset.org</span><span class="co">](https://sunrise-sunset.org/)</span> by <span class="co">[</span><span class="ot">Jon Harmon</span><span class="co">](https://github.com/jonthegeek/apis/)</span>.</span>
-<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Code</span></span>
-<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1. Intro to scripts</span></span>
-<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a>In class, we use an R Script. It allows you to write your code (recipe) and run the code in the console (kitchen).</span>
-<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a>R considers everything in the script as code to run, so you can write comments in the R Script by putting a pound sign at the beginning of the line. This is especially useful when you want to explain what your code is doing at each line in plain language.</span>
-<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a>Try writing a comment of your own in the line below.</span>
-<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a><span class="in">```{r comment-code}</span></span>
-<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a><span class="in"># This is a comment!</span></span>
-<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. Intro to functions</span></span>
-<span id="cb18-49"><a href="#cb18-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-50"><a href="#cb18-50" aria-hidden="true" tabindex="-1"></a>R allows you to apply functions to do calculations, from simple to complex structures.</span>
-<span id="cb18-51"><a href="#cb18-51" aria-hidden="true" tabindex="-1"></a>Run code by putting your cursor on the line and hitting <span class="in">`Ctrl + Enter`</span> or <span class="in">`Cmd + Enter`</span>.</span>
-<span id="cb18-52"><a href="#cb18-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-53"><a href="#cb18-53" aria-hidden="true" tabindex="-1"></a><span class="in">```{r mean-calc}</span></span>
-<span id="cb18-54"><a href="#cb18-54" aria-hidden="true" tabindex="-1"></a><span class="in">mean(c(4, 5, 1, 2, 1))</span></span>
-<span id="cb18-55"><a href="#cb18-55" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a>You can store things you want to use over and over again as objects.</span>
-<span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-59"><a href="#cb18-59" aria-hidden="true" tabindex="-1"></a><span class="in">```{r store-numbers}</span></span>
-<span id="cb18-60"><a href="#cb18-60" aria-hidden="true" tabindex="-1"></a><span class="in">numbers &lt;- c(4, 6, 2, 5, 3, 10)</span></span>
-<span id="cb18-61"><a href="#cb18-61" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-62"><a href="#cb18-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-63"><a href="#cb18-63" aria-hidden="true" tabindex="-1"></a>and then you can use those objects in functions.</span>
-<span id="cb18-64"><a href="#cb18-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-65"><a href="#cb18-65" aria-hidden="true" tabindex="-1"></a><span class="in">```{r max-numbers}</span></span>
-<span id="cb18-66"><a href="#cb18-66" aria-hidden="true" tabindex="-1"></a><span class="in">max(numbers)</span></span>
-<span id="cb18-67"><a href="#cb18-67" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-68"><a href="#cb18-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-69"><a href="#cb18-69" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3. loading in packages and data</span></span>
-<span id="cb18-70"><a href="#cb18-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-71"><a href="#cb18-71" aria-hidden="true" tabindex="-1"></a><span class="in">```{r load-in-package}</span></span>
-<span id="cb18-72"><a href="#cb18-72" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb18-73"><a href="#cb18-73" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-74"><a href="#cb18-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-75"><a href="#cb18-75" aria-hidden="true" tabindex="-1"></a><span class="in">```{r quarto-data}</span></span>
-<span id="cb18-76"><a href="#cb18-76" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
-<span id="cb18-77"><a href="#cb18-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-78"><a href="#cb18-78" aria-hidden="true" tabindex="-1"></a><span class="in">ufo_sightings &lt;- read_csv(here::here("workshop", "data", "ufo_sightings.csv"))</span></span>
-<span id="cb18-79"><a href="#cb18-79" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-80"><a href="#cb18-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-81"><a href="#cb18-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{r script-data}</span></span>
-<span id="cb18-82"><a href="#cb18-82" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
-<span id="cb18-83"><a href="#cb18-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-84"><a href="#cb18-84" aria-hidden="true" tabindex="-1"></a><span class="in">ufo_sightings &lt;- read_csv("ufo_sightings.csv")</span></span>
-<span id="cb18-85"><a href="#cb18-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-86"><a href="#cb18-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-87"><a href="#cb18-87" aria-hidden="true" tabindex="-1"></a><span class="in">```{r viewing-data}</span></span>
-<span id="cb18-88"><a href="#cb18-88" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
-<span id="cb18-89"><a href="#cb18-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-90"><a href="#cb18-90" aria-hidden="true" tabindex="-1"></a><span class="in">View(ufo_sightings)</span></span>
-<span id="cb18-91"><a href="#cb18-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-92"><a href="#cb18-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-93"><a href="#cb18-93" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4. cleaning and wranging</span></span>
-<span id="cb18-94"><a href="#cb18-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-95"><a href="#cb18-95" aria-hidden="true" tabindex="-1"></a>These are all functions in the <span class="in">`tidyverse`</span> that allow you to work with your data in R. </span>
-<span id="cb18-96"><a href="#cb18-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-97"><a href="#cb18-97" aria-hidden="true" tabindex="-1"></a>First, you can filter by state to only include California.</span>
-<span id="cb18-98"><a href="#cb18-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-99"><a href="#cb18-99" aria-hidden="true" tabindex="-1"></a><span class="in">```{r filter-state}</span></span>
-<span id="cb18-100"><a href="#cb18-100" aria-hidden="true" tabindex="-1"></a><span class="in">df1 &lt;- filter(ufo_sightings, </span></span>
-<span id="cb18-101"><a href="#cb18-101" aria-hidden="true" tabindex="-1"></a><span class="in">              state == "CA") </span></span>
-<span id="cb18-102"><a href="#cb18-102" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-103"><a href="#cb18-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-104"><a href="#cb18-104" aria-hidden="true" tabindex="-1"></a>Then, you can arrange the data frame by date.</span>
-<span id="cb18-105"><a href="#cb18-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-106"><a href="#cb18-106" aria-hidden="true" tabindex="-1"></a><span class="in">```{r arrange-date}</span></span>
-<span id="cb18-107"><a href="#cb18-107" aria-hidden="true" tabindex="-1"></a><span class="in">df2 &lt;- arrange(df1,</span></span>
-<span id="cb18-108"><a href="#cb18-108" aria-hidden="true" tabindex="-1"></a><span class="in">               reported_date_time)</span></span>
-<span id="cb18-109"><a href="#cb18-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-110"><a href="#cb18-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-111"><a href="#cb18-111" aria-hidden="true" tabindex="-1"></a>Then, you can make a new column just with the year.</span>
-<span id="cb18-112"><a href="#cb18-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-113"><a href="#cb18-113" aria-hidden="true" tabindex="-1"></a><span class="in">```{r mutate-year}</span></span>
-<span id="cb18-114"><a href="#cb18-114" aria-hidden="true" tabindex="-1"></a><span class="in">df3 &lt;- mutate(df2,</span></span>
-<span id="cb18-115"><a href="#cb18-115" aria-hidden="true" tabindex="-1"></a><span class="in">              extracted_year = year(reported_date_time)) </span></span>
-<span id="cb18-116"><a href="#cb18-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-117"><a href="#cb18-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-118"><a href="#cb18-118" aria-hidden="true" tabindex="-1"></a>Then, you can group the data frame by year and shape.</span>
-<span id="cb18-119"><a href="#cb18-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-120"><a href="#cb18-120" aria-hidden="true" tabindex="-1"></a><span class="in">```{r group-year-shape}</span></span>
-<span id="cb18-121"><a href="#cb18-121" aria-hidden="true" tabindex="-1"></a><span class="in">df4 &lt;- group_by(df3, </span></span>
-<span id="cb18-122"><a href="#cb18-122" aria-hidden="true" tabindex="-1"></a><span class="in">                extracted_year, shape)</span></span>
-<span id="cb18-123"><a href="#cb18-123" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-124"><a href="#cb18-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-125"><a href="#cb18-125" aria-hidden="true" tabindex="-1"></a>Then, you can count the number of occurrences by year and shape.</span>
-<span id="cb18-126"><a href="#cb18-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-127"><a href="#cb18-127" aria-hidden="true" tabindex="-1"></a><span class="in">```{r count-occurrences}</span></span>
-<span id="cb18-128"><a href="#cb18-128" aria-hidden="true" tabindex="-1"></a><span class="in">df5 &lt;- count(df4) </span></span>
-<span id="cb18-129"><a href="#cb18-129" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-130"><a href="#cb18-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-131"><a href="#cb18-131" aria-hidden="true" tabindex="-1"></a>Then, you can filter the data frame by the shapes you're interested in.</span>
-<span id="cb18-132"><a href="#cb18-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-133"><a href="#cb18-133" aria-hidden="true" tabindex="-1"></a><span class="in">```{r filter-shapes}</span></span>
-<span id="cb18-134"><a href="#cb18-134" aria-hidden="true" tabindex="-1"></a><span class="in">df6 &lt;- filter(df5, </span></span>
-<span id="cb18-135"><a href="#cb18-135" aria-hidden="true" tabindex="-1"></a><span class="in">              shape %in% c("formation", "circle", "orb", "changing", "light"))</span></span>
-<span id="cb18-136"><a href="#cb18-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-137"><a href="#cb18-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-138"><a href="#cb18-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-139"><a href="#cb18-139" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5. an easier way to clean and wrangle </span></span>
-<span id="cb18-140"><a href="#cb18-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-141"><a href="#cb18-141" aria-hidden="true" tabindex="-1"></a>You can use what's called a pipe operator to chain functions together. The keyboard shortcut for a pipe is <span class="in">`Ctrl + Shift + M`</span> or <span class="in">`Cmd + Shift + M`</span>.  </span>
-<span id="cb18-142"><a href="#cb18-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-143"><a href="#cb18-143" aria-hidden="true" tabindex="-1"></a>When reading your code aloud, you can read the pipe as "and then"  </span>
-<span id="cb18-144"><a href="#cb18-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-145"><a href="#cb18-145" aria-hidden="true" tabindex="-1"></a><span class="in">```{r new-mexico-example}</span></span>
-<span id="cb18-146"><a href="#cb18-146" aria-hidden="true" tabindex="-1"></a><span class="in">new_mexico &lt;- ufo_sightings %&gt;% # use the ufo_sightings data frame</span></span>
-<span id="cb18-147"><a href="#cb18-147" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(state == "NM") %&gt;% # and then, filter by state to only include New Mexico</span></span>
-<span id="cb18-148"><a href="#cb18-148" aria-hidden="true" tabindex="-1"></a><span class="in">  arrange(reported_date_time) %&gt;% # and then, arrange by date</span></span>
-<span id="cb18-149"><a href="#cb18-149" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(extracted_year = year(reported_date_time)) %&gt;% # and then, create a new column for the year</span></span>
-<span id="cb18-150"><a href="#cb18-150" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(extracted_year, shape) %&gt;% # and then, group by extracted_year and shape</span></span>
-<span id="cb18-151"><a href="#cb18-151" aria-hidden="true" tabindex="-1"></a><span class="in">  count() # and then, count occurrences</span></span>
-<span id="cb18-152"><a href="#cb18-152" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-153"><a href="#cb18-153" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb18-154"><a href="#cb18-154" aria-hidden="true" tabindex="-1"></a><span class="fu">### 6. data visualization </span></span>
-<span id="cb18-155"><a href="#cb18-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-156"><a href="#cb18-156" aria-hidden="true" tabindex="-1"></a><span class="in">```{r data-visualization}</span></span>
-<span id="cb18-157"><a href="#cb18-157" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data = df6, </span></span>
-<span id="cb18-158"><a href="#cb18-158" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = extracted_year, </span></span>
-<span id="cb18-159"><a href="#cb18-159" aria-hidden="true" tabindex="-1"></a><span class="in">           y = n,</span></span>
-<span id="cb18-160"><a href="#cb18-160" aria-hidden="true" tabindex="-1"></a><span class="in">           color = shape)) +</span></span>
-<span id="cb18-161"><a href="#cb18-161" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point() +</span></span>
-<span id="cb18-162"><a href="#cb18-162" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line() +</span></span>
-<span id="cb18-163"><a href="#cb18-163" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Year",</span></span>
-<span id="cb18-164"><a href="#cb18-164" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Number of sightings",</span></span>
-<span id="cb18-165"><a href="#cb18-165" aria-hidden="true" tabindex="-1"></a><span class="in">       title = "UFOs in California are mostly light")</span></span>
-<span id="cb18-166"><a href="#cb18-166" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-167"><a href="#cb18-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-168"><a href="#cb18-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-169"><a href="#cb18-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-170"><a href="#cb18-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-171"><a href="#cb18-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-172"><a href="#cb18-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-173"><a href="#cb18-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-174"><a href="#cb18-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-175"><a href="#cb18-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-176"><a href="#cb18-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-177"><a href="#cb18-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-178"><a href="#cb18-178" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Coding workshop: Week 1"</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "basics of using RStudio, intro to `tidyverse`"</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [tidyverse, mean, median, read_csv, filter, group_by, mutate, summarize, pipe operators, '|&gt;', ggplot, geom_boxplot, geom_point, geom_line, labs]</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>**Workshop dates: April 3 (Thursday), April 4 (Friday)**:</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Summary</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="fu">### Packages</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`tidyverse`</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="fu">### Operations</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>calculations using <span class="in">`mean()`</span> and <span class="in">`median()`</span>  </span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>read in data using <span class="in">`read_csv()`</span>  </span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>filter data using <span class="in">`filter()`</span>  </span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>group data using <span class="in">`group_by()`</span>  </span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>create new column using <span class="in">`mutate()`</span>  </span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>calculate summary statistics using <span class="in">`summarize()`</span>  </span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>chain functions together using <span class="in">` |&gt; `</span>  </span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>visualize data using <span class="in">`ggplot()`</span>  </span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>create boxplots using <span class="in">`geom_boxplot()`</span>  </span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>create line plots (a type of scatterplot) using <span class="in">`geom_point()`</span> and <span class="in">`geom_line()`</span>  </span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>label plots using <span class="in">`labs()`</span></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data source</span></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>This workshop's data comes from <span class="co">[</span><span class="ot">National Parks Service Stats</span><span class="co">](https://irma.nps.gov/Stats/)</span>, which is the official repository for all data relating to national parks visits. Today, we are working with data from Channel Islands (unceded Chumash land), Death Valley (unceded Serrano and Cahuilla land), and Joshua Tree (unceded Shoshone, Kawaiisu, and Southern Paiute land). You can orient yourself on <span class="co">[</span><span class="ot">this map</span><span class="co">](https://www.arcgis.com/apps/webappviewer/index.html?id=f178c6d7581e4d45ad7ce68c52a1863e&amp;extent=-13593425.3853%2C4085629.1882%2C-13117987.0693%2C4385568.0871%2C102100)</span>.</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Code</span></span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1. Intro to scripts</span></span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>In class, we use an R Script. It allows you to write your code (recipe) and run the code in the console (kitchen).</span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>R considers everything in the script as code to run. Try writing code to calculate the sum of 5 and 7 multiplied by 2.    </span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a>Run code by putting your cursor on the line and hitting <span class="in">`Ctrl + Enter`</span> or <span class="in">`Cmd + Enter`</span>.  </span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a><span class="in">```{r math-code}</span></span>
+<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a><span class="in">(5+7)*2 # basic math: adding and multiplying</span></span>
+<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a>Everything in colored text is considered code, and that is what R will run in the console. If you don't want to run code, you can put a pound sign/hashtag at the beginning of the line.  This is especially useful when you want to explain what your code is doing at each line in plain language.</span>
+<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a>Go back up to the code you wrote to do the simple calculation and write a comment describing what the code is doing.</span>
+<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. Intro to objects</span></span>
+<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a>It's often useful to save things called "objects." These are stored numbers, lists of numbers, or anything else that appears in the "Environment" tab in the top right.  </span>
+<span id="cb19-52"><a href="#cb19-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-53"><a href="#cb19-53" aria-hidden="true" tabindex="-1"></a>To save (aka store) an object, the general form is:</span>
+<span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-55"><a href="#cb19-55" aria-hidden="true" tabindex="-1"></a><span class="in">`object name &lt;- what you want to store`</span>  </span>
+<span id="cb19-56"><a href="#cb19-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-57"><a href="#cb19-57" aria-hidden="true" tabindex="-1"></a>Read aloud, this is "object name, left arrow operator, what you want to store".  </span>
+<span id="cb19-58"><a href="#cb19-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-59"><a href="#cb19-59" aria-hidden="true" tabindex="-1"></a>In this code, we are creating an object called <span class="in">`visitors`</span> and storing a list of numbers: 31, 15, 20, 50.  </span>
+<span id="cb19-60"><a href="#cb19-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-61"><a href="#cb19-61" aria-hidden="true" tabindex="-1"></a>In code, you know that something is a list if it is within a <span class="in">`c()`</span> function (we'll get to functions in the next section).  </span>
+<span id="cb19-62"><a href="#cb19-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-63"><a href="#cb19-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-64"><a href="#cb19-64" aria-hidden="true" tabindex="-1"></a>Write a comment at the end of this line describing what it does.</span>
+<span id="cb19-65"><a href="#cb19-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-66"><a href="#cb19-66" aria-hidden="true" tabindex="-1"></a><span class="in">```{r storing-object}</span></span>
+<span id="cb19-67"><a href="#cb19-67" aria-hidden="true" tabindex="-1"></a><span class="in">visits &lt;- c(31, 15, 20, 50) # saving a list of numbers as an object called visits</span></span>
+<span id="cb19-68"><a href="#cb19-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-69"><a href="#cb19-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-70"><a href="#cb19-70" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3. Intro to functions</span></span>
+<span id="cb19-71"><a href="#cb19-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-72"><a href="#cb19-72" aria-hidden="true" tabindex="-1"></a>R allows you to apply functions to do calculations, from simple to complex structures.  </span>
+<span id="cb19-73"><a href="#cb19-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-74"><a href="#cb19-74" aria-hidden="true" tabindex="-1"></a>Let's say we want to find the mean of the numbers in <span class="in">`visits`</span>. We could do the calculation by hand, or we could as R to do it for us.  </span>
+<span id="cb19-75"><a href="#cb19-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-76"><a href="#cb19-76" aria-hidden="true" tabindex="-1"></a>Functions are really powerful tools in R. In this class, we'll get comfortable learning new functions and applying them to different scenarios.  </span>
+<span id="cb19-77"><a href="#cb19-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-78"><a href="#cb19-78" aria-hidden="true" tabindex="-1"></a>In this next line, we'll calculate the mean of the numbers in <span class="in">`visits`</span> using the function <span class="in">`mean()`</span>.  </span>
+<span id="cb19-79"><a href="#cb19-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-80"><a href="#cb19-80" aria-hidden="true" tabindex="-1"></a>All functions take the general form <span class="in">`function()`</span>. Read aloud, this is "function, parentheses".  </span>
+<span id="cb19-81"><a href="#cb19-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-82"><a href="#cb19-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r mean-calc}</span></span>
+<span id="cb19-83"><a href="#cb19-83" aria-hidden="true" tabindex="-1"></a><span class="in">mean(visits) # calculating mean of numbers in visits</span></span>
+<span id="cb19-84"><a href="#cb19-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-85"><a href="#cb19-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-86"><a href="#cb19-86" aria-hidden="true" tabindex="-1"></a>Write a comment at the end of the line so that you know what it is doing!</span>
+<span id="cb19-87"><a href="#cb19-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-88"><a href="#cb19-88" aria-hidden="true" tabindex="-1"></a>There is also a function for calculating the median, another measure of central tendency we talked about in class. You can probably guess what it is called!</span>
+<span id="cb19-89"><a href="#cb19-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-90"><a href="#cb19-90" aria-hidden="true" tabindex="-1"></a><span class="in">```{r median-calc}</span></span>
+<span id="cb19-91"><a href="#cb19-91" aria-hidden="true" tabindex="-1"></a><span class="in">median(visits)</span></span>
+<span id="cb19-92"><a href="#cb19-92" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-93"><a href="#cb19-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-94"><a href="#cb19-94" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4. Intro to packages and data</span></span>
+<span id="cb19-95"><a href="#cb19-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-96"><a href="#cb19-96" aria-hidden="true" tabindex="-1"></a>Packages are collections of functions that you can bring into R to use. You've already installed a package (using the <span class="in">`install.packages()`</span> function) if you did the set up steps!  </span>
+<span id="cb19-97"><a href="#cb19-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-98"><a href="#cb19-98" aria-hidden="true" tabindex="-1"></a>Today (and most days), we'll use the <span class="in">`tidyverse`</span> package. The <span class="in">`tidyverse`</span> is actually a package of packages, and they all have functions that are really useful for us to use in working with data and analyzing it.  </span>
+<span id="cb19-99"><a href="#cb19-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-100"><a href="#cb19-100" aria-hidden="true" tabindex="-1"></a>In this next line, we'll "read in the package" using the function <span class="in">`library()`</span>. You only have to install a package once, but you have to read in a package every time you start a new script or restart R.  </span>
+<span id="cb19-101"><a href="#cb19-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-102"><a href="#cb19-102" aria-hidden="true" tabindex="-1"></a><span class="in">```{r load-in-package}</span></span>
+<span id="cb19-103"><a href="#cb19-103" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb19-104"><a href="#cb19-104" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-105"><a href="#cb19-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-106"><a href="#cb19-106" aria-hidden="true" tabindex="-1"></a>To work with data, we can also "read it in" the way we would a package. Basically, we are getting the data into R for us to work with. The function we'll use for that is <span class="in">`read_csv()`</span>, which is from the <span class="in">`tidyverse`</span> package.  </span>
+<span id="cb19-107"><a href="#cb19-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-108"><a href="#cb19-108" aria-hidden="true" tabindex="-1"></a><span class="in">```{r quarto-data}</span></span>
+<span id="cb19-109"><a href="#cb19-109" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
+<span id="cb19-110"><a href="#cb19-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-111"><a href="#cb19-111" aria-hidden="true" tabindex="-1"></a><span class="in">parks_visits &lt;- read_csv(here::here("workshop", "data", "parks_visits.csv"))</span></span>
+<span id="cb19-112"><a href="#cb19-112" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-113"><a href="#cb19-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-114"><a href="#cb19-114" aria-hidden="true" tabindex="-1"></a><span class="in">```{r script-data}</span></span>
+<span id="cb19-115"><a href="#cb19-115" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb19-116"><a href="#cb19-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-117"><a href="#cb19-117" aria-hidden="true" tabindex="-1"></a><span class="in">parks_visits &lt;- read_csv("parks_visits.csv")</span></span>
+<span id="cb19-118"><a href="#cb19-118" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-119"><a href="#cb19-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-120"><a href="#cb19-120" aria-hidden="true" tabindex="-1"></a>We've already looked at the data in Excel, but let's make sure it's actually in R.  </span>
+<span id="cb19-121"><a href="#cb19-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-122"><a href="#cb19-122" aria-hidden="true" tabindex="-1"></a>First, if you look at the "Environment" tab, you should see an object called <span class="in">`park_visits`</span>. </span>
+<span id="cb19-123"><a href="#cb19-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-124"><a href="#cb19-124" aria-hidden="true" tabindex="-1"></a>:::{.callout-tip title="Is my data actually in R?" collapse="true"}</span>
+<span id="cb19-125"><a href="#cb19-125" aria-hidden="true" tabindex="-1"></a>If you're not sure if your data is in R, the first thing to check is the "Environment". If you've read in everything correctly, you should see an object in there. If not, you know something is wrong!</span>
+<span id="cb19-126"><a href="#cb19-126" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb19-127"><a href="#cb19-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-128"><a href="#cb19-128" aria-hidden="true" tabindex="-1"></a>Second, you can use the <span class="in">`View()`</span> function to look at the actual data.</span>
+<span id="cb19-129"><a href="#cb19-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-130"><a href="#cb19-130" aria-hidden="true" tabindex="-1"></a><span class="in">```{r viewing-data}</span></span>
+<span id="cb19-131"><a href="#cb19-131" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb19-132"><a href="#cb19-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-133"><a href="#cb19-133" aria-hidden="true" tabindex="-1"></a><span class="in">View(parks_visits)</span></span>
+<span id="cb19-134"><a href="#cb19-134" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-135"><a href="#cb19-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-136"><a href="#cb19-136" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5. cleaning and wranging</span></span>
+<span id="cb19-137"><a href="#cb19-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-138"><a href="#cb19-138" aria-hidden="true" tabindex="-1"></a>Let's say we want to figure out what the average (mean) number of visits is for Joshua Tree is across all years and months.  </span>
+<span id="cb19-139"><a href="#cb19-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-140"><a href="#cb19-140" aria-hidden="true" tabindex="-1"></a>First, you can filter by park to only include <span class="in">`jtnp`</span> (or Joshua Tree) using the <span class="in">`filter()`</span> function.</span>
+<span id="cb19-141"><a href="#cb19-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-142"><a href="#cb19-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{r filter-state}</span></span>
+<span id="cb19-143"><a href="#cb19-143" aria-hidden="true" tabindex="-1"></a><span class="in">df1 &lt;- filter(parks_visits, # use the parks_visits data frame</span></span>
+<span id="cb19-144"><a href="#cb19-144" aria-hidden="true" tabindex="-1"></a><span class="in">              park == "jtnp") # only include rows where `jtnp` is in the `park` column</span></span>
+<span id="cb19-145"><a href="#cb19-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-146"><a href="#cb19-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-147"><a href="#cb19-147" aria-hidden="true" tabindex="-1"></a>Then, you can calculate the total visits for Joshua Tree across all years using the <span class="in">`summarize()`</span> and <span class="in">`sum()`</span> functions.</span>
+<span id="cb19-148"><a href="#cb19-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-151"><a href="#cb19-151" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb19-152"><a href="#cb19-152" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">summarize</span>(df1, <span class="co"># use the df1 data frame</span></span>
+<span id="cb19-153"><a href="#cb19-153" aria-hidden="true" tabindex="-1"></a>                 <span class="at">mean_visits =</span> <span class="fu">mean</span>(visits)) <span class="co"># calculate the mean number of visits</span></span>
+<span id="cb19-154"><a href="#cb19-154" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-155"><a href="#cb19-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-156"><a href="#cb19-156" aria-hidden="true" tabindex="-1"></a>This can get tedious if you have a bunch of filtering and summarizing to do! So instead, we can use...</span>
+<span id="cb19-157"><a href="#cb19-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-158"><a href="#cb19-158" aria-hidden="true" tabindex="-1"></a><span class="fu">### 6. an easier way to clean and wrangle </span></span>
+<span id="cb19-159"><a href="#cb19-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-160"><a href="#cb19-160" aria-hidden="true" tabindex="-1"></a>You can use what's called a pipe operator to chain functions together. The keyboard shortcut for a pipe is <span class="in">`Ctrl + Shift + M`</span> or <span class="in">`Cmd + Shift + M`</span>.  </span>
+<span id="cb19-161"><a href="#cb19-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-162"><a href="#cb19-162" aria-hidden="true" tabindex="-1"></a>:::{.callout-tip title="Which pipe to use?" collapse="true"}</span>
+<span id="cb19-163"><a href="#cb19-163" aria-hidden="true" tabindex="-1"></a>If you did the set up steps, you should see a pipe operator that looks like this: <span class="in">` |&gt; `</span>.  </span>
+<span id="cb19-164"><a href="#cb19-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-165"><a href="#cb19-165" aria-hidden="true" tabindex="-1"></a>If you don't, you might see a pipe operator that looks like this: <span class="in">` %&gt;% `</span>.  </span>
+<span id="cb19-166"><a href="#cb19-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-167"><a href="#cb19-167" aria-hidden="true" tabindex="-1"></a>These both do the same thing, though the <span class="in">` |&gt; `</span> is from <span class="in">`baseR`</span> (or, a package of pre-loaded R functions and operators) and the <span class="in">` %&gt;% `</span> is from the <span class="in">`magrittr`</span> package in the <span class="in">`tidyverse`</span>. </span>
+<span id="cb19-168"><a href="#cb19-168" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb19-169"><a href="#cb19-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-170"><a href="#cb19-170" aria-hidden="true" tabindex="-1"></a>When reading your code aloud, you can read the pipe as "and then"  </span>
+<span id="cb19-171"><a href="#cb19-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-172"><a href="#cb19-172" aria-hidden="true" tabindex="-1"></a><span class="in">```{r jt-example}</span></span>
+<span id="cb19-173"><a href="#cb19-173" aria-hidden="true" tabindex="-1"></a><span class="in"># create a new object called `jtnp`</span></span>
+<span id="cb19-174"><a href="#cb19-174" aria-hidden="true" tabindex="-1"></a><span class="in">jtnp &lt;- parks_visits |&gt; # start with the `parks_visits` data frame</span></span>
+<span id="cb19-175"><a href="#cb19-175" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(park == "jtnp") |&gt; # filter to only include Joshua tree</span></span>
+<span id="cb19-176"><a href="#cb19-176" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(mean_visits = mean(visits)) # calculate the mean number of visits at Joshua Tree</span></span>
+<span id="cb19-177"><a href="#cb19-177" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-178"><a href="#cb19-178" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb19-179"><a href="#cb19-179" aria-hidden="true" tabindex="-1"></a><span class="fu">### 7. Visualizing data</span></span>
+<span id="cb19-180"><a href="#cb19-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-181"><a href="#cb19-181" aria-hidden="true" tabindex="-1"></a>Let's say we want to visualize the average monthly visits for Channel Islands, Joshua Tree, and Death Valley. We can use a boxplot to do that. Remember that a boxplot is an easy way to represent the **central tendency** (using the median) and **spread** (using quantiles) of a variable.  </span>
+<span id="cb19-182"><a href="#cb19-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-183"><a href="#cb19-183" aria-hidden="true" tabindex="-1"></a>Before you move on, write your best guess for which park has, on average, the greatest number of visitors (out of these three).  </span>
+<span id="cb19-184"><a href="#cb19-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-185"><a href="#cb19-185" aria-hidden="true" tabindex="-1"></a>To visualize the data, we'll use <span class="in">`ggplot()`</span> and its associated functions, which are all in the <span class="in">`ggplot2`</span> package in the <span class="in">`tidyverse`</span>.  </span>
+<span id="cb19-186"><a href="#cb19-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-187"><a href="#cb19-187" aria-hidden="true" tabindex="-1"></a>The main parts of creating a plot in <span class="in">`ggplot()`</span> are:  </span>
+<span id="cb19-188"><a href="#cb19-188" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>the "global call": you have to tell R that you want to use <span class="in">`ggplot()`</span> by actually naming the function  </span>
+<span id="cb19-189"><a href="#cb19-189" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>the "aesthetics": you have the tell R the data frame name (in this case, <span class="in">`parks_visits`</span>) and what the x- and y-axes should be (using the aesthetics function called <span class="in">`aes()`</span>)  </span>
+<span id="cb19-190"><a href="#cb19-190" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>the "geometries": this is the _type_ of plot you are making. In this case, we're using the function `geom_boxplot()` because we want to make a boxplot. Most `geom_()` functions are named after the plot they make.  </span>
+<span id="cb19-191"><a href="#cb19-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-192"><a href="#cb19-192" aria-hidden="true" tabindex="-1"></a><span class="in">```{r first-boxplot}</span></span>
+<span id="cb19-193"><a href="#cb19-193" aria-hidden="true" tabindex="-1"></a><span class="in">#| warning: false</span></span>
+<span id="cb19-194"><a href="#cb19-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-195"><a href="#cb19-195" aria-hidden="true" tabindex="-1"></a><span class="in"># 1. start with the global call</span></span>
+<span id="cb19-196"><a href="#cb19-196" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data = parks_visits, # using the data frame parks_visits</span></span>
+<span id="cb19-197"><a href="#cb19-197" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = park, # 2. naming the aesthetics: the x-axis should be the 3 parks</span></span>
+<span id="cb19-198"><a href="#cb19-198" aria-hidden="true" tabindex="-1"></a><span class="in">           y = visits)) + # the y-axis should be monthly visits</span></span>
+<span id="cb19-199"><a href="#cb19-199" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_boxplot() # 3. the plot should be a boxplot</span></span>
+<span id="cb19-200"><a href="#cb19-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-201"><a href="#cb19-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-202"><a href="#cb19-202" aria-hidden="true" tabindex="-1"></a>:::{.callout-tip title="Getting a warning?"}</span>
+<span id="cb19-203"><a href="#cb19-203" aria-hidden="true" tabindex="-1"></a>When you run the code to create this figure, you will get a warning message that looks like this:</span>
+<span id="cb19-204"><a href="#cb19-204" aria-hidden="true" tabindex="-1"></a>`</span>
+<span id="cb19-205"><a href="#cb19-205" aria-hidden="true" tabindex="-1"></a>Warning message:</span>
+<span id="cb19-206"><a href="#cb19-206" aria-hidden="true" tabindex="-1"></a>Removed 1 row containing non-finite outside the scale range (<span class="in">`stat_boxplot()`</span>). </span>
+<span id="cb19-207"><a href="#cb19-207" aria-hidden="true" tabindex="-1"></a>`</span>
+<span id="cb19-208"><a href="#cb19-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-209"><a href="#cb19-209" aria-hidden="true" tabindex="-1"></a>This means that there is a number _missing_ in the data frame. Can you find it? (Hint: you'll need to look at CNPS visit numbers from 2005).  </span>
+<span id="cb19-210"><a href="#cb19-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-211"><a href="#cb19-211" aria-hidden="true" tabindex="-1"></a>Missing data is often not a big deal - things happen during data collection! However, we do want to be aware of missing data when we analyze it. That's why making visualizations is so important; it can help us identify gaps in the dataset if there are any.</span>
+<span id="cb19-212"><a href="#cb19-212" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb19-213"><a href="#cb19-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-214"><a href="#cb19-214" aria-hidden="true" tabindex="-1"></a>Which park do you think receives, _on average_, the greatest number of visitors?  </span>
+<span id="cb19-215"><a href="#cb19-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-216"><a href="#cb19-216" aria-hidden="true" tabindex="-1"></a>We can check that using math!  </span>
+<span id="cb19-217"><a href="#cb19-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-218"><a href="#cb19-218" aria-hidden="true" tabindex="-1"></a><span class="fu">### 8. Grouping data using `group_by()`</span></span>
+<span id="cb19-219"><a href="#cb19-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-220"><a href="#cb19-220" aria-hidden="true" tabindex="-1"></a>In the <span class="in">`parks_visits`</span> data frame, there are 3 parks. We could do everything in section 5 for each park individually, or we could use a function called <span class="in">`group_by()`</span> from the <span class="in">`tidyverse`</span>. When you use <span class="in">`group_by()`</span>, you are basically telling R, "there are groups in this dataset that I want you to pay attention to."  </span>
+<span id="cb19-221"><a href="#cb19-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-222"><a href="#cb19-222" aria-hidden="true" tabindex="-1"></a><span class="in">```{r first-group-example}</span></span>
+<span id="cb19-223"><a href="#cb19-223" aria-hidden="true" tabindex="-1"></a><span class="in">parks_summary &lt;- parks_visits |&gt; # start with the parks_visits data frame</span></span>
+<span id="cb19-224"><a href="#cb19-224" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(park) |&gt; # group by each park</span></span>
+<span id="cb19-225"><a href="#cb19-225" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(median_visits = median(visits, na.rm = TRUE)) # summarize the median number of visits</span></span>
+<span id="cb19-226"><a href="#cb19-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-227"><a href="#cb19-227" aria-hidden="true" tabindex="-1"></a><span class="in">parks_summary # display the final data frame</span></span>
+<span id="cb19-228"><a href="#cb19-228" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-229"><a href="#cb19-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-230"><a href="#cb19-230" aria-hidden="true" tabindex="-1"></a><span class="fu">### 9. Cleaning, wrangling, and visualizing all together</span></span>
+<span id="cb19-231"><a href="#cb19-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-232"><a href="#cb19-232" aria-hidden="true" tabindex="-1"></a>Let's say we want to create a figure of total _annual_ visits through time. That would mean we would need to add up all the monthly visits for a given park in a given year. We can take advantage of the functions we've gone through to do that work!  </span>
+<span id="cb19-233"><a href="#cb19-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-234"><a href="#cb19-234" aria-hidden="true" tabindex="-1"></a>We'll also add in a new function here: <span class="in">`mutate()`</span>. <span class="in">`mutate()`</span> is a function that allows you to add new columns or manipulate existing columns in a data frame. In this case, we'll use mutate to do two things:  </span>
+<span id="cb19-235"><a href="#cb19-235" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>add a new column called <span class="in">`park_name`</span> that has the full name of each park (instead of the abbreviation)  </span>
+<span id="cb19-236"><a href="#cb19-236" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>add a new column called <span class="in">`visits_millions`</span> that calculates the annual number of visits in millions</span>
+<span id="cb19-237"><a href="#cb19-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-238"><a href="#cb19-238" aria-hidden="true" tabindex="-1"></a><span class="in">```{r annual-visits-summary}</span></span>
+<span id="cb19-239"><a href="#cb19-239" aria-hidden="true" tabindex="-1"></a><span class="in">annual_visits &lt;- parks_visits |&gt; # start with the parks_visits data frame</span></span>
+<span id="cb19-240"><a href="#cb19-240" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(park, year) |&gt; # group by park AND year</span></span>
+<span id="cb19-241"><a href="#cb19-241" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(total_visits = sum(visits, na.rm = TRUE)) |&gt; # calculate total visits per year</span></span>
+<span id="cb19-242"><a href="#cb19-242" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(park_name = case_when( # create a new column called park_name</span></span>
+<span id="cb19-243"><a href="#cb19-243" aria-hidden="true" tabindex="-1"></a><span class="in">    park == "cnps" ~ "Channel Islands", # when cnps appears in the park column, fill in Channel Islands</span></span>
+<span id="cb19-244"><a href="#cb19-244" aria-hidden="true" tabindex="-1"></a><span class="in">    park == "dvnp" ~ "Death Valley", # when dvnp appears in the park column, fill in Death Valley</span></span>
+<span id="cb19-245"><a href="#cb19-245" aria-hidden="true" tabindex="-1"></a><span class="in">    park == "jtnp" ~ "Joshua Tree" # when jtnp appears in the park column, fill in Joshua Tree</span></span>
+<span id="cb19-246"><a href="#cb19-246" aria-hidden="true" tabindex="-1"></a><span class="in">  )) |&gt; </span></span>
+<span id="cb19-247"><a href="#cb19-247" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(visits_millions = total_visits/1000000) # add a new column called visits_millions, where the total visits are divided by 1000000</span></span>
+<span id="cb19-248"><a href="#cb19-248" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-249"><a href="#cb19-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-250"><a href="#cb19-250" aria-hidden="true" tabindex="-1"></a>Now, we can visualize the data in a _line plot_, which is a type of scatter plot except the points are connected with lines. We can do that using <span class="in">`ggplot()`</span> again, but this time with two new "geometries": <span class="in">`geom_point()`</span> and <span class="in">`geom_line()`</span>.  </span>
+<span id="cb19-251"><a href="#cb19-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-252"><a href="#cb19-252" aria-hidden="true" tabindex="-1"></a>We'll also add some color to the plot to make it more interesting to look at!   </span>
+<span id="cb19-253"><a href="#cb19-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-254"><a href="#cb19-254" aria-hidden="true" tabindex="-1"></a>Lastly, we'll add in a new function called <span class="in">`labs()`</span>, which allows us to change the labels on the axes and legend and add a title to the plot, to make things more clear.  </span>
+<span id="cb19-255"><a href="#cb19-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-256"><a href="#cb19-256" aria-hidden="true" tabindex="-1"></a><span class="in">```{r annual-visits-plot}</span></span>
+<span id="cb19-257"><a href="#cb19-257" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data = annual_visits, # use the annual_visits data frame</span></span>
+<span id="cb19-258"><a href="#cb19-258" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = year, # the x-axis should be year</span></span>
+<span id="cb19-259"><a href="#cb19-259" aria-hidden="true" tabindex="-1"></a><span class="in">           y = visits_millions, # the y-axis should be visits in millions</span></span>
+<span id="cb19-260"><a href="#cb19-260" aria-hidden="true" tabindex="-1"></a><span class="in">           color = park_name)) + # color all geometries by park_name</span></span>
+<span id="cb19-261"><a href="#cb19-261" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point() + # adding points</span></span>
+<span id="cb19-262"><a href="#cb19-262" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line() + # adding lines</span></span>
+<span id="cb19-263"><a href="#cb19-263" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Year", # relabelling the x-axis</span></span>
+<span id="cb19-264"><a href="#cb19-264" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Recreation visits (in millions)", # and the y-axis</span></span>
+<span id="cb19-265"><a href="#cb19-265" aria-hidden="true" tabindex="-1"></a><span class="in">       title = "Joshua Tree receives more visits than Death Valley and Channel Islands", # adding a title</span></span>
+<span id="cb19-266"><a href="#cb19-266" aria-hidden="true" tabindex="-1"></a><span class="in">       color = "Park name") # relabelling the legend</span></span>
+<span id="cb19-267"><a href="#cb19-267" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-268"><a href="#cb19-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-269"><a href="#cb19-269" aria-hidden="true" tabindex="-1"></a>**END OF WORKSHOP 1**</span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

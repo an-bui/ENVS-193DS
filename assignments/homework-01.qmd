@@ -3,11 +3,16 @@ title: "Homework 1"
 editor: source
 freeze: auto
 published-title: "Due date"
-date: 2024-04-17
+date: 2025-04-16
 date-modified: last-modified
+categories: [homework]
 ---
 
-[Due on Wednesday April 17 (Week 3) at 11:59 PM]{style="color: #79ACBD; font-size: 24px;"}
+:::{.callout-warning title="Work in progress!"}
+Subject to change before in-class assignment on Monday the 7th of April
+:::
+
+[Due on Wednesday April 16 (Week 3) at 11:59 PM]{style="color: #79ACBD; font-size: 24px;"}
 
 Read these instructions before starting your homework and follow them carefully. See the end of this assignment for a checklist of components that your assignment must have at minimum (i.e. to earn at least partial credit). Only submit the items in that list, in the order requested.
 
@@ -31,20 +36,7 @@ It is in the [google sheet](https://docs.google.com/spreadsheets/d/1iGh39-AZ0RoE
 You will not need to submit any materials for tasks, but you are expected to complete the material.
 :::
 
-### Task 1. Beginning steps to configure Git/GitHub
-a. Check that Git is installed on your computer. It likely already is, but check anyway!  
-
-    - [Instructions for Macs](https://ucsb-meds.github.io/meds-install-mac.html#check-for-git) 
-    - [Instructions for Windows](https://ucsb-meds.github.io/meds-install-windows.html#check-for-git)  
-    - If you do _not_ have git installed, follow the instructions to install it.  
-    
-b. If you don’t have one already, create a GitHub account.  
-
-    - Read Jenny Brian’s Happy Git with R Section 4.1: [“Username advice”](https://happygitwithr.com/github-acct.html#username-advice) (for example, An's GitHub username is an-bui and Caitlin's is cnordheim-maestas)  
-    - Visit [GitHub](https://github.com/)  
-    - Create an account using your personal email (not your UCSB email, which you will lose access to once you graduate)  
-
-### Task 2. Read Julia Lowndes’ piece in Scientific American: [“Open Software Means Kinder Science”](https://blogs.scientificamerican.com/observations/open-software-means-kinder-science/)
+### Task 1. insert reading here
 
 ## Part 2. Problems, code, and figures
 
@@ -52,23 +44,25 @@ Carefully read the checklist for the components that you will need to submit for
 
 :::{.callout-tip}
 #### Setting up
-You'll want to set up a directory specifically for this homework assignment _within your class directory_. For example, your class directory is called `ENVS-193DS`, while your directory for this homework assignment could be called something like `ENVS-193DS_homework-01`. Then, you can create a project within the directory for this assignment. Afterward, you can save your code and data into the same directory.
+You'll want to set up a directory specifically for this homework assignment _within your class directory_ (that you should have set up if you followed the "Getting set up" instructions.  
+
+For example, your class directory is called `ENVS-193DS`, while your directory for this homework assignment could be called something like `ENVS-193DS_homework-01`. Then, you can create a project within the directory for this assignment. Afterward, you can save your code and data into the same directory.
 :::
 
-### Problem 1. Measures of central tendency and data spread (8 points)
+### Problem 1. Measures of central tendency and data spread (12 points)
 
-After the major rains this winter, you’re interested in what’s happening with the Pacific treefrog (Pseudacris hypochondriaca) population at North Campus Open Space.  You’ve collected the following masses (in grams) for tree frogs in one night of sampling (frogs can be hard to catch!):  
+After this winter's rains, you've developed a new interest in slender salamanders (_Batrachoseps_ spp.) You’ve collected the following lengths (in centimeters) for salamanders:  
 
 $$
-23, 32, 39, 25, 35, 28
+4.6, 4.4, 6.2, 5.2, 3.7, 6.0, 3.9, 4.6, 2.7
 $$
 
   a. In one sentence, categorize this data set: what type of data did you collect, and why is it that type? **(2 points)**  
-  b. Calculate the sample mean. Express your answer with the correct units. **(2 points)**  
-  c. Calculate the sample variance. Express your answer with the correct units. **(2 points)**  
-  d. Calculate the sample standard deviation. Express your answer with the correct units. **(2 points)**  
+  b. Calculate the sample mean. Express your answer with the correct units and round to 1 decimal point. **(3 points)**  
+  c. Calculate the sample variance. Express your answer with the correct units and round to 1 decimal point. **(3 points)**  
+  d. Calculate the sample standard deviation. Express your answer with the correct units and round to 1 decimal point. **(3 points)**  
 
-### Problem 2. Visualizing data (9 points)
+### Problem 2. Visualizing data (22 points)
 
 In this problem, you’ll work with data collected by the National Snow and Ice Data Center on glacial mass and sea level rise. 
 
@@ -80,7 +74,7 @@ b. Download the two data files from Canvas (linked in the Homework 1 assignment 
     i. Data file 1: `glacial_volume_loss_copy.csv`  
     ii. Data file 2: `glacial_volume_loss.csv`  
   
-c. Open up the two data files and look at them side-by-side. In one sentence, explain how the data files are different. **(1 point)**  
+c. Open up the two data files and look at them side-by-side. In one sentence, explain how the data files are different. **(2 points)**  
 d. Read the metadata (data/information about the data) in data file 2 (`glacial_volume_loss.csv`) to understand what each column means.  
 
 Coding:  
@@ -88,8 +82,15 @@ Coding:
 e. Make sure your data files and your script (R script, Quarto, or RMarkdown document) is in the same folder as the data file.  
 f. Load the `tidyverse` package.  
 g. Read in data file 1 using `read_csv(“glacial_volume_loss_copy.csv”)` and store that as an object named `glaciers`.  
-h. Create a histogram of annual sea level rise. **(4 points)**  
-i. Create a scatterplot of cumulative sea level rise through time (year on the x-axis, cumulative sea level rise on the y-axis). **(4 points)**  
+
+:::{.callout-tip title="Before you start parts h and i" collapse="true"}
+On paper, sketch out the axes for the histogram and the scatterplot. Label the axes, and write down the columns in the data frame you will need to use to make the figures. Draw the bars of the histogram and the points of the scatterplot.  
+
+By doing this before you code up your figure, you'll be able to gain some intuition for what your figure should look like. You can then check your work against what you thought based on your drawing.
+:::
+
+h. Create a histogram of annual sea level rise. Label the x- and y-axes. **(10 points)**  
+i. Create a scatterplot of cumulative sea level rise through time (year on the x-axis, cumulative sea level rise on the y-axis). Label the x- and y-axes. **(10 points)**  
 
 ### Problem 3. Personal data (20 points total)
 
@@ -128,7 +129,7 @@ e.
 
 :::{.callout-note}
 #### When can you start collecting data?
-An will give you feedback and recommendations for what to pursue for this project on Canvas on Thursday the 18th of April. That means that **you should be able to start collecting data by the end of week 3**, if not sooner.
+An will give you feedback and recommendations for what to pursue for this project on Canvas on Thursday the 17th of April. That means that **you should be able to start collecting data by the end of week 3**, if not sooner.
 :::
 
 ### Problem 4. Setting up statistical critique (6 points)
@@ -150,10 +151,10 @@ a. For each paper, read the Abstract to get a general sense of what the paper is
     - Generalized linear mixed effect model  
     
 b. Once you’ve verified that your paper includes at least one of the above listed terms, find the [digital object identifier (DOI)](https://www.doi.org/the-identifier/what-is-a-doi/), which is a unique identifier in the form of a URL for a paper. You will know it is a DOI if it has **doi.org** somewhere in the URL.  
-c. Once you find the DOI for your paper, add it to the [Google form](https://docs.google.com/forms/d/e/1FAIpQLSdtFUDdPYsImzmbQXzIbF-tC8srozjaau00NyFEpar5pf3TfQ/viewform). Repeat this for all three papers. **(3 points)**  
+c. Once you find the DOI for your paper, add it to the [Google form](https://docs.google.com/forms/d/e/1FAIpQLSeHmqPOtdEDZ3l6oxgyFrwSDQyQl_uXO0ISt4VF2D3hOq0emQ/viewform?usp=preview). Repeat this for all three papers. **(3 points)**  
 
 :::{.callout-note}
-If you want to see what other people have chosen, see the class responses [here](https://docs.google.com/spreadsheets/d/1iGh39-AZ0RoEuY3VqjUQ_JORli-2wQ_O6EPRl20iy6k/edit?usp=sharing).
+If you want to see what other people have chosen, see the class responses [here](https://docs.google.com/spreadsheets/d/19lnWhFNnCa4Ovxz8SSq8IodSYI7U-CtRwCMa-mx7gus/edit?usp=sharing).
 :::
 
 d. In your homework document, list the papers in alphabetical order by author last name. **(3 points)**  

@@ -59,7 +59,7 @@ For data following a symmetrical distribution, the mean and median tend to be si
 
 ```{r mean-med-comparison}
 set.seed(1)
-rnorm(n = 40, mean = 6, sd = 1) %>% 
+rnorm(n = 100, mean = 6, sd = 1) %>% 
   as_tibble() %>% 
   ggplot(aes(x = value)) +
   geom_density() +
@@ -69,6 +69,27 @@ rnorm(n = 40, mean = 6, sd = 1) %>%
   annotate("text", x = 6.5, y  = 0.5, label = "median") +
   scale_x_continuous(limits = c(2.5, 10)) +
   scale_y_continuous(limits = c(0, 0.5)) +
+  labs(x = "Sculpin lengths (cm)") +
+  theme(axis.text.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.line.y = element_blank())
+```
+
+```{r mean-med-comparison-asymmetrical}
+set.seed(10)
+sample(x = 1:10, 
+       size = 100, 
+       replace = TRUE,
+       prob = 10:1
+       #prob = 10:1
+       ) |> 
+  as_tibble() |> 
+  ggplot(aes(x = value)) +
+  geom_density() +
+  geom_vline(aes(xintercept = mean(value)),
+             color = "blue") +
+  geom_vline(aes(xintercept = median(value))) +
   labs(x = "Sculpin lengths (cm)") +
   theme(axis.text.y = element_blank(),
         axis.title.y = element_blank(),

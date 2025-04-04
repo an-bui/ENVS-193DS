@@ -187,6 +187,7 @@ Before you move on, write your best guess for which park has, on average, the gr
 To visualize the data, we'll use `ggplot()` and its associated functions, which are all in the `ggplot2` package in the `tidyverse`.  
 
 The main parts of creating a plot in `ggplot()` are:  
+
 1. the "global call": you have to tell R that you want to use `ggplot()` by actually naming the function  
 2. the "aesthetics": you have the tell R the data frame name (in this case, `parks_visits`) and what the x- and y-axes should be (using the aesthetics function called `aes()`)  
 3. the "geometries": this is the _type_ of plot you are making. In this case, we're using the function `geom_boxplot()` because we want to make a boxplot. Most `geom_()` functions are named after the plot they make.  
@@ -234,6 +235,7 @@ parks_summary # display the final data frame
 Let's say we want to create a figure of total _annual_ visits through time. That would mean we would need to add up all the monthly visits for a given park in a given year. We can take advantage of the functions we've gone through to do that work!  
 
 We'll also add in a new function here: `mutate()`. `mutate()` is a function that allows you to add new columns or manipulate existing columns in a data frame. In this case, we'll use mutate to do two things:  
+
 1. add a new column called `park_name` that has the full name of each park (instead of the abbreviation)  
 2. add a new column called `visits_millions` that calculates the annual number of visits in millions
 
@@ -269,3 +271,159 @@ ggplot(data = annual_visits, # use the annual_visits data frame
 ```
 
 **END OF WORKSHOP 1**
+
+## 3. Extra stuff
+
+### Keyboard shortcut for ` <- `
+
+On Macs, this is `Opt` + `-`. On Windows, this is `Alt` + `-`.  
+
+### Applying and changing colors in a `ggplot()` object
+
+If you want your plot to have colors in it and/or control the colors, you will need two things in your code:  
+
+1. to apply colors: in the `aes()` call, have `color = ` or `fill = ` for the column in your data frame that represents the colors  
+2. to control colors: you can add on another layer (using the `+` operator) of `scale_color_manual()` or `scale_fill_manual`.  
+
+:::{.callout-tip collapse="true"}
+##### What to use: `color` or `fill`?
+
+`fill` is appropriate for any shape that you are _filling_ in (i.e. something with a boundary); for example, in the boxplot, you are filling in the rectangle shape of the box.  
+
+`color` is appropriate for anything that's _not_ a shape; points and lines are typically what you would "color".  
+
+It takes some intuition building to decide which to use, so don't get discouraged if you try `fill` but realize it's supposed to be `color` or vice versa.
+:::
+
+Here's a demonstration of how that works for a boxplot, where the argument in the `aes()` call is `fill` and the function to control the colors is `scale_fill_manual()`.  
+
+```{css, echo=FALSE, eval=TRUE}
+.multiple .leftcolumn {
+  width: 40%;
+  margin-top: 0px;
+  margin-right: 50px;
+  margin-bottom: 0px;
+  margin-left: 250px
+}
+
+.multiple .rightcolumn {
+  width:40%;
+  margin-top: 0px;
+  margin-right: 250px;
+  margin-bottom: 0px;
+  margin-left: 50px
+}
+
+.multiple .columns {
+  display: flex;
+}
+
+@media (max-width: 767px) {
+  .multiple .column {
+    width: auto;
+  }
+
+ .multiple .columns {
+   display: flex;
+   flex-direction: column;
+  }
+}
+```
+
+::::: { .multiple}
+
+:::: {.columns .column-screen-inset}
+
+::: leftcolumn
+**Without colors:**  
+
+```{r boxplot-without-colors}
+ggplot(data = parks_visits, 
+       aes(x = park, 
+           y = visits)) + 
+  geom_boxplot() 
+```
+:::
+
+::: rightcolumn
+**With colors:**  
+
+```{r boxplot-with-colors}
+ggplot(data = parks_visits, 
+       aes(x = park, 
+           y = visits,
+           fill = park)) + 
+  geom_boxplot() +
+  scale_fill_manual(values = c("cnps" = "deeppink3",
+                               "jtnp" = "seagreen3",
+                               "dvnp" = "steelblue4"))
+```
+:::
+
+::::
+:::::
+
+Here's a demonstration of how it works with a line plot, where the argument in the `aes()` call is `color` and the function to control the colors is `scale_color_manual()`.  
+
+::::: { .multiple}
+
+:::: {.columns .column-screen-inset}
+
+::: leftcolumn
+**Without colors:**  
+
+```{r line-plot-without-colors}
+ggplot(data = annual_visits, 
+       aes(x = year, 
+           y = visits_millions,
+           group = park)) + # this is an extra argument to make sure there is one line per park
+  geom_point() + 
+  geom_line() + 
+  labs(x = "Year", 
+       y = "Recreation visits (in millions)", 
+       title = "Joshua Tree receives more visits than Death Valley and Channel Islands", 
+       color = "Park name") 
+```
+:::
+
+::: rightcolumn
+**With colors:**  
+
+```{r line-plot-with-colors}
+ggplot(data = annual_visits,
+       aes(x = year, 
+           y = visits_millions, 
+           color = park_name)) + 
+  geom_point() +
+  geom_line() + 
+  labs(x = "Year", 
+       y = "Recreation visits (in millions)", 
+       title = "Joshua Tree receives more visits than Death Valley and Channel Islands", 
+       color = "Park name") + 
+  scale_color_manual(values = c("Channel Islands" = "deeppink3",
+                                "Joshua Tree" = "seagreen3",
+                                "Death Valley" = "steelblue4"))
+```
+:::
+
+::::
+:::::
+
+:::{.callout-note collapse="true"}
+##### Careful about your labels!
+
+When naming the colors that you'll assign to each value in a column, be sure that they match up with the column you typed in for your `fill` or `color` argument.  
+
+For example, the boxplot uses `fill = park`. The `park` column in the `parks_visits` data frame has three values: `cnps`, `jtnp`, and `dvnp`. That's why the `scale_fill_manual()` function contains a list of values using the abbreviations.  
+
+In contrast, the line plot uses `color = park_name`. The `park_name` column in the `annual_visits` data frame has three values: `Channel Islands`, `Joshua Tree`, and `Death Valley`. Thus, the `scale_color_manual()` function contains a list of values using the full names.
+:::
+
+### Choosing colors!
+
+Go down color rabbit holes! Some resources to do that:  
+
+- [Named colors in R](https://sites.stat.columbia.edu/tzheng/files/Rcolor.pdf): R has a bunch of built in color names, like `steelblue3`, `violetred2`, and `darkorchid4`.  
+- [hex codes](https://www.color-hex.com/): more customizable colors come from hex codes, which are 6 digit alphanumeric codes that describe a color. For example, `#FFFFFFF` represents white, while `#000000` represents black, and `#3d85c6` is a nice blue.  
+- [color palettes](https://emilhvitfeldt.github.io/r-color-palettes/discrete.html): if you want to change the colors but you don't want to pick your own, you can use color palettes. These are collections of colors that people have put into packages for you to use in your plots. There are lots of interesting packages of palettes: a `beyonce` package that has a bunch of palettes from music videos/concerts, a `vangogh` package that has palettes from Van Gogh paintings, and much more. A package I developed with my friends is `calecopal`, which is a package of palettes inspired by California ecosystems. 
+

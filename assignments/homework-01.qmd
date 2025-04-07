@@ -8,27 +8,9 @@ date-modified: last-modified
 categories: [homework]
 ---
 
-:::{.callout-warning title="Work in progress!"}
-Subject to change before in-class assignment on Monday the 7th of April
-:::
-
 [Due on Wednesday April 16 (Week 3) at 11:59 PM]{style="color: #79ACBD; font-size: 24px;"}
 
 Read these instructions before starting your homework and follow them carefully. See the end of this assignment for a checklist of components that your assignment must have at minimum (i.e. to earn at least partial credit). Only submit the items in that list, in the order requested.
-
-## Frequently Asked Questions
-
-### I'm having trouble rendering to PDF. What can I do?
-
-You could either install all the additional things R is asking for you to install, or you can render to a word doc instead (change `pdf` in the top part of the document to `docx`) and save that doc as a PDF. 
-
-### I don't know how to insert an image into a Quarto document. How do I do that?
-
-Here is a [resource for Quarto](https://quarto.org/docs/authoring/figures.html). If you rendered your Quarto file to a word document, you can insert an image into that word document the same way you would with any other word doc.
-
-### Where is the feedback for problem 4?
-
-It is in the [google sheet](https://docs.google.com/spreadsheets/d/19lnWhFNnCa4Ovxz8SSq8IodSYI7U-CtRwCMa-mx7gus/edit?usp=sharing).
 
 ## Part 1. Tasks
 
@@ -36,31 +18,42 @@ It is in the [google sheet](https://docs.google.com/spreadsheets/d/19lnWhFNnCa4O
 You will not need to submit any materials for tasks, but you are expected to complete the material/steps.
 :::
 
-### Task 1. insert reading here
+### Task 1. Set up your folders and `.Rproj` file
 
-### Task 2. Set up your folders
-
-#### a. Create a new folder for this homework assignment.
+#### a. Create a new folder for this homework assignment within your `ENVS-193DS` folder.
 
 Within the `ENVS-193DS` folder you set up, create a _new_ folder for Homework 1. Name it whatever you want (a logical name could be `homework-01`).  
 
 #### b. Download the files from Canvas
 
-In your homework 1 folder, download all the files from Canvas. This includes:  
+Download the homework files from Canvas into your homework folder on your computer. This includes:  
 
-- insert file here  
-- insert file here  
-- insert file here  
+- the homework template  
+- `glacial_volume_loss.csv`  
+- `glacial_volume_loss_copy.csv`  
 
 #### c. Create an Rproject for this homework assignment
 
-Create an Rproj file! If you need help with this, watch the "Creating an Rproject" video on Canvas.  
+Create an Rproj file within your `homework-01` folder. If you need help with this, watch the "Creating an Rproject" video on Canvas.  
+
+### Task 2. Set up your code.
+
+At the top of the template (or your own Quarto doc):
+
+- Load the `tidyverse` package.  
+- Read in data file 1 using `read_csv(“glacial_volume_loss_copy.csv”)` and store that as an object named `glaciers`.  
+
+### Task 3. Read about metadata from NOAA's National Centers for Environmental Information
+
+Read the overview page on metadata [here](https://www.ncei.noaa.gov/resources/metadata) to understand what metadata is.  
+
+Then, click through to the "Introduction to Metadata" page (under "Learn") and read the questions that you should be able to answer with metadata.  
 
 #### You are now ready to start your homework!
 
 ## Part 2. Problems, code, and figures
 
-### Problem 1. Measures of central tendency and data spread (12 points)
+### Problem 1. Measures of central tendency and data spread (11 points)
 
 After this winter's rains, you've developed a new interest in slender salamanders (_Batrachoseps_ spp.) You’ve collected the following lengths (in centimeters) for salamanders:  
 
@@ -73,66 +66,89 @@ $$
   c. Calculate the sample variance. Express your answer with the correct units and round to 1 decimal point. **(3 points)**  
   d. Calculate the sample standard deviation. Express your answer with the correct units and round to 1 decimal point. **(3 points)**  
 
-### Problem 2. Visualizing data (22 points)
+### Problem 2. Visualizing data (50 points)
 
-In this problem, you’ll work with data collected by the National Snow and Ice Data Center on glacial mass and sea level rise. 
+In this problem, you’ll work with data collected by the National Snow and Ice Data Center on glacial mass and sea level rise.  
 
-Getting set up:  
+Before you start this problem, read about the data [here](http://dx.doi.org/10.7265/N52N506F).  
 
-a. Read the overview information about the data set from the database **(INSERT LINK HERE)**  
-b. Read the metadata (data/information about the data) in data file 2 (`glacial_volume_loss.csv`) to understand what each column means.  
+Questions:  
 
-Coding:  
+a. Open up the two data files (`glacial_volume_loss_copy.csv` and `glacial_volume_loss.csv`) in Excel (or another program, if you use something different). Look at the files side-by-side. In one sentence, explain how the data files are different. **(2 points)**  
 
-f. Load the `tidyverse` package.  
-g. Read in data file 1 using `read_csv(“glacial_volume_loss_copy.csv”)` and store that as an object named `glaciers`.  
+b. Using the "Introduction to Metadata" information from Task 3, choose one question from the examples for "Who", "What", "Why", "Where", "When" and "How". Answer the questions you chose using the metadata in `glacial_volume_loss.csv`.  
 
-:::{.callout-tip title="Before you start parts h and i" collapse="true"}
+Each response should have the "question" (who, what, why, where, when, how), the example ("Who collected and processed the data?"), and your response. Format each as:  
+
+- Who: Who collected and processed the data? [insert response here]  
+- What: What are the data about? [insert response here]  
+- Why: Why were the data collected? [insert response here]  
+- Where: Where are the data located? [insert response here]  
+
+and so on. You should have _one_ response for each question and example. **(18 points)**
+
+:::{.callout-tip title="Before you start parts c and d" collapse="true"}
 On paper, sketch out the axes for the histogram and the scatterplot. Label the axes, and write down the columns in the data frame you will need to use to make the figures. Draw the bars of the histogram and the points of the scatterplot.  
 
 By doing this before you code up your figure, you'll be able to gain some intuition for what your figure should look like. You can then check your work against what you thought based on your drawing.
-:::
-b. Open up the two data files and look at them side-by-side. In one sentence, explain how the data files are different. **(2 points)**  
-h. Create a histogram of annual sea level rise. Label the x- and y-axes. **(10 points)**  
-i. Create a scatterplot of cumulative sea level rise through time (year on the x-axis, cumulative sea level rise on the y-axis). Label the x- and y-axes. **(10 points)**  
+:::  
 
-### Problem 3. Personal data (20 points total)
+c. Create a histogram of annual sea level rise using `ggplot()`. Label the x- and y-axes. **(16 points)**  
+d. Create a scatterplot of cumulative sea level rise through time (year on the x-axis, cumulative sea level rise on the y-axis) using `ggplot()`. Label the x- and y-axes. **(14 points)**  
 
-This quarter, you'll collect data from your own life to see how data science concepts are part of your daily existence. For this homework assignment, you'll come up with **two ideas for data collection**. The data you collect:
+### Problem 3. Personal data (32 points total)
+
+This quarter, you'll collect data from your own life to see how data science concepts are part of your daily existence. For this homework assignment, you'll come up with **two ideas for data collection**. The data you collect:  
 
 - has to be something you can get at least 30 observations on by week 10 (e.g. minutes to get from ENVS 193DS to your next class, not number of shark views per week)  
-- can't something you can get from data collection objects (e.g. number of steps in a day)  
 - has to be something that you could actually remember to write down (e.g. liters of water consumed in a day, not time spent on tiktok)  
-- has to be be shaped by a question (e.g. how much water do i drink in a day?)  
+- has to be be shaped by a question    
 - has to include variables that would be *appropriate* to share with the class  
 
 For each idea you have (remember you have to come up with two ideas), you should:  
 
 a. articulate a question **(2 points each)**  
-b. describe when you would write that data down **(2 points each)**  
-c. describe what other variables you think you should measure **(2 points each)**    
-d. describe what type of data your variables are **(2 points each)**  
-e. design a data sheet with some example data: what are the columns and what are the rows? **(2 points each)**  
+b. describe your response variable (i.e. your variable of interest) **(2 points each)**  
+c. describe your predictor variable **(2 points each)**  
+d. describe what variables you should measure or record that indicate the _time_ of the observation (for example: date or time of day) **(2 points each)**
+e. describe 4 additional variables you think you should measure or record that could also influence your response variable **(2 points each)**    
+f. describe what type of data all your variables are with units **(2 points each)**  
+g. describe the sources of your data (e.g. phone step tracker, screen time tracker, self) **(2 points each)**  
+h. describe when you would take down data for an observation **(2 points each)**  
+i. design a data sheet with some example data: what are the columns and what are the rows? **(2 points each)**  
 
-**Example:**  
+:::{.callout-note collapse="true"}
+#### Need an example? Here's An's.
 
-a. Question: How many different types of vegetables do I eat?  
-b. I would take data after every meal.  
-c. Date, time of day, type of vegetable, meal, whether or not it's cooked, if it's eaten with other things   
-d.  
+a. Question: Do I go on longer runs on non-work days?   
+b. My response variable is length of run, measured in miles.  
+c. My predictor variable is work day (yes or no).  
+d. I would record the date and time of day.  
+e. duration, average pace, cadence, temperature, elevation, type of run, run location, hydration level  
+f.  
 
-- Date: continuous  
-- time of day: categorical (morning, afternoon, evening)  
-- meal: categorical (breakfast, lunch, dinner, snack)  
-- cooked: binary (yes/no)  
-- eaten with other things: binary (yes/no)  
+- date (yyyy-mm-dd): continuous  
+- time of day (hh:mm, 24 hour time): continuous  
+- duration (mm:ss): continuous  
+- length (miles): continuous  
+- average pace (min/mile): continuous  
+- cadence (steps/min): continuous  
+- temperature (F): continuous  
+- elevation (feet): continuous  
+- type of run (road, trail, mix): categorical    
+- run location (neighborhood, front country, NCOS, other): categorical   
+- hydration level (> 2 L, between 1-2 L, less than 1 L): categorical   
+- work day (yes/no): binary categorical   
 
-e. 
+g. Date, time of day, duration, length, average pace, cadence, temperature, and elevation are all variables that I could get from Strava (a running tracking app). The 4 additional variables that I could _not_ get from Strava and could influence the length of my run are: type of run, run location, hydration level, and work day. I would assign these categories myself.    
 
-![](/assignments/images/homework-01/example-data-sheet.png)
+h. I would record my data after every run.  
+
+i. ![](/assignments/images/homework-01/example-data-sheet.png)
+:::
 
 :::{.callout-note}
-#### When can you start collecting data?
+#### When can I start collecting data?
 An will give you feedback and recommendations for what to pursue for this project on Canvas on Thursday the 17th of April. That means that **you should be able to start collecting data by the end of week 3**, if not sooner.
 :::
 
@@ -173,21 +189,36 @@ Sanford, E., et al. 2019. “Widespread shifts in the coastal biota of northern 
 Your assignment should:
 
 - [ ] include your name, the title, and the date **(3 points)**  
-- [ ] include all code with annotations  **(_ points)**  
+- [ ] include all code with annotations  **(5 points)**  
 - [ ] be organized and readable **(5 points)**  
-- [ ] be uploaded to Canvas as a single PDF **(1 point)**  
+- [ ] be uploaded to Canvas as a single PDF **(2 points)**  
 
 Your responses should include:  
 
-- [ ] written responses for Problem __  
-- [ ] written responses for Problem ___  
-- [ ] 3 citations for Problem 3c  
+- [ ] work and written responses for Problem 1  
+- [ ] written responses, annotated code, and figure outputs for Problem 2    
+- [ ] written responses for Problem 3  
+- [ ] written responses (3 paper citations) for Problem 4  
 
 Additionally, you should:  
 
 - [ ] paste 3 DOIs for the papers you’re interested in in the [Google form](https://docs.google.com/forms/d/e/1FAIpQLSdtFUDdPYsImzmbQXzIbF-tC8srozjaau00NyFEpar5pf3TfQ/viewform)  
 
-Lastly, check out the **rubric on Canvas** to see the point breakdown in more detail.  
+Lastly, check out the **rubric on Canvas** to see the point breakdown in more detail (rubric will be posted at the end of the day on Monday 7 April).  
  
-**49 points total**  
+**100 points total**  
+
+## Frequently Asked Questions
+
+### I'm having trouble rendering to PDF. What can I do?
+
+You could either install all the additional things R is asking for you to install, or you can render to a word doc instead (change `pdf` in the top part of the document to `docx`) and save that doc as a PDF. 
+
+### I don't know how to insert an image into a Quarto document. How do I do that?
+
+Here is a [resource for Quarto](https://quarto.org/docs/authoring/figures.html). If you rendered your Quarto file to a word document, you can insert an image into that word document the same way you would with any other word doc.
+
+### Where is the feedback for problem 4?
+
+It is in the [google sheet](https://docs.google.com/spreadsheets/d/19lnWhFNnCa4Ovxz8SSq8IodSYI7U-CtRwCMa-mx7gus/edit?usp=sharing).
 

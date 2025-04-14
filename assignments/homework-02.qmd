@@ -1,0 +1,193 @@
+---
+title: "Homework 2"
+editor: source
+freeze: auto
+published-title: "Due date"
+date: 2025-04-23
+date-modified: last-modified
+---
+
+[Due on Wednesday April 23 (Week 4) at 11:59 PM]{style="color: #79ACBD; font-size: 24px;"}
+
+Read the instructions carefully and double check that you have everything on the checklist.
+
+## Part 1. Tasks
+
+Remember that you are not expected to turn anything in for tasks, but you should complete all the material.
+
+### Task 1. Set up your folders and Rproject.
+
+#### a. Create a new folder for this homework assignment within your `ENVS-193DS` folder.
+
+Within the `ENVS-193DS` folder you set up, create a _new_ folder for Homework 2. Name it whatever you want (a logical name could be `homework-02`).  
+
+#### b. Download the files from Canvas
+
+Download the homework files from Canvas into your homework folder on your computer. This includes:  
+
+- the homework template  
+- `insert csv name here.csv`  
+
+#### c. Create an Rproject for this homework assignment
+
+Create an Rproj file within your `homework-02` folder. If you need help with this, watch the "Creating an Rproject" video on Canvas.  
+
+#### d. In the template, write code to load in the packages you need.
+
+You will probably need to use the `tidyverse`, and potentially `janitor`. 
+
+#### e. Read the Canvas data into R.
+
+Store this as an object called `pm25`. 
+
+### Task 2. Read about the Environmental Protection Agency's Outdoor Air Quality data.
+
+#### a. Learn about PM 2.5
+
+Read the [EPA's description of particulate matter](https://www.epa.gov/pm-pollution/particulate-matter-pm-basics) to understand the definition of PM 2.5.  
+
+#### b. Read about the EPA's data collection
+
+Read the [EPA's description of their Air Data](https://www.epa.gov/outdoor-air-quality-data/air-data-basic-information) to understand the source of the data you'll be working with in Problem 2.
+
+### Task 3. Enter your data for your personal data project.  
+
+#### a. Create a spreadsheet to enter your data.
+
+Two good options include Google Sheets or Microsoft Excel. This will be the spreadsheet that you continually update with data for new observations, so store it in a logical place so that you can find it later.  
+
+#### b. Create the columns of your spreadsheet.
+
+If you have organized your data sheet in "long" format, in which each row is an observation, then your spreadsheet columns will be the same as your data sheet columns. If not, that's ok - just make sure you're entering your data in a way that makes sense based on how you collected it.
+
+#### c. Enter your data.
+
+Double check your values!
+
+#### d. Save your spreadsheet as a .csv file in your `homework-02` folder.
+
+#### e. Read your data into R. 
+
+Include the code to to this at the top of the template. You will want to do this the same way you read any data into R: by creating a new object (you could call this `my_data`) and using the left arrow operator to store and read in the data using `read_csv()`.
+
+#### You are now ready to start your homework!
+
+## Part 2. Problems
+
+### Problem 1. Burrowing owl abundance (12 points)
+
+Managers at Dangermond Reserve are interested in the return of burrowing owls to the reserve. You conduct weekly surveys for burrowing owls from October to February and collect the following data on the number of burrowing owls you see each week:
+
+$$
+0, 2, 0, 3, 1, 4, 1, 2
+$$
+
+a. What kind of data did you collect, and why? Explain in 1-2 sentences. **(2 points)**  
+b. What is a better description of the variability in burrowing owl count, standard deviation or standard error? Explain why in 1 sentence. Calculate the metric of your choice, showing your work. Round your final answer to 1 decimal point, and show the correct units. **(5 points)**  
+c. What is a better description of the uncertainty in burrowing owl count, standard deviation or standard error? Explain why in 1 sentence. Calculate the metric of your choice, showing your work. Round your final answer to 1 decimal point, and show the correct units. **(5 points)**  
+
+### Problem 2. Fire and particulate matter (68 points)
+
+In 2017-2018, the Thomas Fire burned 281,893 acres in Santa Barbara County and Ventura County. At the time, it was the largest wildfire in California history. The fire started on December 4th and was fully contained on January 12, 2018. You'll be working with EPA data on particulate matter during the fire.  
+
+In this problem, you will visualize the data two different ways. You will then answer the question: **from the start of the Thomas Fire on December 4th until it was contained on January 12th, was there a difference in PM2.5 between Goleta and Santa Barbara?**  
+
+a. Create a line graph with date on the x-axis and PM 2.5 on the y-axis. Color each line by the location of the sensor (hint: there should be 5 locations). Label the x and y-axes. **(8 points)**  
+
+b. Filter the `sbpm` data frame to only include observations from Goleta and Santa Barbara. Store this filtered data frame in an object called `gol_sb`. **Only show the code; do _not_ display the data frame.** **(2 points)**  
+
+c. In one sentence, write your hypothesis to answer the question: **from the start of the fire until when it was contained, was there a difference in PM2.5 between Goleta and Santa Barbara?** in _biological terms_ (_not_ statistical or mathematical terms). **(2 points)**  
+
+c. Create a boxplot with jittered points, where the x-axis is the location and the y-axis is PM 2.5. Make sure the jittered points do not move along the y-axis. Label the x and y-axes. For full points:  
+
+   i. color by site and change the colors from the default   
+   ii. make sure each site has a different shape  
+   iii. use a ggplot theme that is not the default  
+   **(14 points)**
+
+d. Make a QQ plot. Make sure there are two panels for each location. You do not need to label the x and y-axes. **(10 points)**
+
+e. In one sentence, describe whether the variable (PM 2.5) is normally distributed or not. Use visual components (e.g. shape, distribution) of the QQ plot you made to justify your characterization of the variable. **(4 points)**  
+
+f. Check your variances using `var.test()`. In one sentence, describe whether the groups have equal variances or not. **(4 points)**   
+
+g. Do a t-test using `t.test()`. **(4 points)**   
+
+:::{.callout-tip title="t-test arguments" collapse=true}
+Double check your arguments to make sure you’re running the right test.
+:::
+    
+h. In one sentence each, describe:  
+
+    i. Why a t-test would have been appropriate for testing your hypotheses in part a   
+    ii. How you evaluated normality and homogeneity of variance  
+    iii. If the variable was not normally distributed, how you justified using a t-test  
+    **(6 points)**
+    
+i. Describe the results in 1-2 full sentences in your own words. Make sure to include the:  
+
+    i. Test you ran   
+    ii. Number of observations for each location
+    iii. Significance level
+    iv. Degrees of freedom
+    v. Test statistic
+    vi. p-value  
+    **(14 points)**  
+    
+Round any numbers with decimals to two decimal points. 
+    
+:::{.callout-tip title="Do _not_ simply list each component!" collapse=true}
+You will be graded on how you synthesize information. See lecture notes for an example of how to summarize the results of a statistical test in parentheses.
+:::
+    
+### Problem 3. Personal data (40 points)
+
+By now, you have some observations on your data sheet for your personal data. Even though it's early on in your data collection, it's a good idea to practice good **data management**. For this problem, you'll enter your data, read it into R, and create a visualization. If you get stuck at any step, you'll know there's something you need to fix.  
+
+a. Create a visualization with a _categorical_ predictor variable on the x-axis and your response variable on the y-axis. Label the x- and y-axes. **(16 points)**   
+b. Create a visualization with a _continuous_ predictor variable on the x-axis and your response variable on the y-axis. Label the x- and y-axes. **(16 points)**  
+c. In 2-5 sentences, describe what insights (if any) you can gain about your data from visualizations like these. Once you collect more data and update these figures, would these insights change? **(4 points)**  
+d. In 2-5 sentences, describe the process of getting your data from your spreadsheet into R. Did you encounter any challenges? If so, why do you think those challenges arose, and how did you fix them? If not, why do you think your system for collecting your data worked? **(4 points)**  
+
+:::{.callout-tip title="Changing your data collection scheme" collapse=true}
+If you found that entering your data from your spreadsheet and getting it into the right format to be used in R was challenging, that's ok! This happens a lot with data collection. Feel free to change your data sheet so that you're collecting data in a way that makes your life easier as you're reading your data into R and using it. 
+:::
+
+### Problem 4. Statistical critique (24 points)
+Check the [Google sheet](https://docs.google.com/spreadsheets/d/1iGh39-AZ0RoEuY3VqjUQ_JORli-2wQ_O6EPRl20iy6k/edit?usp=sharing) and choose a paper to use for your critique based on An’s/Thuy-Tien's/Grace's recommendations. Answer the following questions about the paper in 1-2 sentences each:  
+
+a. Why were you interested in this paper? **(4 points)**  
+b. What questions/hypotheses are the authors addressing? **(4 points)**  
+c. Which statistical test (from Homework 1) is included in this paper? What is the response variable? What is the predictor variable? **(4 points)**  
+d. How does this test address the main question(s) presented by the authors? For example, how would the authors interpret a "significant" result? **(4 points)**  
+e. Find the figure(s) and/or table(s) in the paper that are associated with the statistical tests from question (c). If there are multiple figures and tables relating to the statistical test, find the best one that demonstrates the relationship betwee the predictor and the response. Take a screenshot, and insert it into your document. **4 points**
+
+:::{.callout-tip title="Make sure your screenshot is visible in your final PDF!" collapse="true"}
+If your screenshot for part e is not visible, you will not receive points for part f.
+:::
+
+f. If you have a figure: describe the x- and y-axes, and what the figure is supposed to show (i.e. what is the main message of the figure)? If you have a table, what are the rows and columns, and what is in each cell of the table?  **(4 points)**
+
+## Double check your assignment!
+
+Your assignment should:
+
+- [ ] include your name, the title, and the date **(3 points)**  
+- [ ] include all code with annotations  **(5 points)**  
+- [ ] be organized and readable **(5 points)**  
+- [ ] be uploaded to Canvas as a single PDF **(2 points)**  
+
+Your responses should include:  
+
+- [ ] work and written responses for Problem 1  
+- [ ] written responses, annotated code, and figure outputs for Problem 2    
+- [ ] annotated code, figure output, and written responses for Problem 3  
+- [ ] written responses and screenshot for Problem 4  
+
+Lastly, check out the **rubric on Canvas** to see the point breakdown in more detail.  
+ 
+**144 points total**  
+
+
+
+

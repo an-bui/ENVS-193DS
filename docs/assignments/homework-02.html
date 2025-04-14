@@ -224,7 +224,7 @@ window.Quarto = {
   <li><a href="#part-2.-problems" id="toc-part-2.-problems" class="nav-link" data-scroll-target="#part-2.-problems">Part 2. Problems</a>
   <ul class="collapse">
   <li><a href="#problem-1.-burrowing-owl-abundance-12-points" id="toc-problem-1.-burrowing-owl-abundance-12-points" class="nav-link" data-scroll-target="#problem-1.-burrowing-owl-abundance-12-points">Problem 1. Burrowing owl abundance (12 points)</a></li>
-  <li><a href="#problem-2.-fire-and-particulate-matter-68-points" id="toc-problem-2.-fire-and-particulate-matter-68-points" class="nav-link" data-scroll-target="#problem-2.-fire-and-particulate-matter-68-points">Problem 2. Fire and particulate matter (68 points)</a></li>
+  <li><a href="#problem-2.-fire-and-particulate-matter-90-points" id="toc-problem-2.-fire-and-particulate-matter-90-points" class="nav-link" data-scroll-target="#problem-2.-fire-and-particulate-matter-90-points">Problem 2. Fire and particulate matter (90 points)</a></li>
   <li><a href="#problem-3.-personal-data-40-points" id="toc-problem-3.-personal-data-40-points" class="nav-link" data-scroll-target="#problem-3.-personal-data-40-points">Problem 3. Personal data (40 points)</a></li>
   <li><a href="#problem-4.-statistical-critique-24-points" id="toc-problem-4.-statistical-critique-24-points" class="nav-link" data-scroll-target="#problem-4.-statistical-critique-24-points">Problem 4. Statistical critique (24 points)</a></li>
   </ul></li>
@@ -243,7 +243,7 @@ window.Quarto = {
 
 
 
-<p><span style="color: #79ACBD; font-size: 24px;">Due on Wednesday April 23 (Week 4) at 11:59 PM</span></p>
+<p><span style="color: #79ACBD; font-size: 24px;">Due on Friday April 25 (Week 4) at 11:59 PM</span></p>
 <p>Read the instructions carefully and double check that you have everything on the checklist.</p>
 <section id="part-1.-tasks" class="level2">
 <h2 class="anchored" data-anchor-id="part-1.-tasks">Part 1. Tasks</h2>
@@ -273,7 +273,7 @@ window.Quarto = {
 </section>
 <section id="e.-read-the-canvas-data-into-r." class="level4">
 <h4 class="anchored" data-anchor-id="e.-read-the-canvas-data-into-r.">e. Read the Canvas data into R.</h4>
-<p>Store this as an object called <code>pm25</code>.</p>
+<p>Store this as an object called <code>sbpm</code>.</p>
 </section>
 </section>
 <section id="task-2.-read-about-the-environmental-protection-agencys-outdoor-air-quality-data." class="level3">
@@ -329,23 +329,25 @@ window.Quarto = {
 <li>What is a better description of the uncertainty in burrowing owl count, standard deviation or standard error? Explain why in 1 sentence. Calculate the metric of your choice, showing your work. Round your final answer to 1 decimal point, and show the correct units. <strong>(5 points)</strong></li>
 </ol>
 </section>
-<section id="problem-2.-fire-and-particulate-matter-68-points" class="level3">
-<h3 class="anchored" data-anchor-id="problem-2.-fire-and-particulate-matter-68-points">Problem 2. Fire and particulate matter (68 points)</h3>
+<section id="problem-2.-fire-and-particulate-matter-90-points" class="level3">
+<h3 class="anchored" data-anchor-id="problem-2.-fire-and-particulate-matter-90-points">Problem 2. Fire and particulate matter (90 points)</h3>
 <p>In 2017-2018, the Thomas Fire burned 281,893 acres in Santa Barbara County and Ventura County. At the time, it was the largest wildfire in California history. The fire started on December 4th and was fully contained on January 12, 2018. You’ll be working with EPA data on particulate matter during the fire.</p>
 <p>In this problem, you will visualize the data two different ways. You will then answer the question: <strong>from the start of the Thomas Fire on December 4th until it was contained on January 12th, was there a difference in PM2.5 between Goleta and Santa Barbara?</strong></p>
 <ol type="a">
-<li><p>Create a line graph with date on the x-axis and PM 2.5 on the y-axis. Color each line by the location of the sensor (hint: there should be 5 locations). Label the x and y-axes. <strong>(8 points)</strong></p></li>
+<li><p>Create a line graph with date on the x-axis and PM 2.5 on the y-axis. Color each line by the location of the sensor (hint: there should be 5 locations). Label the x-axis, y-axis, and legend colors. <strong>(18 points)</strong></p></li>
 <li><p>Filter the <code>sbpm</code> data frame to only include observations from Goleta and Santa Barbara. Store this filtered data frame in an object called <code>gol_sb</code>. <strong>Only show the code; do <em>not</em> display the data frame.</strong> <strong>(2 points)</strong></p></li>
 <li><p>In one sentence, write your hypothesis to answer the question: <strong>from the start of the fire until when it was contained, was there a difference in PM2.5 between Goleta and Santa Barbara?</strong> in <em>biological terms</em> (<em>not</em> statistical or mathematical terms). <strong>(2 points)</strong></p></li>
-<li><p>Create a boxplot with jittered points, where the x-axis is the location and the y-axis is PM 2.5. Make sure the jittered points do not move along the y-axis. Label the x and y-axes. For full points:</p>
-<ol type="i">
+<li><p>Create a boxplot with jittered points, with location on the x-axis and PM 2.5 on the y-axis. Make sure the jittered points do not move along the y-axis. Label the x and y-axes. Additionally:</p>
+<ul>
 <li>color by site and change the colors from the default<br>
 </li>
 <li>make sure each site has a different shape<br>
 </li>
 <li>use a ggplot theme that is not the default<br>
-<strong>(14 points)</strong></li>
-</ol></li>
+</li>
+<li>make sure the legend is not showing<br>
+<strong>(26 points)</strong></li>
+</ul></li>
 <li><p>Make a QQ plot. Make sure there are two panels for each location. You do not need to label the x and y-axes. <strong>(10 points)</strong></p></li>
 <li><p>In one sentence, describe whether the variable (PM 2.5) is normally distributed or not. Use visual components (e.g.&nbsp;shape, distribution) of the QQ plot you made to justify your characterization of the variable. <strong>(4 points)</strong></p></li>
 <li><p>Check your variances using <code>var.test()</code>. In one sentence, describe whether the groups have equal variances or not. <strong>(4 points)</strong></p></li>
@@ -367,7 +369,7 @@ t-test arguments
 </div>
 </div>
 </div>
-<ol start="8" type="a">
+<ol type="i">
 <li><p>In one sentence each, describe:</p>
 <ol type="i">
 <li>Why a t-test would have been appropriate for testing your hypotheses in part a<br>
@@ -377,6 +379,8 @@ t-test arguments
 <li>If the variable was not normally distributed, how you justified using a t-test<br>
 <strong>(6 points)</strong></li>
 </ol></li>
+</ol>
+<ol start="10" type="a">
 <li><p>Describe the results in 1-2 full sentences in your own words. Make sure to include the:</p>
 <ol type="i">
 <li>Test you ran<br>
@@ -494,7 +498,7 @@ Make sure your screenshot is visible in your final PDF!
 <li><label><input type="checkbox">written responses and screenshot for Problem 4</label></li>
 </ul>
 <p>Lastly, check out the <strong>rubric on Canvas</strong> to see the point breakdown in more detail.</p>
-<p><strong>144 points total</strong></p>
+<p><strong>166 points total</strong></p>
 
 
 <!-- -->
@@ -971,7 +975,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="an">date-modified:</span><span class="co"> last-modified</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Due on Wednesday April 23 (Week 4) at 11:59 PM</span><span class="co">]</span>{style="color: #79ACBD; font-size: 24px;"}</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Due on Friday April 25 (Week 4) at 11:59 PM</span><span class="co">]</span>{style="color: #79ACBD; font-size: 24px;"}</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>Read the instructions carefully and double check that you have everything on the checklist.</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
@@ -1002,7 +1006,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="fu">#### e. Read the Canvas data into R.</span></span>
 <span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>Store this as an object called <span class="in">`pm25`</span>. </span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>Store this as an object called <span class="in">`sbpm`</span>. </span>
 <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="fu">### Task 2. Read about the Environmental Protection Agency's Outdoor Air Quality data.</span></span>
 <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
@@ -1050,110 +1054,111 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>b. What is a better description of the variability in burrowing owl count, standard deviation or standard error? Explain why in 1 sentence. Calculate the metric of your choice, showing your work. Round your final answer to 1 decimal point, and show the correct units. **(5 points)**  </span>
 <span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>c. What is a better description of the uncertainty in burrowing owl count, standard deviation or standard error? Explain why in 1 sentence. Calculate the metric of your choice, showing your work. Round your final answer to 1 decimal point, and show the correct units. **(5 points)**  </span>
 <span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a><span class="fu">### Problem 2. Fire and particulate matter (68 points)</span></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a><span class="fu">### Problem 2. Fire and particulate matter (90 points)</span></span>
 <span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>In 2017-2018, the Thomas Fire burned 281,893 acres in Santa Barbara County and Ventura County. At the time, it was the largest wildfire in California history. The fire started on December 4th and was fully contained on January 12, 2018. You'll be working with EPA data on particulate matter during the fire.  </span>
 <span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>In this problem, you will visualize the data two different ways. You will then answer the question: **from the start of the Thomas Fire on December 4th until it was contained on January 12th, was there a difference in PM2.5 between Goleta and Santa Barbara?**  </span>
 <span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>a. Create a line graph with date on the x-axis and PM 2.5 on the y-axis. Color each line by the location of the sensor (hint: there should be 5 locations). Label the x and y-axes. **(8 points)**  </span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>a. Create a line graph with date on the x-axis and PM 2.5 on the y-axis. Color each line by the location of the sensor (hint: there should be 5 locations). Label the x-axis, y-axis, and legend colors. **(18 points)**  </span>
 <span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>b. Filter the <span class="in">`sbpm`</span> data frame to only include observations from Goleta and Santa Barbara. Store this filtered data frame in an object called <span class="in">`gol_sb`</span>. **Only show the code; do _not_ display the data frame.** **(2 points)**  </span>
 <span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>c. In one sentence, write your hypothesis to answer the question: **from the start of the fire until when it was contained, was there a difference in PM2.5 between Goleta and Santa Barbara?** in _biological terms_ (_not_ statistical or mathematical terms). **(2 points)**  </span>
 <span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>c. Create a boxplot with jittered points, where the x-axis is the location and the y-axis is PM 2.5. Make sure the jittered points do not move along the y-axis. Label the x and y-axes. For full points:  </span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>d. Create a boxplot with jittered points, with location on the x-axis and PM 2.5 on the y-axis. Make sure the jittered points do not move along the y-axis. Label the x and y-axes. Additionally:  </span>
 <span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>   i. color by site and change the colors from the default   </span>
-<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a>   ii. make sure each site has a different shape  </span>
-<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>   iii. use a ggplot theme that is not the default  </span>
-<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>   **(14 points)**</span>
-<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a>d. Make a QQ plot. Make sure there are two panels for each location. You do not need to label the x and y-axes. **(10 points)**</span>
-<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a>e. In one sentence, describe whether the variable (PM 2.5) is normally distributed or not. Use visual components (e.g. shape, distribution) of the QQ plot you made to justify your characterization of the variable. **(4 points)**  </span>
-<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>f. Check your variances using <span class="in">`var.test()`</span>. In one sentence, describe whether the groups have equal variances or not. **(4 points)**   </span>
-<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a>g. Do a t-test using <span class="in">`t.test()`</span>. **(4 points)**   </span>
-<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>:::{.callout-tip title="t-test arguments" collapse=true}</span>
-<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>Double check your arguments to make sure you’re running the right test.</span>
-<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a>h. In one sentence each, describe:  </span>
-<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a><span class="in">    i. Why a t-test would have been appropriate for testing your hypotheses in part a   </span></span>
-<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a><span class="in">    ii. How you evaluated normality and homogeneity of variance  </span></span>
-<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a><span class="in">    iii. If the variable was not normally distributed, how you justified using a t-test  </span></span>
-<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a><span class="in">    **(6 points)**</span></span>
-<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a>i. Describe the results in 1-2 full sentences in your own words. Make sure to include the:  </span>
-<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a><span class="in">    i. Test you ran   </span></span>
-<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a><span class="in">    ii. Number of observations for each location</span></span>
-<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a><span class="in">    iii. Significance level</span></span>
-<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a><span class="in">    iv. Degrees of freedom</span></span>
-<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a><span class="in">    v. Test statistic</span></span>
-<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a><span class="in">    vi. p-value  </span></span>
-<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a><span class="in">    **(14 points)**  </span></span>
-<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a>Round any numbers with decimals to two decimal points. </span>
-<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a>:::{.callout-tip title="Do _not_ simply list each component!" collapse=true}</span>
-<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a>You will be graded on how you synthesize information. See lecture notes for an example of how to summarize the results of a statistical test in parentheses.</span>
-<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a><span class="fu">### Problem 3. Personal data (40 points)</span></span>
-<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a>By now, you have some observations on your data sheet for your personal data. Even though it's early on in your data collection, it's a good idea to practice good **data management**. For this problem, you'll enter your data, read it into R, and create a visualization. If you get stuck at any step, you'll know there's something you need to fix.  </span>
-<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>a. Create a visualization with a _categorical_ predictor variable on the x-axis and your response variable on the y-axis. Label the x- and y-axes. **(16 points)**   </span>
-<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a>b. Create a visualization with a _continuous_ predictor variable on the x-axis and your response variable on the y-axis. Label the x- and y-axes. **(16 points)**  </span>
-<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a>c. In 2-5 sentences, describe what insights (if any) you can gain about your data from visualizations like these. Once you collect more data and update these figures, would these insights change? **(4 points)**  </span>
-<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a>d. In 2-5 sentences, describe the process of getting your data from your spreadsheet into R. Did you encounter any challenges? If so, why do you think those challenges arose, and how did you fix them? If not, why do you think your system for collecting your data worked? **(4 points)**  </span>
-<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a>:::{.callout-tip title="Changing your data collection scheme" collapse=true}</span>
-<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>If you found that entering your data from your spreadsheet and getting it into the right format to be used in R was challenging, that's ok! This happens a lot with data collection. Feel free to change your data sheet so that you're collecting data in a way that makes your life easier as you're reading your data into R and using it. </span>
-<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a><span class="fu">### Problem 4. Statistical critique (24 points)</span></span>
-<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a>Check the <span class="co">[</span><span class="ot">Google sheet</span><span class="co">](https://docs.google.com/spreadsheets/d/19lnWhFNnCa4Ovxz8SSq8IodSYI7U-CtRwCMa-mx7gus/edit?usp=sharing)</span> and choose a paper to use for your critique based on An’s/Thuy-Tien's/Grace's recommendations. Answer the following questions about the paper in 1-2 sentences each:  </span>
-<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a>a. Why were you interested in this paper? **(4 points)**  </span>
-<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a>b. What questions/hypotheses are the authors addressing? **(4 points)**  </span>
-<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a>c. Which statistical test (from Homework 1) is included in this paper? What is the response variable? What is the predictor variable? **(4 points)**  </span>
-<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a>d. How does this test address the main question(s) presented by the authors? For example, how would the authors interpret a "significant" result? **(4 points)**  </span>
-<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a>e. Find the figure(s) and/or table(s) in the paper that are associated with the statistical tests from question (c). If there are multiple figures and tables relating to the statistical test, find the best one that demonstrates the relationship betwee the predictor and the response. Take a screenshot, and insert it into your document. **4 points**</span>
-<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a>:::{.callout-tip title="Make sure your screenshot is visible in your final PDF!" collapse="true"}</span>
-<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a>If your screenshot for part e is not visible, you will not receive points for part f.</span>
-<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a>f. If you have a figure: describe the x- and y-axes, and what the figure is supposed to show (i.e. what is the main message of the figure)? If you have a table, what are the rows and columns, and what is in each cell of the table?  **(4 points)**</span>
-<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a><span class="fu">## Double check your assignment!</span></span>
-<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a>Your assignment should:</span>
-<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> include your name, the title, and the date **(3 points)**  </span>
-<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> include all code with annotations  **(5 points)**  </span>
-<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> be organized and readable **(5 points)**  </span>
-<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> be uploaded to Canvas as a single PDF **(2 points)**  </span>
-<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a>Your responses should include:  </span>
-<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> work and written responses for Problem 1  </span>
-<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> written responses, annotated code, and figure outputs for Problem 2    </span>
-<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> annotated code, figure output, and written responses for Problem 3  </span>
-<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> written responses and screenshot for Problem 4  </span>
-<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a>Lastly, check out the **rubric on Canvas** to see the point breakdown in more detail.  </span>
-<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a>**144 points total**  </span>
-<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>color by site and change the colors from the default   </span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>make sure each site has a different shape  </span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>use a ggplot theme that is not the default  </span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>make sure the legend is not showing  </span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>   **(26 points)**</span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>e. Make a QQ plot. Make sure there are two panels for each location. You do not need to label the x and y-axes. **(10 points)**</span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>f. In one sentence, describe whether the variable (PM 2.5) is normally distributed or not. Use visual components (e.g. shape, distribution) of the QQ plot you made to justify your characterization of the variable. **(4 points)**  </span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>g. Check your variances using <span class="in">`var.test()`</span>. In one sentence, describe whether the groups have equal variances or not. **(4 points)**   </span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>h. Do a t-test using <span class="in">`t.test()`</span>. **(4 points)**   </span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>:::{.callout-tip title="t-test arguments" collapse=true}</span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>Double check your arguments to make sure you’re running the right test.</span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a>i. In one sentence each, describe:  </span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a><span class="in">    i. Why a t-test would have been appropriate for testing your hypotheses in part a   </span></span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a><span class="in">    ii. How you evaluated normality and homogeneity of variance  </span></span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a><span class="in">    iii. If the variable was not normally distributed, how you justified using a t-test  </span></span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a><span class="in">    **(6 points)**</span></span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a>j. Describe the results in 1-2 full sentences in your own words. Make sure to include the:  </span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a><span class="in">    i. Test you ran   </span></span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a><span class="in">    ii. Number of observations for each location</span></span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a><span class="in">    iii. Significance level</span></span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a><span class="in">    iv. Degrees of freedom</span></span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a><span class="in">    v. Test statistic</span></span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a><span class="in">    vi. p-value  </span></span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a><span class="in">    **(14 points)**  </span></span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a>Round any numbers with decimals to two decimal points. </span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a>:::{.callout-tip title="Do _not_ simply list each component!" collapse=true}</span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>You will be graded on how you synthesize information. See lecture notes for an example of how to summarize the results of a statistical test in parentheses.</span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a><span class="fu">### Problem 3. Personal data (40 points)</span></span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a>By now, you have some observations on your data sheet for your personal data. Even though it's early on in your data collection, it's a good idea to practice good **data management**. For this problem, you'll enter your data, read it into R, and create a visualization. If you get stuck at any step, you'll know there's something you need to fix.  </span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a>a. Create a visualization with a _categorical_ predictor variable on the x-axis and your response variable on the y-axis. Label the x- and y-axes. **(16 points)**   </span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a>b. Create a visualization with a _continuous_ predictor variable on the x-axis and your response variable on the y-axis. Label the x- and y-axes. **(16 points)**  </span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a>c. In 2-5 sentences, describe what insights (if any) you can gain about your data from visualizations like these. Once you collect more data and update these figures, would these insights change? **(4 points)**  </span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>d. In 2-5 sentences, describe the process of getting your data from your spreadsheet into R. Did you encounter any challenges? If so, why do you think those challenges arose, and how did you fix them? If not, why do you think your system for collecting your data worked? **(4 points)**  </span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>:::{.callout-tip title="Changing your data collection scheme" collapse=true}</span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a>If you found that entering your data from your spreadsheet and getting it into the right format to be used in R was challenging, that's ok! This happens a lot with data collection. Feel free to change your data sheet so that you're collecting data in a way that makes your life easier as you're reading your data into R and using it. </span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a><span class="fu">### Problem 4. Statistical critique (24 points)</span></span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a>Check the <span class="co">[</span><span class="ot">Google sheet</span><span class="co">](https://docs.google.com/spreadsheets/d/19lnWhFNnCa4Ovxz8SSq8IodSYI7U-CtRwCMa-mx7gus/edit?usp=sharing)</span> and choose a paper to use for your critique based on An’s/Thuy-Tien's/Grace's recommendations. Answer the following questions about the paper in 1-2 sentences each:  </span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a>a. Why were you interested in this paper? **(4 points)**  </span>
+<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a>b. What questions/hypotheses are the authors addressing? **(4 points)**  </span>
+<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a>c. Which statistical test (from Homework 1) is included in this paper? What is the response variable? What is the predictor variable? **(4 points)**  </span>
+<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a>d. How does this test address the main question(s) presented by the authors? For example, how would the authors interpret a "significant" result? **(4 points)**  </span>
+<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a>e. Find the figure(s) and/or table(s) in the paper that are associated with the statistical tests from question (c). If there are multiple figures and tables relating to the statistical test, find the best one that demonstrates the relationship betwee the predictor and the response. Take a screenshot, and insert it into your document. **4 points**</span>
+<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a>:::{.callout-tip title="Make sure your screenshot is visible in your final PDF!" collapse="true"}</span>
+<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a>If your screenshot for part e is not visible, you will not receive points for part f.</span>
+<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a>f. If you have a figure: describe the x- and y-axes, and what the figure is supposed to show (i.e. what is the main message of the figure)? If you have a table, what are the rows and columns, and what is in each cell of the table?  **(4 points)**</span>
+<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a><span class="fu">## Double check your assignment!</span></span>
+<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>Your assignment should:</span>
+<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> include your name, the title, and the date **(3 points)**  </span>
+<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> include all code with annotations  **(5 points)**  </span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> be organized and readable **(5 points)**  </span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> be uploaded to Canvas as a single PDF **(2 points)**  </span>
+<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a>Your responses should include:  </span>
+<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> work and written responses for Problem 1  </span>
+<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> written responses, annotated code, and figure outputs for Problem 2    </span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> annotated code, figure output, and written responses for Problem 3  </span>
+<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> written responses and screenshot for Problem 4  </span>
+<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a>Lastly, check out the **rubric on Canvas** to see the point breakdown in more detail.  </span>
+<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a>**166 points total**  </span>
 <span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

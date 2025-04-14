@@ -1,0 +1,254 @@
+---
+title: "Coding workshop: Week 3"
+subtitle: "two types of t-tests"
+categories: [tidyverse, lterdatasampler, data, geom_qq, geom_qq_line, facet_wrap, var.test, t.test, rownames_to_column, geom_pointrange, pipe operators, '|>', mutate, case_when, gglpot, geom_boxplot, geom_jitter, geom_histogram, group_by, summarize]
+---
+
+## 1. Summary
+
+### Packages
+- `tidyverse`  
+- `lterdatasampler`  
+
+### Operations
+
+#### New functions
+- display data from package using `data()`  
+- visualize QQ plots using `geom_qq()` and `geom_qq_line()`  
+- create multi-panel plots using `facet_wrap()`  
+- compare group variances using `var.test()`  
+- do t-tests using `t.test()`  
+- make rownames into a separate column using `rownames_to_column()`  
+- use `geom_pointrange()` to show means and 95% CI
+
+#### Review
+- chain functions together using ` |> `  
+- filtering observations using `filter()`  
+- manipulate columns using `mutate()` and `case_when()`  
+- visualize data using `ggplot()`  
+- create boxplots using `geom_boxplot()` and show observation values using `geom_jitter()`  
+- create histograms using `geom_histogram()`  
+- group data using `group_by()`  
+- summarize data using `summarize()`  
+
+### General Quarto formatting tips
+
+You can control the appearance of text, links, images, etc. using this [guide](https://quarto.org/docs/authoring/markdown-basics.html).
+
+### Data source
+
+The data on sugar maples is from the `lterdatasampler` package. The package developers (alumni of the Bren Masters of Environmental Data Science program!) curated a bunch of datasets from the LTER network into this package for teaching and learning. Read about the package [here](https://lter.github.io/lterdatasampler/index.html).  
+
+The source of the data is Hubbard Brook Experimental Forest. Read more about the data [here](https://lter.github.io/lterdatasampler/articles/hbr_maples_vignette.html).
+
+## 2. Code
+
+**Remember to set up an Rproject before starting!**
+
+### 1. Set up
+
+Insert a code chunk below to read in your packages. Name the code chunk `packages`.
+
+```{r packages}
+#| message: false # remember to include this in your code chunk whenever you want to make sure that the code shows up in your rendered document without messages
+
+library(tidyverse)
+library(lterdatasampler)
+```
+
+Because we are using data from the package `lterdatasampler`, we don't need to use `read_csv()`.  
+
+Instead, we can use `data()` to make the data frame show up in the environment.  
+
+Insert a code chunk below to display `hbr_maples` in the environment using `data("hbr_maples")`. Name the code chunk `data`.
+
+```{r data}
+#| message: false
+
+data("hbr_maples")
+```
+
+### 2. Cleaning and wrangling
+
+Insert a code chunk to:  
+
+1. create a new object from `hbr_maples` called `maples_2003`  
+2. filter observations to only include the year 2003  
+3. mutate the `watershed` column so that `W1` is filled in as `Calcium-treated`  
+
+Name the code chunk `data-cleaning`.
+
+```{r data-cleaning}
+maples_2003 <- hbr_maples |> # start with hbr_maples data frame
+  filter(year == "2003") |> # filter to only include observations from 2003
+  mutate(watershed = case_when( # rename watersheds
+    watershed == "Reference" ~ "Reference",
+    watershed == "W1" ~ "Calcium-treated"
+  ))
+```
+
+### 3. Exploratory data visualization
+
+Insert a code chunk to make a boxplot + jitter plot comparing stem lengths between watersheds. Remember to:  
+
+1. color by watershed  
+2. control the jitter so that the points don't move up and down the y-axis  
+
+Name the code chunk `boxplot-and-jitter`.
+
+```{r boxplot-and-jitter}
+# base layer: ggplot
+ggplot(data = maples_2003, # starting data frame
+       aes(x = watershed, # x-axis
+           y = stem_length, # y-axis
+           color = watershed)) + # coloring by watershed
+  # first layer: boxplot
+  geom_boxplot() +
+  # second layer: jitter plot
+  geom_jitter(height = 0, # making sure points don't move along y-axis
+              width = 0.2) # narrowing width of jitter
+```
+
+### 4. Checks for t-test assumptions
+
+Insert a code chunk to create a histogram. Name the code chunk `histogram`.  
+
+Use `facet_wrap()` to create separate panels for each watershed. 
+
+```{r histogram}
+ggplot(data = maples_2003, # starting data frame
+       aes(x = stem_length)) + # x-axis (no y-axis for histogram)
+  geom_histogram(bins = 6) + # number of bins from Rice Rule
+  facet_wrap(~watershed) # creating two panels to show watersheds separately
+```
+
+Insert a code chunk to create a QQ plot. Name the code chunk `qq-plot`.  
+
+Use `facet_wrap()` to create separate panels for each watershed.
+
+```{r qq-plot}
+ggplot(data = maples_2003, # starting data frame
+       aes(sample = stem_length)) + # y-axis for QQ plot (no x-axis)
+  geom_qq() + # geometry for QQ plot
+  facet_wrap(~watershed) # creating two panels to show watersheds separately
+```
+
+**Check in:** using histograms and QQ plots, does stem length seem to be normally distributed?  
+
+**Yes, because the histogram looks symmetrical, and the QQ plot points follow a straight line.**  
+
+Next, we'll check our variances. We can make sure we know where the F test results are coming from by calculating the variance ratios ourselves. 
+
+```{r variance-ratio-calculation}
+# calculate variances
+stem_length_var <- maples_2003 |> # starting data frame
+  group_by(watershed) |> # group by watershed
+  summarize(variance = var(stem_length)) # calculate variances
+
+# calculate variance ratio (use this number to double check against results of var.test)
+205.7026/194.3021
+```
+
+
+Insert a code chunk to check the variances using `var.test()`. Name the code chunk `F-test`.  
+
+In the function `var.test()`, enter the arguments for:  
+
+1. the formula  
+2. the data  
+
+```{r F-test}
+# doing F test of equal variances
+var.test(stem_length ~ watershed, # response variable ~ grouping variable
+         data = maples_2003) # data frame
+```
+
+Remember that this variance test is an F test of equal variances. You are comparing the variance of one group with another.  
+
+To communicate about this, you could write something like:  
+
+Using an F test of equal variances, we determined that variances were (equal or not equal) (F ratio, F(num df, denom df) = F statistic, p-value).  
+
+We determined that group variances were (equal or not equal) (F ratio, F(num df, denom df) = F statistic, p-value).  
+
+Fill in the blank here:  
+
+**We determined that group variances were equal (F ratio = 1.06, F(119, 119) = 1.06, p = 0.76).**    
+
+### 5. Doing a t-test
+
+Insert a code chunk to do a t-test. Name the code chunk `t-test`.  
+
+In the function `t.test()`, enter the arguments for:  
+
+1. the formula  
+2. the variances in `var.equal = `  
+3. and the dataframe in `data = `  
+
+```{r t-test}
+t.test(stem_length ~ watershed, # response variable
+       var.equal = TRUE, # argument for equal or unequal variances
+       data = maples_2003)  # data frame
+```
+
+### 6. Communicating
+
+#### a. visual communication
+
+When doing a t-test, remember that you are comparing _means_. To visualize the data in a way that reflects the values you are comparing (again, you are comparing _means_), you can visualize the _means_ of each watershed with the standard deviation (spread), standard error (variation), or confidence interval (confidence).  
+
+In this example, we will show 95% confidence intervals.  
+
+In this code chunk, we are calculating the means and 95% confidence intervals. Name the code chunk `ci-calculation`.
+
+```{r ci-calculation}
+maples_ci <- maples_2003 |> # start with the maples_2003 data frame
+  group_by(watershed) |> # group by watershed
+  summarize(ci = mean_cl_normal(stem_length)) |> # calculate the 95% CI
+  deframe() |> # expand the data frame
+  rownames_to_column("watershed") # make the data frame rownames a column called "watershed"
+```
+
+Before moving on, look at the `maples_ci` object to make sure you know what it contains.  
+
+Note that this visualization uses two data frames. We use `maples_2003` to show the underlying data using `geom_jitter()`, and `maples_ci` to show the mean and 95% CI.
+
+```{r ci-visualization}
+# base layer: ggplot with the x- and y-axes
+ggplot(data = maples_2003, # using the maples_2003 data frame
+       aes(x = watershed, # x-axis
+           y = stem_length, # y-axis
+           color = watershed)) + # coloring points by watershed
+  # first layer: showing the underlying data
+  geom_jitter(height = 0, # no jitter in the vertical direction
+              width = 0.1, # smaller jitter in the horizontal direction
+              alpha = 0.4, # make the points more transparent
+              shape = 21) + # make the points open circles
+  # second layer: showing the summary (mean and 95% CI)
+  geom_pointrange(data = maples_ci, # using the maples_ci data frame
+                  aes(x = watershed, # x-axis
+                      y = y, # y-axis
+                      ymax = ymax, # upper bound of confidence interval
+                      ymin = ymin)) + # lower bound of confidence interval
+  labs(x = "Watershed", # labeling the axes
+       y = "Stem length (cm)") +
+  # figure customization
+  # Note: this is optional (but nice to do!)
+  scale_color_manual(values = c("Calcium-treated" = "darkorchid3",
+                                "Reference" = "tomato3")) + # changing the point colors
+  theme_bw() + # using a theme
+  theme(legend.position = "none") # getting rid of the legend
+```
+
+#### b. Writing
+
+Summarize the results of the t-test in one sentence. Before you do, make sure you know the:  
+
+1. type of test: Student's t-test (because variances were equal)  
+2. degrees of freedom  
+3. t-value  
+4. p-value  
+
+We found a significant difference in sugar maple stem lengths between calcium-treated and reference watersheds (Student's t-test, t(238) = 3.8, p < 0.001).  
+
+**END OF WORKSHOP 3**

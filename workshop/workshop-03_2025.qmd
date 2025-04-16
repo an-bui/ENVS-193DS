@@ -129,10 +129,15 @@ Insert a code chunk to create a QQ plot. Name the code chunk `qq-plot`.
 Use `facet_wrap()` to create separate panels for each watershed.
 
 ```{r qq-plot}
+# base layer: ggplot call
 ggplot(data = maples_2003, # starting data frame
        aes(sample = stem_length)) + # y-axis for QQ plot (no x-axis)
-  geom_qq() + # geometry for QQ plot
-  facet_wrap(~watershed) # creating two panels to show watersheds separately
+  # first layer: QQ reference line 
+  geom_qq_line(color = "blue") + # showing this in blue so it's easier to see
+  # second layer: QQ plot
+  geom_qq() + 
+  # creating "facets"
+  facet_wrap(~watershed) # show watersheds separately
 ```
 
 **Check in:** using histograms and QQ plots, does stem length seem to be normally distributed?  
@@ -246,11 +251,30 @@ ggplot(data = maples_2003, # using the maples_2003 data frame
 
 Summarize the results of the t-test in one sentence. Before you do, make sure you know the:  
 
-1. type of test: Student's t-test (because variances were equal)  
-2. degrees of freedom  
-3. t-value  
+1. type of test  
+
+**Student's t (note: this is because variances are equal)**
+
+2. Sample size  
+
+**n = 120 for calcium-treated, n = 120 for reference**  
+
+3. significance level ($\alpha$)  
+
+**$\alpha$ = 0.05**  
+
+4. degrees of freedom  
+
+**238**  
+
+3. t-value (aka t-statistic)  
+
+**3.8**  
+
 4. p-value  
 
-We found a significant difference in sugar maple stem lengths between calcium-treated and reference watersheds (Student's t-test, t(238) = 3.8, p < 0.001).  
+**p < 0.001 (don't need to give exact number for anything below 0.001)**  
+
+**We found a significant difference in sugar maple stem lengths between calcium-treated (n = 120) and reference watersheds (n = 120) (Student's t-test, t(238) = 3.8, p < 0.001).**    
 
 **END OF WORKSHOP 3**

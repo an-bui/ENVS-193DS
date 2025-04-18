@@ -289,7 +289,7 @@ Summarize the results of the t-test in one sentence. Before you do, make sure yo
 
 Let's see what happens when you don't include that:
 
-```{r}
+```{r no-ref}
 hbr_maples |> # start with hbr_maples data frame
   filter(year == "2003") |> # filter to only include observations from 2003
   mutate(watershed = case_when( # rename watersheds
@@ -306,7 +306,7 @@ Whenever you use `mutate()`/`case_when()`, you have to explicitly name each valu
 
 If you want to _keep_ values, you can insert the argument `TRUE ~ `. Here's what that code/output would look like:
 
-```{r}
+```{r ref-true}
 hbr_maples |> # start with hbr_maples data frame
   filter(year == "2003") |> # filter to only include observations from 2003
   mutate(watershed = case_when( # rename watersheds
@@ -330,7 +330,7 @@ Shapes 0-14 are only outlines (with a transparent fill). Shapes 15 - 20 are fill
 
 Shapes 21 - 25 include outlines and fills. You can manipulate both: you can change the outline using `color` and `scale_color_()` functions, and change the fill with `fill` and `scale_fill_()` functions. In the plot, outlines show up in [pink]{style="color: #db0f48; font-weight: bold"} and fills show up in [yellow]{style="color: #f4b301; font-weight: bold"}.   
 
-```{r}
+```{r shapes}
 #| fig-height: 5
 #| fig-width: 7
 #| echo: false
@@ -396,5 +396,5 @@ ggplot(data = df,
                                    size = 12))
 ```
 
-Credit to [Albert Kuo's blog post](https://blog.albertkuo.me/post/point-shape-options-in-ggplot/) for inspiring me to make my own reference figure, and Alex Phillip's [colorblind friendly schemes](https://www.nceas.ucsb.edu/sites/default/files/2022-06/Colorblind%20Safe%20Color%20Schemes.pdf) for the colors in the figure.  
+Credit to [Albert Kuo's blog post](https://blog.albertkuo.me/post/point-shape-options-in-ggplot/) for inspiring me to make my own reference figure, and Alex Phillips's [colorblind friendly schemes](https://www.nceas.ucsb.edu/sites/default/files/2022-06/Colorblind%20Safe%20Color%20Schemes.pdf) for the colors in the figure.  
 

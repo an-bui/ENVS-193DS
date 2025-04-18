@@ -677,12 +677,12 @@ mean in group Calcium-treated       mean in group Reference
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="workshop-03_2025_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="workshop-03_2025_files/figure-html/shapes-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Credit to <a href="https://blog.albertkuo.me/post/point-shape-options-in-ggplot/">Albert Kuo’s blog post</a> for inspiring me to make my own reference figure, and Alex Phillip’s <a href="https://www.nceas.ucsb.edu/sites/default/files/2022-06/Colorblind%20Safe%20Color%20Schemes.pdf">colorblind friendly schemes</a> for the colors in the figure.</p>
+<p>Credit to <a href="https://blog.albertkuo.me/post/point-shape-options-in-ggplot/">Albert Kuo’s blog post</a> for inspiring me to make my own reference figure, and Alex Phillips’s <a href="https://www.nceas.ucsb.edu/sites/default/files/2022-06/Colorblind%20Safe%20Color%20Schemes.pdf">colorblind friendly schemes</a> for the colors in the figure.</p>
 
 
 <!-- -->
@@ -1442,115 +1442,114 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb19-289"><a href="#cb19-289" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-290"><a href="#cb19-290" aria-hidden="true" tabindex="-1"></a>Let's see what happens when you don't include that:</span>
 <span id="cb19-291"><a href="#cb19-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-294"><a href="#cb19-294" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb19-295"><a href="#cb19-295" aria-hidden="true" tabindex="-1"></a>hbr_maples <span class="sc">|&gt;</span> <span class="co"># start with hbr_maples data frame</span></span>
-<span id="cb19-296"><a href="#cb19-296" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="st">"2003"</span>) <span class="sc">|&gt;</span> <span class="co"># filter to only include observations from 2003</span></span>
-<span id="cb19-297"><a href="#cb19-297" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">watershed =</span> <span class="fu">case_when</span>( <span class="co"># rename watersheds</span></span>
-<span id="cb19-298"><a href="#cb19-298" aria-hidden="true" tabindex="-1"></a>    <span class="co"># note that we're missing the "Reference" line of code here</span></span>
-<span id="cb19-299"><a href="#cb19-299" aria-hidden="true" tabindex="-1"></a>    watershed <span class="sc">==</span> <span class="st">"W1"</span> <span class="sc">~</span> <span class="st">"Calcium-treated"</span></span>
-<span id="cb19-300"><a href="#cb19-300" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span> </span>
-<span id="cb19-301"><a href="#cb19-301" aria-hidden="true" tabindex="-1"></a>  <span class="co"># including this to only display the first 6 rows of the data frame</span></span>
-<span id="cb19-302"><a href="#cb19-302" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span>
-<span id="cb19-303"><a href="#cb19-303" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-292"><a href="#cb19-292" aria-hidden="true" tabindex="-1"></a><span class="in">```{r no-ref}</span></span>
+<span id="cb19-293"><a href="#cb19-293" aria-hidden="true" tabindex="-1"></a><span class="in">hbr_maples |&gt; # start with hbr_maples data frame</span></span>
+<span id="cb19-294"><a href="#cb19-294" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(year == "2003") |&gt; # filter to only include observations from 2003</span></span>
+<span id="cb19-295"><a href="#cb19-295" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(watershed = case_when( # rename watersheds</span></span>
+<span id="cb19-296"><a href="#cb19-296" aria-hidden="true" tabindex="-1"></a><span class="in">    # note that we're missing the "Reference" line of code here</span></span>
+<span id="cb19-297"><a href="#cb19-297" aria-hidden="true" tabindex="-1"></a><span class="in">    watershed == "W1" ~ "Calcium-treated"</span></span>
+<span id="cb19-298"><a href="#cb19-298" aria-hidden="true" tabindex="-1"></a><span class="in">  )) |&gt; </span></span>
+<span id="cb19-299"><a href="#cb19-299" aria-hidden="true" tabindex="-1"></a><span class="in">  # including this to only display the first 6 rows of the data frame</span></span>
+<span id="cb19-300"><a href="#cb19-300" aria-hidden="true" tabindex="-1"></a><span class="in">  head()</span></span>
+<span id="cb19-301"><a href="#cb19-301" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-302"><a href="#cb19-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-303"><a href="#cb19-303" aria-hidden="true" tabindex="-1"></a>In the <span class="in">`watershed`</span> column, the <span class="in">`mutate()`</span>/<span class="in">`case_when()`</span> function replaced <span class="in">`Reference`</span> with <span class="in">`NA`</span>, which is a missing value.  </span>
 <span id="cb19-304"><a href="#cb19-304" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-305"><a href="#cb19-305" aria-hidden="true" tabindex="-1"></a>In the <span class="in">`watershed`</span> column, the <span class="in">`mutate()`</span>/<span class="in">`case_when()`</span> function replaced <span class="in">`Reference`</span> with <span class="in">`NA`</span>, which is a missing value.  </span>
+<span id="cb19-305"><a href="#cb19-305" aria-hidden="true" tabindex="-1"></a>Whenever you use <span class="in">`mutate()`</span>/<span class="in">`case_when()`</span>, you have to explicitly name each value in the column you're mutating.  </span>
 <span id="cb19-306"><a href="#cb19-306" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-307"><a href="#cb19-307" aria-hidden="true" tabindex="-1"></a>Whenever you use <span class="in">`mutate()`</span>/<span class="in">`case_when()`</span>, you have to explicitly name each value in the column you're mutating.  </span>
+<span id="cb19-307"><a href="#cb19-307" aria-hidden="true" tabindex="-1"></a>If you want to _keep_ values, you can insert the argument <span class="in">`TRUE ~ `</span>. Here's what that code/output would look like:</span>
 <span id="cb19-308"><a href="#cb19-308" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-309"><a href="#cb19-309" aria-hidden="true" tabindex="-1"></a>If you want to _keep_ values, you can insert the argument <span class="in">`TRUE ~ `</span>. Here's what that code/output would look like:</span>
-<span id="cb19-310"><a href="#cb19-310" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-313"><a href="#cb19-313" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb19-314"><a href="#cb19-314" aria-hidden="true" tabindex="-1"></a>hbr_maples <span class="sc">|&gt;</span> <span class="co"># start with hbr_maples data frame</span></span>
-<span id="cb19-315"><a href="#cb19-315" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="st">"2003"</span>) <span class="sc">|&gt;</span> <span class="co"># filter to only include observations from 2003</span></span>
-<span id="cb19-316"><a href="#cb19-316" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">watershed =</span> <span class="fu">case_when</span>( <span class="co"># rename watersheds</span></span>
-<span id="cb19-317"><a href="#cb19-317" aria-hidden="true" tabindex="-1"></a>    watershed <span class="sc">==</span> <span class="st">"W1"</span> <span class="sc">~</span> <span class="st">"Calcium-treated"</span>, <span class="co"># change all occurrences of W1 in the watershed column to be Calcium-treated</span></span>
-<span id="cb19-318"><a href="#cb19-318" aria-hidden="true" tabindex="-1"></a>    <span class="co"># note that this has to come LAST</span></span>
-<span id="cb19-319"><a href="#cb19-319" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> watershed <span class="co"># keep any values that are not explicitly named as the original value</span></span>
-<span id="cb19-320"><a href="#cb19-320" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span> </span>
-<span id="cb19-321"><a href="#cb19-321" aria-hidden="true" tabindex="-1"></a>  <span class="co"># including this to only display the first 6 rows of the data frame</span></span>
-<span id="cb19-322"><a href="#cb19-322" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span>
-<span id="cb19-323"><a href="#cb19-323" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-309"><a href="#cb19-309" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ref-true}</span></span>
+<span id="cb19-310"><a href="#cb19-310" aria-hidden="true" tabindex="-1"></a><span class="in">hbr_maples |&gt; # start with hbr_maples data frame</span></span>
+<span id="cb19-311"><a href="#cb19-311" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(year == "2003") |&gt; # filter to only include observations from 2003</span></span>
+<span id="cb19-312"><a href="#cb19-312" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(watershed = case_when( # rename watersheds</span></span>
+<span id="cb19-313"><a href="#cb19-313" aria-hidden="true" tabindex="-1"></a><span class="in">    watershed == "W1" ~ "Calcium-treated", # change all occurrences of W1 in the watershed column to be Calcium-treated</span></span>
+<span id="cb19-314"><a href="#cb19-314" aria-hidden="true" tabindex="-1"></a><span class="in">    # note that this has to come LAST</span></span>
+<span id="cb19-315"><a href="#cb19-315" aria-hidden="true" tabindex="-1"></a><span class="in">    TRUE ~ watershed # keep any values that are not explicitly named as the original value</span></span>
+<span id="cb19-316"><a href="#cb19-316" aria-hidden="true" tabindex="-1"></a><span class="in">  )) |&gt; </span></span>
+<span id="cb19-317"><a href="#cb19-317" aria-hidden="true" tabindex="-1"></a><span class="in">  # including this to only display the first 6 rows of the data frame</span></span>
+<span id="cb19-318"><a href="#cb19-318" aria-hidden="true" tabindex="-1"></a><span class="in">  head()</span></span>
+<span id="cb19-319"><a href="#cb19-319" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-320"><a href="#cb19-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-321"><a href="#cb19-321" aria-hidden="true" tabindex="-1"></a>If you combine arguments where you are changing values (for example, <span class="in">`watershed == "W1" ~ "Calcium-treated"`</span>) with <span class="in">`TRUE ~ column name`</span>, you can change values _and_ keep the original values in the column.</span>
+<span id="cb19-322"><a href="#cb19-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-323"><a href="#cb19-323" aria-hidden="true" tabindex="-1"></a><span class="fu">### Shapes in figures</span></span>
 <span id="cb19-324"><a href="#cb19-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-325"><a href="#cb19-325" aria-hidden="true" tabindex="-1"></a>If you combine arguments where you are changing values (for example, <span class="in">`watershed == "W1" ~ "Calcium-treated"`</span>) with <span class="in">`TRUE ~ column name`</span>, you can change values _and_ keep the original values in the column.</span>
+<span id="cb19-325"><a href="#cb19-325" aria-hidden="true" tabindex="-1"></a>In class, we used <span class="in">`shape = 21`</span> in the <span class="in">`geom_point()`</span> call to make the points show up as open circles. By default, <span class="in">`ggplot()`</span> uses <span class="in">`shape = 16`</span> for all geometries that include points.    </span>
 <span id="cb19-326"><a href="#cb19-326" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-327"><a href="#cb19-327" aria-hidden="true" tabindex="-1"></a><span class="fu">### Shapes in figures</span></span>
+<span id="cb19-327"><a href="#cb19-327" aria-hidden="true" tabindex="-1"></a>This figure below shows the 26 options for shapes you can use in any plot with a point geometry.  </span>
 <span id="cb19-328"><a href="#cb19-328" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-329"><a href="#cb19-329" aria-hidden="true" tabindex="-1"></a>In class, we used <span class="in">`shape = 21`</span> in the <span class="in">`geom_point()`</span> call to make the points show up as open circles. By default, <span class="in">`ggplot()`</span> uses <span class="in">`shape = 16`</span> for all geometries that include points.    </span>
+<span id="cb19-329"><a href="#cb19-329" aria-hidden="true" tabindex="-1"></a>Shapes 0-14 are only outlines (with a transparent fill). Shapes 15 - 20 are filled (no outline). This means you control them with <span class="in">`color`</span> in the <span class="in">`aes()`</span> function, and <span class="in">`scale_color_()`</span> functions. These show up in <span class="co">[</span><span class="ot">pink</span><span class="co">]</span>{style="color: #db0f48; font-weight: bold"} in the plot below.  </span>
 <span id="cb19-330"><a href="#cb19-330" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-331"><a href="#cb19-331" aria-hidden="true" tabindex="-1"></a>This figure below shows the 26 options for shapes you can use in any plot with a point geometry.  </span>
+<span id="cb19-331"><a href="#cb19-331" aria-hidden="true" tabindex="-1"></a>Shapes 21 - 25 include outlines and fills. You can manipulate both: you can change the outline using <span class="in">`color`</span> and <span class="in">`scale_color_()`</span> functions, and change the fill with <span class="in">`fill`</span> and <span class="in">`scale_fill_()`</span> functions. In the plot, outlines show up in <span class="co">[</span><span class="ot">pink</span><span class="co">]</span>{style="color: #db0f48; font-weight: bold"} and fills show up in <span class="co">[</span><span class="ot">yellow</span><span class="co">]</span>{style="color: #f4b301; font-weight: bold"}.   </span>
 <span id="cb19-332"><a href="#cb19-332" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-333"><a href="#cb19-333" aria-hidden="true" tabindex="-1"></a>Shapes 0-14 are only outlines (with a transparent fill). Shapes 15 - 20 are filled (no outline). This means you control them with <span class="in">`color`</span> in the <span class="in">`aes()`</span> function, and <span class="in">`scale_color_()`</span> functions. These show up in <span class="co">[</span><span class="ot">pink</span><span class="co">]</span>{style="color: #db0f48; font-weight: bold"} in the plot below.  </span>
-<span id="cb19-334"><a href="#cb19-334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-335"><a href="#cb19-335" aria-hidden="true" tabindex="-1"></a>Shapes 21 - 25 include outlines and fills. You can manipulate both: you can change the outline using <span class="in">`color`</span> and <span class="in">`scale_color_()`</span> functions, and change the fill with <span class="in">`fill`</span> and <span class="in">`scale_fill_()`</span> functions. In the plot, outlines show up in <span class="co">[</span><span class="ot">pink</span><span class="co">]</span>{style="color: #db0f48; font-weight: bold"} and fills show up in <span class="co">[</span><span class="ot">yellow</span><span class="co">]</span>{style="color: #f4b301; font-weight: bold"}.   </span>
-<span id="cb19-336"><a href="#cb19-336" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-339"><a href="#cb19-339" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb19-340"><a href="#cb19-340" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
-<span id="cb19-341"><a href="#cb19-341" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
-<span id="cb19-342"><a href="#cb19-342" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb19-343"><a href="#cb19-343" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-344"><a href="#cb19-344" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-345"><a href="#cb19-345" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb19-346"><a href="#cb19-346" aria-hidden="true" tabindex="-1"></a>  <span class="at">point_numbers =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">25</span>, <span class="at">by =</span> <span class="dv">1</span>)</span>
-<span id="cb19-347"><a href="#cb19-347" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
-<span id="cb19-348"><a href="#cb19-348" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">case_when</span>(</span>
-<span id="cb19-349"><a href="#cb19-349" aria-hidden="true" tabindex="-1"></a>    <span class="fu">between</span>(point_numbers, <span class="dv">0</span>, <span class="dv">14</span>) <span class="sc">~</span> <span class="st">"Outline"</span>,</span>
-<span id="cb19-350"><a href="#cb19-350" aria-hidden="true" tabindex="-1"></a>    <span class="fu">between</span>(point_numbers, <span class="dv">15</span>, <span class="dv">20</span>) <span class="sc">~</span> <span class="st">"Fill"</span>,</span>
-<span id="cb19-351"><a href="#cb19-351" aria-hidden="true" tabindex="-1"></a>    <span class="fu">between</span>(point_numbers, <span class="dv">21</span>, <span class="dv">25</span>) <span class="sc">~</span> <span class="st">"Outline + Fill"</span></span>
-<span id="cb19-352"><a href="#cb19-352" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb19-353"><a href="#cb19-353" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="fu">fct_relevel</span>(type, <span class="st">"Outline"</span>, <span class="st">"Fill"</span>, <span class="st">"Outline + Fill"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb19-354"><a href="#cb19-354" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">x_axis =</span> <span class="fu">case_when</span>(</span>
-<span id="cb19-355"><a href="#cb19-355" aria-hidden="true" tabindex="-1"></a>    point_numbers <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">21</span>) <span class="sc">~</span> <span class="st">"a"</span>,</span>
-<span id="cb19-356"><a href="#cb19-356" aria-hidden="true" tabindex="-1"></a>    point_numbers <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">13</span>, <span class="dv">16</span>, <span class="dv">22</span>) <span class="sc">~</span> <span class="st">"b"</span>,</span>
-<span id="cb19-357"><a href="#cb19-357" aria-hidden="true" tabindex="-1"></a>    point_numbers <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">8</span>, <span class="dv">14</span>, <span class="dv">17</span>, <span class="dv">23</span>) <span class="sc">~</span> <span class="st">"c"</span>,</span>
-<span id="cb19-358"><a href="#cb19-358" aria-hidden="true" tabindex="-1"></a>    point_numbers <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">9</span>, <span class="dv">18</span>, <span class="dv">24</span>) <span class="sc">~</span> <span class="st">"d"</span>,</span>
-<span id="cb19-359"><a href="#cb19-359" aria-hidden="true" tabindex="-1"></a>    point_numbers <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">10</span>, <span class="dv">19</span>, <span class="dv">25</span>) <span class="sc">~</span> <span class="st">"e"</span>,</span>
-<span id="cb19-360"><a href="#cb19-360" aria-hidden="true" tabindex="-1"></a>    point_numbers <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">11</span>, <span class="dv">20</span>) <span class="sc">~</span> <span class="st">"f"</span></span>
-<span id="cb19-361"><a href="#cb19-361" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span> </span>
-<span id="cb19-362"><a href="#cb19-362" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">y_axis =</span> <span class="fu">case_when</span>(</span>
-<span id="cb19-363"><a href="#cb19-363" aria-hidden="true" tabindex="-1"></a>    point_numbers <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>) <span class="sc">~</span> <span class="dv">5</span>,</span>
-<span id="cb19-364"><a href="#cb19-364" aria-hidden="true" tabindex="-1"></a>    point_numbers <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>) <span class="sc">~</span> <span class="dv">4</span>,</span>
-<span id="cb19-365"><a href="#cb19-365" aria-hidden="true" tabindex="-1"></a>    point_numbers <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">13</span>, <span class="dv">14</span>) <span class="sc">~</span> <span class="dv">3</span>,</span>
-<span id="cb19-366"><a href="#cb19-366" aria-hidden="true" tabindex="-1"></a>    point_numbers <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">16</span>, <span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">19</span>, <span class="dv">20</span>) <span class="sc">~</span> <span class="dv">2</span>,</span>
-<span id="cb19-367"><a href="#cb19-367" aria-hidden="true" tabindex="-1"></a>    point_numbers <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">21</span>, <span class="dv">22</span>, <span class="dv">23</span>, <span class="dv">24</span>, <span class="dv">25</span>) <span class="sc">~</span> <span class="dv">1</span></span>
-<span id="cb19-368"><a href="#cb19-368" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span> </span>
-<span id="cb19-369"><a href="#cb19-369" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">y_axis_labels =</span> y_axis <span class="sc">-</span> <span class="fl">0.2</span>)</span>
-<span id="cb19-370"><a href="#cb19-370" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-371"><a href="#cb19-371" aria-hidden="true" tabindex="-1"></a>values <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">25</span>, <span class="at">by =</span> <span class="dv">1</span>)</span>
-<span id="cb19-372"><a href="#cb19-372" aria-hidden="true" tabindex="-1"></a>yellow <span class="ot">&lt;-</span> <span class="st">"#f4b301"</span></span>
-<span id="cb19-373"><a href="#cb19-373" aria-hidden="true" tabindex="-1"></a>pink <span class="ot">&lt;-</span> <span class="st">"#db0f48"</span></span>
-<span id="cb19-374"><a href="#cb19-374" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb19-375"><a href="#cb19-375" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df,</span>
-<span id="cb19-376"><a href="#cb19-376" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> x_axis,</span>
-<span id="cb19-377"><a href="#cb19-377" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> y_axis,</span>
-<span id="cb19-378"><a href="#cb19-378" aria-hidden="true" tabindex="-1"></a>           <span class="at">shape =</span> <span class="fu">as_factor</span>(point_numbers),</span>
-<span id="cb19-379"><a href="#cb19-379" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> type,</span>
-<span id="cb19-380"><a href="#cb19-380" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> type)) <span class="sc">+</span></span>
-<span id="cb19-381"><a href="#cb19-381" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">6</span>,</span>
-<span id="cb19-382"><a href="#cb19-382" aria-hidden="true" tabindex="-1"></a>             <span class="at">stroke =</span> <span class="fl">0.7</span>) <span class="sc">+</span> </span>
-<span id="cb19-383"><a href="#cb19-383" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> point_numbers,</span>
-<span id="cb19-384"><a href="#cb19-384" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> y_axis_labels),</span>
-<span id="cb19-385"><a href="#cb19-385" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb19-386"><a href="#cb19-386" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">values =</span> values) <span class="sc">+</span></span>
-<span id="cb19-387"><a href="#cb19-387" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(pink, pink, pink)) <span class="sc">+</span></span>
-<span id="cb19-388"><a href="#cb19-388" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(yellow, yellow, yellow)) <span class="sc">+</span> </span>
-<span id="cb19-389"><a href="#cb19-389" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">c</span>(</span>
-<span id="cb19-390"><a href="#cb19-390" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Outline + Fill </span><span class="sc">\n</span><span class="st">(control with `color` or `fill`)"</span>, <span class="st">"Fill only </span><span class="sc">\n</span><span class="st">(control with `color`)"</span>, <span class="st">""</span>, <span class="st">"Outline only </span><span class="sc">\n</span><span class="st"> (control with `color`)"</span>, <span class="st">""</span></span>
-<span id="cb19-391"><a href="#cb19-391" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb19-392"><a href="#cb19-392" aria-hidden="true" tabindex="-1"></a>  <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb19-393"><a href="#cb19-393" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
-<span id="cb19-394"><a href="#cb19-394" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.text.y.left =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">360</span>),</span>
-<span id="cb19-395"><a href="#cb19-395" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.background =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb19-396"><a href="#cb19-396" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb19-397"><a href="#cb19-397" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb19-398"><a href="#cb19-398" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb19-399"><a href="#cb19-399" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb19-400"><a href="#cb19-400" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>,</span>
-<span id="cb19-401"><a href="#cb19-401" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">vjust =</span> <span class="fl">0.5</span>,</span>
-<span id="cb19-402"><a href="#cb19-402" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">size =</span> <span class="dv">12</span>))</span>
-<span id="cb19-403"><a href="#cb19-403" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-404"><a href="#cb19-404" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-405"><a href="#cb19-405" aria-hidden="true" tabindex="-1"></a>Credit to <span class="co">[</span><span class="ot">Albert Kuo's blog post</span><span class="co">](https://blog.albertkuo.me/post/point-shape-options-in-ggplot/)</span> for inspiring me to make my own reference figure, and Alex Phillip's <span class="co">[</span><span class="ot">colorblind friendly schemes</span><span class="co">](https://www.nceas.ucsb.edu/sites/default/files/2022-06/Colorblind%20Safe%20Color%20Schemes.pdf)</span> for the colors in the figure.  </span>
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-333"><a href="#cb19-333" aria-hidden="true" tabindex="-1"></a><span class="in">```{r shapes}</span></span>
+<span id="cb19-334"><a href="#cb19-334" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 5</span></span>
+<span id="cb19-335"><a href="#cb19-335" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 7</span></span>
+<span id="cb19-336"><a href="#cb19-336" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
+<span id="cb19-337"><a href="#cb19-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-338"><a href="#cb19-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-339"><a href="#cb19-339" aria-hidden="true" tabindex="-1"></a><span class="in">df &lt;- tibble(</span></span>
+<span id="cb19-340"><a href="#cb19-340" aria-hidden="true" tabindex="-1"></a><span class="in">  point_numbers = seq(from = 0, to = 25, by = 1)</span></span>
+<span id="cb19-341"><a href="#cb19-341" aria-hidden="true" tabindex="-1"></a><span class="in">) |&gt; </span></span>
+<span id="cb19-342"><a href="#cb19-342" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(type = case_when(</span></span>
+<span id="cb19-343"><a href="#cb19-343" aria-hidden="true" tabindex="-1"></a><span class="in">    between(point_numbers, 0, 14) ~ "Outline",</span></span>
+<span id="cb19-344"><a href="#cb19-344" aria-hidden="true" tabindex="-1"></a><span class="in">    between(point_numbers, 15, 20) ~ "Fill",</span></span>
+<span id="cb19-345"><a href="#cb19-345" aria-hidden="true" tabindex="-1"></a><span class="in">    between(point_numbers, 21, 25) ~ "Outline + Fill"</span></span>
+<span id="cb19-346"><a href="#cb19-346" aria-hidden="true" tabindex="-1"></a><span class="in">  ),</span></span>
+<span id="cb19-347"><a href="#cb19-347" aria-hidden="true" tabindex="-1"></a><span class="in">  type = fct_relevel(type, "Outline", "Fill", "Outline + Fill")) |&gt; </span></span>
+<span id="cb19-348"><a href="#cb19-348" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(x_axis = case_when(</span></span>
+<span id="cb19-349"><a href="#cb19-349" aria-hidden="true" tabindex="-1"></a><span class="in">    point_numbers %in% c(0, 6, 12, 15, 21) ~ "a",</span></span>
+<span id="cb19-350"><a href="#cb19-350" aria-hidden="true" tabindex="-1"></a><span class="in">    point_numbers %in% c(1, 7, 13, 16, 22) ~ "b",</span></span>
+<span id="cb19-351"><a href="#cb19-351" aria-hidden="true" tabindex="-1"></a><span class="in">    point_numbers %in% c(2, 8, 14, 17, 23) ~ "c",</span></span>
+<span id="cb19-352"><a href="#cb19-352" aria-hidden="true" tabindex="-1"></a><span class="in">    point_numbers %in% c(3, 9, 18, 24) ~ "d",</span></span>
+<span id="cb19-353"><a href="#cb19-353" aria-hidden="true" tabindex="-1"></a><span class="in">    point_numbers %in% c(4, 10, 19, 25) ~ "e",</span></span>
+<span id="cb19-354"><a href="#cb19-354" aria-hidden="true" tabindex="-1"></a><span class="in">    point_numbers %in% c(5, 11, 20) ~ "f"</span></span>
+<span id="cb19-355"><a href="#cb19-355" aria-hidden="true" tabindex="-1"></a><span class="in">  )) |&gt; </span></span>
+<span id="cb19-356"><a href="#cb19-356" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(y_axis = case_when(</span></span>
+<span id="cb19-357"><a href="#cb19-357" aria-hidden="true" tabindex="-1"></a><span class="in">    point_numbers %in% c(0, 1, 2, 3, 4, 5) ~ 5,</span></span>
+<span id="cb19-358"><a href="#cb19-358" aria-hidden="true" tabindex="-1"></a><span class="in">    point_numbers %in% c(6, 7, 8, 9, 10, 11) ~ 4,</span></span>
+<span id="cb19-359"><a href="#cb19-359" aria-hidden="true" tabindex="-1"></a><span class="in">    point_numbers %in% c(11, 12, 13, 14) ~ 3,</span></span>
+<span id="cb19-360"><a href="#cb19-360" aria-hidden="true" tabindex="-1"></a><span class="in">    point_numbers %in% c(15, 16, 17, 18, 19, 20) ~ 2,</span></span>
+<span id="cb19-361"><a href="#cb19-361" aria-hidden="true" tabindex="-1"></a><span class="in">    point_numbers %in% c(21, 22, 23, 24, 25) ~ 1</span></span>
+<span id="cb19-362"><a href="#cb19-362" aria-hidden="true" tabindex="-1"></a><span class="in">  )) |&gt; </span></span>
+<span id="cb19-363"><a href="#cb19-363" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(y_axis_labels = y_axis - 0.2)</span></span>
+<span id="cb19-364"><a href="#cb19-364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-365"><a href="#cb19-365" aria-hidden="true" tabindex="-1"></a><span class="in">values &lt;- seq(from = 0, to = 25, by = 1)</span></span>
+<span id="cb19-366"><a href="#cb19-366" aria-hidden="true" tabindex="-1"></a><span class="in">yellow &lt;- "#f4b301"</span></span>
+<span id="cb19-367"><a href="#cb19-367" aria-hidden="true" tabindex="-1"></a><span class="in">pink &lt;- "#db0f48"</span></span>
+<span id="cb19-368"><a href="#cb19-368" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb19-369"><a href="#cb19-369" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data = df,</span></span>
+<span id="cb19-370"><a href="#cb19-370" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = x_axis,</span></span>
+<span id="cb19-371"><a href="#cb19-371" aria-hidden="true" tabindex="-1"></a><span class="in">           y = y_axis,</span></span>
+<span id="cb19-372"><a href="#cb19-372" aria-hidden="true" tabindex="-1"></a><span class="in">           shape = as_factor(point_numbers),</span></span>
+<span id="cb19-373"><a href="#cb19-373" aria-hidden="true" tabindex="-1"></a><span class="in">           color = type,</span></span>
+<span id="cb19-374"><a href="#cb19-374" aria-hidden="true" tabindex="-1"></a><span class="in">           fill = type)) +</span></span>
+<span id="cb19-375"><a href="#cb19-375" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(size = 6,</span></span>
+<span id="cb19-376"><a href="#cb19-376" aria-hidden="true" tabindex="-1"></a><span class="in">             stroke = 0.7) + </span></span>
+<span id="cb19-377"><a href="#cb19-377" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_text(aes(label = point_numbers,</span></span>
+<span id="cb19-378"><a href="#cb19-378" aria-hidden="true" tabindex="-1"></a><span class="in">                y = y_axis_labels),</span></span>
+<span id="cb19-379"><a href="#cb19-379" aria-hidden="true" tabindex="-1"></a><span class="in">            color = "black") +</span></span>
+<span id="cb19-380"><a href="#cb19-380" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_shape_manual(values = values) +</span></span>
+<span id="cb19-381"><a href="#cb19-381" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(values = c(pink, pink, pink)) +</span></span>
+<span id="cb19-382"><a href="#cb19-382" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_manual(values = c(yellow, yellow, yellow)) + </span></span>
+<span id="cb19-383"><a href="#cb19-383" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_y_continuous(labels = c(</span></span>
+<span id="cb19-384"><a href="#cb19-384" aria-hidden="true" tabindex="-1"></a><span class="in">    "Outline + Fill \n(control with `color` or `fill`)", "Fill only \n(control with `color`)", "", "Outline only \n (control with `color`)", ""</span></span>
+<span id="cb19-385"><a href="#cb19-385" aria-hidden="true" tabindex="-1"></a><span class="in">  ),</span></span>
+<span id="cb19-386"><a href="#cb19-386" aria-hidden="true" tabindex="-1"></a><span class="in">  breaks = c(1, 2, 3, 4, 5)) +</span></span>
+<span id="cb19-387"><a href="#cb19-387" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none",</span></span>
+<span id="cb19-388"><a href="#cb19-388" aria-hidden="true" tabindex="-1"></a><span class="in">        strip.text.y.left = element_text(angle = 360),</span></span>
+<span id="cb19-389"><a href="#cb19-389" aria-hidden="true" tabindex="-1"></a><span class="in">        strip.background = element_blank(),</span></span>
+<span id="cb19-390"><a href="#cb19-390" aria-hidden="true" tabindex="-1"></a><span class="in">        panel.background = element_blank(),</span></span>
+<span id="cb19-391"><a href="#cb19-391" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.ticks = element_blank(),</span></span>
+<span id="cb19-392"><a href="#cb19-392" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.title = element_blank(),</span></span>
+<span id="cb19-393"><a href="#cb19-393" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.text.x = element_blank(),</span></span>
+<span id="cb19-394"><a href="#cb19-394" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.text.y = element_text(hjust = 0.5,</span></span>
+<span id="cb19-395"><a href="#cb19-395" aria-hidden="true" tabindex="-1"></a><span class="in">                                   vjust = 0.5,</span></span>
+<span id="cb19-396"><a href="#cb19-396" aria-hidden="true" tabindex="-1"></a><span class="in">                                   size = 12))</span></span>
+<span id="cb19-397"><a href="#cb19-397" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-398"><a href="#cb19-398" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-399"><a href="#cb19-399" aria-hidden="true" tabindex="-1"></a>Credit to <span class="co">[</span><span class="ot">Albert Kuo's blog post</span><span class="co">](https://blog.albertkuo.me/post/point-shape-options-in-ggplot/)</span> for inspiring me to make my own reference figure, and Alex Phillips's <span class="co">[</span><span class="ot">colorblind friendly schemes</span><span class="co">](https://www.nceas.ucsb.edu/sites/default/files/2022-06/Colorblind%20Safe%20Color%20Schemes.pdf)</span> for the colors in the figure.  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

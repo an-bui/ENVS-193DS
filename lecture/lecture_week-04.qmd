@@ -14,7 +14,7 @@ author:
     affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology
     affiliation-url: https://www.eemb.ucsb.edu/
 published-title: "Lecture date"
-date: 2024-04-21
+date: 2025-04-21
 date-modified: last-modified
 categories: [effect size, power analysis, confidence intervals]
 citation:
@@ -324,7 +324,7 @@ ggplot(data = needlegrass,
 
 Doing a t-test:
 
-```{r}
+```{r t-test}
 var.test(height_cm ~ plot_type,
        data = needlegrass)
 t.test(height_cm ~ plot_type,
@@ -342,7 +342,7 @@ ggplot(data = vect,
 
 Cohen's d:
 
-```{r}
+```{r cohens-d}
 # pooled SD
 cohens_d(height_cm ~ plot_type,
        data = needlegrass)
@@ -380,7 +380,7 @@ nb <- pluck(needlegrass_sum, 4, 2)
 
 ## 6. good and bad results statements
 
-```{r}
+```{r managed-pools}
 managed <- rnorm(n = 33, mean = 5, sd = 1) %>% 
   enframe() %>% 
   mutate(treatment = "managed")
@@ -401,6 +401,43 @@ cohens_d(temp ~ treatment,
 Statement: Our data suggest a difference in water temperature between managed (n = 33) and non-intervention (i.e. control, n = 30) vernal pools, with a strong (Cohen’s d = 2.19) effect of management.  
 Temperatures in managed pools were different from those in non-intervention pools (two-tailed two-sample t-test, t(60.9) = -8.7, p < 0.001, ⍺ = 0.05); on average, managed pools were 5.3 °C, while control pools were 7.1 °C.
 
+## 7. QQ/histograms
+
+```{r qq-hist-comparisons}
+set.seed(666)
+data1 <- rnorm(n = 30, mean = 15, sd = 2) |> 
+  enframe()
+
+ggplot(data = data1,
+       aes(x = value)) +
+  geom_histogram(bins = 6,
+                 fill = "cornflowerblue",
+                 color = "black") +
+  scale_y_continuous(expand = c(0, 0))
+
+ggplot(data = data1,
+       aes(sample = value)) +
+  geom_qq_line(color = "black") +
+  geom_qq(color = "cornflowerblue",
+          size = 4)
+
+set.seed(666)
+data2 <- rgamma(n = 30, shape = 0.5) |> 
+  enframe()
+
+ggplot(data = data2,
+       aes(x = value)) +
+  geom_histogram(bins = 6,
+                 fill = "orange",
+                 color = "black") +
+  scale_y_continuous(expand = c(0, 0))
+
+ggplot(data = data2,
+       aes(sample = value)) +
+  geom_qq_line(color = "black") +
+  geom_qq(color = "orange",
+          size = 4)
+```
 
 
 

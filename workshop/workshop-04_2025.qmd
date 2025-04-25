@@ -508,8 +508,118 @@ ggplot(data = salmon_clean,
     # legend elements
     legend.direction = "horizontal",
     legend.key.size = unit(3, "line"),
+    legend.background = element_rect(fill = "lemonchiffon", color = "grey50", linewidth = 1),
     # axis elements
     axis.text.y.left = element_text(size = 15, color = "deeppink")
+  )
+```
+
+### Friday 9 AM plot
+
+```{r}
+#| fig-width: 12
+#| fig-height: 7
+#| code-fold: true
+
+ggplot(data = sharks_clean,
+                     # aesthetics: x-axis, y-axis
+                     aes(x = n,
+                         y = shark_common_name)) +
+  # first layer: columns to represent counts
+  geom_col() +
+  # faceting by state
+  facet_wrap(~ state,
+             strip.position = "bottom") +
+  # labels
+  labs(x = "Total number of shark incidents",
+       y = "Shark species",
+       title = "Fishy Salmon Run",
+       subtitle = "fishfishyfishyfishyfishy") +
+  # built in theme
+  theme_dark() +
+  theme(
+    # strip elements
+    strip.text = element_text(color = "brown",
+                              family = "Times New Roman",
+                              size = 50,
+                              face = "bold"),
+    strip.background = element_rect(fill = "cornflowerblue",
+                                    color = "pink2",
+                                    size = 5),
+    # plot elements
+    plot.background = element_rect(fill = "#EC4899",
+                                   color = NA),
+    plot.title = element_text(angle = -20, size = 40, color = "blue"),
+    plot.subtitle = element_text(angle = 20, color = "gold"),
+    plot.margin = unit(rep(2, 4), "cm"),
+    # panel elements
+    panel.grid.major = element_line(size = 8),
+    panel.background = element_rect(fill = "#EC4899"),
+    panel.grid.minor = element_line(color = "#32CD32"),
+    # legend elements
+    legend.background = element_rect(fill = "yellow"),
+    legend.key.size = unit(3, "cm"),
+    legend.position.inside = c(0.6, 0.5)
+  )
+```
+
+### Friday 10 AM plot
+
+```{r}
+#| fig-width: 12
+#| fig-height: 7
+#| code-fold: true
+
+ggplot(data = salmon_clean,
+                      # aesthetics: x-axis, y-axis, and color
+                      aes(x = Date,
+                          y = daily_count,
+                          color = species)) +
+  # first layer: points
+  geom_point() +
+  # second layer: line
+  geom_line(size = 2, 
+            linetype = "dashed") +
+  # labels
+  labs(x = "Date",
+       y = "Daily fish count",
+       title = "Ugly plot",
+       caption = "super ugly") +
+  # custom color scale
+  scale_color_manual(values = c("Chinook" = "hotpink",
+                                "Coho" = "chartreuse",
+                                "Sockeye" = "pink")) +
+  # adding this facet 
+  facet_wrap(~species) +
+  # built in theme
+  theme_dark() +
+  theme(
+    # strip elements
+    strip.text = element_text(family = "Courier New",
+                              color = "gold",
+                              face = "bold"),
+    strip.background = element_rect(color = "brown",
+                                    fill = "white"),
+    # plot elements
+    plot.background = element_rect(fill = "yellow", color = "red", size = 20),
+    plot.title = element_text(color = "purple", size = 28, face = "italic", hjust = 0),
+    plot.caption = element_text(color = "red", size = 14, face = "bold.italic", hjust = 0.5),
+    # panel elements
+    panel.border = element_rect(fill = NA, color = "chartreuse", size = 1),
+    panel.grid.major.x = element_line(color = "blue3"),
+    panel.grid.minor.y = element_line(color = "chartreuse4"),
+    panel.background = element_rect(fill = "deeppink"),
+    # legend elements
+    legend.key.height = unit(3, "cm"),
+    legend.key.width = unit(5, "cm"),
+    legend.background = element_rect(fill = "green"),
+    legend.position = "left",
+    legend.box.background = element_rect(fill = "red"),
+    # axis elements
+    axis.text.y.left = element_text(size = 17, color = "yellow"),
+    axis.ticks = element_line(color = "red"),
+    axis.line = element_line(color = "purple",
+                             size = 12)
   )
 ```
 

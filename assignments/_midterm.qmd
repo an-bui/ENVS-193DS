@@ -1,17 +1,12 @@
 ---
 title: "Midterm"
 editor: source
-freeze: auto
 published-title: "Due date"
-date: 2024-05-08
+date: 2025-05-07
 date-modified: last-modified
-format:
-  html:
-    toc: true
-    toc-depth: 5
 ---
 
-[Due on Wednesday May 8 (Week 6) at 11:59 PM]{style="color: #79ACBD; font-size: 24px;"}
+[Due on Wednesday May 7 (Week 6) at 11:59 PM]{style="color: #79ACBD; font-size: 24px;"}
 
 ## Description
 
@@ -27,177 +22,54 @@ This midterm is open note, open internet, open everything; feel free to also tal
 
 library(tidyverse)
 library(here) 
-library(lterdatasampler)
 library(readxl)
 library(effectsize)
 library(janitor)
 ```
 
-## Problem 1. Test choice, assumptions, and communication (21 points)
+## Problem 1. Test interpretation and communication (**POINTS HERE**) 
 
 ### Skills you will demonstrate
 
-In this problem, **you will demonstrate your ability to come up with an "analysis plan"** by articulating what hypotheses you are testing, and what tests are appropriate for those hypotheses. You will also **demonstrate your ability to interpret code output and synthesize the statistics in writing to ground the stats in biology** for a scientific audience.  
+In this problem, you will be responsible for interpreting the results of a test with which you may be familiar, but haven't seen. You will also **demonstrate your ability to interpret code output and synthesize the statistics in writing to ground the stats in biology** for a scientific audience.  
 
 ### Description
 
-You’re the manager of a reserve that burned in a major wildfire a year ago. Plants have started to grow back in some areas, but things still don't look quite right. You wonder if the soil phosphorus content (expressed in parts per million, ppm) has something to do with how plants are (or are not) returning to burned areas. You want to compare soil phosphorus content in areas in the reserve with different burn histories: recently burned (within the last 2 years), historically burned (within the last 10 years), and unburned (not burned in the last 10 years).  
+Residents in Flint, Michigan have dealt with lead contamination in their water from 2014 to now. In **INSERT YEAR HERE**, residents conducted their own experiment to demonstrate that the city's recommendation to flush water out of the faucet before using it was not effective at clearing lead from drinking water. Residents took water samples at three different time points (letting the water run the whole time:  
+1. immediately after turning on the water  
+2. 45 seconds after turning on the water  
+3. 2 minutes after turning on the water.  
+
+In this problem, you will interpret the statistical results to answer the questions:  
+1. Is there a difference in lead (measured in parts per million, ppm) between water samples taken immediately after turning on the water and 2 minutes after turning on the water?  
+2. Is the amount of lead in the water after 2 minutes different from 0?
 
 ```{r problem-1-data}
 #| echo: false
 #| message: false
 
-soil_data <- read_csv(here::here("data", "soil_data.csv"))
+flint <- read_xlsx(here::here("data", "Flint-Samples-WORKING-COPY.xlsx"),
+                                  sheet = "Samples from Flint Water homes")
+
+flint_clean <- flint |> 
+  clean_names() |> 
+  filter(sample_id != 31)
+
+# paired
+
+t.test(flint_clean$pb_bottle_1_ppb_first_draw, 
+       flint_clean$pb_bottle_3_ppb_2_mins_flushing, 
+       paired = TRUE)
+
+cohens_d(flint_clean$pb_bottle_1_ppb_first_draw, 
+       flint_clean$pb_bottle_3_ppb_2_mins_flushing, 
+       paired = TRUE)
+
+# one sample
+
+t.test(flint_clean$pb_bottle_3_ppb_2_mins_flushing,
+       mu = 0)
 ```
-
-### Components
-
-#### a. Hypotheses (2 points)
-
-State your hypothesis in statistical terms. (1-2 sentences)   
-
-#### b. Tests (2 points)
-
-What kind of _parametric_ statistical test could you use to test the null hypothesis? Justify your use of this test by describing why it is appropriate for the response and predictor variables you have. (1-2 sentences)  
-
-#### c. Assumptions (3 points)
-
-What are the assumptions you would have to meet to use the test? (1-2 sentences)  
-
-#### d. Alternate routes (2 points)
-
-If your data did not meet the assumptions of this test, what other test(s) could you do? Justify your potential use of this test. (1-2 sentences)   
-
-#### e. Exporatory data visualization (2 points)
-
-After coming up with your analysis plan (in parts a-d), you collect samples from all three areas of the reserve (n = 35 for each sample). To explore your data, you make the following graph:
-
-```{r problem-1-viz}
-#| echo: false
-
-# exploratory data visualization
-ggplot(data = soil_data, # using soil data
-       aes(x = treatment, # x-axis
-           y = p_ppm)) + # y-axis
-  
-  # underlying data ----
-  geom_jitter(width = 0.1,
-              height = 0,
-              shape = 21,
-              alpha = 0.3) +
-  
-  # mean and 95% CI ----
-  stat_summary(geom = "pointrange",
-               fun.data = mean_cl_normal) +
-  
-  # plot appearance ----
-  theme_minimal()
-```
-
-Describe whether or not there could be a difference in phosphorus soil content between burned and unburned treatments. Use components from the figure to justify your description. (1-2 sentences)
-
-#### f. Normality (2 points)
-
-You then make a QQ plot and test for normality. 
-
-**This is your QQ plot:**
-
-```{r problem-1-qq}
-#| echo: false
-
-# visually evaluating normality ----
-ggplot(data = soil_data, # using soil data
-       aes(sample = p_ppm)) + # making qq for phosphorus in ppm
-  geom_qq_line(color = "red") + # creating a reference line in red for qq plot
-  geom_qq() + # making the qq plot
-  facet_wrap(~ treatment) # making two panels for treatments
-```
-
-**And this is your output of a test for normality:**
-
-```{r problem-1-shapiro-wilk}
-#| echo: false
-
-historic_burn <- soil_data %>% 
-  filter(treatment == "historic_burn") %>% 
-  pull(p_ppm) 
-recent_burn <- soil_data %>% 
-  filter(treatment == "recent_burn") %>% 
-  pull(p_ppm) 
-unburned <- soil_data %>% 
-  filter(treatment == "unburned") %>% 
-  pull(p_ppm) 
-
-shapiro.test(historic_burn)
-shapiro.test(recent_burn)
-shapiro.test(unburned)
-```
-
-Using the figure and the results from the test you ran, describe whether your variable is normally distributed enough. If you have evidence to suggest your variable is not normally distributed, describe why you could continue using a parametric test. (1-2 sentences)  
-
-#### g. Variances (2 points)
-
-You then calculate the variances for each group and run a test for equal variances.
-
-**This is the output for your calculation of variances:**
-
-```{r problem-1-variance-table}
-#| echo: false
-
-# testing for equal variances ----
-soil_var <- soil_data %>% 
-  group_by(treatment) %>% 
-  reframe(var = var(p_ppm))
-
-soil_var
-```
-
-**And the output of your variance test:**
-
-```{r problem-1-variance-test}
-#| echo: false
-
-car::leveneTest(p_ppm ~ treatment, # formula
-         data = soil_data) # data
-```
-
-Using your calculated variances and output of the test you ran, describe whether your variances are equal enough. (1-2 sentences)
-
-#### h. Test and communication (6 points)
-
-You run your statistical test. Following your test, you also decide to do a post-hoc analysis and calculate an effect size.  
-
-**This is your test output:**
-
-```{r problem-1-anova}
-#| echo: false
-
-# doing an ANOVA ----
-soil_anova <- aov(p_ppm ~ treatment, # formula
-                  data = soil_data) # data)
-
-summary(soil_anova)
-```
-
-**This is your post-hoc output:**
-
-```{r problem-1-post-hoc}
-#| echo: false
-
-# doing post-hoc ----
-TukeyHSD(soil_anova)
-```
-
-**And this is your effect size output:**
-
-```{r problem-1-t-test}
-#| echo: false
-
-# calculating effect size ----
-eta_squared(soil_anova)
-```
-
-You want to report your results to the other managers at the reserve. In 2-3 sentences, describe your results.  
 
 ## Problem 2. Reproducing an analysis (41 points)
 
@@ -205,40 +77,48 @@ You want to report your results to the other managers at the reserve. In 2-3 sen
 
 In environmental studies, open research means that researchers make their data and/or their code available for anyone to see. This means that anyone should be able to reproduce the analysis, even if they are not on the research team. **In this problem, you will demonstrate your ability to read a paper to understand the context for a research study and its statistical analysis. You will then demonstrate your ability to take a data set and analyze it, using the researchers' original analysis as a guide.**  
 
-When reproducing someone else's analysis, you should be able to get the same exact results (for example: test statistics, summary statistics) that they do. When doing this problem, double check your work against the text/figures in the paper. Did you get it right?
-
 ### Description
 
-You will reproduce the analysis in Beheshti, K. M., K. Wasson, C. Angelini, B. R. Silliman, and B. B. Hughes. 2021. Long-term study reveals top-down effect of crabs on a California salt marsh. Ecosphere 12(8):e03703. [10.1002/ecs2.3703](https://doi.org/10.1002/ecs2.3703).  
+You will reproduce the analysis in: Steketee, Jess K., Adrian V. Rocha, Laura Gough, Kevin L. Griffin, Ian Klupar, Ruby An, Nicole Williamson, and Rebecca J. Rowe. 2022. “Small Herbivores with Big Impacts: Tundra Voles (Microtus Oeconomus) Alter Post-Fire Ecosystem Dynamics.” _Ecology_ 103(7): e3689. [https://doi.org/10.1002/ecy.3689](https://doi.org/10.1002/ecy.3689)  
 
 **Read all parts of the paper before starting this problem.**  
 
 You will specifically recreate the components in this passage:  
 
-> In trial (i) with pickleweed root only, there was less pickleweed root biomass in treatments (M~T~ 
-> = 0.21, SD~T~ = 0.07) than controls (M~C~ = 0.34, SD~C~ = 0.05), indicating crab consumption of 
-> roots (Fig. 6, Welch’s two-sample t-test; t(20.5) = 5.55, P < 0.0001). In trial (ii) with algae only, 
-> there was less algal biomass in treatments (M~T~ = 0.12, SD~T~ = 0.11) than controls (M~C~ = 0.33, 
-> SD~C~ = 0.03), indicating crab consumption of algae (Fig. 6, Welch’s two-sample t-test; t(13.05) = 6.098, 
-> P < 0.0001). Lastly, in trial (iii) with both algae and pickleweed offered simultaneously, treatments 
-> had less biomass than controls for both pickleweed roots (M~T~ = 0.24, SD~T~ = 0.07, and M~C~ = 0.32, 
-> SD~C~ = 0.03) and algae (M~T~ = 0.08, SD~T~ = 0.15, and M~C~ = 0.28, SD~C~ = 0.10), indicating that 
-> crabs consume pickleweed roots as well as algae when both are offered (Fig. 6, Welch’s two-sample t-test; 
-> pickleweed roots, t(11.03) = 3.00, P = 0.012; algae t(14.40) = 3.20, P = 0.006).  
+> Although tussock density was lower at the burned site, tussocks were larger 
+> (Table 1, Figure 2a).
 
 #### Getting the data
 
-Once you have read the paper, find the open research statement at the end of the paper. Navigate to the database using the link that is provided. Download the data into your midterm directory. To understand the data structure, read the `README`, which is a description of the data.  
+This statement relies on the dataset stored here:  
+
+Rocha, A. 2021. Tussock height and diameter in moist acidic tussock tundra at the site of the
+2007 Anaktuvuk River fire scar, and nearby unburned tundra measured in 2016 ver 1.
+Environmental Data Initiative. [https://doi.org/10.6073/pasta/1dccd3fdb3aa693f9c2b69a24f8306ed](https://doi.org/10.6073/pasta/1dccd3fdb3aa693f9c2b69a24f8306ed)  
+
+Download the data into your midterm directory. To understand the data structure, read the metadata (under Resources > View full metadata).   
 
 ### Components
 
-#### a. Feeding trials (2 points)
+#### a. Variables
 
-In 1-2 sentences, explain why the authors conducted feeding trials and how they analyzed the data from their feeding trials.  
+In 1-2 sentences, describe the response variable (with units) and predictor variable. Explain the _type_ of each variable (categorical, continuous, etc.).
 
-#### b. Comparisons (2 points)
+#### b. Summarizing and table displays
 
-In 1-2 sentences, explain the difference(s) between the three feeding trials.  
+Calculation the:  
+- means,  
+- standard deviations,  
+- standard errors, and   
+- 95% confidence intervals of the means  
+for the response variable within the two groups. Round all numbers to 1 decimal point.  
+
+Display these results in a **table**. Use _one_ of the following packages to do so:  
+- `kableExtra`
+- `gt`
+- `flextable`
+
+**Note: render your document to make sure things look right.**
 
 #### c. Response variable (2 points)
 
@@ -345,35 +225,7 @@ Make a list of the arguments in the `aes()` call and any `geom_()` calls you wil
 
 :::
 
-## Problem 4. Personal data (18 points)
-
-### Skills you will demonstrate
-
-Up until this point, we've created figures to represent data. In this problem, you will create a table to represent data from your personal data project. **You will demonstrate your understanding of data summarizing (for example, calculating a mean, counting observations), installing/loading packages, and your ability to apply packages/functions to your own use.**  
-
-Before doing this problem, update your spreadsheet with your new observations.  
-
-### Components
-
-#### a. Data summarizing (2 points)
-
-In 1-2 sentences, describe how you could summarize your data to compare your response variable between a categorical predictor variable of your choosing. For example, are you counting observations and comparing counts between groups? Are you taking the mean and comparing means between groups?
-
-#### b. Visualization (6 points)
-
-Using the summary you described in part a, **create a visualization of your data comparing your summarized response variable between some categorical predictor variable**. If you are calculating a mean or median, show the underlying data in addition to your summary. Display the output. 
-
-:::{.callout-note}
-See [From Data to Viz](https://www.data-to-viz.com/) for new ideas for visualization.  
-:::
-
-#### c. Caption (4 points)
-
-Write a caption for your figure.
-
-#### d. Table presentation (6 points)
-
-Using the `flextable` package (package info [here](https://ardata-fr.github.io/flextable-book/), gallery of examples [here](https://ardata.fr/en/flextable-gallery/)), create a table with the same data summary that you describe in part a and visualized in part b. For example, if you described and visualized means, make a table with means. Display the output.  
+ 
 
 ## Checklist
 

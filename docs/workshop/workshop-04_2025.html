@@ -197,7 +197,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">April 24, 2025</p>
+        <p class="date-modified">April 25, 2025</p>
       </div>
     </div>
       
@@ -259,6 +259,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#thursday-4-pm-plot" id="toc-thursday-4-pm-plot" class="nav-link" data-scroll-target="#thursday-4-pm-plot">Thursday 4 PM plot</a></li>
   <li><a href="#thursday-5-pm-plot" id="toc-thursday-5-pm-plot" class="nav-link" data-scroll-target="#thursday-5-pm-plot">Thursday 5 PM plot</a></li>
+  <li><a href="#friday-9-am-plot" id="toc-friday-9-am-plot" class="nav-link" data-scroll-target="#friday-9-am-plot">Friday 9 AM plot</a></li>
+  <li><a href="#friday-10-am-plot" id="toc-friday-10-am-plot" class="nav-link" data-scroll-target="#friday-10-am-plot">Friday 10 AM plot</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -767,14 +769,136 @@ b) how to manipulate it (in code).</p>
 <span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># legend elements</span></span>
 <span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.direction =</span> <span class="st">"horizontal"</span>,</span>
 <span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="dv">3</span>, <span class="st">"line"</span>),</span>
-<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axis elements</span></span>
-<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y.left =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>, <span class="at">color =</span> <span class="st">"deeppink"</span>)</span>
-<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"lemonchiffon"</span>, <span class="at">color =</span> <span class="st">"grey50"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>),</span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axis elements</span></span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y.left =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>, <span class="at">color =</span> <span class="st">"deeppink"</span>)</span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
 <p><img src="workshop-04_2025_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="1152"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="friday-9-am-plot" class="level3">
+<h3 class="anchored" data-anchor-id="friday-9-am-plot">Friday 9 AM plot</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> sharks_clean,</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                     <span class="co"># aesthetics: x-axis, y-axis</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">aes</span>(<span class="at">x =</span> n,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> shark_common_name)) <span class="sc">+</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first layer: columns to represent counts</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># faceting by state</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> state,</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">strip.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># labels</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Total number of shark incidents"</span>,</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Shark species"</span>,</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Fishy Salmon Run"</span>,</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"fishfishyfishyfishyfishy"</span>) <span class="sc">+</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># built in theme</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dark</span>() <span class="sc">+</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># strip elements</span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"brown"</span>,</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>                              <span class="at">family =</span> <span class="st">"Times New Roman"</span>,</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>                              <span class="at">size =</span> <span class="dv">50</span>,</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>                              <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"cornflowerblue"</span>,</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">color =</span> <span class="st">"pink2"</span>,</span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">size =</span> <span class="dv">5</span>),</span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot elements</span></span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#EC4899"</span>,</span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="sc">-</span><span class="dv">20</span>, <span class="at">size =</span> <span class="dv">40</span>, <span class="at">color =</span> <span class="st">"blue"</span>),</span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">20</span>, <span class="at">color =</span> <span class="st">"gold"</span>),</span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">rep</span>(<span class="dv">2</span>, <span class="dv">4</span>), <span class="st">"cm"</span>),</span>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># panel elements</span></span>
+<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
+<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#EC4899"</span>),</span>
+<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"#32CD32"</span>),</span>
+<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># legend elements</span></span>
+<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"yellow"</span>),</span>
+<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="dv">3</span>, <span class="st">"cm"</span>),</span>
+<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.5</span>)</span>
+<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="workshop-04_2025_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="1152"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="friday-10-am-plot" class="level3">
+<h3 class="anchored" data-anchor-id="friday-10-am-plot">Friday 10 AM plot</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> salmon_clean,</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                      <span class="co"># aesthetics: x-axis, y-axis, and color</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">aes</span>(<span class="at">x =</span> Date,</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">y =</span> daily_count,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first layer: points</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># second layer: line</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>, </span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># labels</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>,</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Daily fish count"</span>,</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Ugly plot"</span>,</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"super ugly"</span>) <span class="sc">+</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># custom color scale</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Chinook"</span> <span class="ot">=</span> <span class="st">"hotpink"</span>,</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Coho"</span> <span class="ot">=</span> <span class="st">"chartreuse"</span>,</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Sockeye"</span> <span class="ot">=</span> <span class="st">"pink"</span>)) <span class="sc">+</span></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># adding this facet </span></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species) <span class="sc">+</span></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># built in theme</span></span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dark</span>() <span class="sc">+</span></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># strip elements</span></span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Courier New"</span>,</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>                              <span class="at">color =</span> <span class="st">"gold"</span>,</span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>                              <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"brown"</span>,</span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">fill =</span> <span class="st">"white"</span>),</span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot elements</span></span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"yellow"</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">size =</span> <span class="dv">28</span>, <span class="at">face =</span> <span class="st">"italic"</span>, <span class="at">hjust =</span> <span class="dv">0</span>),</span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">14</span>, <span class="at">face =</span> <span class="st">"bold.italic"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># panel elements</span></span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"chartreuse"</span>, <span class="at">size =</span> <span class="dv">1</span>),</span>
+<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"blue3"</span>),</span>
+<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"chartreuse4"</span>),</span>
+<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"deeppink"</span>),</span>
+<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># legend elements</span></span>
+<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.height =</span> <span class="fu">unit</span>(<span class="dv">3</span>, <span class="st">"cm"</span>),</span>
+<span id="cb27-42"><a href="#cb27-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.width =</span> <span class="fu">unit</span>(<span class="dv">5</span>, <span class="st">"cm"</span>),</span>
+<span id="cb27-43"><a href="#cb27-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"green"</span>),</span>
+<span id="cb27-44"><a href="#cb27-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"left"</span>,</span>
+<span id="cb27-45"><a href="#cb27-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.box.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"red"</span>),</span>
+<span id="cb27-46"><a href="#cb27-46" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axis elements</span></span>
+<span id="cb27-47"><a href="#cb27-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y.left =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">17</span>, <span class="at">color =</span> <span class="st">"yellow"</span>),</span>
+<span id="cb27-48"><a href="#cb27-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"red"</span>),</span>
+<span id="cb27-49"><a href="#cb27-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"purple"</span>,</span>
+<span id="cb27-50"><a href="#cb27-50" aria-hidden="true" tabindex="-1"></a>                             <span class="at">size =</span> <span class="dv">12</span>)</span>
+<span id="cb27-51"><a href="#cb27-51" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="workshop-04_2025_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="1152"></p>
 </figure>
 </div>
 </div>
@@ -1247,520 +1371,630 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb26" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Coding workshop: Week 4"</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "ggplot customization"</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [tidyverse, read_csv, ggplot, theme, facet_wrap, geom_point, geom_line, group_by, summarize, pipe operators, '|&gt;', filter, mutate]</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 8</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Workshop dates: April 24 (Thursday), April 25 (Friday)</span><span class="co">]</span>{style="color: #79ACBD; font-size: 24px;"}</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Summary</span></span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="fu">### Packages</span></span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`tidyverse`</span>  </span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a><span class="fu">### Operations</span></span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Review</span></span>
-<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>read in data using <span class="in">`read_csv()`</span>  </span>
-<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>visualize data using <span class="in">`ggplot()`</span>  </span>
-<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>modify theme elements using <span class="in">`theme()`</span>  </span>
-<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>use built-in themes using <span class="in">`theme_()`</span>  </span>
-<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>modify colors using <span class="in">`scale_color_()`</span> and <span class="in">`scale_fill_()`</span> functions  </span>
-<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>create multi-panel plots using <span class="in">`facet_wrap()`</span>  </span>
-<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>make line plots using <span class="in">`geom_point()`</span> and <span class="in">`geom_line()`</span>  </span>
-<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>group data using <span class="in">`group_by()`</span>  </span>
-<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>summarize data using <span class="in">`summarize()`</span>  </span>
-<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>chain functions together using <span class="in">` |&gt; `</span>  </span>
-<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>filtering observations using <span class="in">`filter()`</span>  </span>
-<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>manipulate columns using <span class="in">`mutate()`</span> and <span class="in">`case_when()`</span>  </span>
-<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data sources</span></span>
-<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a>The fish migration data is from the <span class="co">[</span><span class="ot">Columbia River DART (Data Access in Real Time)</span><span class="co">](https://www.cbr.washington.edu/dart/overview)</span> on fish migration through the Columbia River Basin in 2023.  </span>
-<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a>The shark incident data is from <span class="co">[</span><span class="ot">Riley et al.</span><span class="co">](https://doi.org/10.1038/s41597-022-01453-9)</span>  </span>
-<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a>The tornado data is from the <span class="co">[</span><span class="ot">NOAA National Weather Service Storm Prediction Center</span><span class="co">](https://www.spc.noaa.gov/wcm/#data)</span>.</span>
-<span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Code</span></span>
-<span id="cb26-43"><a href="#cb26-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-44"><a href="#cb26-44" aria-hidden="true" tabindex="-1"></a><span class="fu">### Today's topic</span></span>
-<span id="cb26-45"><a href="#cb26-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-46"><a href="#cb26-46" aria-hidden="true" tabindex="-1"></a>We're going to be exploring different ways to customize plots in <span class="in">`ggplot2`</span> (remember that <span class="in">`ggplot2`</span> is a package within the <span class="in">`tidyverse`</span>, which you already have installed).  </span>
-<span id="cb26-47"><a href="#cb26-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-48"><a href="#cb26-48" aria-hidden="true" tabindex="-1"></a>Each group will be responsible for creating a figure manipulating your assigned plot component. You will spend some time exploring each part and creating a figure together. After you are done, you'll compile slides to teach the class  </span>
-<span id="cb26-49"><a href="#cb26-49" aria-hidden="true" tabindex="-1"></a>a) what your assigned plot component is (what it does) and  </span>
-<span id="cb26-50"><a href="#cb26-50" aria-hidden="true" tabindex="-1"></a>b) how to manipulate it (in code).  </span>
-<span id="cb26-51"><a href="#cb26-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-52"><a href="#cb26-52" aria-hidden="true" tabindex="-1"></a>**Your challenge is to make the ugliest plot you can!** Change the colors, line types, line widths, etc. - whatever your heart desires to make a fundamentally ugly plot.  </span>
-<span id="cb26-53"><a href="#cb26-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-54"><a href="#cb26-54" aria-hidden="true" tabindex="-1"></a><span class="fu">### Resources</span></span>
-<span id="cb26-55"><a href="#cb26-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-56"><a href="#cb26-56" aria-hidden="true" tabindex="-1"></a>First, look up the function. In the Console, type a question mark, then your function name. For example:</span>
-<span id="cb26-57"><a href="#cb26-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-58"><a href="#cb26-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r looking-up-function}</span></span>
-<span id="cb26-59"><a href="#cb26-59" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false # this makes sure that the code shows up in the rendered document but isn't actually run</span></span>
-<span id="cb26-60"><a href="#cb26-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-61"><a href="#cb26-61" aria-hidden="true" tabindex="-1"></a><span class="in"># copy paste this into the console</span></span>
-<span id="cb26-62"><a href="#cb26-62" aria-hidden="true" tabindex="-1"></a><span class="in">?theme</span></span>
-<span id="cb26-63"><a href="#cb26-63" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-64"><a href="#cb26-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-65"><a href="#cb26-65" aria-hidden="true" tabindex="-1"></a>You can do this with any function - whenever you want to know what it does, just look it up in the Console by hitting <span class="in">`?`</span> then the function name.  </span>
-<span id="cb26-66"><a href="#cb26-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-67"><a href="#cb26-67" aria-hidden="true" tabindex="-1"></a>Read about your function. Make sure you understand the arguments, and decide which ones are relevant to you.  </span>
-<span id="cb26-68"><a href="#cb26-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-69"><a href="#cb26-69" aria-hidden="true" tabindex="-1"></a>Second, see these resources for some explanation of themes and customization:  </span>
-<span id="cb26-70"><a href="#cb26-70" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">ggplot2tor</span><span class="co">](https://ggplot2tor.com/theme/)</span>  </span>
-<span id="cb26-71"><a href="#cb26-71" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Jumping Rivers</span><span class="co">](https://www.jumpingrivers.com/blog/intro-to-theme-ggplot2-r/)</span>  </span>
-<span id="cb26-72"><a href="#cb26-72" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">theme elements from `ggplot2` handbook</span><span class="co">](https://ggplot2-book.org/themes.html#sec-theme-elements)</span>  </span>
-<span id="cb26-73"><a href="#cb26-73" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">built in themes from `ggplot2` handbook</span><span class="co">](https://ggplot2-book.org/themes.html#sec-themes)</span>  </span>
-<span id="cb26-74"><a href="#cb26-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-75"><a href="#cb26-75" aria-hidden="true" tabindex="-1"></a><span class="fu">### Code</span></span>
-<span id="cb26-76"><a href="#cb26-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-77"><a href="#cb26-77" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 1. Set up</span></span>
-<span id="cb26-78"><a href="#cb26-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-79"><a href="#cb26-79" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Packages and data</span></span>
-<span id="cb26-80"><a href="#cb26-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-81"><a href="#cb26-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{r read-in-packages-and-data-background}</span></span>
-<span id="cb26-82"><a href="#cb26-82" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
-<span id="cb26-83"><a href="#cb26-83" aria-hidden="true" tabindex="-1"></a><span class="in">#| message: false</span></span>
-<span id="cb26-84"><a href="#cb26-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-85"><a href="#cb26-85" aria-hidden="true" tabindex="-1"></a><span class="in"># packages</span></span>
-<span id="cb26-86"><a href="#cb26-86" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb26-87"><a href="#cb26-87" aria-hidden="true" tabindex="-1"></a><span class="in">library(here)</span></span>
-<span id="cb26-88"><a href="#cb26-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-89"><a href="#cb26-89" aria-hidden="true" tabindex="-1"></a><span class="in"># data</span></span>
-<span id="cb26-90"><a href="#cb26-90" aria-hidden="true" tabindex="-1"></a><span class="in"># salmon data</span></span>
-<span id="cb26-91"><a href="#cb26-91" aria-hidden="true" tabindex="-1"></a><span class="in">salmon &lt;- read_csv(here("workshop", "data", "adultdaily_1745380588_196.csv"))</span></span>
-<span id="cb26-92"><a href="#cb26-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-93"><a href="#cb26-93" aria-hidden="true" tabindex="-1"></a><span class="in"># tornado data</span></span>
-<span id="cb26-94"><a href="#cb26-94" aria-hidden="true" tabindex="-1"></a><span class="in">tornados &lt;- read_csv(here("workshop", "data", "tornados.csv"))</span></span>
-<span id="cb26-95"><a href="#cb26-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-96"><a href="#cb26-96" aria-hidden="true" tabindex="-1"></a><span class="in"># shark data</span></span>
-<span id="cb26-97"><a href="#cb26-97" aria-hidden="true" tabindex="-1"></a><span class="in">sharks &lt;- read_csv(here("workshop", "data", "sharks.csv"))</span></span>
-<span id="cb26-98"><a href="#cb26-98" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-99"><a href="#cb26-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-100"><a href="#cb26-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-101"><a href="#cb26-101" aria-hidden="true" tabindex="-1"></a><span class="in">```{r read-in-packages-and-data-for-website}</span></span>
-<span id="cb26-102"><a href="#cb26-102" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
-<span id="cb26-103"><a href="#cb26-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-104"><a href="#cb26-104" aria-hidden="true" tabindex="-1"></a><span class="in"># packages</span></span>
-<span id="cb26-105"><a href="#cb26-105" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb26-106"><a href="#cb26-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-107"><a href="#cb26-107" aria-hidden="true" tabindex="-1"></a><span class="in"># data</span></span>
-<span id="cb26-108"><a href="#cb26-108" aria-hidden="true" tabindex="-1"></a><span class="in"># salmon data</span></span>
-<span id="cb26-109"><a href="#cb26-109" aria-hidden="true" tabindex="-1"></a><span class="in">salmon &lt;- read_csv("adultdaily_1745380588_196.csv")</span></span>
-<span id="cb26-110"><a href="#cb26-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-111"><a href="#cb26-111" aria-hidden="true" tabindex="-1"></a><span class="in"># tornado data</span></span>
-<span id="cb26-112"><a href="#cb26-112" aria-hidden="true" tabindex="-1"></a><span class="in">tornados &lt;- read_csv("tornados.csv")</span></span>
-<span id="cb26-113"><a href="#cb26-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-114"><a href="#cb26-114" aria-hidden="true" tabindex="-1"></a><span class="in"># shark data</span></span>
-<span id="cb26-115"><a href="#cb26-115" aria-hidden="true" tabindex="-1"></a><span class="in">sharks &lt;- read_csv("sharks.csv")</span></span>
-<span id="cb26-116"><a href="#cb26-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-117"><a href="#cb26-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-118"><a href="#cb26-118" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Cleaning </span></span>
-<span id="cb26-119"><a href="#cb26-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-120"><a href="#cb26-120" aria-hidden="true" tabindex="-1"></a><span class="fu">###### Salmon</span></span>
-<span id="cb26-121"><a href="#cb26-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-122"><a href="#cb26-122" aria-hidden="true" tabindex="-1"></a><span class="in">```{r salmon-data-and-wrangling}</span></span>
-<span id="cb26-123"><a href="#cb26-123" aria-hidden="true" tabindex="-1"></a><span class="in"># create new clean object from salmon</span></span>
-<span id="cb26-124"><a href="#cb26-124" aria-hidden="true" tabindex="-1"></a><span class="in">salmon_clean &lt;- salmon |&gt; </span></span>
-<span id="cb26-125"><a href="#cb26-125" aria-hidden="true" tabindex="-1"></a><span class="in">  # making sure the date is read as a date</span></span>
-<span id="cb26-126"><a href="#cb26-126" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(Date = mdy(Date)) |&gt; </span></span>
-<span id="cb26-127"><a href="#cb26-127" aria-hidden="true" tabindex="-1"></a><span class="in">  # selecting date and 3 salmonid species</span></span>
-<span id="cb26-128"><a href="#cb26-128" aria-hidden="true" tabindex="-1"></a><span class="in">  select(Date, Chin, Stlhd, Coho) |&gt; </span></span>
-<span id="cb26-129"><a href="#cb26-129" aria-hidden="true" tabindex="-1"></a><span class="in">  # making the data frame longer</span></span>
-<span id="cb26-130"><a href="#cb26-130" aria-hidden="true" tabindex="-1"></a><span class="in">  pivot_longer(cols = Chin:Coho,</span></span>
-<span id="cb26-131"><a href="#cb26-131" aria-hidden="true" tabindex="-1"></a><span class="in">               names_to = "species",</span></span>
-<span id="cb26-132"><a href="#cb26-132" aria-hidden="true" tabindex="-1"></a><span class="in">               values_to = "daily_count") |&gt; </span></span>
-<span id="cb26-133"><a href="#cb26-133" aria-hidden="true" tabindex="-1"></a><span class="in">  # mutating species column to display species names in full</span></span>
-<span id="cb26-134"><a href="#cb26-134" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(species = case_when(</span></span>
-<span id="cb26-135"><a href="#cb26-135" aria-hidden="true" tabindex="-1"></a><span class="in">    species == "Chin" ~ "Chinook",</span></span>
-<span id="cb26-136"><a href="#cb26-136" aria-hidden="true" tabindex="-1"></a><span class="in">    species == "Stlhd" ~ "Steelhead",</span></span>
-<span id="cb26-137"><a href="#cb26-137" aria-hidden="true" tabindex="-1"></a><span class="in">    TRUE ~ species</span></span>
-<span id="cb26-138"><a href="#cb26-138" aria-hidden="true" tabindex="-1"></a><span class="in">  )) |&gt; </span></span>
-<span id="cb26-139"><a href="#cb26-139" aria-hidden="true" tabindex="-1"></a><span class="in">  # filter to only include dates after December 31st 2023</span></span>
-<span id="cb26-140"><a href="#cb26-140" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(Date &gt; as_date("2023-12-31")) |&gt; </span></span>
-<span id="cb26-141"><a href="#cb26-141" aria-hidden="true" tabindex="-1"></a><span class="in">  # take out any missing values</span></span>
-<span id="cb26-142"><a href="#cb26-142" aria-hidden="true" tabindex="-1"></a><span class="in">  drop_na(daily_count)</span></span>
-<span id="cb26-143"><a href="#cb26-143" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-144"><a href="#cb26-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-145"><a href="#cb26-145" aria-hidden="true" tabindex="-1"></a><span class="fu">###### Tornados</span></span>
-<span id="cb26-146"><a href="#cb26-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-147"><a href="#cb26-147" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tornados-cleaning-and-wrangling}</span></span>
-<span id="cb26-148"><a href="#cb26-148" aria-hidden="true" tabindex="-1"></a><span class="in"># create new clean object from tornados</span></span>
-<span id="cb26-149"><a href="#cb26-149" aria-hidden="true" tabindex="-1"></a><span class="in">tornados_clean &lt;- tornados |&gt; </span></span>
-<span id="cb26-150"><a href="#cb26-150" aria-hidden="true" tabindex="-1"></a><span class="in">  # group by year</span></span>
-<span id="cb26-151"><a href="#cb26-151" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(yr) |&gt;</span></span>
-<span id="cb26-152"><a href="#cb26-152" aria-hidden="true" tabindex="-1"></a><span class="in">  # calculate total property loss in dollars, sum number of tornados, calculate total property loss in billions of dollars</span></span>
-<span id="cb26-153"><a href="#cb26-153" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(total_property_loss = sum(loss, na.rm = TRUE),</span></span>
-<span id="cb26-154"><a href="#cb26-154" aria-hidden="true" tabindex="-1"></a><span class="in">            number_tornados = length(yr),</span></span>
-<span id="cb26-155"><a href="#cb26-155" aria-hidden="true" tabindex="-1"></a><span class="in">            total_property_loss_bil = total_property_loss/1000000000) |&gt; </span></span>
-<span id="cb26-156"><a href="#cb26-156" aria-hidden="true" tabindex="-1"></a><span class="in">  # ungroup the data frame (useful if you're going to do any further summarizing steps)</span></span>
-<span id="cb26-157"><a href="#cb26-157" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup() </span></span>
-<span id="cb26-158"><a href="#cb26-158" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-159"><a href="#cb26-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-160"><a href="#cb26-160" aria-hidden="true" tabindex="-1"></a><span class="fu">###### Sharks</span></span>
-<span id="cb26-161"><a href="#cb26-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-162"><a href="#cb26-162" aria-hidden="true" tabindex="-1"></a><span class="in">```{r sharks-cleaning-and-wrangling}</span></span>
-<span id="cb26-163"><a href="#cb26-163" aria-hidden="true" tabindex="-1"></a><span class="in"># create new clean object from sharks</span></span>
-<span id="cb26-164"><a href="#cb26-164" aria-hidden="true" tabindex="-1"></a><span class="in">sharks_clean &lt;- sharks |&gt; </span></span>
-<span id="cb26-165"><a href="#cb26-165" aria-hidden="true" tabindex="-1"></a><span class="in">  # drop any observations where shark common name is missing</span></span>
-<span id="cb26-166"><a href="#cb26-166" aria-hidden="true" tabindex="-1"></a><span class="in">  drop_na(shark_common_name) |&gt; </span></span>
-<span id="cb26-167"><a href="#cb26-167" aria-hidden="true" tabindex="-1"></a><span class="in">  # group by shark species and state</span></span>
-<span id="cb26-168"><a href="#cb26-168" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(shark_common_name, state) |&gt; </span></span>
-<span id="cb26-169"><a href="#cb26-169" aria-hidden="true" tabindex="-1"></a><span class="in">  # count observations (easy way to get total number of observations from groups)</span></span>
-<span id="cb26-170"><a href="#cb26-170" aria-hidden="true" tabindex="-1"></a><span class="in">  count() |&gt; </span></span>
-<span id="cb26-171"><a href="#cb26-171" aria-hidden="true" tabindex="-1"></a><span class="in">  # ungroup the data frame (good to do if you're doing any cleaning steps after this)</span></span>
-<span id="cb26-172"><a href="#cb26-172" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup() |&gt; </span></span>
-<span id="cb26-173"><a href="#cb26-173" aria-hidden="true" tabindex="-1"></a><span class="in">  # filter to only include New South Wales, Queensland, and Western Australia</span></span>
-<span id="cb26-174"><a href="#cb26-174" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(state %in% c("NSW", "QLD", "WA")) |&gt; </span></span>
-<span id="cb26-175"><a href="#cb26-175" aria-hidden="true" tabindex="-1"></a><span class="in">  # mutate state column to show full names for each state</span></span>
-<span id="cb26-176"><a href="#cb26-176" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(state = case_when(</span></span>
-<span id="cb26-177"><a href="#cb26-177" aria-hidden="true" tabindex="-1"></a><span class="in">    state == "NSW" ~ "New South Wales",</span></span>
-<span id="cb26-178"><a href="#cb26-178" aria-hidden="true" tabindex="-1"></a><span class="in">    state == "QLD" ~ "Queensland",</span></span>
-<span id="cb26-179"><a href="#cb26-179" aria-hidden="true" tabindex="-1"></a><span class="in">    state == "WA" ~ "Western Australia"</span></span>
-<span id="cb26-180"><a href="#cb26-180" aria-hidden="true" tabindex="-1"></a><span class="in">  ))</span></span>
-<span id="cb26-181"><a href="#cb26-181" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-182"><a href="#cb26-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-183"><a href="#cb26-183" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 2. Basic visualization</span></span>
-<span id="cb26-184"><a href="#cb26-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-185"><a href="#cb26-185" aria-hidden="true" tabindex="-1"></a><span class="fu">##### a. Daily counts of salmon through Bonneville Dam in Columbia River Basin, Oregon in 2024</span></span>
-<span id="cb26-186"><a href="#cb26-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-187"><a href="#cb26-187" aria-hidden="true" tabindex="-1"></a><span class="in">```{r salmon-timeseries}</span></span>
-<span id="cb26-188"><a href="#cb26-188" aria-hidden="true" tabindex="-1"></a><span class="in">               # base layer: ggplot</span></span>
-<span id="cb26-189"><a href="#cb26-189" aria-hidden="true" tabindex="-1"></a><span class="in">salmon_plot &lt;- ggplot(data = salmon_clean,</span></span>
-<span id="cb26-190"><a href="#cb26-190" aria-hidden="true" tabindex="-1"></a><span class="in">                      # aesthetics: x-axis, y-axis, and color</span></span>
-<span id="cb26-191"><a href="#cb26-191" aria-hidden="true" tabindex="-1"></a><span class="in">                      aes(x = Date,</span></span>
-<span id="cb26-192"><a href="#cb26-192" aria-hidden="true" tabindex="-1"></a><span class="in">                          y = daily_count,</span></span>
-<span id="cb26-193"><a href="#cb26-193" aria-hidden="true" tabindex="-1"></a><span class="in">                          color = species)) +</span></span>
-<span id="cb26-194"><a href="#cb26-194" aria-hidden="true" tabindex="-1"></a><span class="in">  # first layer: points</span></span>
-<span id="cb26-195"><a href="#cb26-195" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point() +</span></span>
-<span id="cb26-196"><a href="#cb26-196" aria-hidden="true" tabindex="-1"></a><span class="in">  # second layer: line</span></span>
-<span id="cb26-197"><a href="#cb26-197" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line() +</span></span>
-<span id="cb26-198"><a href="#cb26-198" aria-hidden="true" tabindex="-1"></a><span class="in">  # labels</span></span>
-<span id="cb26-199"><a href="#cb26-199" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Date",</span></span>
-<span id="cb26-200"><a href="#cb26-200" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Daily fish count")</span></span>
-<span id="cb26-201"><a href="#cb26-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-202"><a href="#cb26-202" aria-hidden="true" tabindex="-1"></a><span class="in"># display the plot</span></span>
-<span id="cb26-203"><a href="#cb26-203" aria-hidden="true" tabindex="-1"></a><span class="in">salmon_plot</span></span>
-<span id="cb26-204"><a href="#cb26-204" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-205"><a href="#cb26-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-206"><a href="#cb26-206" aria-hidden="true" tabindex="-1"></a><span class="fu">##### b. Total property loss (in dollars) due to tornados in US from 1950-2022</span></span>
-<span id="cb26-207"><a href="#cb26-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-208"><a href="#cb26-208" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tornado-property-loss}</span></span>
-<span id="cb26-209"><a href="#cb26-209" aria-hidden="true" tabindex="-1"></a><span class="in">                              # base layer: ggplot</span></span>
-<span id="cb26-210"><a href="#cb26-210" aria-hidden="true" tabindex="-1"></a><span class="in">tornado_property_loss_plot &lt;- ggplot(data = tornados_clean,</span></span>
-<span id="cb26-211"><a href="#cb26-211" aria-hidden="true" tabindex="-1"></a><span class="in">                                     # aesthetics: x-axis, y-axis</span></span>
-<span id="cb26-212"><a href="#cb26-212" aria-hidden="true" tabindex="-1"></a><span class="in">                                     aes(x = yr,</span></span>
-<span id="cb26-213"><a href="#cb26-213" aria-hidden="true" tabindex="-1"></a><span class="in">                                         y = total_property_loss_bil)) +</span></span>
-<span id="cb26-214"><a href="#cb26-214" aria-hidden="true" tabindex="-1"></a><span class="in">  # first layer: points</span></span>
-<span id="cb26-215"><a href="#cb26-215" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point() +</span></span>
-<span id="cb26-216"><a href="#cb26-216" aria-hidden="true" tabindex="-1"></a><span class="in">  # second layer: line</span></span>
-<span id="cb26-217"><a href="#cb26-217" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line() +</span></span>
-<span id="cb26-218"><a href="#cb26-218" aria-hidden="true" tabindex="-1"></a><span class="in">  # labels</span></span>
-<span id="cb26-219"><a href="#cb26-219" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Year",</span></span>
-<span id="cb26-220"><a href="#cb26-220" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Total property loss (billions of dollars)")</span></span>
-<span id="cb26-221"><a href="#cb26-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-222"><a href="#cb26-222" aria-hidden="true" tabindex="-1"></a><span class="in"># display the plot</span></span>
-<span id="cb26-223"><a href="#cb26-223" aria-hidden="true" tabindex="-1"></a><span class="in">tornado_property_loss_plot</span></span>
-<span id="cb26-224"><a href="#cb26-224" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-225"><a href="#cb26-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-226"><a href="#cb26-226" aria-hidden="true" tabindex="-1"></a><span class="fu">##### c. Total annual tornados in US from 1950-2022</span></span>
-<span id="cb26-227"><a href="#cb26-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-228"><a href="#cb26-228" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tornado-count-plot}</span></span>
-<span id="cb26-229"><a href="#cb26-229" aria-hidden="true" tabindex="-1"></a><span class="in">                      # base layer: ggplot</span></span>
-<span id="cb26-230"><a href="#cb26-230" aria-hidden="true" tabindex="-1"></a><span class="in">tornado_count_plot &lt;- ggplot(data = tornados_clean,</span></span>
-<span id="cb26-231"><a href="#cb26-231" aria-hidden="true" tabindex="-1"></a><span class="in">                             # aesthetics: x-axis, y-axis</span></span>
-<span id="cb26-232"><a href="#cb26-232" aria-hidden="true" tabindex="-1"></a><span class="in">                             aes(x = yr,</span></span>
-<span id="cb26-233"><a href="#cb26-233" aria-hidden="true" tabindex="-1"></a><span class="in">                                 y = number_tornados)) +</span></span>
-<span id="cb26-234"><a href="#cb26-234" aria-hidden="true" tabindex="-1"></a><span class="in">  # first layer: points</span></span>
-<span id="cb26-235"><a href="#cb26-235" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point() +</span></span>
-<span id="cb26-236"><a href="#cb26-236" aria-hidden="true" tabindex="-1"></a><span class="in">  # second layer: line</span></span>
-<span id="cb26-237"><a href="#cb26-237" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line() +</span></span>
-<span id="cb26-238"><a href="#cb26-238" aria-hidden="true" tabindex="-1"></a><span class="in">  # labels</span></span>
-<span id="cb26-239"><a href="#cb26-239" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Year",</span></span>
-<span id="cb26-240"><a href="#cb26-240" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Total annual tornados")</span></span>
-<span id="cb26-241"><a href="#cb26-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-242"><a href="#cb26-242" aria-hidden="true" tabindex="-1"></a><span class="in"># display the plot</span></span>
-<span id="cb26-243"><a href="#cb26-243" aria-hidden="true" tabindex="-1"></a><span class="in">tornado_count_plot</span></span>
-<span id="cb26-244"><a href="#cb26-244" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-245"><a href="#cb26-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-246"><a href="#cb26-246" aria-hidden="true" tabindex="-1"></a><span class="fu">##### d. Total number of shark incidents in New South Wales and Queensland from 1791-2022</span></span>
-<span id="cb26-247"><a href="#cb26-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-248"><a href="#cb26-248" aria-hidden="true" tabindex="-1"></a><span class="in">```{r shark-incident-plot}</span></span>
-<span id="cb26-249"><a href="#cb26-249" aria-hidden="true" tabindex="-1"></a><span class="in">              # base layer: ggplot</span></span>
-<span id="cb26-250"><a href="#cb26-250" aria-hidden="true" tabindex="-1"></a><span class="in">shark_plot &lt;- ggplot(data = sharks_clean,</span></span>
-<span id="cb26-251"><a href="#cb26-251" aria-hidden="true" tabindex="-1"></a><span class="in">                     # aesthetics: x-axis, y-axis</span></span>
-<span id="cb26-252"><a href="#cb26-252" aria-hidden="true" tabindex="-1"></a><span class="in">                     aes(x = n,</span></span>
-<span id="cb26-253"><a href="#cb26-253" aria-hidden="true" tabindex="-1"></a><span class="in">                         y = shark_common_name)) +</span></span>
-<span id="cb26-254"><a href="#cb26-254" aria-hidden="true" tabindex="-1"></a><span class="in">  # first layer: columns to represent counts</span></span>
-<span id="cb26-255"><a href="#cb26-255" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_col() +</span></span>
-<span id="cb26-256"><a href="#cb26-256" aria-hidden="true" tabindex="-1"></a><span class="in">  # faceting by state</span></span>
-<span id="cb26-257"><a href="#cb26-257" aria-hidden="true" tabindex="-1"></a><span class="in">  facet_wrap(~ state) +</span></span>
-<span id="cb26-258"><a href="#cb26-258" aria-hidden="true" tabindex="-1"></a><span class="in">  # labels</span></span>
-<span id="cb26-259"><a href="#cb26-259" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Year",</span></span>
-<span id="cb26-260"><a href="#cb26-260" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Total number of shark incidents")</span></span>
-<span id="cb26-261"><a href="#cb26-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-262"><a href="#cb26-262" aria-hidden="true" tabindex="-1"></a><span class="in"># display the plot</span></span>
-<span id="cb26-263"><a href="#cb26-263" aria-hidden="true" tabindex="-1"></a><span class="in">shark_plot</span></span>
-<span id="cb26-264"><a href="#cb26-264" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-265"><a href="#cb26-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-266"><a href="#cb26-266" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 3. Plot components</span></span>
-<span id="cb26-267"><a href="#cb26-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-268"><a href="#cb26-268" aria-hidden="true" tabindex="-1"></a>As everyone is going through their plot components, take notes in each section.</span>
-<span id="cb26-269"><a href="#cb26-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-270"><a href="#cb26-270" aria-hidden="true" tabindex="-1"></a><span class="fu">###### a. `strip` in `theme()`</span></span>
-<span id="cb26-271"><a href="#cb26-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-272"><a href="#cb26-272" aria-hidden="true" tabindex="-1"></a>Demonstrate how to:  </span>
-<span id="cb26-273"><a href="#cb26-273" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the background  </span>
-<span id="cb26-274"><a href="#cb26-274" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the placement  </span>
-<span id="cb26-275"><a href="#cb26-275" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the text size and font  </span>
-<span id="cb26-276"><a href="#cb26-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-277"><a href="#cb26-277" aria-hidden="true" tabindex="-1"></a>**Note:** you may want to use the <span class="in">`shark_plot`</span> for this <span class="in">`theme`</span> element.</span>
-<span id="cb26-278"><a href="#cb26-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-279"><a href="#cb26-279" aria-hidden="true" tabindex="-1"></a><span class="in">```{r strip-elements-individual}</span></span>
-<span id="cb26-280"><a href="#cb26-280" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your individual plot</span></span>
-<span id="cb26-281"><a href="#cb26-281" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-282"><a href="#cb26-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-283"><a href="#cb26-283" aria-hidden="true" tabindex="-1"></a>Code for the plot your group made:</span>
-<span id="cb26-284"><a href="#cb26-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-285"><a href="#cb26-285" aria-hidden="true" tabindex="-1"></a><span class="in">```{r strip-elements-group}</span></span>
-<span id="cb26-286"><a href="#cb26-286" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your group plot</span></span>
-<span id="cb26-287"><a href="#cb26-287" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-288"><a href="#cb26-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-289"><a href="#cb26-289" aria-hidden="true" tabindex="-1"></a><span class="fu">###### b. `plot` in `theme()`</span></span>
-<span id="cb26-290"><a href="#cb26-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-291"><a href="#cb26-291" aria-hidden="true" tabindex="-1"></a>Demonstrate how to:  </span>
-<span id="cb26-292"><a href="#cb26-292" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the plot margin  </span>
-<span id="cb26-293"><a href="#cb26-293" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the plot background  </span>
-<span id="cb26-294"><a href="#cb26-294" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the plot title, subtitle, and caption text position and color  </span>
-<span id="cb26-295"><a href="#cb26-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-296"><a href="#cb26-296" aria-hidden="true" tabindex="-1"></a>**Note:** you will have to add a title, subtitle, and caption to the plot you choose to manipulate.  </span>
-<span id="cb26-297"><a href="#cb26-297" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-298"><a href="#cb26-298" aria-hidden="true" tabindex="-1"></a>Code for your own independent exploration:</span>
-<span id="cb26-299"><a href="#cb26-299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-300"><a href="#cb26-300" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plot-elements-individual}</span></span>
-<span id="cb26-301"><a href="#cb26-301" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your individual plot</span></span>
-<span id="cb26-302"><a href="#cb26-302" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-303"><a href="#cb26-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-304"><a href="#cb26-304" aria-hidden="true" tabindex="-1"></a>Code for the plot your group made:</span>
-<span id="cb26-305"><a href="#cb26-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-306"><a href="#cb26-306" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plot-elements-group}</span></span>
-<span id="cb26-307"><a href="#cb26-307" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your group plot</span></span>
-<span id="cb26-308"><a href="#cb26-308" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-309"><a href="#cb26-309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-310"><a href="#cb26-310" aria-hidden="true" tabindex="-1"></a><span class="fu">###### c. `panel` in `theme()`</span></span>
-<span id="cb26-311"><a href="#cb26-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-312"><a href="#cb26-312" aria-hidden="true" tabindex="-1"></a>Demonstrate how to:  </span>
-<span id="cb26-313"><a href="#cb26-313" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the panel border  </span>
-<span id="cb26-314"><a href="#cb26-314" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the panel major grid lines (vertically and horizontally, in separate arguments)  </span>
-<span id="cb26-315"><a href="#cb26-315" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the panel minor grid lines (vertically and horizontally, in separate arguments)  </span>
-<span id="cb26-316"><a href="#cb26-316" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the panel background  </span>
-<span id="cb26-317"><a href="#cb26-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-318"><a href="#cb26-318" aria-hidden="true" tabindex="-1"></a>Code for your own independent exploration:</span>
-<span id="cb26-319"><a href="#cb26-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-320"><a href="#cb26-320" aria-hidden="true" tabindex="-1"></a><span class="in">```{r panel-elements-individual}</span></span>
-<span id="cb26-321"><a href="#cb26-321" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your individual plot</span></span>
-<span id="cb26-322"><a href="#cb26-322" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-323"><a href="#cb26-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-324"><a href="#cb26-324" aria-hidden="true" tabindex="-1"></a>Code for the plot your group made:</span>
-<span id="cb26-325"><a href="#cb26-325" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-326"><a href="#cb26-326" aria-hidden="true" tabindex="-1"></a><span class="in">```{r panel-elements-group}</span></span>
-<span id="cb26-327"><a href="#cb26-327" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your group plot</span></span>
-<span id="cb26-328"><a href="#cb26-328" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-329"><a href="#cb26-329" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-330"><a href="#cb26-330" aria-hidden="true" tabindex="-1"></a><span class="fu">###### d. `legend` in `theme()`</span></span>
-<span id="cb26-331"><a href="#cb26-331" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-332"><a href="#cb26-332" aria-hidden="true" tabindex="-1"></a>Demonstrate how to:  </span>
-<span id="cb26-333"><a href="#cb26-333" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the legend frame  </span>
-<span id="cb26-334"><a href="#cb26-334" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the legend key size  </span>
-<span id="cb26-335"><a href="#cb26-335" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the legend text size  </span>
-<span id="cb26-336"><a href="#cb26-336" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the legend position  </span>
-<span id="cb26-337"><a href="#cb26-337" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the legend row numbers  </span>
-<span id="cb26-338"><a href="#cb26-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-339"><a href="#cb26-339" aria-hidden="true" tabindex="-1"></a>**Note:** you may want to use the <span class="in">`salmon_plot`</span> for this <span class="in">`theme`</span> element.  </span>
-<span id="cb26-340"><a href="#cb26-340" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-341"><a href="#cb26-341" aria-hidden="true" tabindex="-1"></a>Code for your own independent exploration:</span>
-<span id="cb26-342"><a href="#cb26-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-343"><a href="#cb26-343" aria-hidden="true" tabindex="-1"></a><span class="in">```{r legend-elements-individual}</span></span>
-<span id="cb26-344"><a href="#cb26-344" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your individual plot</span></span>
-<span id="cb26-345"><a href="#cb26-345" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-346"><a href="#cb26-346" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-347"><a href="#cb26-347" aria-hidden="true" tabindex="-1"></a>Code for the plot your group made:</span>
-<span id="cb26-348"><a href="#cb26-348" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-349"><a href="#cb26-349" aria-hidden="true" tabindex="-1"></a><span class="in">```{r legend-elements-group}</span></span>
-<span id="cb26-350"><a href="#cb26-350" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your group plot</span></span>
-<span id="cb26-351"><a href="#cb26-351" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-352"><a href="#cb26-352" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-353"><a href="#cb26-353" aria-hidden="true" tabindex="-1"></a><span class="fu">###### e. `axis` in `theme()`</span></span>
-<span id="cb26-354"><a href="#cb26-354" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-355"><a href="#cb26-355" aria-hidden="true" tabindex="-1"></a>Demonstrate how to:  </span>
-<span id="cb26-356"><a href="#cb26-356" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the axis text color and font</span>
-<span id="cb26-357"><a href="#cb26-357" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the axis tick length (major and minor ticks)  </span>
-<span id="cb26-358"><a href="#cb26-358" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the axis line colors and line types  </span>
-<span id="cb26-359"><a href="#cb26-359" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-360"><a href="#cb26-360" aria-hidden="true" tabindex="-1"></a>Code for your own independent exploration:</span>
-<span id="cb26-361"><a href="#cb26-361" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-362"><a href="#cb26-362" aria-hidden="true" tabindex="-1"></a><span class="in">```{r axis-elements-individual}</span></span>
-<span id="cb26-363"><a href="#cb26-363" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your individual plot</span></span>
-<span id="cb26-364"><a href="#cb26-364" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-365"><a href="#cb26-365" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-366"><a href="#cb26-366" aria-hidden="true" tabindex="-1"></a>Code for the plot your group made:</span>
-<span id="cb26-367"><a href="#cb26-367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-368"><a href="#cb26-368" aria-hidden="true" tabindex="-1"></a><span class="in">```{r axis-elements-group}</span></span>
-<span id="cb26-369"><a href="#cb26-369" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your group plot</span></span>
-<span id="cb26-370"><a href="#cb26-370" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-371"><a href="#cb26-371" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-372"><a href="#cb26-372" aria-hidden="true" tabindex="-1"></a><span class="fu">###### f. `scale_color` or `scale_fill` functions</span></span>
-<span id="cb26-373"><a href="#cb26-373" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-374"><a href="#cb26-374" aria-hidden="true" tabindex="-1"></a>**Note: use the shark plot for scale_fill and any other plot for scale_color**</span>
-<span id="cb26-375"><a href="#cb26-375" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-376"><a href="#cb26-376" aria-hidden="true" tabindex="-1"></a>Demonstrate how to:  </span>
-<span id="cb26-377"><a href="#cb26-377" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>use a color palette package  </span>
-<span id="cb26-378"><a href="#cb26-378" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>apply it to a color scale  </span>
-<span id="cb26-379"><a href="#cb26-379" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-380"><a href="#cb26-380" aria-hidden="true" tabindex="-1"></a>Code for your own independent exploration:</span>
-<span id="cb26-381"><a href="#cb26-381" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-382"><a href="#cb26-382" aria-hidden="true" tabindex="-1"></a><span class="in">```{r color-or-fill-individual}</span></span>
-<span id="cb26-383"><a href="#cb26-383" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your individual plot</span></span>
-<span id="cb26-384"><a href="#cb26-384" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-385"><a href="#cb26-385" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-386"><a href="#cb26-386" aria-hidden="true" tabindex="-1"></a>Code for the plot your group made:</span>
-<span id="cb26-387"><a href="#cb26-387" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-388"><a href="#cb26-388" aria-hidden="true" tabindex="-1"></a><span class="in">```{r color-or-fill-group}</span></span>
-<span id="cb26-389"><a href="#cb26-389" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your group plot</span></span>
-<span id="cb26-390"><a href="#cb26-390" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-391"><a href="#cb26-391" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-392"><a href="#cb26-392" aria-hidden="true" tabindex="-1"></a><span class="fu">###### g. built in themes (`theme_`) with your own customization using `theme()`</span></span>
-<span id="cb26-393"><a href="#cb26-393" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-394"><a href="#cb26-394" aria-hidden="true" tabindex="-1"></a>Demonstrate how to:  </span>
-<span id="cb26-395"><a href="#cb26-395" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-396"><a href="#cb26-396" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>use a built in theme and  </span>
-<span id="cb26-397"><a href="#cb26-397" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change additional components using the <span class="in">`theme()`</span> elements of your choice</span>
-<span id="cb26-398"><a href="#cb26-398" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-399"><a href="#cb26-399" aria-hidden="true" tabindex="-1"></a>Code for your own independent exploration:</span>
-<span id="cb26-400"><a href="#cb26-400" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-401"><a href="#cb26-401" aria-hidden="true" tabindex="-1"></a><span class="in">```{r theme-customization-individual}</span></span>
-<span id="cb26-402"><a href="#cb26-402" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your individual plot</span></span>
-<span id="cb26-403"><a href="#cb26-403" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-404"><a href="#cb26-404" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-405"><a href="#cb26-405" aria-hidden="true" tabindex="-1"></a>Code for the plot your group made:</span>
-<span id="cb26-406"><a href="#cb26-406" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-407"><a href="#cb26-407" aria-hidden="true" tabindex="-1"></a><span class="in">```{r theme-customization-group}</span></span>
-<span id="cb26-408"><a href="#cb26-408" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your group plot</span></span>
-<span id="cb26-409"><a href="#cb26-409" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-410"><a href="#cb26-410" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-411"><a href="#cb26-411" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Extra stuff</span></span>
-<span id="cb26-412"><a href="#cb26-412" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-413"><a href="#cb26-413" aria-hidden="true" tabindex="-1"></a><span class="fu">### Thursday 4 PM plot</span></span>
-<span id="cb26-414"><a href="#cb26-414" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-415"><a href="#cb26-415" aria-hidden="true" tabindex="-1"></a><span class="in">```{r thursday-plot}</span></span>
-<span id="cb26-416"><a href="#cb26-416" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 12</span></span>
-<span id="cb26-417"><a href="#cb26-417" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 7</span></span>
-<span id="cb26-418"><a href="#cb26-418" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
-<span id="cb26-419"><a href="#cb26-419" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-420"><a href="#cb26-420" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data = sharks_clean,</span></span>
-<span id="cb26-421"><a href="#cb26-421" aria-hidden="true" tabindex="-1"></a><span class="in">                     # aesthetics: x-axis, y-axis</span></span>
-<span id="cb26-422"><a href="#cb26-422" aria-hidden="true" tabindex="-1"></a><span class="in">                     aes(x = n,</span></span>
-<span id="cb26-423"><a href="#cb26-423" aria-hidden="true" tabindex="-1"></a><span class="in">                         y = shark_common_name,</span></span>
-<span id="cb26-424"><a href="#cb26-424" aria-hidden="true" tabindex="-1"></a><span class="in">                         # fill columns by shark common name</span></span>
-<span id="cb26-425"><a href="#cb26-425" aria-hidden="true" tabindex="-1"></a><span class="in">                         fill = shark_common_name)) +</span></span>
-<span id="cb26-426"><a href="#cb26-426" aria-hidden="true" tabindex="-1"></a><span class="in">  # first layer: columns to represent counts</span></span>
-<span id="cb26-427"><a href="#cb26-427" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_col() +</span></span>
-<span id="cb26-428"><a href="#cb26-428" aria-hidden="true" tabindex="-1"></a><span class="in">  # faceting by state, putting the strip on the bottom of the plot</span></span>
-<span id="cb26-429"><a href="#cb26-429" aria-hidden="true" tabindex="-1"></a><span class="in">  facet_wrap(~ state,</span></span>
-<span id="cb26-430"><a href="#cb26-430" aria-hidden="true" tabindex="-1"></a><span class="in">             strip.position = "bottom") +</span></span>
-<span id="cb26-431"><a href="#cb26-431" aria-hidden="true" tabindex="-1"></a><span class="in">  # labels</span></span>
-<span id="cb26-432"><a href="#cb26-432" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Total number of shark incidents",</span></span>
-<span id="cb26-433"><a href="#cb26-433" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Species") +</span></span>
-<span id="cb26-434"><a href="#cb26-434" aria-hidden="true" tabindex="-1"></a><span class="in">  # manually manipulate fill colors</span></span>
-<span id="cb26-435"><a href="#cb26-435" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_manual(values = c("bull shark" = "pink",</span></span>
-<span id="cb26-436"><a href="#cb26-436" aria-hidden="true" tabindex="-1"></a><span class="in">                               "whaler shark" = "chartreuse")) +</span></span>
-<span id="cb26-437"><a href="#cb26-437" aria-hidden="true" tabindex="-1"></a><span class="in">  # built in theme</span></span>
-<span id="cb26-438"><a href="#cb26-438" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_dark() +</span></span>
-<span id="cb26-439"><a href="#cb26-439" aria-hidden="true" tabindex="-1"></a><span class="in">  # theme elements</span></span>
-<span id="cb26-440"><a href="#cb26-440" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(</span></span>
-<span id="cb26-441"><a href="#cb26-441" aria-hidden="true" tabindex="-1"></a><span class="in">    # strip elements</span></span>
-<span id="cb26-442"><a href="#cb26-442" aria-hidden="true" tabindex="-1"></a><span class="in">    strip.placement = "outside",</span></span>
-<span id="cb26-443"><a href="#cb26-443" aria-hidden="true" tabindex="-1"></a><span class="in">    strip.background = element_rect(color = "red", linetype = 4, linewidth = 7),</span></span>
-<span id="cb26-444"><a href="#cb26-444" aria-hidden="true" tabindex="-1"></a><span class="in">    strip.text = element_text(color = "hotpink"),</span></span>
-<span id="cb26-445"><a href="#cb26-445" aria-hidden="true" tabindex="-1"></a><span class="in">    strip.text.x.top = element_text(size = 20, face = "italic"),</span></span>
-<span id="cb26-446"><a href="#cb26-446" aria-hidden="true" tabindex="-1"></a><span class="in">    # plot elements</span></span>
-<span id="cb26-447"><a href="#cb26-447" aria-hidden="true" tabindex="-1"></a><span class="in">    plot.background = element_rect(fill = "turquoise", color = "#EC4899", linewidth = 4, linetype = "dashed"),</span></span>
-<span id="cb26-448"><a href="#cb26-448" aria-hidden="true" tabindex="-1"></a><span class="in">    # panel elements</span></span>
-<span id="cb26-449"><a href="#cb26-449" aria-hidden="true" tabindex="-1"></a><span class="in">    panel.grid.major.x = element_line(color = "hotpink", linewidth = 3),</span></span>
-<span id="cb26-450"><a href="#cb26-450" aria-hidden="true" tabindex="-1"></a><span class="in">    panel.grid.major.y = element_line(color = "dodgerblue", linewidth = 1),</span></span>
-<span id="cb26-451"><a href="#cb26-451" aria-hidden="true" tabindex="-1"></a><span class="in">    panel.background = element_rect(fill = "lavender"),</span></span>
-<span id="cb26-452"><a href="#cb26-452" aria-hidden="true" tabindex="-1"></a><span class="in">    # legend elements</span></span>
-<span id="cb26-453"><a href="#cb26-453" aria-hidden="true" tabindex="-1"></a><span class="in">    legend.background = element_rect(fill = "chartreuse"),</span></span>
-<span id="cb26-454"><a href="#cb26-454" aria-hidden="true" tabindex="-1"></a><span class="in">    legend.key = element_rect(color = "orange"),</span></span>
-<span id="cb26-455"><a href="#cb26-455" aria-hidden="true" tabindex="-1"></a><span class="in">    legend.text = element_text(size = 30),</span></span>
-<span id="cb26-456"><a href="#cb26-456" aria-hidden="true" tabindex="-1"></a><span class="in">    # axis elements</span></span>
-<span id="cb26-457"><a href="#cb26-457" aria-hidden="true" tabindex="-1"></a><span class="in">    axis.line.x = element_line(color = "yellowgreen", linewidth = 4),</span></span>
-<span id="cb26-458"><a href="#cb26-458" aria-hidden="true" tabindex="-1"></a><span class="in">    axis.line.y = element_line(color = "deeppink1"),</span></span>
-<span id="cb26-459"><a href="#cb26-459" aria-hidden="true" tabindex="-1"></a><span class="in">    axis.text.x.bottom = element_text(color = "skyblue"),</span></span>
-<span id="cb26-460"><a href="#cb26-460" aria-hidden="true" tabindex="-1"></a><span class="in">    axis.text.y.left = element_text(color = "chocolate")</span></span>
-<span id="cb26-461"><a href="#cb26-461" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb26-462"><a href="#cb26-462" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb26-463"><a href="#cb26-463" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-464"><a href="#cb26-464" aria-hidden="true" tabindex="-1"></a><span class="fu">### Thursday 5 PM plot</span></span>
-<span id="cb26-465"><a href="#cb26-465" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-468"><a href="#cb26-468" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb26-469"><a href="#cb26-469" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
-<span id="cb26-470"><a href="#cb26-470" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
-<span id="cb26-471"><a href="#cb26-471" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb26-472"><a href="#cb26-472" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-473"><a href="#cb26-473" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> salmon_clean,</span>
-<span id="cb26-474"><a href="#cb26-474" aria-hidden="true" tabindex="-1"></a>                      <span class="co"># aesthetics: x-axis, y-axis, and color</span></span>
-<span id="cb26-475"><a href="#cb26-475" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">aes</span>(<span class="at">x =</span> Date,</span>
-<span id="cb26-476"><a href="#cb26-476" aria-hidden="true" tabindex="-1"></a>                          <span class="at">y =</span> daily_count,</span>
-<span id="cb26-477"><a href="#cb26-477" aria-hidden="true" tabindex="-1"></a>                          <span class="at">color =</span> species)) <span class="sc">+</span></span>
-<span id="cb26-478"><a href="#cb26-478" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first layer: points</span></span>
-<span id="cb26-479"><a href="#cb26-479" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb26-480"><a href="#cb26-480" aria-hidden="true" tabindex="-1"></a>  <span class="co"># second layer: line</span></span>
-<span id="cb26-481"><a href="#cb26-481" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>, </span>
-<span id="cb26-482"><a href="#cb26-482" aria-hidden="true" tabindex="-1"></a>            <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb26-483"><a href="#cb26-483" aria-hidden="true" tabindex="-1"></a>  <span class="co"># labels</span></span>
-<span id="cb26-484"><a href="#cb26-484" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>,</span>
-<span id="cb26-485"><a href="#cb26-485" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Daily fish count"</span>,</span>
-<span id="cb26-486"><a href="#cb26-486" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Daily fish count per day"</span>,</span>
-<span id="cb26-487"><a href="#cb26-487" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"group 2"</span>,</span>
-<span id="cb26-488"><a href="#cb26-488" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"thursday 5 pm"</span>) <span class="sc">+</span></span>
-<span id="cb26-489"><a href="#cb26-489" aria-hidden="true" tabindex="-1"></a>  <span class="co"># custom color scale</span></span>
-<span id="cb26-490"><a href="#cb26-490" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Chinook"</span> <span class="ot">=</span> <span class="st">"hotpink"</span>,</span>
-<span id="cb26-491"><a href="#cb26-491" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Coho"</span> <span class="ot">=</span> <span class="st">"chartreuse"</span>,</span>
-<span id="cb26-492"><a href="#cb26-492" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Sockeye"</span> <span class="ot">=</span> <span class="st">"pink"</span>)) <span class="sc">+</span></span>
-<span id="cb26-493"><a href="#cb26-493" aria-hidden="true" tabindex="-1"></a>  <span class="co"># adding this facet </span></span>
-<span id="cb26-494"><a href="#cb26-494" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species) <span class="sc">+</span></span>
-<span id="cb26-495"><a href="#cb26-495" aria-hidden="true" tabindex="-1"></a>  <span class="co"># built in theme</span></span>
-<span id="cb26-496"><a href="#cb26-496" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dark</span>() <span class="sc">+</span></span>
-<span id="cb26-497"><a href="#cb26-497" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb26-498"><a href="#cb26-498" aria-hidden="true" tabindex="-1"></a>    <span class="co"># strip elements</span></span>
-<span id="cb26-499"><a href="#cb26-499" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Times New Roman"</span>),</span>
-<span id="cb26-500"><a href="#cb26-500" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"red"</span>),</span>
-<span id="cb26-501"><a href="#cb26-501" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot elements</span></span>
-<span id="cb26-502"><a href="#cb26-502" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">30</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"orange"</span>),</span>
-<span id="cb26-503"><a href="#cb26-503" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"yellow"</span>),</span>
-<span id="cb26-504"><a href="#cb26-504" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">100</span>, <span class="at">r =</span> <span class="fl">0.6</span>, <span class="at">b =</span> <span class="dv">20</span>, <span class="at">l =</span> <span class="fl">0.9</span>),</span>
-<span id="cb26-505"><a href="#cb26-505" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"lightgreen"</span>),</span>
-<span id="cb26-506"><a href="#cb26-506" aria-hidden="true" tabindex="-1"></a>    <span class="co"># panel elements</span></span>
-<span id="cb26-507"><a href="#cb26-507" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>),</span>
-<span id="cb26-508"><a href="#cb26-508" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"darkgreen"</span>, <span class="at">linewidth =</span> <span class="dv">5</span>),</span>
-<span id="cb26-509"><a href="#cb26-509" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"black"</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
-<span id="cb26-510"><a href="#cb26-510" aria-hidden="true" tabindex="-1"></a>    <span class="co"># legend elements</span></span>
-<span id="cb26-511"><a href="#cb26-511" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.direction =</span> <span class="st">"horizontal"</span>,</span>
-<span id="cb26-512"><a href="#cb26-512" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="dv">3</span>, <span class="st">"line"</span>),</span>
-<span id="cb26-513"><a href="#cb26-513" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axis elements</span></span>
-<span id="cb26-514"><a href="#cb26-514" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y.left =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>, <span class="at">color =</span> <span class="st">"deeppink"</span>)</span>
-<span id="cb26-515"><a href="#cb26-515" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb26-516"><a href="#cb26-516" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<div class="sourceCode" id="cb28" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Coding workshop: Week 4"</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "ggplot customization"</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [tidyverse, read_csv, ggplot, theme, facet_wrap, geom_point, geom_line, group_by, summarize, pipe operators, '|&gt;', filter, mutate]</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 8</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Workshop dates: April 24 (Thursday), April 25 (Friday)</span><span class="co">]</span>{style="color: #79ACBD; font-size: 24px;"}</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Summary</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="fu">### Packages</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`tidyverse`</span>  </span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="fu">### Operations</span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Review</span></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>read in data using <span class="in">`read_csv()`</span>  </span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>visualize data using <span class="in">`ggplot()`</span>  </span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>modify theme elements using <span class="in">`theme()`</span>  </span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>use built-in themes using <span class="in">`theme_()`</span>  </span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>modify colors using <span class="in">`scale_color_()`</span> and <span class="in">`scale_fill_()`</span> functions  </span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>create multi-panel plots using <span class="in">`facet_wrap()`</span>  </span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>make line plots using <span class="in">`geom_point()`</span> and <span class="in">`geom_line()`</span>  </span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>group data using <span class="in">`group_by()`</span>  </span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>summarize data using <span class="in">`summarize()`</span>  </span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>chain functions together using <span class="in">` |&gt; `</span>  </span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>filtering observations using <span class="in">`filter()`</span>  </span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>manipulate columns using <span class="in">`mutate()`</span> and <span class="in">`case_when()`</span>  </span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data sources</span></span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a>The fish migration data is from the <span class="co">[</span><span class="ot">Columbia River DART (Data Access in Real Time)</span><span class="co">](https://www.cbr.washington.edu/dart/overview)</span> on fish migration through the Columbia River Basin in 2023.  </span>
+<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a>The shark incident data is from <span class="co">[</span><span class="ot">Riley et al.</span><span class="co">](https://doi.org/10.1038/s41597-022-01453-9)</span>  </span>
+<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a>The tornado data is from the <span class="co">[</span><span class="ot">NOAA National Weather Service Storm Prediction Center</span><span class="co">](https://www.spc.noaa.gov/wcm/#data)</span>.</span>
+<span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Code</span></span>
+<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a><span class="fu">### Today's topic</span></span>
+<span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-46"><a href="#cb28-46" aria-hidden="true" tabindex="-1"></a>We're going to be exploring different ways to customize plots in <span class="in">`ggplot2`</span> (remember that <span class="in">`ggplot2`</span> is a package within the <span class="in">`tidyverse`</span>, which you already have installed).  </span>
+<span id="cb28-47"><a href="#cb28-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-48"><a href="#cb28-48" aria-hidden="true" tabindex="-1"></a>Each group will be responsible for creating a figure manipulating your assigned plot component. You will spend some time exploring each part and creating a figure together. After you are done, you'll compile slides to teach the class  </span>
+<span id="cb28-49"><a href="#cb28-49" aria-hidden="true" tabindex="-1"></a>a) what your assigned plot component is (what it does) and  </span>
+<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a>b) how to manipulate it (in code).  </span>
+<span id="cb28-51"><a href="#cb28-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-52"><a href="#cb28-52" aria-hidden="true" tabindex="-1"></a>**Your challenge is to make the ugliest plot you can!** Change the colors, line types, line widths, etc. - whatever your heart desires to make a fundamentally ugly plot.  </span>
+<span id="cb28-53"><a href="#cb28-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-54"><a href="#cb28-54" aria-hidden="true" tabindex="-1"></a><span class="fu">### Resources</span></span>
+<span id="cb28-55"><a href="#cb28-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-56"><a href="#cb28-56" aria-hidden="true" tabindex="-1"></a>First, look up the function. In the Console, type a question mark, then your function name. For example:</span>
+<span id="cb28-57"><a href="#cb28-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-58"><a href="#cb28-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r looking-up-function}</span></span>
+<span id="cb28-59"><a href="#cb28-59" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false # this makes sure that the code shows up in the rendered document but isn't actually run</span></span>
+<span id="cb28-60"><a href="#cb28-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-61"><a href="#cb28-61" aria-hidden="true" tabindex="-1"></a><span class="in"># copy paste this into the console</span></span>
+<span id="cb28-62"><a href="#cb28-62" aria-hidden="true" tabindex="-1"></a><span class="in">?theme</span></span>
+<span id="cb28-63"><a href="#cb28-63" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-64"><a href="#cb28-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-65"><a href="#cb28-65" aria-hidden="true" tabindex="-1"></a>You can do this with any function - whenever you want to know what it does, just look it up in the Console by hitting <span class="in">`?`</span> then the function name.  </span>
+<span id="cb28-66"><a href="#cb28-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-67"><a href="#cb28-67" aria-hidden="true" tabindex="-1"></a>Read about your function. Make sure you understand the arguments, and decide which ones are relevant to you.  </span>
+<span id="cb28-68"><a href="#cb28-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-69"><a href="#cb28-69" aria-hidden="true" tabindex="-1"></a>Second, see these resources for some explanation of themes and customization:  </span>
+<span id="cb28-70"><a href="#cb28-70" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">ggplot2tor</span><span class="co">](https://ggplot2tor.com/theme/)</span>  </span>
+<span id="cb28-71"><a href="#cb28-71" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Jumping Rivers</span><span class="co">](https://www.jumpingrivers.com/blog/intro-to-theme-ggplot2-r/)</span>  </span>
+<span id="cb28-72"><a href="#cb28-72" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">theme elements from `ggplot2` handbook</span><span class="co">](https://ggplot2-book.org/themes.html#sec-theme-elements)</span>  </span>
+<span id="cb28-73"><a href="#cb28-73" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">built in themes from `ggplot2` handbook</span><span class="co">](https://ggplot2-book.org/themes.html#sec-themes)</span>  </span>
+<span id="cb28-74"><a href="#cb28-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-75"><a href="#cb28-75" aria-hidden="true" tabindex="-1"></a><span class="fu">### Code</span></span>
+<span id="cb28-76"><a href="#cb28-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-77"><a href="#cb28-77" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 1. Set up</span></span>
+<span id="cb28-78"><a href="#cb28-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-79"><a href="#cb28-79" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Packages and data</span></span>
+<span id="cb28-80"><a href="#cb28-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-81"><a href="#cb28-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{r read-in-packages-and-data-background}</span></span>
+<span id="cb28-82"><a href="#cb28-82" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
+<span id="cb28-83"><a href="#cb28-83" aria-hidden="true" tabindex="-1"></a><span class="in">#| message: false</span></span>
+<span id="cb28-84"><a href="#cb28-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-85"><a href="#cb28-85" aria-hidden="true" tabindex="-1"></a><span class="in"># packages</span></span>
+<span id="cb28-86"><a href="#cb28-86" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb28-87"><a href="#cb28-87" aria-hidden="true" tabindex="-1"></a><span class="in">library(here)</span></span>
+<span id="cb28-88"><a href="#cb28-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-89"><a href="#cb28-89" aria-hidden="true" tabindex="-1"></a><span class="in"># data</span></span>
+<span id="cb28-90"><a href="#cb28-90" aria-hidden="true" tabindex="-1"></a><span class="in"># salmon data</span></span>
+<span id="cb28-91"><a href="#cb28-91" aria-hidden="true" tabindex="-1"></a><span class="in">salmon &lt;- read_csv(here("workshop", "data", "adultdaily_1745380588_196.csv"))</span></span>
+<span id="cb28-92"><a href="#cb28-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-93"><a href="#cb28-93" aria-hidden="true" tabindex="-1"></a><span class="in"># tornado data</span></span>
+<span id="cb28-94"><a href="#cb28-94" aria-hidden="true" tabindex="-1"></a><span class="in">tornados &lt;- read_csv(here("workshop", "data", "tornados.csv"))</span></span>
+<span id="cb28-95"><a href="#cb28-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-96"><a href="#cb28-96" aria-hidden="true" tabindex="-1"></a><span class="in"># shark data</span></span>
+<span id="cb28-97"><a href="#cb28-97" aria-hidden="true" tabindex="-1"></a><span class="in">sharks &lt;- read_csv(here("workshop", "data", "sharks.csv"))</span></span>
+<span id="cb28-98"><a href="#cb28-98" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-99"><a href="#cb28-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-100"><a href="#cb28-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-101"><a href="#cb28-101" aria-hidden="true" tabindex="-1"></a><span class="in">```{r read-in-packages-and-data-for-website}</span></span>
+<span id="cb28-102"><a href="#cb28-102" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb28-103"><a href="#cb28-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-104"><a href="#cb28-104" aria-hidden="true" tabindex="-1"></a><span class="in"># packages</span></span>
+<span id="cb28-105"><a href="#cb28-105" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb28-106"><a href="#cb28-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-107"><a href="#cb28-107" aria-hidden="true" tabindex="-1"></a><span class="in"># data</span></span>
+<span id="cb28-108"><a href="#cb28-108" aria-hidden="true" tabindex="-1"></a><span class="in"># salmon data</span></span>
+<span id="cb28-109"><a href="#cb28-109" aria-hidden="true" tabindex="-1"></a><span class="in">salmon &lt;- read_csv("adultdaily_1745380588_196.csv")</span></span>
+<span id="cb28-110"><a href="#cb28-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-111"><a href="#cb28-111" aria-hidden="true" tabindex="-1"></a><span class="in"># tornado data</span></span>
+<span id="cb28-112"><a href="#cb28-112" aria-hidden="true" tabindex="-1"></a><span class="in">tornados &lt;- read_csv("tornados.csv")</span></span>
+<span id="cb28-113"><a href="#cb28-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-114"><a href="#cb28-114" aria-hidden="true" tabindex="-1"></a><span class="in"># shark data</span></span>
+<span id="cb28-115"><a href="#cb28-115" aria-hidden="true" tabindex="-1"></a><span class="in">sharks &lt;- read_csv("sharks.csv")</span></span>
+<span id="cb28-116"><a href="#cb28-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-117"><a href="#cb28-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-118"><a href="#cb28-118" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Cleaning </span></span>
+<span id="cb28-119"><a href="#cb28-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-120"><a href="#cb28-120" aria-hidden="true" tabindex="-1"></a><span class="fu">###### Salmon</span></span>
+<span id="cb28-121"><a href="#cb28-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-122"><a href="#cb28-122" aria-hidden="true" tabindex="-1"></a><span class="in">```{r salmon-data-and-wrangling}</span></span>
+<span id="cb28-123"><a href="#cb28-123" aria-hidden="true" tabindex="-1"></a><span class="in"># create new clean object from salmon</span></span>
+<span id="cb28-124"><a href="#cb28-124" aria-hidden="true" tabindex="-1"></a><span class="in">salmon_clean &lt;- salmon |&gt; </span></span>
+<span id="cb28-125"><a href="#cb28-125" aria-hidden="true" tabindex="-1"></a><span class="in">  # making sure the date is read as a date</span></span>
+<span id="cb28-126"><a href="#cb28-126" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(Date = mdy(Date)) |&gt; </span></span>
+<span id="cb28-127"><a href="#cb28-127" aria-hidden="true" tabindex="-1"></a><span class="in">  # selecting date and 3 salmonid species</span></span>
+<span id="cb28-128"><a href="#cb28-128" aria-hidden="true" tabindex="-1"></a><span class="in">  select(Date, Chin, Stlhd, Coho) |&gt; </span></span>
+<span id="cb28-129"><a href="#cb28-129" aria-hidden="true" tabindex="-1"></a><span class="in">  # making the data frame longer</span></span>
+<span id="cb28-130"><a href="#cb28-130" aria-hidden="true" tabindex="-1"></a><span class="in">  pivot_longer(cols = Chin:Coho,</span></span>
+<span id="cb28-131"><a href="#cb28-131" aria-hidden="true" tabindex="-1"></a><span class="in">               names_to = "species",</span></span>
+<span id="cb28-132"><a href="#cb28-132" aria-hidden="true" tabindex="-1"></a><span class="in">               values_to = "daily_count") |&gt; </span></span>
+<span id="cb28-133"><a href="#cb28-133" aria-hidden="true" tabindex="-1"></a><span class="in">  # mutating species column to display species names in full</span></span>
+<span id="cb28-134"><a href="#cb28-134" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(species = case_when(</span></span>
+<span id="cb28-135"><a href="#cb28-135" aria-hidden="true" tabindex="-1"></a><span class="in">    species == "Chin" ~ "Chinook",</span></span>
+<span id="cb28-136"><a href="#cb28-136" aria-hidden="true" tabindex="-1"></a><span class="in">    species == "Stlhd" ~ "Steelhead",</span></span>
+<span id="cb28-137"><a href="#cb28-137" aria-hidden="true" tabindex="-1"></a><span class="in">    TRUE ~ species</span></span>
+<span id="cb28-138"><a href="#cb28-138" aria-hidden="true" tabindex="-1"></a><span class="in">  )) |&gt; </span></span>
+<span id="cb28-139"><a href="#cb28-139" aria-hidden="true" tabindex="-1"></a><span class="in">  # filter to only include dates after December 31st 2023</span></span>
+<span id="cb28-140"><a href="#cb28-140" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(Date &gt; as_date("2023-12-31")) |&gt; </span></span>
+<span id="cb28-141"><a href="#cb28-141" aria-hidden="true" tabindex="-1"></a><span class="in">  # take out any missing values</span></span>
+<span id="cb28-142"><a href="#cb28-142" aria-hidden="true" tabindex="-1"></a><span class="in">  drop_na(daily_count)</span></span>
+<span id="cb28-143"><a href="#cb28-143" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-144"><a href="#cb28-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-145"><a href="#cb28-145" aria-hidden="true" tabindex="-1"></a><span class="fu">###### Tornados</span></span>
+<span id="cb28-146"><a href="#cb28-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-147"><a href="#cb28-147" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tornados-cleaning-and-wrangling}</span></span>
+<span id="cb28-148"><a href="#cb28-148" aria-hidden="true" tabindex="-1"></a><span class="in"># create new clean object from tornados</span></span>
+<span id="cb28-149"><a href="#cb28-149" aria-hidden="true" tabindex="-1"></a><span class="in">tornados_clean &lt;- tornados |&gt; </span></span>
+<span id="cb28-150"><a href="#cb28-150" aria-hidden="true" tabindex="-1"></a><span class="in">  # group by year</span></span>
+<span id="cb28-151"><a href="#cb28-151" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(yr) |&gt;</span></span>
+<span id="cb28-152"><a href="#cb28-152" aria-hidden="true" tabindex="-1"></a><span class="in">  # calculate total property loss in dollars, sum number of tornados, calculate total property loss in billions of dollars</span></span>
+<span id="cb28-153"><a href="#cb28-153" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(total_property_loss = sum(loss, na.rm = TRUE),</span></span>
+<span id="cb28-154"><a href="#cb28-154" aria-hidden="true" tabindex="-1"></a><span class="in">            number_tornados = length(yr),</span></span>
+<span id="cb28-155"><a href="#cb28-155" aria-hidden="true" tabindex="-1"></a><span class="in">            total_property_loss_bil = total_property_loss/1000000000) |&gt; </span></span>
+<span id="cb28-156"><a href="#cb28-156" aria-hidden="true" tabindex="-1"></a><span class="in">  # ungroup the data frame (useful if you're going to do any further summarizing steps)</span></span>
+<span id="cb28-157"><a href="#cb28-157" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup() </span></span>
+<span id="cb28-158"><a href="#cb28-158" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-159"><a href="#cb28-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-160"><a href="#cb28-160" aria-hidden="true" tabindex="-1"></a><span class="fu">###### Sharks</span></span>
+<span id="cb28-161"><a href="#cb28-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-162"><a href="#cb28-162" aria-hidden="true" tabindex="-1"></a><span class="in">```{r sharks-cleaning-and-wrangling}</span></span>
+<span id="cb28-163"><a href="#cb28-163" aria-hidden="true" tabindex="-1"></a><span class="in"># create new clean object from sharks</span></span>
+<span id="cb28-164"><a href="#cb28-164" aria-hidden="true" tabindex="-1"></a><span class="in">sharks_clean &lt;- sharks |&gt; </span></span>
+<span id="cb28-165"><a href="#cb28-165" aria-hidden="true" tabindex="-1"></a><span class="in">  # drop any observations where shark common name is missing</span></span>
+<span id="cb28-166"><a href="#cb28-166" aria-hidden="true" tabindex="-1"></a><span class="in">  drop_na(shark_common_name) |&gt; </span></span>
+<span id="cb28-167"><a href="#cb28-167" aria-hidden="true" tabindex="-1"></a><span class="in">  # group by shark species and state</span></span>
+<span id="cb28-168"><a href="#cb28-168" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(shark_common_name, state) |&gt; </span></span>
+<span id="cb28-169"><a href="#cb28-169" aria-hidden="true" tabindex="-1"></a><span class="in">  # count observations (easy way to get total number of observations from groups)</span></span>
+<span id="cb28-170"><a href="#cb28-170" aria-hidden="true" tabindex="-1"></a><span class="in">  count() |&gt; </span></span>
+<span id="cb28-171"><a href="#cb28-171" aria-hidden="true" tabindex="-1"></a><span class="in">  # ungroup the data frame (good to do if you're doing any cleaning steps after this)</span></span>
+<span id="cb28-172"><a href="#cb28-172" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup() |&gt; </span></span>
+<span id="cb28-173"><a href="#cb28-173" aria-hidden="true" tabindex="-1"></a><span class="in">  # filter to only include New South Wales, Queensland, and Western Australia</span></span>
+<span id="cb28-174"><a href="#cb28-174" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(state %in% c("NSW", "QLD", "WA")) |&gt; </span></span>
+<span id="cb28-175"><a href="#cb28-175" aria-hidden="true" tabindex="-1"></a><span class="in">  # mutate state column to show full names for each state</span></span>
+<span id="cb28-176"><a href="#cb28-176" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(state = case_when(</span></span>
+<span id="cb28-177"><a href="#cb28-177" aria-hidden="true" tabindex="-1"></a><span class="in">    state == "NSW" ~ "New South Wales",</span></span>
+<span id="cb28-178"><a href="#cb28-178" aria-hidden="true" tabindex="-1"></a><span class="in">    state == "QLD" ~ "Queensland",</span></span>
+<span id="cb28-179"><a href="#cb28-179" aria-hidden="true" tabindex="-1"></a><span class="in">    state == "WA" ~ "Western Australia"</span></span>
+<span id="cb28-180"><a href="#cb28-180" aria-hidden="true" tabindex="-1"></a><span class="in">  ))</span></span>
+<span id="cb28-181"><a href="#cb28-181" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-182"><a href="#cb28-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-183"><a href="#cb28-183" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 2. Basic visualization</span></span>
+<span id="cb28-184"><a href="#cb28-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-185"><a href="#cb28-185" aria-hidden="true" tabindex="-1"></a><span class="fu">##### a. Daily counts of salmon through Bonneville Dam in Columbia River Basin, Oregon in 2024</span></span>
+<span id="cb28-186"><a href="#cb28-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-187"><a href="#cb28-187" aria-hidden="true" tabindex="-1"></a><span class="in">```{r salmon-timeseries}</span></span>
+<span id="cb28-188"><a href="#cb28-188" aria-hidden="true" tabindex="-1"></a><span class="in">               # base layer: ggplot</span></span>
+<span id="cb28-189"><a href="#cb28-189" aria-hidden="true" tabindex="-1"></a><span class="in">salmon_plot &lt;- ggplot(data = salmon_clean,</span></span>
+<span id="cb28-190"><a href="#cb28-190" aria-hidden="true" tabindex="-1"></a><span class="in">                      # aesthetics: x-axis, y-axis, and color</span></span>
+<span id="cb28-191"><a href="#cb28-191" aria-hidden="true" tabindex="-1"></a><span class="in">                      aes(x = Date,</span></span>
+<span id="cb28-192"><a href="#cb28-192" aria-hidden="true" tabindex="-1"></a><span class="in">                          y = daily_count,</span></span>
+<span id="cb28-193"><a href="#cb28-193" aria-hidden="true" tabindex="-1"></a><span class="in">                          color = species)) +</span></span>
+<span id="cb28-194"><a href="#cb28-194" aria-hidden="true" tabindex="-1"></a><span class="in">  # first layer: points</span></span>
+<span id="cb28-195"><a href="#cb28-195" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point() +</span></span>
+<span id="cb28-196"><a href="#cb28-196" aria-hidden="true" tabindex="-1"></a><span class="in">  # second layer: line</span></span>
+<span id="cb28-197"><a href="#cb28-197" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line() +</span></span>
+<span id="cb28-198"><a href="#cb28-198" aria-hidden="true" tabindex="-1"></a><span class="in">  # labels</span></span>
+<span id="cb28-199"><a href="#cb28-199" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Date",</span></span>
+<span id="cb28-200"><a href="#cb28-200" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Daily fish count")</span></span>
+<span id="cb28-201"><a href="#cb28-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-202"><a href="#cb28-202" aria-hidden="true" tabindex="-1"></a><span class="in"># display the plot</span></span>
+<span id="cb28-203"><a href="#cb28-203" aria-hidden="true" tabindex="-1"></a><span class="in">salmon_plot</span></span>
+<span id="cb28-204"><a href="#cb28-204" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-205"><a href="#cb28-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-206"><a href="#cb28-206" aria-hidden="true" tabindex="-1"></a><span class="fu">##### b. Total property loss (in dollars) due to tornados in US from 1950-2022</span></span>
+<span id="cb28-207"><a href="#cb28-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-208"><a href="#cb28-208" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tornado-property-loss}</span></span>
+<span id="cb28-209"><a href="#cb28-209" aria-hidden="true" tabindex="-1"></a><span class="in">                              # base layer: ggplot</span></span>
+<span id="cb28-210"><a href="#cb28-210" aria-hidden="true" tabindex="-1"></a><span class="in">tornado_property_loss_plot &lt;- ggplot(data = tornados_clean,</span></span>
+<span id="cb28-211"><a href="#cb28-211" aria-hidden="true" tabindex="-1"></a><span class="in">                                     # aesthetics: x-axis, y-axis</span></span>
+<span id="cb28-212"><a href="#cb28-212" aria-hidden="true" tabindex="-1"></a><span class="in">                                     aes(x = yr,</span></span>
+<span id="cb28-213"><a href="#cb28-213" aria-hidden="true" tabindex="-1"></a><span class="in">                                         y = total_property_loss_bil)) +</span></span>
+<span id="cb28-214"><a href="#cb28-214" aria-hidden="true" tabindex="-1"></a><span class="in">  # first layer: points</span></span>
+<span id="cb28-215"><a href="#cb28-215" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point() +</span></span>
+<span id="cb28-216"><a href="#cb28-216" aria-hidden="true" tabindex="-1"></a><span class="in">  # second layer: line</span></span>
+<span id="cb28-217"><a href="#cb28-217" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line() +</span></span>
+<span id="cb28-218"><a href="#cb28-218" aria-hidden="true" tabindex="-1"></a><span class="in">  # labels</span></span>
+<span id="cb28-219"><a href="#cb28-219" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Year",</span></span>
+<span id="cb28-220"><a href="#cb28-220" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Total property loss (billions of dollars)")</span></span>
+<span id="cb28-221"><a href="#cb28-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-222"><a href="#cb28-222" aria-hidden="true" tabindex="-1"></a><span class="in"># display the plot</span></span>
+<span id="cb28-223"><a href="#cb28-223" aria-hidden="true" tabindex="-1"></a><span class="in">tornado_property_loss_plot</span></span>
+<span id="cb28-224"><a href="#cb28-224" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-225"><a href="#cb28-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-226"><a href="#cb28-226" aria-hidden="true" tabindex="-1"></a><span class="fu">##### c. Total annual tornados in US from 1950-2022</span></span>
+<span id="cb28-227"><a href="#cb28-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-228"><a href="#cb28-228" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tornado-count-plot}</span></span>
+<span id="cb28-229"><a href="#cb28-229" aria-hidden="true" tabindex="-1"></a><span class="in">                      # base layer: ggplot</span></span>
+<span id="cb28-230"><a href="#cb28-230" aria-hidden="true" tabindex="-1"></a><span class="in">tornado_count_plot &lt;- ggplot(data = tornados_clean,</span></span>
+<span id="cb28-231"><a href="#cb28-231" aria-hidden="true" tabindex="-1"></a><span class="in">                             # aesthetics: x-axis, y-axis</span></span>
+<span id="cb28-232"><a href="#cb28-232" aria-hidden="true" tabindex="-1"></a><span class="in">                             aes(x = yr,</span></span>
+<span id="cb28-233"><a href="#cb28-233" aria-hidden="true" tabindex="-1"></a><span class="in">                                 y = number_tornados)) +</span></span>
+<span id="cb28-234"><a href="#cb28-234" aria-hidden="true" tabindex="-1"></a><span class="in">  # first layer: points</span></span>
+<span id="cb28-235"><a href="#cb28-235" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point() +</span></span>
+<span id="cb28-236"><a href="#cb28-236" aria-hidden="true" tabindex="-1"></a><span class="in">  # second layer: line</span></span>
+<span id="cb28-237"><a href="#cb28-237" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line() +</span></span>
+<span id="cb28-238"><a href="#cb28-238" aria-hidden="true" tabindex="-1"></a><span class="in">  # labels</span></span>
+<span id="cb28-239"><a href="#cb28-239" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Year",</span></span>
+<span id="cb28-240"><a href="#cb28-240" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Total annual tornados")</span></span>
+<span id="cb28-241"><a href="#cb28-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-242"><a href="#cb28-242" aria-hidden="true" tabindex="-1"></a><span class="in"># display the plot</span></span>
+<span id="cb28-243"><a href="#cb28-243" aria-hidden="true" tabindex="-1"></a><span class="in">tornado_count_plot</span></span>
+<span id="cb28-244"><a href="#cb28-244" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-245"><a href="#cb28-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-246"><a href="#cb28-246" aria-hidden="true" tabindex="-1"></a><span class="fu">##### d. Total number of shark incidents in New South Wales and Queensland from 1791-2022</span></span>
+<span id="cb28-247"><a href="#cb28-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-248"><a href="#cb28-248" aria-hidden="true" tabindex="-1"></a><span class="in">```{r shark-incident-plot}</span></span>
+<span id="cb28-249"><a href="#cb28-249" aria-hidden="true" tabindex="-1"></a><span class="in">              # base layer: ggplot</span></span>
+<span id="cb28-250"><a href="#cb28-250" aria-hidden="true" tabindex="-1"></a><span class="in">shark_plot &lt;- ggplot(data = sharks_clean,</span></span>
+<span id="cb28-251"><a href="#cb28-251" aria-hidden="true" tabindex="-1"></a><span class="in">                     # aesthetics: x-axis, y-axis</span></span>
+<span id="cb28-252"><a href="#cb28-252" aria-hidden="true" tabindex="-1"></a><span class="in">                     aes(x = n,</span></span>
+<span id="cb28-253"><a href="#cb28-253" aria-hidden="true" tabindex="-1"></a><span class="in">                         y = shark_common_name)) +</span></span>
+<span id="cb28-254"><a href="#cb28-254" aria-hidden="true" tabindex="-1"></a><span class="in">  # first layer: columns to represent counts</span></span>
+<span id="cb28-255"><a href="#cb28-255" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_col() +</span></span>
+<span id="cb28-256"><a href="#cb28-256" aria-hidden="true" tabindex="-1"></a><span class="in">  # faceting by state</span></span>
+<span id="cb28-257"><a href="#cb28-257" aria-hidden="true" tabindex="-1"></a><span class="in">  facet_wrap(~ state) +</span></span>
+<span id="cb28-258"><a href="#cb28-258" aria-hidden="true" tabindex="-1"></a><span class="in">  # labels</span></span>
+<span id="cb28-259"><a href="#cb28-259" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Year",</span></span>
+<span id="cb28-260"><a href="#cb28-260" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Total number of shark incidents")</span></span>
+<span id="cb28-261"><a href="#cb28-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-262"><a href="#cb28-262" aria-hidden="true" tabindex="-1"></a><span class="in"># display the plot</span></span>
+<span id="cb28-263"><a href="#cb28-263" aria-hidden="true" tabindex="-1"></a><span class="in">shark_plot</span></span>
+<span id="cb28-264"><a href="#cb28-264" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-265"><a href="#cb28-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-266"><a href="#cb28-266" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 3. Plot components</span></span>
+<span id="cb28-267"><a href="#cb28-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-268"><a href="#cb28-268" aria-hidden="true" tabindex="-1"></a>As everyone is going through their plot components, take notes in each section.</span>
+<span id="cb28-269"><a href="#cb28-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-270"><a href="#cb28-270" aria-hidden="true" tabindex="-1"></a><span class="fu">###### a. `strip` in `theme()`</span></span>
+<span id="cb28-271"><a href="#cb28-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-272"><a href="#cb28-272" aria-hidden="true" tabindex="-1"></a>Demonstrate how to:  </span>
+<span id="cb28-273"><a href="#cb28-273" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the background  </span>
+<span id="cb28-274"><a href="#cb28-274" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the placement  </span>
+<span id="cb28-275"><a href="#cb28-275" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the text size and font  </span>
+<span id="cb28-276"><a href="#cb28-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-277"><a href="#cb28-277" aria-hidden="true" tabindex="-1"></a>**Note:** you may want to use the <span class="in">`shark_plot`</span> for this <span class="in">`theme`</span> element.</span>
+<span id="cb28-278"><a href="#cb28-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-279"><a href="#cb28-279" aria-hidden="true" tabindex="-1"></a><span class="in">```{r strip-elements-individual}</span></span>
+<span id="cb28-280"><a href="#cb28-280" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your individual plot</span></span>
+<span id="cb28-281"><a href="#cb28-281" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-282"><a href="#cb28-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-283"><a href="#cb28-283" aria-hidden="true" tabindex="-1"></a>Code for the plot your group made:</span>
+<span id="cb28-284"><a href="#cb28-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-285"><a href="#cb28-285" aria-hidden="true" tabindex="-1"></a><span class="in">```{r strip-elements-group}</span></span>
+<span id="cb28-286"><a href="#cb28-286" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your group plot</span></span>
+<span id="cb28-287"><a href="#cb28-287" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-288"><a href="#cb28-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-289"><a href="#cb28-289" aria-hidden="true" tabindex="-1"></a><span class="fu">###### b. `plot` in `theme()`</span></span>
+<span id="cb28-290"><a href="#cb28-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-291"><a href="#cb28-291" aria-hidden="true" tabindex="-1"></a>Demonstrate how to:  </span>
+<span id="cb28-292"><a href="#cb28-292" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the plot margin  </span>
+<span id="cb28-293"><a href="#cb28-293" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the plot background  </span>
+<span id="cb28-294"><a href="#cb28-294" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the plot title, subtitle, and caption text position and color  </span>
+<span id="cb28-295"><a href="#cb28-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-296"><a href="#cb28-296" aria-hidden="true" tabindex="-1"></a>**Note:** you will have to add a title, subtitle, and caption to the plot you choose to manipulate.  </span>
+<span id="cb28-297"><a href="#cb28-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-298"><a href="#cb28-298" aria-hidden="true" tabindex="-1"></a>Code for your own independent exploration:</span>
+<span id="cb28-299"><a href="#cb28-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-300"><a href="#cb28-300" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plot-elements-individual}</span></span>
+<span id="cb28-301"><a href="#cb28-301" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your individual plot</span></span>
+<span id="cb28-302"><a href="#cb28-302" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-303"><a href="#cb28-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-304"><a href="#cb28-304" aria-hidden="true" tabindex="-1"></a>Code for the plot your group made:</span>
+<span id="cb28-305"><a href="#cb28-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-306"><a href="#cb28-306" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plot-elements-group}</span></span>
+<span id="cb28-307"><a href="#cb28-307" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your group plot</span></span>
+<span id="cb28-308"><a href="#cb28-308" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-309"><a href="#cb28-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-310"><a href="#cb28-310" aria-hidden="true" tabindex="-1"></a><span class="fu">###### c. `panel` in `theme()`</span></span>
+<span id="cb28-311"><a href="#cb28-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-312"><a href="#cb28-312" aria-hidden="true" tabindex="-1"></a>Demonstrate how to:  </span>
+<span id="cb28-313"><a href="#cb28-313" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the panel border  </span>
+<span id="cb28-314"><a href="#cb28-314" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the panel major grid lines (vertically and horizontally, in separate arguments)  </span>
+<span id="cb28-315"><a href="#cb28-315" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the panel minor grid lines (vertically and horizontally, in separate arguments)  </span>
+<span id="cb28-316"><a href="#cb28-316" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the panel background  </span>
+<span id="cb28-317"><a href="#cb28-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-318"><a href="#cb28-318" aria-hidden="true" tabindex="-1"></a>Code for your own independent exploration:</span>
+<span id="cb28-319"><a href="#cb28-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-320"><a href="#cb28-320" aria-hidden="true" tabindex="-1"></a><span class="in">```{r panel-elements-individual}</span></span>
+<span id="cb28-321"><a href="#cb28-321" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your individual plot</span></span>
+<span id="cb28-322"><a href="#cb28-322" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-323"><a href="#cb28-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-324"><a href="#cb28-324" aria-hidden="true" tabindex="-1"></a>Code for the plot your group made:</span>
+<span id="cb28-325"><a href="#cb28-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-326"><a href="#cb28-326" aria-hidden="true" tabindex="-1"></a><span class="in">```{r panel-elements-group}</span></span>
+<span id="cb28-327"><a href="#cb28-327" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your group plot</span></span>
+<span id="cb28-328"><a href="#cb28-328" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-329"><a href="#cb28-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-330"><a href="#cb28-330" aria-hidden="true" tabindex="-1"></a><span class="fu">###### d. `legend` in `theme()`</span></span>
+<span id="cb28-331"><a href="#cb28-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-332"><a href="#cb28-332" aria-hidden="true" tabindex="-1"></a>Demonstrate how to:  </span>
+<span id="cb28-333"><a href="#cb28-333" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the legend frame  </span>
+<span id="cb28-334"><a href="#cb28-334" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the legend key size  </span>
+<span id="cb28-335"><a href="#cb28-335" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the legend text size  </span>
+<span id="cb28-336"><a href="#cb28-336" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the legend position  </span>
+<span id="cb28-337"><a href="#cb28-337" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the legend row numbers  </span>
+<span id="cb28-338"><a href="#cb28-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-339"><a href="#cb28-339" aria-hidden="true" tabindex="-1"></a>**Note:** you may want to use the <span class="in">`salmon_plot`</span> for this <span class="in">`theme`</span> element.  </span>
+<span id="cb28-340"><a href="#cb28-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-341"><a href="#cb28-341" aria-hidden="true" tabindex="-1"></a>Code for your own independent exploration:</span>
+<span id="cb28-342"><a href="#cb28-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-343"><a href="#cb28-343" aria-hidden="true" tabindex="-1"></a><span class="in">```{r legend-elements-individual}</span></span>
+<span id="cb28-344"><a href="#cb28-344" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your individual plot</span></span>
+<span id="cb28-345"><a href="#cb28-345" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-346"><a href="#cb28-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-347"><a href="#cb28-347" aria-hidden="true" tabindex="-1"></a>Code for the plot your group made:</span>
+<span id="cb28-348"><a href="#cb28-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-349"><a href="#cb28-349" aria-hidden="true" tabindex="-1"></a><span class="in">```{r legend-elements-group}</span></span>
+<span id="cb28-350"><a href="#cb28-350" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your group plot</span></span>
+<span id="cb28-351"><a href="#cb28-351" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-352"><a href="#cb28-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-353"><a href="#cb28-353" aria-hidden="true" tabindex="-1"></a><span class="fu">###### e. `axis` in `theme()`</span></span>
+<span id="cb28-354"><a href="#cb28-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-355"><a href="#cb28-355" aria-hidden="true" tabindex="-1"></a>Demonstrate how to:  </span>
+<span id="cb28-356"><a href="#cb28-356" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the axis text color and font</span>
+<span id="cb28-357"><a href="#cb28-357" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the axis tick length (major and minor ticks)  </span>
+<span id="cb28-358"><a href="#cb28-358" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change the axis line colors and line types  </span>
+<span id="cb28-359"><a href="#cb28-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-360"><a href="#cb28-360" aria-hidden="true" tabindex="-1"></a>Code for your own independent exploration:</span>
+<span id="cb28-361"><a href="#cb28-361" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-362"><a href="#cb28-362" aria-hidden="true" tabindex="-1"></a><span class="in">```{r axis-elements-individual}</span></span>
+<span id="cb28-363"><a href="#cb28-363" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your individual plot</span></span>
+<span id="cb28-364"><a href="#cb28-364" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-365"><a href="#cb28-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-366"><a href="#cb28-366" aria-hidden="true" tabindex="-1"></a>Code for the plot your group made:</span>
+<span id="cb28-367"><a href="#cb28-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-368"><a href="#cb28-368" aria-hidden="true" tabindex="-1"></a><span class="in">```{r axis-elements-group}</span></span>
+<span id="cb28-369"><a href="#cb28-369" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your group plot</span></span>
+<span id="cb28-370"><a href="#cb28-370" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-371"><a href="#cb28-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-372"><a href="#cb28-372" aria-hidden="true" tabindex="-1"></a><span class="fu">###### f. `scale_color` or `scale_fill` functions</span></span>
+<span id="cb28-373"><a href="#cb28-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-374"><a href="#cb28-374" aria-hidden="true" tabindex="-1"></a>**Note: use the shark plot for scale_fill and any other plot for scale_color**</span>
+<span id="cb28-375"><a href="#cb28-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-376"><a href="#cb28-376" aria-hidden="true" tabindex="-1"></a>Demonstrate how to:  </span>
+<span id="cb28-377"><a href="#cb28-377" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>use a color palette package  </span>
+<span id="cb28-378"><a href="#cb28-378" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>apply it to a color scale  </span>
+<span id="cb28-379"><a href="#cb28-379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-380"><a href="#cb28-380" aria-hidden="true" tabindex="-1"></a>Code for your own independent exploration:</span>
+<span id="cb28-381"><a href="#cb28-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-382"><a href="#cb28-382" aria-hidden="true" tabindex="-1"></a><span class="in">```{r color-or-fill-individual}</span></span>
+<span id="cb28-383"><a href="#cb28-383" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your individual plot</span></span>
+<span id="cb28-384"><a href="#cb28-384" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-385"><a href="#cb28-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-386"><a href="#cb28-386" aria-hidden="true" tabindex="-1"></a>Code for the plot your group made:</span>
+<span id="cb28-387"><a href="#cb28-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-388"><a href="#cb28-388" aria-hidden="true" tabindex="-1"></a><span class="in">```{r color-or-fill-group}</span></span>
+<span id="cb28-389"><a href="#cb28-389" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your group plot</span></span>
+<span id="cb28-390"><a href="#cb28-390" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-391"><a href="#cb28-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-392"><a href="#cb28-392" aria-hidden="true" tabindex="-1"></a><span class="fu">###### g. built in themes (`theme_`) with your own customization using `theme()`</span></span>
+<span id="cb28-393"><a href="#cb28-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-394"><a href="#cb28-394" aria-hidden="true" tabindex="-1"></a>Demonstrate how to:  </span>
+<span id="cb28-395"><a href="#cb28-395" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-396"><a href="#cb28-396" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>use a built in theme and  </span>
+<span id="cb28-397"><a href="#cb28-397" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>change additional components using the <span class="in">`theme()`</span> elements of your choice</span>
+<span id="cb28-398"><a href="#cb28-398" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-399"><a href="#cb28-399" aria-hidden="true" tabindex="-1"></a>Code for your own independent exploration:</span>
+<span id="cb28-400"><a href="#cb28-400" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-401"><a href="#cb28-401" aria-hidden="true" tabindex="-1"></a><span class="in">```{r theme-customization-individual}</span></span>
+<span id="cb28-402"><a href="#cb28-402" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your individual plot</span></span>
+<span id="cb28-403"><a href="#cb28-403" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-404"><a href="#cb28-404" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-405"><a href="#cb28-405" aria-hidden="true" tabindex="-1"></a>Code for the plot your group made:</span>
+<span id="cb28-406"><a href="#cb28-406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-407"><a href="#cb28-407" aria-hidden="true" tabindex="-1"></a><span class="in">```{r theme-customization-group}</span></span>
+<span id="cb28-408"><a href="#cb28-408" aria-hidden="true" tabindex="-1"></a><span class="in"># insert code here for your group plot</span></span>
+<span id="cb28-409"><a href="#cb28-409" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-410"><a href="#cb28-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-411"><a href="#cb28-411" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Extra stuff</span></span>
+<span id="cb28-412"><a href="#cb28-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-413"><a href="#cb28-413" aria-hidden="true" tabindex="-1"></a><span class="fu">### Thursday 4 PM plot</span></span>
+<span id="cb28-414"><a href="#cb28-414" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-415"><a href="#cb28-415" aria-hidden="true" tabindex="-1"></a><span class="in">```{r thursday-plot}</span></span>
+<span id="cb28-416"><a href="#cb28-416" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 12</span></span>
+<span id="cb28-417"><a href="#cb28-417" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 7</span></span>
+<span id="cb28-418"><a href="#cb28-418" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb28-419"><a href="#cb28-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-420"><a href="#cb28-420" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data = sharks_clean,</span></span>
+<span id="cb28-421"><a href="#cb28-421" aria-hidden="true" tabindex="-1"></a><span class="in">                     # aesthetics: x-axis, y-axis</span></span>
+<span id="cb28-422"><a href="#cb28-422" aria-hidden="true" tabindex="-1"></a><span class="in">                     aes(x = n,</span></span>
+<span id="cb28-423"><a href="#cb28-423" aria-hidden="true" tabindex="-1"></a><span class="in">                         y = shark_common_name,</span></span>
+<span id="cb28-424"><a href="#cb28-424" aria-hidden="true" tabindex="-1"></a><span class="in">                         # fill columns by shark common name</span></span>
+<span id="cb28-425"><a href="#cb28-425" aria-hidden="true" tabindex="-1"></a><span class="in">                         fill = shark_common_name)) +</span></span>
+<span id="cb28-426"><a href="#cb28-426" aria-hidden="true" tabindex="-1"></a><span class="in">  # first layer: columns to represent counts</span></span>
+<span id="cb28-427"><a href="#cb28-427" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_col() +</span></span>
+<span id="cb28-428"><a href="#cb28-428" aria-hidden="true" tabindex="-1"></a><span class="in">  # faceting by state, putting the strip on the bottom of the plot</span></span>
+<span id="cb28-429"><a href="#cb28-429" aria-hidden="true" tabindex="-1"></a><span class="in">  facet_wrap(~ state,</span></span>
+<span id="cb28-430"><a href="#cb28-430" aria-hidden="true" tabindex="-1"></a><span class="in">             strip.position = "bottom") +</span></span>
+<span id="cb28-431"><a href="#cb28-431" aria-hidden="true" tabindex="-1"></a><span class="in">  # labels</span></span>
+<span id="cb28-432"><a href="#cb28-432" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Total number of shark incidents",</span></span>
+<span id="cb28-433"><a href="#cb28-433" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Species") +</span></span>
+<span id="cb28-434"><a href="#cb28-434" aria-hidden="true" tabindex="-1"></a><span class="in">  # manually manipulate fill colors</span></span>
+<span id="cb28-435"><a href="#cb28-435" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_manual(values = c("bull shark" = "pink",</span></span>
+<span id="cb28-436"><a href="#cb28-436" aria-hidden="true" tabindex="-1"></a><span class="in">                               "whaler shark" = "chartreuse")) +</span></span>
+<span id="cb28-437"><a href="#cb28-437" aria-hidden="true" tabindex="-1"></a><span class="in">  # built in theme</span></span>
+<span id="cb28-438"><a href="#cb28-438" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_dark() +</span></span>
+<span id="cb28-439"><a href="#cb28-439" aria-hidden="true" tabindex="-1"></a><span class="in">  # theme elements</span></span>
+<span id="cb28-440"><a href="#cb28-440" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(</span></span>
+<span id="cb28-441"><a href="#cb28-441" aria-hidden="true" tabindex="-1"></a><span class="in">    # strip elements</span></span>
+<span id="cb28-442"><a href="#cb28-442" aria-hidden="true" tabindex="-1"></a><span class="in">    strip.placement = "outside",</span></span>
+<span id="cb28-443"><a href="#cb28-443" aria-hidden="true" tabindex="-1"></a><span class="in">    strip.background = element_rect(color = "red", linetype = 4, linewidth = 7),</span></span>
+<span id="cb28-444"><a href="#cb28-444" aria-hidden="true" tabindex="-1"></a><span class="in">    strip.text = element_text(color = "hotpink"),</span></span>
+<span id="cb28-445"><a href="#cb28-445" aria-hidden="true" tabindex="-1"></a><span class="in">    strip.text.x.top = element_text(size = 20, face = "italic"),</span></span>
+<span id="cb28-446"><a href="#cb28-446" aria-hidden="true" tabindex="-1"></a><span class="in">    # plot elements</span></span>
+<span id="cb28-447"><a href="#cb28-447" aria-hidden="true" tabindex="-1"></a><span class="in">    plot.background = element_rect(fill = "turquoise", color = "#EC4899", linewidth = 4, linetype = "dashed"),</span></span>
+<span id="cb28-448"><a href="#cb28-448" aria-hidden="true" tabindex="-1"></a><span class="in">    # panel elements</span></span>
+<span id="cb28-449"><a href="#cb28-449" aria-hidden="true" tabindex="-1"></a><span class="in">    panel.grid.major.x = element_line(color = "hotpink", linewidth = 3),</span></span>
+<span id="cb28-450"><a href="#cb28-450" aria-hidden="true" tabindex="-1"></a><span class="in">    panel.grid.major.y = element_line(color = "dodgerblue", linewidth = 1),</span></span>
+<span id="cb28-451"><a href="#cb28-451" aria-hidden="true" tabindex="-1"></a><span class="in">    panel.background = element_rect(fill = "lavender"),</span></span>
+<span id="cb28-452"><a href="#cb28-452" aria-hidden="true" tabindex="-1"></a><span class="in">    # legend elements</span></span>
+<span id="cb28-453"><a href="#cb28-453" aria-hidden="true" tabindex="-1"></a><span class="in">    legend.background = element_rect(fill = "chartreuse"),</span></span>
+<span id="cb28-454"><a href="#cb28-454" aria-hidden="true" tabindex="-1"></a><span class="in">    legend.key = element_rect(color = "orange"),</span></span>
+<span id="cb28-455"><a href="#cb28-455" aria-hidden="true" tabindex="-1"></a><span class="in">    legend.text = element_text(size = 30),</span></span>
+<span id="cb28-456"><a href="#cb28-456" aria-hidden="true" tabindex="-1"></a><span class="in">    # axis elements</span></span>
+<span id="cb28-457"><a href="#cb28-457" aria-hidden="true" tabindex="-1"></a><span class="in">    axis.line.x = element_line(color = "yellowgreen", linewidth = 4),</span></span>
+<span id="cb28-458"><a href="#cb28-458" aria-hidden="true" tabindex="-1"></a><span class="in">    axis.line.y = element_line(color = "deeppink1"),</span></span>
+<span id="cb28-459"><a href="#cb28-459" aria-hidden="true" tabindex="-1"></a><span class="in">    axis.text.x.bottom = element_text(color = "skyblue"),</span></span>
+<span id="cb28-460"><a href="#cb28-460" aria-hidden="true" tabindex="-1"></a><span class="in">    axis.text.y.left = element_text(color = "chocolate")</span></span>
+<span id="cb28-461"><a href="#cb28-461" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb28-462"><a href="#cb28-462" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-463"><a href="#cb28-463" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-464"><a href="#cb28-464" aria-hidden="true" tabindex="-1"></a><span class="fu">### Thursday 5 PM plot</span></span>
+<span id="cb28-465"><a href="#cb28-465" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-468"><a href="#cb28-468" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-469"><a href="#cb28-469" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
+<span id="cb28-470"><a href="#cb28-470" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
+<span id="cb28-471"><a href="#cb28-471" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb28-472"><a href="#cb28-472" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-473"><a href="#cb28-473" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> salmon_clean,</span>
+<span id="cb28-474"><a href="#cb28-474" aria-hidden="true" tabindex="-1"></a>                      <span class="co"># aesthetics: x-axis, y-axis, and color</span></span>
+<span id="cb28-475"><a href="#cb28-475" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">aes</span>(<span class="at">x =</span> Date,</span>
+<span id="cb28-476"><a href="#cb28-476" aria-hidden="true" tabindex="-1"></a>                          <span class="at">y =</span> daily_count,</span>
+<span id="cb28-477"><a href="#cb28-477" aria-hidden="true" tabindex="-1"></a>                          <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb28-478"><a href="#cb28-478" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first layer: points</span></span>
+<span id="cb28-479"><a href="#cb28-479" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb28-480"><a href="#cb28-480" aria-hidden="true" tabindex="-1"></a>  <span class="co"># second layer: line</span></span>
+<span id="cb28-481"><a href="#cb28-481" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>, </span>
+<span id="cb28-482"><a href="#cb28-482" aria-hidden="true" tabindex="-1"></a>            <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb28-483"><a href="#cb28-483" aria-hidden="true" tabindex="-1"></a>  <span class="co"># labels</span></span>
+<span id="cb28-484"><a href="#cb28-484" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>,</span>
+<span id="cb28-485"><a href="#cb28-485" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Daily fish count"</span>,</span>
+<span id="cb28-486"><a href="#cb28-486" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Daily fish count per day"</span>,</span>
+<span id="cb28-487"><a href="#cb28-487" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"group 2"</span>,</span>
+<span id="cb28-488"><a href="#cb28-488" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"thursday 5 pm"</span>) <span class="sc">+</span></span>
+<span id="cb28-489"><a href="#cb28-489" aria-hidden="true" tabindex="-1"></a>  <span class="co"># custom color scale</span></span>
+<span id="cb28-490"><a href="#cb28-490" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Chinook"</span> <span class="ot">=</span> <span class="st">"hotpink"</span>,</span>
+<span id="cb28-491"><a href="#cb28-491" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Coho"</span> <span class="ot">=</span> <span class="st">"chartreuse"</span>,</span>
+<span id="cb28-492"><a href="#cb28-492" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Sockeye"</span> <span class="ot">=</span> <span class="st">"pink"</span>)) <span class="sc">+</span></span>
+<span id="cb28-493"><a href="#cb28-493" aria-hidden="true" tabindex="-1"></a>  <span class="co"># adding this facet </span></span>
+<span id="cb28-494"><a href="#cb28-494" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species) <span class="sc">+</span></span>
+<span id="cb28-495"><a href="#cb28-495" aria-hidden="true" tabindex="-1"></a>  <span class="co"># built in theme</span></span>
+<span id="cb28-496"><a href="#cb28-496" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dark</span>() <span class="sc">+</span></span>
+<span id="cb28-497"><a href="#cb28-497" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb28-498"><a href="#cb28-498" aria-hidden="true" tabindex="-1"></a>    <span class="co"># strip elements</span></span>
+<span id="cb28-499"><a href="#cb28-499" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Times New Roman"</span>),</span>
+<span id="cb28-500"><a href="#cb28-500" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"red"</span>),</span>
+<span id="cb28-501"><a href="#cb28-501" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot elements</span></span>
+<span id="cb28-502"><a href="#cb28-502" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">30</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"orange"</span>),</span>
+<span id="cb28-503"><a href="#cb28-503" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"yellow"</span>),</span>
+<span id="cb28-504"><a href="#cb28-504" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">100</span>, <span class="at">r =</span> <span class="fl">0.6</span>, <span class="at">b =</span> <span class="dv">20</span>, <span class="at">l =</span> <span class="fl">0.9</span>),</span>
+<span id="cb28-505"><a href="#cb28-505" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"lightgreen"</span>),</span>
+<span id="cb28-506"><a href="#cb28-506" aria-hidden="true" tabindex="-1"></a>    <span class="co"># panel elements</span></span>
+<span id="cb28-507"><a href="#cb28-507" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>),</span>
+<span id="cb28-508"><a href="#cb28-508" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"darkgreen"</span>, <span class="at">linewidth =</span> <span class="dv">5</span>),</span>
+<span id="cb28-509"><a href="#cb28-509" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"black"</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb28-510"><a href="#cb28-510" aria-hidden="true" tabindex="-1"></a>    <span class="co"># legend elements</span></span>
+<span id="cb28-511"><a href="#cb28-511" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.direction =</span> <span class="st">"horizontal"</span>,</span>
+<span id="cb28-512"><a href="#cb28-512" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="dv">3</span>, <span class="st">"line"</span>),</span>
+<span id="cb28-513"><a href="#cb28-513" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"lemonchiffon"</span>, <span class="at">color =</span> <span class="st">"grey50"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>),</span>
+<span id="cb28-514"><a href="#cb28-514" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axis elements</span></span>
+<span id="cb28-515"><a href="#cb28-515" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y.left =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>, <span class="at">color =</span> <span class="st">"deeppink"</span>)</span>
+<span id="cb28-516"><a href="#cb28-516" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb28-517"><a href="#cb28-517" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-518"><a href="#cb28-518" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-519"><a href="#cb28-519" aria-hidden="true" tabindex="-1"></a><span class="fu">### Friday 9 AM plot</span></span>
+<span id="cb28-520"><a href="#cb28-520" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-523"><a href="#cb28-523" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-524"><a href="#cb28-524" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
+<span id="cb28-525"><a href="#cb28-525" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
+<span id="cb28-526"><a href="#cb28-526" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb28-527"><a href="#cb28-527" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-528"><a href="#cb28-528" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> sharks_clean,</span>
+<span id="cb28-529"><a href="#cb28-529" aria-hidden="true" tabindex="-1"></a>                     <span class="co"># aesthetics: x-axis, y-axis</span></span>
+<span id="cb28-530"><a href="#cb28-530" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">aes</span>(<span class="at">x =</span> n,</span>
+<span id="cb28-531"><a href="#cb28-531" aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> shark_common_name)) <span class="sc">+</span></span>
+<span id="cb28-532"><a href="#cb28-532" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first layer: columns to represent counts</span></span>
+<span id="cb28-533"><a href="#cb28-533" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb28-534"><a href="#cb28-534" aria-hidden="true" tabindex="-1"></a>  <span class="co"># faceting by state</span></span>
+<span id="cb28-535"><a href="#cb28-535" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> state,</span>
+<span id="cb28-536"><a href="#cb28-536" aria-hidden="true" tabindex="-1"></a>             <span class="at">strip.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
+<span id="cb28-537"><a href="#cb28-537" aria-hidden="true" tabindex="-1"></a>  <span class="co"># labels</span></span>
+<span id="cb28-538"><a href="#cb28-538" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Total number of shark incidents"</span>,</span>
+<span id="cb28-539"><a href="#cb28-539" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Shark species"</span>,</span>
+<span id="cb28-540"><a href="#cb28-540" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Fishy Salmon Run"</span>,</span>
+<span id="cb28-541"><a href="#cb28-541" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"fishfishyfishyfishyfishy"</span>) <span class="sc">+</span></span>
+<span id="cb28-542"><a href="#cb28-542" aria-hidden="true" tabindex="-1"></a>  <span class="co"># built in theme</span></span>
+<span id="cb28-543"><a href="#cb28-543" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dark</span>() <span class="sc">+</span></span>
+<span id="cb28-544"><a href="#cb28-544" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb28-545"><a href="#cb28-545" aria-hidden="true" tabindex="-1"></a>    <span class="co"># strip elements</span></span>
+<span id="cb28-546"><a href="#cb28-546" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"brown"</span>,</span>
+<span id="cb28-547"><a href="#cb28-547" aria-hidden="true" tabindex="-1"></a>                              <span class="at">family =</span> <span class="st">"Times New Roman"</span>,</span>
+<span id="cb28-548"><a href="#cb28-548" aria-hidden="true" tabindex="-1"></a>                              <span class="at">size =</span> <span class="dv">50</span>,</span>
+<span id="cb28-549"><a href="#cb28-549" aria-hidden="true" tabindex="-1"></a>                              <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb28-550"><a href="#cb28-550" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"cornflowerblue"</span>,</span>
+<span id="cb28-551"><a href="#cb28-551" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">color =</span> <span class="st">"pink2"</span>,</span>
+<span id="cb28-552"><a href="#cb28-552" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">size =</span> <span class="dv">5</span>),</span>
+<span id="cb28-553"><a href="#cb28-553" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot elements</span></span>
+<span id="cb28-554"><a href="#cb28-554" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#EC4899"</span>,</span>
+<span id="cb28-555"><a href="#cb28-555" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb28-556"><a href="#cb28-556" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="sc">-</span><span class="dv">20</span>, <span class="at">size =</span> <span class="dv">40</span>, <span class="at">color =</span> <span class="st">"blue"</span>),</span>
+<span id="cb28-557"><a href="#cb28-557" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">20</span>, <span class="at">color =</span> <span class="st">"gold"</span>),</span>
+<span id="cb28-558"><a href="#cb28-558" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">rep</span>(<span class="dv">2</span>, <span class="dv">4</span>), <span class="st">"cm"</span>),</span>
+<span id="cb28-559"><a href="#cb28-559" aria-hidden="true" tabindex="-1"></a>    <span class="co"># panel elements</span></span>
+<span id="cb28-560"><a href="#cb28-560" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
+<span id="cb28-561"><a href="#cb28-561" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#EC4899"</span>),</span>
+<span id="cb28-562"><a href="#cb28-562" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"#32CD32"</span>),</span>
+<span id="cb28-563"><a href="#cb28-563" aria-hidden="true" tabindex="-1"></a>    <span class="co"># legend elements</span></span>
+<span id="cb28-564"><a href="#cb28-564" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"yellow"</span>),</span>
+<span id="cb28-565"><a href="#cb28-565" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="dv">3</span>, <span class="st">"cm"</span>),</span>
+<span id="cb28-566"><a href="#cb28-566" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.5</span>)</span>
+<span id="cb28-567"><a href="#cb28-567" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb28-568"><a href="#cb28-568" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-569"><a href="#cb28-569" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-570"><a href="#cb28-570" aria-hidden="true" tabindex="-1"></a><span class="fu">### Friday 10 AM plot</span></span>
+<span id="cb28-571"><a href="#cb28-571" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-574"><a href="#cb28-574" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-575"><a href="#cb28-575" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
+<span id="cb28-576"><a href="#cb28-576" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
+<span id="cb28-577"><a href="#cb28-577" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb28-578"><a href="#cb28-578" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-579"><a href="#cb28-579" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> salmon_clean,</span>
+<span id="cb28-580"><a href="#cb28-580" aria-hidden="true" tabindex="-1"></a>                      <span class="co"># aesthetics: x-axis, y-axis, and color</span></span>
+<span id="cb28-581"><a href="#cb28-581" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">aes</span>(<span class="at">x =</span> Date,</span>
+<span id="cb28-582"><a href="#cb28-582" aria-hidden="true" tabindex="-1"></a>                          <span class="at">y =</span> daily_count,</span>
+<span id="cb28-583"><a href="#cb28-583" aria-hidden="true" tabindex="-1"></a>                          <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb28-584"><a href="#cb28-584" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first layer: points</span></span>
+<span id="cb28-585"><a href="#cb28-585" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb28-586"><a href="#cb28-586" aria-hidden="true" tabindex="-1"></a>  <span class="co"># second layer: line</span></span>
+<span id="cb28-587"><a href="#cb28-587" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>, </span>
+<span id="cb28-588"><a href="#cb28-588" aria-hidden="true" tabindex="-1"></a>            <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb28-589"><a href="#cb28-589" aria-hidden="true" tabindex="-1"></a>  <span class="co"># labels</span></span>
+<span id="cb28-590"><a href="#cb28-590" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>,</span>
+<span id="cb28-591"><a href="#cb28-591" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Daily fish count"</span>,</span>
+<span id="cb28-592"><a href="#cb28-592" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Ugly plot"</span>,</span>
+<span id="cb28-593"><a href="#cb28-593" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"super ugly"</span>) <span class="sc">+</span></span>
+<span id="cb28-594"><a href="#cb28-594" aria-hidden="true" tabindex="-1"></a>  <span class="co"># custom color scale</span></span>
+<span id="cb28-595"><a href="#cb28-595" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Chinook"</span> <span class="ot">=</span> <span class="st">"hotpink"</span>,</span>
+<span id="cb28-596"><a href="#cb28-596" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Coho"</span> <span class="ot">=</span> <span class="st">"chartreuse"</span>,</span>
+<span id="cb28-597"><a href="#cb28-597" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Sockeye"</span> <span class="ot">=</span> <span class="st">"pink"</span>)) <span class="sc">+</span></span>
+<span id="cb28-598"><a href="#cb28-598" aria-hidden="true" tabindex="-1"></a>  <span class="co"># adding this facet </span></span>
+<span id="cb28-599"><a href="#cb28-599" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species) <span class="sc">+</span></span>
+<span id="cb28-600"><a href="#cb28-600" aria-hidden="true" tabindex="-1"></a>  <span class="co"># built in theme</span></span>
+<span id="cb28-601"><a href="#cb28-601" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dark</span>() <span class="sc">+</span></span>
+<span id="cb28-602"><a href="#cb28-602" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb28-603"><a href="#cb28-603" aria-hidden="true" tabindex="-1"></a>    <span class="co"># strip elements</span></span>
+<span id="cb28-604"><a href="#cb28-604" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Courier New"</span>,</span>
+<span id="cb28-605"><a href="#cb28-605" aria-hidden="true" tabindex="-1"></a>                              <span class="at">color =</span> <span class="st">"gold"</span>,</span>
+<span id="cb28-606"><a href="#cb28-606" aria-hidden="true" tabindex="-1"></a>                              <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb28-607"><a href="#cb28-607" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"brown"</span>,</span>
+<span id="cb28-608"><a href="#cb28-608" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">fill =</span> <span class="st">"white"</span>),</span>
+<span id="cb28-609"><a href="#cb28-609" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot elements</span></span>
+<span id="cb28-610"><a href="#cb28-610" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"yellow"</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb28-611"><a href="#cb28-611" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">size =</span> <span class="dv">28</span>, <span class="at">face =</span> <span class="st">"italic"</span>, <span class="at">hjust =</span> <span class="dv">0</span>),</span>
+<span id="cb28-612"><a href="#cb28-612" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">14</span>, <span class="at">face =</span> <span class="st">"bold.italic"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb28-613"><a href="#cb28-613" aria-hidden="true" tabindex="-1"></a>    <span class="co"># panel elements</span></span>
+<span id="cb28-614"><a href="#cb28-614" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"chartreuse"</span>, <span class="at">size =</span> <span class="dv">1</span>),</span>
+<span id="cb28-615"><a href="#cb28-615" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"blue3"</span>),</span>
+<span id="cb28-616"><a href="#cb28-616" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"chartreuse4"</span>),</span>
+<span id="cb28-617"><a href="#cb28-617" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"deeppink"</span>),</span>
+<span id="cb28-618"><a href="#cb28-618" aria-hidden="true" tabindex="-1"></a>    <span class="co"># legend elements</span></span>
+<span id="cb28-619"><a href="#cb28-619" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.height =</span> <span class="fu">unit</span>(<span class="dv">3</span>, <span class="st">"cm"</span>),</span>
+<span id="cb28-620"><a href="#cb28-620" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.width =</span> <span class="fu">unit</span>(<span class="dv">5</span>, <span class="st">"cm"</span>),</span>
+<span id="cb28-621"><a href="#cb28-621" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"green"</span>),</span>
+<span id="cb28-622"><a href="#cb28-622" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"left"</span>,</span>
+<span id="cb28-623"><a href="#cb28-623" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.box.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"red"</span>),</span>
+<span id="cb28-624"><a href="#cb28-624" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axis elements</span></span>
+<span id="cb28-625"><a href="#cb28-625" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y.left =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">17</span>, <span class="at">color =</span> <span class="st">"yellow"</span>),</span>
+<span id="cb28-626"><a href="#cb28-626" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"red"</span>),</span>
+<span id="cb28-627"><a href="#cb28-627" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"purple"</span>,</span>
+<span id="cb28-628"><a href="#cb28-628" aria-hidden="true" tabindex="-1"></a>                             <span class="at">size =</span> <span class="dv">12</span>)</span>
+<span id="cb28-629"><a href="#cb28-629" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb28-630"><a href="#cb28-630" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

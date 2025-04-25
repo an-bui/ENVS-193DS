@@ -408,3 +408,108 @@ Code for the plot your group made:
 # insert code here for your group plot
 ```
 
+## 3. Extra stuff
+
+### Thursday 4 PM plot
+
+```{r thursday-plot}
+#| fig-width: 12
+#| fig-height: 7
+#| code-fold: true
+
+ggplot(data = sharks_clean,
+                     # aesthetics: x-axis, y-axis
+                     aes(x = n,
+                         y = shark_common_name,
+                         # fill columns by shark common name
+                         fill = shark_common_name)) +
+  # first layer: columns to represent counts
+  geom_col() +
+  # faceting by state, putting the strip on the bottom of the plot
+  facet_wrap(~ state,
+             strip.position = "bottom") +
+  # labels
+  labs(x = "Total number of shark incidents",
+       y = "Species") +
+  # manually manipulate fill colors
+  scale_fill_manual(values = c("bull shark" = "pink",
+                               "whaler shark" = "chartreuse")) +
+  # built in theme
+  theme_dark() +
+  # theme elements
+  theme(
+    # strip elements
+    strip.placement = "outside",
+    strip.background = element_rect(color = "red", linetype = 4, linewidth = 7),
+    strip.text = element_text(color = "hotpink"),
+    strip.text.x.top = element_text(size = 20, face = "italic"),
+    # plot elements
+    plot.background = element_rect(fill = "turquoise", color = "#EC4899", linewidth = 4, linetype = "dashed"),
+    # panel elements
+    panel.grid.major.x = element_line(color = "hotpink", linewidth = 3),
+    panel.grid.major.y = element_line(color = "dodgerblue", linewidth = 1),
+    panel.background = element_rect(fill = "lavender"),
+    # legend elements
+    legend.background = element_rect(fill = "chartreuse"),
+    legend.key = element_rect(color = "orange"),
+    legend.text = element_text(size = 30),
+    # axis elements
+    axis.line.x = element_line(color = "yellowgreen", linewidth = 4),
+    axis.line.y = element_line(color = "deeppink1"),
+    axis.text.x.bottom = element_text(color = "skyblue"),
+    axis.text.y.left = element_text(color = "chocolate")
+  )
+```
+
+### Thursday 5 PM plot
+
+```{r}
+#| fig-width: 12
+#| fig-height: 7
+#| code-fold: true
+
+ggplot(data = salmon_clean,
+                      # aesthetics: x-axis, y-axis, and color
+                      aes(x = Date,
+                          y = daily_count,
+                          color = species)) +
+  # first layer: points
+  geom_point() +
+  # second layer: line
+  geom_line(size = 2, 
+            linetype = "dashed") +
+  # labels
+  labs(x = "Date",
+       y = "Daily fish count",
+       title = "Daily fish count per day",
+       subtitle = "group 2",
+       caption = "thursday 5 pm") +
+  # custom color scale
+  scale_color_manual(values = c("Chinook" = "hotpink",
+                                "Coho" = "chartreuse",
+                                "Sockeye" = "pink")) +
+  # adding this facet 
+  facet_wrap(~species) +
+  # built in theme
+  theme_dark() +
+  theme(
+    # strip elements
+    strip.text = element_text(family = "Times New Roman"),
+    strip.background = element_rect(fill = "red"),
+    # plot elements
+    plot.title = element_text(size = 30, face = "bold", color = "orange"),
+    plot.subtitle = element_text(color = "yellow"),
+    plot.margin = margin(t = 100, r = 0.6, b = 20, l = 0.9),
+    plot.background = element_rect(fill = "lightgreen"),
+    # panel elements
+    panel.grid.minor.x = element_line(color = "orange", linewidth = 1),
+    panel.grid.major.y = element_line(color = "darkgreen", linewidth = 5),
+    panel.background = element_rect(fill = "black", color = NA),
+    # legend elements
+    legend.direction = "horizontal",
+    legend.key.size = unit(3, "line"),
+    # axis elements
+    axis.text.y.left = element_text(size = 15, color = "deeppink")
+  )
+```
+

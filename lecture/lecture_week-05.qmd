@@ -1,24 +1,9 @@
 ---
 title: "Week 5 figures - Lectures 9 and 10"
-editor: source
-freeze: auto
-execute:
-  message: false
-  warning: false
-format:
-  html: 
-    code-fold: true
-author:
-  - name: An Bui
-    url: https://an-bui.com/
-    affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology
-    affiliation-url: https://www.eemb.ucsb.edu/
-published-title: "Lecture date"
-date: 2024-04-29
-date-modified: last-modified
+date: 2025-04-28
 categories: [analysis of variance, eta squared, shapiro-wilk, levene, mann-whitney U, wilcoxon signed-rank, kruskal-wallis, cliffs delta]
 citation:
-  url: https://spring-2024.envs-193ds.com/lecture/lecture_week-05.html
+  url: https://spring-2025.envs-193ds.com/lecture/lecture_week-05.html
 ---
 
 ## 0. Set up
@@ -220,6 +205,13 @@ Example: Are the species variances equal?
 leveneTest(bill_length_mm ~ species,
            data = penguins)
 ```
+
+```{r penguins-var-calc}
+penguins |> 
+  group_by(species) |> 
+  summarize(variance = var(bill_length_mm, na.rm = TRUE))
+```
+
 
 ### e. analysis of variance
 

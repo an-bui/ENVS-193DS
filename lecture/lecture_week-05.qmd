@@ -208,8 +208,10 @@ leveneTest(bill_length_mm ~ species,
 
 ```{r penguins-var-calc}
 penguins |> 
+  drop_na(bill_length_mm) |> 
   group_by(species) |> 
-  summarize(variance = var(bill_length_mm, na.rm = TRUE))
+  summarize(variance = var(bill_length_mm, na.rm = TRUE),
+            n = length(bill_length_mm)) 
 ```
 
 

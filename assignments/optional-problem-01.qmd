@@ -2,7 +2,7 @@
 title: "OPTIONAL practice problem - Do a Wilcoxon signed rank test by hand"
 editor: source
 freeze: auto
-date: 2024-05-01
+date: 2025-04-30
 date-modified: last-modified
 ---
 
@@ -117,21 +117,17 @@ Pick the lowest one: +W = 6.
 Start with this data frame:
 
 ```{r}
-# creating a long format data frame
-df <- tibble(before = c(1.2, 2.0, 0.8, 0.6, 1.3, 3.2, 0.9), # original values
-             after = c(1.6, 2.8, 0.7, 0.6, 1.5, 2.7, 1.1)) %>% 
-  pivot_longer(cols = before:after, # making this long format
-               names_to = "sample", # creating a column called "sample" that has before and after
-               values_to = "value") %>% # creating a column called value that has the values
-  mutate(sample = fct_relevel(sample, "before", "after")) %>% # making sure that before appears in the data frame first
-  arrange(sample) # arranging the data frame so that before and after are all sitting 
+# creating a data frame with "before" and "after" values
+# each row is an individual with a measurement taken "before" and "after"
+df <- tibble(before = c(1.2, 2.0, 0.8, 0.6, 1.3, 3.2, 0.9), 
+             after = c(1.6, 2.8, 0.7, 0.6, 1.5, 2.7, 1.1)) 
 ```
 
 Then run a Wilcoxon signed rank test (note the `paired = TRUE` argument).
 
 ```{r}
-wilcox.test(value ~ sample, # formula
-            data = df, # data
+wilcox.test(x = df$before,
+            y = df$after,
             paired = TRUE) # argument for a paired test
 ```
 

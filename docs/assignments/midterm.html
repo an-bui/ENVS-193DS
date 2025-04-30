@@ -484,7 +484,7 @@ Data collection is always attached to its social context
 <p><strong>Read all parts of the paper before starting this problem.</strong></p>
 <p>You will specifically recreate the components in this passage:</p>
 <blockquote class="blockquote">
-<p>Although tussock density was lower at the burned site, tussocks were larger (Table 1, Figure 2a).</p>
+<p>Although tussock density was lower at the burned site, tussocks were larger.</p>
 </blockquote>
 </section>
 <section id="getting-the-data" class="level3">
@@ -1565,287 +1565,286 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb6-267"><a href="#cb6-267" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-268"><a href="#cb6-268" aria-hidden="true" tabindex="-1"></a>You will specifically recreate the components in this passage:  </span>
 <span id="cb6-269"><a href="#cb6-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-270"><a href="#cb6-270" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Although tussock density was lower at the burned site, tussocks were larger </span></span>
-<span id="cb6-271"><a href="#cb6-271" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; (Table 1, Figure 2a).</span></span>
-<span id="cb6-272"><a href="#cb6-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-273"><a href="#cb6-273" aria-hidden="true" tabindex="-1"></a><span class="fu">### Getting the data</span></span>
-<span id="cb6-274"><a href="#cb6-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-275"><a href="#cb6-275" aria-hidden="true" tabindex="-1"></a>This statement relies on the dataset stored here:  </span>
-<span id="cb6-276"><a href="#cb6-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-277"><a href="#cb6-277" aria-hidden="true" tabindex="-1"></a>Rocha, A. 2021. Tussock height and diameter in moist acidic tussock tundra at the site of the</span>
-<span id="cb6-278"><a href="#cb6-278" aria-hidden="true" tabindex="-1"></a>2007 Anaktuvuk River fire scar, and nearby unburned tundra measured in 2016 ver 1.</span>
-<span id="cb6-279"><a href="#cb6-279" aria-hidden="true" tabindex="-1"></a>Environmental Data Initiative. <span class="co">[</span><span class="ot">https://doi.org/10.6073/pasta/1dccd3fdb3aa693f9c2b69a24f8306ed</span><span class="co">](https://doi.org/10.6073/pasta/1dccd3fdb3aa693f9c2b69a24f8306ed)</span>  </span>
-<span id="cb6-280"><a href="#cb6-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-281"><a href="#cb6-281" aria-hidden="true" tabindex="-1"></a>Download the data into your midterm directory. To understand the data structure, read the metadata (under Resources &gt; View full metadata &gt; Data Entities).   </span>
-<span id="cb6-282"><a href="#cb6-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-283"><a href="#cb6-283" aria-hidden="true" tabindex="-1"></a><span class="fu">### Components</span></span>
-<span id="cb6-284"><a href="#cb6-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-285"><a href="#cb6-285" aria-hidden="true" tabindex="-1"></a><span class="fu">#### a. Variables (4 points) </span></span>
-<span id="cb6-286"><a href="#cb6-286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-287"><a href="#cb6-287" aria-hidden="true" tabindex="-1"></a>In 1-2 sentences, describe the response variable (with units) and predictor variable (include each group). Be sure to explain the _type_ of each variable (categorical, continuous, etc.).</span>
-<span id="cb6-288"><a href="#cb6-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-289"><a href="#cb6-289" aria-hidden="true" tabindex="-1"></a><span class="fu">#### b. Hypotheses (4 points) </span></span>
-<span id="cb6-290"><a href="#cb6-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-291"><a href="#cb6-291" aria-hidden="true" tabindex="-1"></a>In one sentence _each_, write the null ($H_0$) and alternative ($H_A$) hypotheses in _statistical_ terms.</span>
-<span id="cb6-292"><a href="#cb6-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-293"><a href="#cb6-293" aria-hidden="true" tabindex="-1"></a><span class="fu">#### c. Cleaning and organizing data (10 points)</span></span>
-<span id="cb6-294"><a href="#cb6-294" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-295"><a href="#cb6-295" aria-hidden="true" tabindex="-1"></a>:::{.callout-note collapse="true" title="Response variable column in original dataset"}</span>
-<span id="cb6-296"><a href="#cb6-296" aria-hidden="true" tabindex="-1"></a>Use the "Average Moss (cm)" column for tussock height.</span>
-<span id="cb6-297"><a href="#cb6-297" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-298"><a href="#cb6-298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-299"><a href="#cb6-299" aria-hidden="true" tabindex="-1"></a>Create an object called <span class="in">`tussocks_clean`</span>. Clean the data by:  </span>
-<span id="cb6-300"><a href="#cb6-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-301"><a href="#cb6-301" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>cleaning _all_ the column names  </span>
-<span id="cb6-302"><a href="#cb6-302" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>replacing the values in the <span class="in">`site`</span> column as follows:  </span>
-<span id="cb6-303"><a href="#cb6-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-304"><a href="#cb6-304" aria-hidden="true" tabindex="-1"></a>   a. replace <span class="in">`Sev`</span> with <span class="in">`Burned`</span>  </span>
-<span id="cb6-305"><a href="#cb6-305" aria-hidden="true" tabindex="-1"></a>   b. replace <span class="in">`Unb`</span> with <span class="in">`Unburned`</span>  </span>
-<span id="cb6-306"><a href="#cb6-306" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-307"><a href="#cb6-307" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>selecting only the site and height column  </span>
-<span id="cb6-308"><a href="#cb6-308" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-309"><a href="#cb6-309" aria-hidden="true" tabindex="-1"></a>Use the pipe operator to string functions together.  </span>
-<span id="cb6-310"><a href="#cb6-310" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-311"><a href="#cb6-311" aria-hidden="true" tabindex="-1"></a>Once you are done, use the <span class="in">`slice_sample()`</span> function to show 5 rows from <span class="in">`tussocks_clean`</span>.  </span>
-<span id="cb6-312"><a href="#cb6-312" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-313"><a href="#cb6-313" aria-hidden="true" tabindex="-1"></a><span class="fu">#### d. Summarizing and table displays (12 points) </span></span>
-<span id="cb6-314"><a href="#cb6-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-315"><a href="#cb6-315" aria-hidden="true" tabindex="-1"></a>Create an object called <span class="in">`tussocks_summary`</span> using the <span class="in">`tussocks_clean`</span> data frame to calculate the:  </span>
-<span id="cb6-316"><a href="#cb6-316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-317"><a href="#cb6-317" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>means,  </span>
-<span id="cb6-318"><a href="#cb6-318" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>standard deviations,  </span>
-<span id="cb6-319"><a href="#cb6-319" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>standard errors, and   </span>
-<span id="cb6-320"><a href="#cb6-320" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>95% confidence intervals of the means  </span>
-<span id="cb6-321"><a href="#cb6-321" aria-hidden="true" tabindex="-1"></a>for the response variable within the two groups.  </span>
-<span id="cb6-322"><a href="#cb6-322" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-323"><a href="#cb6-323" aria-hidden="true" tabindex="-1"></a>Round all numbers to 1 decimal point.  </span>
-<span id="cb6-324"><a href="#cb6-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-325"><a href="#cb6-325" aria-hidden="true" tabindex="-1"></a>Display _only_ the means, standard deviations, standard errors, and 95% confidence intervals in a **table**. Choose _one_ of the following packages to do so:  </span>
-<span id="cb6-326"><a href="#cb6-326" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-327"><a href="#cb6-327" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`gt`</span> (package info <span class="co">[</span><span class="ot">here</span><span class="co">](https://gt.rstudio.com/)</span>)  </span>
-<span id="cb6-328"><a href="#cb6-328" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`flextable`</span> (package info <span class="co">[</span><span class="ot">here</span><span class="co">](https://ardata-fr.github.io/flextable-book/)</span>)    </span>
-<span id="cb6-329"><a href="#cb6-329" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-330"><a href="#cb6-330" aria-hidden="true" tabindex="-1"></a>Make sure the column names of the table are polished (no underscores, capitalized in sentence case).  </span>
-<span id="cb6-331"><a href="#cb6-331" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-332"><a href="#cb6-332" aria-hidden="true" tabindex="-1"></a>Show _all_ code for your calculations and making/polishing the table.</span>
-<span id="cb6-333"><a href="#cb6-333" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-334"><a href="#cb6-334" aria-hidden="true" tabindex="-1"></a>:::{.callout-note collapse="true" title="Double check your table!"}</span>
-<span id="cb6-335"><a href="#cb6-335" aria-hidden="true" tabindex="-1"></a>**Render your document to make sure your table looks right.** Do not assume that just because your code works, your table will render correctly. </span>
-<span id="cb6-336"><a href="#cb6-336" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-337"><a href="#cb6-337" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-338"><a href="#cb6-338" aria-hidden="true" tabindex="-1"></a><span class="fu">#### e. Tests and effect sizes (6 points) </span></span>
-<span id="cb6-339"><a href="#cb6-339" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-340"><a href="#cb6-340" aria-hidden="true" tabindex="-1"></a>Use a Welch's t-test to compare mean tussock height between groups.  </span>
-<span id="cb6-341"><a href="#cb6-341" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-342"><a href="#cb6-342" aria-hidden="true" tabindex="-1"></a>Calculate the appropriate effect size.  </span>
-<span id="cb6-343"><a href="#cb6-343" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-344"><a href="#cb6-344" aria-hidden="true" tabindex="-1"></a><span class="fu">#### f. Written communication (14 points)</span></span>
-<span id="cb6-345"><a href="#cb6-345" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-346"><a href="#cb6-346" aria-hidden="true" tabindex="-1"></a>The authors communicated about the results of this test in the text above (in the Description) and in a table in the paper.  </span>
-<span id="cb6-347"><a href="#cb6-347" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-348"><a href="#cb6-348" aria-hidden="true" tabindex="-1"></a>In 1-2 sentences _only_, write an updated interpretation with results of the test and effect size. Be sure to include all components of the test summary (for example, degrees of freedom, distribution, test statistic, confidence interval, etc.) that are important for understanding its structure.  </span>
-<span id="cb6-349"><a href="#cb6-349" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-350"><a href="#cb6-350" aria-hidden="true" tabindex="-1"></a><span class="fu">#### g. Making a new figure (13 points)</span></span>
-<span id="cb6-351"><a href="#cb6-351" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-352"><a href="#cb6-352" aria-hidden="true" tabindex="-1"></a>Plots like Figure 3b in the paper show means and whiskers (in this case, standard error), but do not show the data structure and can mask important information about the spread of the observations in each sample.  </span>
-<span id="cb6-353"><a href="#cb6-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-354"><a href="#cb6-354" aria-hidden="true" tabindex="-1"></a>Make a new figure that displays the mean and standard error (as in figure 3b) but shows the underlying data. For full credit:  </span>
-<span id="cb6-355"><a href="#cb6-355" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-356"><a href="#cb6-356" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>take out the gridlines and make the plot and panel background white  </span>
-<span id="cb6-357"><a href="#cb6-357" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>jitter the observations horizontally but _not_ vertically  </span>
-<span id="cb6-358"><a href="#cb6-358" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>give each type a different color that is different from the <span class="in">`ggplot()`</span> default color  </span>
-<span id="cb6-359"><a href="#cb6-359" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>use transparent open circles to represent the underlying data    </span>
-<span id="cb6-360"><a href="#cb6-360" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>take out the legend  </span>
-<span id="cb6-361"><a href="#cb6-361" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>include a plot title and put your name as the subtitle  </span>
-<span id="cb6-362"><a href="#cb6-362" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-363"><a href="#cb6-363" aria-hidden="true" tabindex="-1"></a><span class="fu">#### h. Caption (10 points)</span></span>
-<span id="cb6-364"><a href="#cb6-364" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-365"><a href="#cb6-365" aria-hidden="true" tabindex="-1"></a>Write a caption for your figure in part g. Include a data citation.</span>
-<span id="cb6-366"><a href="#cb6-366" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-367"><a href="#cb6-367" aria-hidden="true" tabindex="-1"></a><span class="fu">## Problem 4. Cleaning, wrangling, and visualization (33 points)</span></span>
-<span id="cb6-368"><a href="#cb6-368" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-369"><a href="#cb6-369" aria-hidden="true" tabindex="-1"></a><span class="fu">### Skills you will demonstrate</span></span>
-<span id="cb6-370"><a href="#cb6-370" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-371"><a href="#cb6-371" aria-hidden="true" tabindex="-1"></a>Figures are built on data; however, to make a figure, you need to understand the data structure and any cleaning, wrangling, or summarizing steps to create it. In this problem, **you will demonstrate your ability to clean, wrangle, and/or summarize a data set to create a figure**, using a final figure as a guide.</span>
-<span id="cb6-372"><a href="#cb6-372" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-373"><a href="#cb6-373" aria-hidden="true" tabindex="-1"></a><span class="fu">### Description</span></span>
-<span id="cb6-374"><a href="#cb6-374" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-377"><a href="#cb6-377" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-378"><a href="#cb6-378" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb6-379"><a href="#cb6-379" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb6-380"><a href="#cb6-380" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-381"><a href="#cb6-381" aria-hidden="true" tabindex="-1"></a>rain <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"200dailys.csv"</span>))</span>
-<span id="cb6-382"><a href="#cb6-382" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-383"><a href="#cb6-383" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-384"><a href="#cb6-384" aria-hidden="true" tabindex="-1"></a>In this problem, you will use a data set of rainfall (measured in inches) from the rain gauge on top of Ellison Hall to recreate this figure.  </span>
-<span id="cb6-385"><a href="#cb6-385" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-386"><a href="#cb6-386" aria-hidden="true" tabindex="-1"></a><span class="al">![](/assignments/images/midterm/rain-gauge-figure.jpeg)</span></span>
-<span id="cb6-387"><a href="#cb6-387" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-388"><a href="#cb6-388" aria-hidden="true" tabindex="-1"></a>The caption for the figure is as follows:  </span>
-<span id="cb6-389"><a href="#cb6-389" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-390"><a href="#cb6-390" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">**Figure 2. Most rain occurs between November and March.** Lines and points represent total monthly rain (measured in inches) from Ellison Hall rain gauge for each water year starting in September and ending in August. Shown are water years 2018-2019 (purple), 2019-2020 (red), 2020-2021 (orange), 2021-2022 (yellow), 2022-2023 (green) and 2023-2024 (blue). Data source: County of Santa Barbara Public Works, [Daily Rainfall Data (XLS)](https://www.countyofsb.org/2328/Daily-Rainfall-Data-XLS). Accessed April 2025.</span><span class="co">]</span>{style="color: #6b6b6b; font-size: 12px;"}</span>
-<span id="cb6-391"><a href="#cb6-391" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-392"><a href="#cb6-392" aria-hidden="true" tabindex="-1"></a><span class="fu">### Getting the data</span></span>
-<span id="cb6-393"><a href="#cb6-393" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-394"><a href="#cb6-394" aria-hidden="true" tabindex="-1"></a>This data set comes from the Count of Santa Barbara Public Works under the <span class="co">[</span><span class="ot">Daily Rainfall Data (XLS) page</span><span class="co">](https://www.countyofsb.org/2328/Daily-Rainfall-Data-XLS)</span>.  </span>
-<span id="cb6-395"><a href="#cb6-395" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-396"><a href="#cb6-396" aria-hidden="true" tabindex="-1"></a>On the website, click the red dot next to Isla Vista (this represents the Ellison Hall rain gauge).  </span>
-<span id="cb6-397"><a href="#cb6-397" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-398"><a href="#cb6-398" aria-hidden="true" tabindex="-1"></a>**MAKE SURE YOU HAVE DOWNLOADED THE CORRECT DATA FILE. YOUR FILE SHOULD BE CALLED `200dailys.xls`.**  </span>
-<span id="cb6-399"><a href="#cb6-399" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-400"><a href="#cb6-400" aria-hidden="true" tabindex="-1"></a>:::{.callout-note collapse="true" title="Look at the data in Sheets or Excel before starting!"}</span>
-<span id="cb6-401"><a href="#cb6-401" aria-hidden="true" tabindex="-1"></a>You will see that there is extra information at the top of the sheet. Clean up the file so that it only has data columns, and save that as a .csv file.</span>
-<span id="cb6-402"><a href="#cb6-402" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-403"><a href="#cb6-403" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-404"><a href="#cb6-404" aria-hidden="true" tabindex="-1"></a><span class="fu">### Components</span></span>
-<span id="cb6-405"><a href="#cb6-405" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-406"><a href="#cb6-406" aria-hidden="true" tabindex="-1"></a><span class="fu">#### a. Initial cleaning, wrangling, and summarizing (14 points)</span></span>
-<span id="cb6-407"><a href="#cb6-407" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-408"><a href="#cb6-408" aria-hidden="true" tabindex="-1"></a>:::{.callout-note collapse="true" title="Double check your data"}</span>
-<span id="cb6-409"><a href="#cb6-409" aria-hidden="true" tabindex="-1"></a>Before you do this problem, make sure you have code to read in and save your data as an object called <span class="in">`rain`</span> at the top of the document.</span>
-<span id="cb6-410"><a href="#cb6-410" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-411"><a href="#cb6-411" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-412"><a href="#cb6-412" aria-hidden="true" tabindex="-1"></a>The following chunk of code creates an object called <span class="in">`rain_clean`</span>. Copy and paste this code into your document to run it.  </span>
-<span id="cb6-413"><a href="#cb6-413" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-414"><a href="#cb6-414" aria-hidden="true" tabindex="-1"></a>Where prompted in the code annotations, fill in your responses to describe what each function is doing, and how the data frame changes. _Only write your responses in the annotations_. See function 7 for an example. </span>
-<span id="cb6-415"><a href="#cb6-415" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-418"><a href="#cb6-418" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-419"><a href="#cb6-419" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb6-420"><a href="#cb6-420" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-421"><a href="#cb6-421" aria-hidden="true" tabindex="-1"></a>rain_clean <span class="ot">&lt;-</span> rain <span class="sc">|&gt;</span>  </span>
-<span id="cb6-422"><a href="#cb6-422" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb6-423"><a href="#cb6-423" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 1. what changes after this function? </span></span>
-<span id="cb6-424"><a href="#cb6-424" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
-<span id="cb6-425"><a href="#cb6-425" aria-hidden="true" tabindex="-1"></a>  <span class="co"># give an example. </span></span>
-<span id="cb6-426"><a href="#cb6-426" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
-<span id="cb6-427"><a href="#cb6-427" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span>  </span>
-<span id="cb6-428"><a href="#cb6-428" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb6-429"><a href="#cb6-429" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2. what new column is created? </span></span>
-<span id="cb6-430"><a href="#cb6-430" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
-<span id="cb6-431"><a href="#cb6-431" aria-hidden="true" tabindex="-1"></a>  <span class="co"># give an example of a value in this column.</span></span>
-<span id="cb6-432"><a href="#cb6-432" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
-<span id="cb6-433"><a href="#cb6-433" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">water_year_minus1 =</span> water_year <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">|&gt;</span>  </span>
-<span id="cb6-434"><a href="#cb6-434" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb6-435"><a href="#cb6-435" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 3. what old column is changed?</span></span>
-<span id="cb6-436"><a href="#cb6-436" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
-<span id="cb6-437"><a href="#cb6-437" aria-hidden="true" tabindex="-1"></a>  <span class="co"># give an example of a value in the old column, and explain how it changed. </span></span>
-<span id="cb6-438"><a href="#cb6-438" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
-<span id="cb6-439"><a href="#cb6-439" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">water_year =</span> <span class="fu">paste0</span>(water_year_minus1, <span class="st">"-"</span>, water_year)) <span class="sc">|&gt;</span> </span>
-<span id="cb6-440"><a href="#cb6-440" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb6-441"><a href="#cb6-441" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 4. what columns are excluded from the data frame?</span></span>
-<span id="cb6-442"><a href="#cb6-442" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
-<span id="cb6-443"><a href="#cb6-443" aria-hidden="true" tabindex="-1"></a>  <span class="co"># give an example of a value in water_year_minus1 </span></span>
-<span id="cb6-444"><a href="#cb6-444" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
-<span id="cb6-445"><a href="#cb6-445" aria-hidden="true" tabindex="-1"></a>  <span class="co"># give an example of a value in code </span></span>
-<span id="cb6-446"><a href="#cb6-446" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
-<span id="cb6-447"><a href="#cb6-447" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(water_year_minus1, code)) <span class="sc">|&gt;</span> </span>
-<span id="cb6-448"><a href="#cb6-448" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb6-449"><a href="#cb6-449" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 5. which column is manipulated, and what changes about it? </span></span>
-<span id="cb6-450"><a href="#cb6-450" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Hint: run str(rain_clean) in the Console. what do you see for the month column?</span></span>
-<span id="cb6-451"><a href="#cb6-451" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
-<span id="cb6-452"><a href="#cb6-452" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">as_factor</span>(month),</span>
-<span id="cb6-453"><a href="#cb6-453" aria-hidden="true" tabindex="-1"></a>         <span class="at">month =</span> <span class="fu">fct_relevel</span>(</span>
-<span id="cb6-454"><a href="#cb6-454" aria-hidden="true" tabindex="-1"></a>           month, </span>
-<span id="cb6-455"><a href="#cb6-455" aria-hidden="true" tabindex="-1"></a>           <span class="st">"9"</span>, <span class="st">"10"</span>, <span class="st">"11"</span>, <span class="st">"12"</span>, <span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"3"</span>, <span class="st">"4"</span>, <span class="st">"5"</span>, <span class="st">"6"</span>, <span class="st">"7"</span>, <span class="st">"8"</span>)</span>
-<span id="cb6-456"><a href="#cb6-456" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">|&gt;</span>  </span>
-<span id="cb6-457"><a href="#cb6-457" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb6-458"><a href="#cb6-458" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 6. what is being calculated? on an annual, monthly, or daily scale? </span></span>
-<span id="cb6-459"><a href="#cb6-459" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
-<span id="cb6-460"><a href="#cb6-460" aria-hidden="true" tabindex="-1"></a>  <span class="co"># give an example. </span></span>
-<span id="cb6-461"><a href="#cb6-461" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
-<span id="cb6-462"><a href="#cb6-462" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month, water_year) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-463"><a href="#cb6-463" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total_rain =</span> <span class="fu">sum</span>(daily_rain, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span>  </span>
-<span id="cb6-464"><a href="#cb6-464" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span>  </span>
-<span id="cb6-465"><a href="#cb6-465" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb6-466"><a href="#cb6-466" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 7. what is being done to which columns? </span></span>
-<span id="cb6-467"><a href="#cb6-467" aria-hidden="true" tabindex="-1"></a>  <span class="co"># missing combinations of values of water_year and month are being filled in with 0</span></span>
-<span id="cb6-468"><a href="#cb6-468" aria-hidden="true" tabindex="-1"></a>  <span class="co"># give an example. </span></span>
-<span id="cb6-469"><a href="#cb6-469" aria-hidden="true" tabindex="-1"></a>  <span class="co"># july in 1951-1952 was not in the data frame previously, and now is present with a total rain of 0 inches</span></span>
-<span id="cb6-470"><a href="#cb6-470" aria-hidden="true" tabindex="-1"></a>  <span class="fu">complete</span>(water_year, </span>
-<span id="cb6-471"><a href="#cb6-471" aria-hidden="true" tabindex="-1"></a>           month, </span>
-<span id="cb6-472"><a href="#cb6-472" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="fu">list</span>(<span class="at">total_rain =</span> <span class="dv">0</span>)) <span class="sc">|&gt;</span>  </span>
-<span id="cb6-473"><a href="#cb6-473" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb6-474"><a href="#cb6-474" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 8. which observations are kept after this filtering step?</span></span>
-<span id="cb6-475"><a href="#cb6-475" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
-<span id="cb6-476"><a href="#cb6-476" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(water_year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"2018-2019"</span>, </span>
-<span id="cb6-477"><a href="#cb6-477" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"2019-2020"</span>, </span>
-<span id="cb6-478"><a href="#cb6-478" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"2020-2021"</span>, </span>
-<span id="cb6-479"><a href="#cb6-479" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"2021-2022"</span>, </span>
-<span id="cb6-480"><a href="#cb6-480" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"2022-2023"</span>, </span>
-<span id="cb6-481"><a href="#cb6-481" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"2023-2024"</span>)) </span>
-<span id="cb6-482"><a href="#cb6-482" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-483"><a href="#cb6-483" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-484"><a href="#cb6-484" aria-hidden="true" tabindex="-1"></a>:::{.callout-note collapse="true" title="A possible approach"}</span>
-<span id="cb6-485"><a href="#cb6-485" aria-hidden="true" tabindex="-1"></a>One way to approach this problem is to delete all the pipe operators and add them back in one by one. With every additional function, look at the <span class="in">`rain_clean`</span> object to describe what has changed about the data frame.</span>
-<span id="cb6-486"><a href="#cb6-486" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-487"><a href="#cb6-487" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-488"><a href="#cb6-488" aria-hidden="true" tabindex="-1"></a><span class="fu">#### b. Make the figure (19 points)</span></span>
-<span id="cb6-489"><a href="#cb6-489" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-490"><a href="#cb6-490" aria-hidden="true" tabindex="-1"></a>Recreate the figure. Specifically, recreate the:  </span>
-<span id="cb6-491"><a href="#cb6-491" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-492"><a href="#cb6-492" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>x-axis (and label),  </span>
-<span id="cb6-493"><a href="#cb6-493" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>y-axis (and label),  </span>
-<span id="cb6-494"><a href="#cb6-494" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>title,  </span>
-<span id="cb6-495"><a href="#cb6-495" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>legend position,  </span>
-<span id="cb6-496"><a href="#cb6-496" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>panel background (blank),  </span>
-<span id="cb6-497"><a href="#cb6-497" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>axis lines and ticks (blank),  </span>
-<span id="cb6-498"><a href="#cb6-498" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>title position,  </span>
-<span id="cb6-499"><a href="#cb6-499" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>geometries, and  </span>
-<span id="cb6-500"><a href="#cb6-500" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>different colors  </span>
-<span id="cb6-501"><a href="#cb6-501" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-502"><a href="#cb6-502" aria-hidden="true" tabindex="-1"></a>Note that you do not need an exact match of the colors (choose whatever colors you want) or legend position (just make sure it's inside the panel and doesn't cover any points).</span>
-<span id="cb6-503"><a href="#cb6-503" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-504"><a href="#cb6-504" aria-hidden="true" tabindex="-1"></a>:::{.callout-note collapse="true" title="My figure doesn't look right when I render my document."}</span>
-<span id="cb6-505"><a href="#cb6-505" aria-hidden="true" tabindex="-1"></a>You will have to set the code chunk options to make a larger figure. Click the gear button in the code chunk to set those options.</span>
-<span id="cb6-506"><a href="#cb6-506" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb6-270"><a href="#cb6-270" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Although tussock density was lower at the burned site, tussocks were larger.</span></span>
+<span id="cb6-271"><a href="#cb6-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-272"><a href="#cb6-272" aria-hidden="true" tabindex="-1"></a><span class="fu">### Getting the data</span></span>
+<span id="cb6-273"><a href="#cb6-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-274"><a href="#cb6-274" aria-hidden="true" tabindex="-1"></a>This statement relies on the dataset stored here:  </span>
+<span id="cb6-275"><a href="#cb6-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-276"><a href="#cb6-276" aria-hidden="true" tabindex="-1"></a>Rocha, A. 2021. Tussock height and diameter in moist acidic tussock tundra at the site of the</span>
+<span id="cb6-277"><a href="#cb6-277" aria-hidden="true" tabindex="-1"></a>2007 Anaktuvuk River fire scar, and nearby unburned tundra measured in 2016 ver 1.</span>
+<span id="cb6-278"><a href="#cb6-278" aria-hidden="true" tabindex="-1"></a>Environmental Data Initiative. <span class="co">[</span><span class="ot">https://doi.org/10.6073/pasta/1dccd3fdb3aa693f9c2b69a24f8306ed</span><span class="co">](https://doi.org/10.6073/pasta/1dccd3fdb3aa693f9c2b69a24f8306ed)</span>  </span>
+<span id="cb6-279"><a href="#cb6-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-280"><a href="#cb6-280" aria-hidden="true" tabindex="-1"></a>Download the data into your midterm directory. To understand the data structure, read the metadata (under Resources &gt; View full metadata &gt; Data Entities).   </span>
+<span id="cb6-281"><a href="#cb6-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-282"><a href="#cb6-282" aria-hidden="true" tabindex="-1"></a><span class="fu">### Components</span></span>
+<span id="cb6-283"><a href="#cb6-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-284"><a href="#cb6-284" aria-hidden="true" tabindex="-1"></a><span class="fu">#### a. Variables (4 points) </span></span>
+<span id="cb6-285"><a href="#cb6-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-286"><a href="#cb6-286" aria-hidden="true" tabindex="-1"></a>In 1-2 sentences, describe the response variable (with units) and predictor variable (include each group). Be sure to explain the _type_ of each variable (categorical, continuous, etc.).</span>
+<span id="cb6-287"><a href="#cb6-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-288"><a href="#cb6-288" aria-hidden="true" tabindex="-1"></a><span class="fu">#### b. Hypotheses (4 points) </span></span>
+<span id="cb6-289"><a href="#cb6-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-290"><a href="#cb6-290" aria-hidden="true" tabindex="-1"></a>In one sentence _each_, write the null ($H_0$) and alternative ($H_A$) hypotheses in _statistical_ terms.</span>
+<span id="cb6-291"><a href="#cb6-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-292"><a href="#cb6-292" aria-hidden="true" tabindex="-1"></a><span class="fu">#### c. Cleaning and organizing data (10 points)</span></span>
+<span id="cb6-293"><a href="#cb6-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-294"><a href="#cb6-294" aria-hidden="true" tabindex="-1"></a>:::{.callout-note collapse="true" title="Response variable column in original dataset"}</span>
+<span id="cb6-295"><a href="#cb6-295" aria-hidden="true" tabindex="-1"></a>Use the "Average Moss (cm)" column for tussock height.</span>
+<span id="cb6-296"><a href="#cb6-296" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb6-297"><a href="#cb6-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-298"><a href="#cb6-298" aria-hidden="true" tabindex="-1"></a>Create an object called <span class="in">`tussocks_clean`</span>. Clean the data by:  </span>
+<span id="cb6-299"><a href="#cb6-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-300"><a href="#cb6-300" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>cleaning _all_ the column names  </span>
+<span id="cb6-301"><a href="#cb6-301" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>replacing the values in the <span class="in">`site`</span> column as follows:  </span>
+<span id="cb6-302"><a href="#cb6-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-303"><a href="#cb6-303" aria-hidden="true" tabindex="-1"></a>   a. replace <span class="in">`Sev`</span> with <span class="in">`Burned`</span>  </span>
+<span id="cb6-304"><a href="#cb6-304" aria-hidden="true" tabindex="-1"></a>   b. replace <span class="in">`Unb`</span> with <span class="in">`Unburned`</span>  </span>
+<span id="cb6-305"><a href="#cb6-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-306"><a href="#cb6-306" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>selecting only the site and height column  </span>
+<span id="cb6-307"><a href="#cb6-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-308"><a href="#cb6-308" aria-hidden="true" tabindex="-1"></a>Use the pipe operator to string functions together.  </span>
+<span id="cb6-309"><a href="#cb6-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-310"><a href="#cb6-310" aria-hidden="true" tabindex="-1"></a>Once you are done, use the <span class="in">`slice_sample()`</span> function to show 5 rows from <span class="in">`tussocks_clean`</span>.  </span>
+<span id="cb6-311"><a href="#cb6-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-312"><a href="#cb6-312" aria-hidden="true" tabindex="-1"></a><span class="fu">#### d. Summarizing and table displays (12 points) </span></span>
+<span id="cb6-313"><a href="#cb6-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-314"><a href="#cb6-314" aria-hidden="true" tabindex="-1"></a>Create an object called <span class="in">`tussocks_summary`</span> using the <span class="in">`tussocks_clean`</span> data frame to calculate the:  </span>
+<span id="cb6-315"><a href="#cb6-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-316"><a href="#cb6-316" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>means,  </span>
+<span id="cb6-317"><a href="#cb6-317" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>standard deviations,  </span>
+<span id="cb6-318"><a href="#cb6-318" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>standard errors, and   </span>
+<span id="cb6-319"><a href="#cb6-319" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>95% confidence intervals of the means  </span>
+<span id="cb6-320"><a href="#cb6-320" aria-hidden="true" tabindex="-1"></a>for the response variable within the two groups.  </span>
+<span id="cb6-321"><a href="#cb6-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-322"><a href="#cb6-322" aria-hidden="true" tabindex="-1"></a>Round all numbers to 1 decimal point.  </span>
+<span id="cb6-323"><a href="#cb6-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-324"><a href="#cb6-324" aria-hidden="true" tabindex="-1"></a>Display _only_ the means, standard deviations, standard errors, and 95% confidence intervals in a **table**. Choose _one_ of the following packages to do so:  </span>
+<span id="cb6-325"><a href="#cb6-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-326"><a href="#cb6-326" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`gt`</span> (package info <span class="co">[</span><span class="ot">here</span><span class="co">](https://gt.rstudio.com/)</span>)  </span>
+<span id="cb6-327"><a href="#cb6-327" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`flextable`</span> (package info <span class="co">[</span><span class="ot">here</span><span class="co">](https://ardata-fr.github.io/flextable-book/)</span>)    </span>
+<span id="cb6-328"><a href="#cb6-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-329"><a href="#cb6-329" aria-hidden="true" tabindex="-1"></a>Make sure the column names of the table are polished (no underscores, capitalized in sentence case).  </span>
+<span id="cb6-330"><a href="#cb6-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-331"><a href="#cb6-331" aria-hidden="true" tabindex="-1"></a>Show _all_ code for your calculations and making/polishing the table.</span>
+<span id="cb6-332"><a href="#cb6-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-333"><a href="#cb6-333" aria-hidden="true" tabindex="-1"></a>:::{.callout-note collapse="true" title="Double check your table!"}</span>
+<span id="cb6-334"><a href="#cb6-334" aria-hidden="true" tabindex="-1"></a>**Render your document to make sure your table looks right.** Do not assume that just because your code works, your table will render correctly. </span>
+<span id="cb6-335"><a href="#cb6-335" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb6-336"><a href="#cb6-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-337"><a href="#cb6-337" aria-hidden="true" tabindex="-1"></a><span class="fu">#### e. Tests and effect sizes (6 points) </span></span>
+<span id="cb6-338"><a href="#cb6-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-339"><a href="#cb6-339" aria-hidden="true" tabindex="-1"></a>Use a Welch's t-test to compare mean tussock height between groups.  </span>
+<span id="cb6-340"><a href="#cb6-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-341"><a href="#cb6-341" aria-hidden="true" tabindex="-1"></a>Calculate the appropriate effect size.  </span>
+<span id="cb6-342"><a href="#cb6-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-343"><a href="#cb6-343" aria-hidden="true" tabindex="-1"></a><span class="fu">#### f. Written communication (14 points)</span></span>
+<span id="cb6-344"><a href="#cb6-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-345"><a href="#cb6-345" aria-hidden="true" tabindex="-1"></a>The authors communicated about the results of this test in the text above (in the Description) and in a table in the paper.  </span>
+<span id="cb6-346"><a href="#cb6-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-347"><a href="#cb6-347" aria-hidden="true" tabindex="-1"></a>In 1-2 sentences _only_, write an updated interpretation with results of the test and effect size. Be sure to include all components of the test summary (for example, degrees of freedom, distribution, test statistic, confidence interval, etc.) that are important for understanding its structure.  </span>
+<span id="cb6-348"><a href="#cb6-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-349"><a href="#cb6-349" aria-hidden="true" tabindex="-1"></a><span class="fu">#### g. Making a new figure (13 points)</span></span>
+<span id="cb6-350"><a href="#cb6-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-351"><a href="#cb6-351" aria-hidden="true" tabindex="-1"></a>Plots like Figure 3b in the paper show means and whiskers (in this case, standard error), but do not show the data structure and can mask important information about the spread of the observations in each sample.  </span>
+<span id="cb6-352"><a href="#cb6-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-353"><a href="#cb6-353" aria-hidden="true" tabindex="-1"></a>Make a new figure that displays the mean and standard error (as in figure 3b) but shows the underlying data. For full credit:  </span>
+<span id="cb6-354"><a href="#cb6-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-355"><a href="#cb6-355" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>take out the gridlines and make the plot and panel background white  </span>
+<span id="cb6-356"><a href="#cb6-356" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>jitter the observations horizontally but _not_ vertically  </span>
+<span id="cb6-357"><a href="#cb6-357" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>give each type a different color that is different from the <span class="in">`ggplot()`</span> default color  </span>
+<span id="cb6-358"><a href="#cb6-358" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>use transparent open circles to represent the underlying data    </span>
+<span id="cb6-359"><a href="#cb6-359" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>take out the legend  </span>
+<span id="cb6-360"><a href="#cb6-360" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>include a plot title and put your name as the subtitle  </span>
+<span id="cb6-361"><a href="#cb6-361" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-362"><a href="#cb6-362" aria-hidden="true" tabindex="-1"></a><span class="fu">#### h. Caption (10 points)</span></span>
+<span id="cb6-363"><a href="#cb6-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-364"><a href="#cb6-364" aria-hidden="true" tabindex="-1"></a>Write a caption for your figure in part g. Include a data citation.</span>
+<span id="cb6-365"><a href="#cb6-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-366"><a href="#cb6-366" aria-hidden="true" tabindex="-1"></a><span class="fu">## Problem 4. Cleaning, wrangling, and visualization (33 points)</span></span>
+<span id="cb6-367"><a href="#cb6-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-368"><a href="#cb6-368" aria-hidden="true" tabindex="-1"></a><span class="fu">### Skills you will demonstrate</span></span>
+<span id="cb6-369"><a href="#cb6-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-370"><a href="#cb6-370" aria-hidden="true" tabindex="-1"></a>Figures are built on data; however, to make a figure, you need to understand the data structure and any cleaning, wrangling, or summarizing steps to create it. In this problem, **you will demonstrate your ability to clean, wrangle, and/or summarize a data set to create a figure**, using a final figure as a guide.</span>
+<span id="cb6-371"><a href="#cb6-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-372"><a href="#cb6-372" aria-hidden="true" tabindex="-1"></a><span class="fu">### Description</span></span>
+<span id="cb6-373"><a href="#cb6-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-376"><a href="#cb6-376" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb6-377"><a href="#cb6-377" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb6-378"><a href="#cb6-378" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb6-379"><a href="#cb6-379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-380"><a href="#cb6-380" aria-hidden="true" tabindex="-1"></a>rain <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"200dailys.csv"</span>))</span>
+<span id="cb6-381"><a href="#cb6-381" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-382"><a href="#cb6-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-383"><a href="#cb6-383" aria-hidden="true" tabindex="-1"></a>In this problem, you will use a data set of rainfall (measured in inches) from the rain gauge on top of Ellison Hall to recreate this figure.  </span>
+<span id="cb6-384"><a href="#cb6-384" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-385"><a href="#cb6-385" aria-hidden="true" tabindex="-1"></a><span class="al">![](/assignments/images/midterm/rain-gauge-figure.jpeg)</span></span>
+<span id="cb6-386"><a href="#cb6-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-387"><a href="#cb6-387" aria-hidden="true" tabindex="-1"></a>The caption for the figure is as follows:  </span>
+<span id="cb6-388"><a href="#cb6-388" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-389"><a href="#cb6-389" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">**Figure 2. Most rain occurs between November and March.** Lines and points represent total monthly rain (measured in inches) from Ellison Hall rain gauge for each water year starting in September and ending in August. Shown are water years 2018-2019 (purple), 2019-2020 (red), 2020-2021 (orange), 2021-2022 (yellow), 2022-2023 (green) and 2023-2024 (blue). Data source: County of Santa Barbara Public Works, [Daily Rainfall Data (XLS)](https://www.countyofsb.org/2328/Daily-Rainfall-Data-XLS). Accessed April 2025.</span><span class="co">]</span>{style="color: #6b6b6b; font-size: 12px;"}</span>
+<span id="cb6-390"><a href="#cb6-390" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-391"><a href="#cb6-391" aria-hidden="true" tabindex="-1"></a><span class="fu">### Getting the data</span></span>
+<span id="cb6-392"><a href="#cb6-392" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-393"><a href="#cb6-393" aria-hidden="true" tabindex="-1"></a>This data set comes from the Count of Santa Barbara Public Works under the <span class="co">[</span><span class="ot">Daily Rainfall Data (XLS) page</span><span class="co">](https://www.countyofsb.org/2328/Daily-Rainfall-Data-XLS)</span>.  </span>
+<span id="cb6-394"><a href="#cb6-394" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-395"><a href="#cb6-395" aria-hidden="true" tabindex="-1"></a>On the website, click the red dot next to Isla Vista (this represents the Ellison Hall rain gauge).  </span>
+<span id="cb6-396"><a href="#cb6-396" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-397"><a href="#cb6-397" aria-hidden="true" tabindex="-1"></a>**MAKE SURE YOU HAVE DOWNLOADED THE CORRECT DATA FILE. YOUR FILE SHOULD BE CALLED `200dailys.xls`.**  </span>
+<span id="cb6-398"><a href="#cb6-398" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-399"><a href="#cb6-399" aria-hidden="true" tabindex="-1"></a>:::{.callout-note collapse="true" title="Look at the data in Sheets or Excel before starting!"}</span>
+<span id="cb6-400"><a href="#cb6-400" aria-hidden="true" tabindex="-1"></a>You will see that there is extra information at the top of the sheet. Clean up the file so that it only has data columns, and save that as a .csv file.</span>
+<span id="cb6-401"><a href="#cb6-401" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb6-402"><a href="#cb6-402" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-403"><a href="#cb6-403" aria-hidden="true" tabindex="-1"></a><span class="fu">### Components</span></span>
+<span id="cb6-404"><a href="#cb6-404" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-405"><a href="#cb6-405" aria-hidden="true" tabindex="-1"></a><span class="fu">#### a. Initial cleaning, wrangling, and summarizing (14 points)</span></span>
+<span id="cb6-406"><a href="#cb6-406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-407"><a href="#cb6-407" aria-hidden="true" tabindex="-1"></a>:::{.callout-note collapse="true" title="Double check your data"}</span>
+<span id="cb6-408"><a href="#cb6-408" aria-hidden="true" tabindex="-1"></a>Before you do this problem, make sure you have code to read in and save your data as an object called <span class="in">`rain`</span> at the top of the document.</span>
+<span id="cb6-409"><a href="#cb6-409" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb6-410"><a href="#cb6-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-411"><a href="#cb6-411" aria-hidden="true" tabindex="-1"></a>The following chunk of code creates an object called <span class="in">`rain_clean`</span>. Copy and paste this code into your document to run it.  </span>
+<span id="cb6-412"><a href="#cb6-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-413"><a href="#cb6-413" aria-hidden="true" tabindex="-1"></a>Where prompted in the code annotations, fill in your responses to describe what each function is doing, and how the data frame changes. _Only write your responses in the annotations_. See function 7 for an example. </span>
+<span id="cb6-414"><a href="#cb6-414" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-417"><a href="#cb6-417" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb6-418"><a href="#cb6-418" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb6-419"><a href="#cb6-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-420"><a href="#cb6-420" aria-hidden="true" tabindex="-1"></a>rain_clean <span class="ot">&lt;-</span> rain <span class="sc">|&gt;</span>  </span>
+<span id="cb6-421"><a href="#cb6-421" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-422"><a href="#cb6-422" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 1. what changes after this function? </span></span>
+<span id="cb6-423"><a href="#cb6-423" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
+<span id="cb6-424"><a href="#cb6-424" aria-hidden="true" tabindex="-1"></a>  <span class="co"># give an example. </span></span>
+<span id="cb6-425"><a href="#cb6-425" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
+<span id="cb6-426"><a href="#cb6-426" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span>  </span>
+<span id="cb6-427"><a href="#cb6-427" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-428"><a href="#cb6-428" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2. what new column is created? </span></span>
+<span id="cb6-429"><a href="#cb6-429" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
+<span id="cb6-430"><a href="#cb6-430" aria-hidden="true" tabindex="-1"></a>  <span class="co"># give an example of a value in this column.</span></span>
+<span id="cb6-431"><a href="#cb6-431" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
+<span id="cb6-432"><a href="#cb6-432" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">water_year_minus1 =</span> water_year <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb6-433"><a href="#cb6-433" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-434"><a href="#cb6-434" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 3. what old column is changed?</span></span>
+<span id="cb6-435"><a href="#cb6-435" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
+<span id="cb6-436"><a href="#cb6-436" aria-hidden="true" tabindex="-1"></a>  <span class="co"># give an example of a value in the old column, and explain how it changed. </span></span>
+<span id="cb6-437"><a href="#cb6-437" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
+<span id="cb6-438"><a href="#cb6-438" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">water_year =</span> <span class="fu">paste0</span>(water_year_minus1, <span class="st">"-"</span>, water_year)) <span class="sc">|&gt;</span> </span>
+<span id="cb6-439"><a href="#cb6-439" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-440"><a href="#cb6-440" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 4. what columns are excluded from the data frame?</span></span>
+<span id="cb6-441"><a href="#cb6-441" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
+<span id="cb6-442"><a href="#cb6-442" aria-hidden="true" tabindex="-1"></a>  <span class="co"># give an example of a value in water_year_minus1 </span></span>
+<span id="cb6-443"><a href="#cb6-443" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
+<span id="cb6-444"><a href="#cb6-444" aria-hidden="true" tabindex="-1"></a>  <span class="co"># give an example of a value in code </span></span>
+<span id="cb6-445"><a href="#cb6-445" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
+<span id="cb6-446"><a href="#cb6-446" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(water_year_minus1, code)) <span class="sc">|&gt;</span> </span>
+<span id="cb6-447"><a href="#cb6-447" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-448"><a href="#cb6-448" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 5. which column is manipulated, and what changes about it? </span></span>
+<span id="cb6-449"><a href="#cb6-449" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Hint: run str(rain_clean) in the Console. what do you see for the month column?</span></span>
+<span id="cb6-450"><a href="#cb6-450" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
+<span id="cb6-451"><a href="#cb6-451" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">as_factor</span>(month),</span>
+<span id="cb6-452"><a href="#cb6-452" aria-hidden="true" tabindex="-1"></a>         <span class="at">month =</span> <span class="fu">fct_relevel</span>(</span>
+<span id="cb6-453"><a href="#cb6-453" aria-hidden="true" tabindex="-1"></a>           month, </span>
+<span id="cb6-454"><a href="#cb6-454" aria-hidden="true" tabindex="-1"></a>           <span class="st">"9"</span>, <span class="st">"10"</span>, <span class="st">"11"</span>, <span class="st">"12"</span>, <span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"3"</span>, <span class="st">"4"</span>, <span class="st">"5"</span>, <span class="st">"6"</span>, <span class="st">"7"</span>, <span class="st">"8"</span>)</span>
+<span id="cb6-455"><a href="#cb6-455" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">|&gt;</span>  </span>
+<span id="cb6-456"><a href="#cb6-456" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-457"><a href="#cb6-457" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 6. what is being calculated? on an annual, monthly, or daily scale? </span></span>
+<span id="cb6-458"><a href="#cb6-458" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
+<span id="cb6-459"><a href="#cb6-459" aria-hidden="true" tabindex="-1"></a>  <span class="co"># give an example. </span></span>
+<span id="cb6-460"><a href="#cb6-460" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
+<span id="cb6-461"><a href="#cb6-461" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month, water_year) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-462"><a href="#cb6-462" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total_rain =</span> <span class="fu">sum</span>(daily_rain, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span>  </span>
+<span id="cb6-463"><a href="#cb6-463" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span>  </span>
+<span id="cb6-464"><a href="#cb6-464" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-465"><a href="#cb6-465" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 7. what is being done to which columns? </span></span>
+<span id="cb6-466"><a href="#cb6-466" aria-hidden="true" tabindex="-1"></a>  <span class="co"># missing combinations of values of water_year and month are being filled in with 0</span></span>
+<span id="cb6-467"><a href="#cb6-467" aria-hidden="true" tabindex="-1"></a>  <span class="co"># give an example. </span></span>
+<span id="cb6-468"><a href="#cb6-468" aria-hidden="true" tabindex="-1"></a>  <span class="co"># july in 1951-1952 was not in the data frame previously, and now is present with a total rain of 0 inches</span></span>
+<span id="cb6-469"><a href="#cb6-469" aria-hidden="true" tabindex="-1"></a>  <span class="fu">complete</span>(water_year, </span>
+<span id="cb6-470"><a href="#cb6-470" aria-hidden="true" tabindex="-1"></a>           month, </span>
+<span id="cb6-471"><a href="#cb6-471" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="fu">list</span>(<span class="at">total_rain =</span> <span class="dv">0</span>)) <span class="sc">|&gt;</span>  </span>
+<span id="cb6-472"><a href="#cb6-472" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-473"><a href="#cb6-473" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 8. which observations are kept after this filtering step?</span></span>
+<span id="cb6-474"><a href="#cb6-474" aria-hidden="true" tabindex="-1"></a>  <span class="co"># [insert response here]</span></span>
+<span id="cb6-475"><a href="#cb6-475" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(water_year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"2018-2019"</span>, </span>
+<span id="cb6-476"><a href="#cb6-476" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"2019-2020"</span>, </span>
+<span id="cb6-477"><a href="#cb6-477" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"2020-2021"</span>, </span>
+<span id="cb6-478"><a href="#cb6-478" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"2021-2022"</span>, </span>
+<span id="cb6-479"><a href="#cb6-479" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"2022-2023"</span>, </span>
+<span id="cb6-480"><a href="#cb6-480" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"2023-2024"</span>)) </span>
+<span id="cb6-481"><a href="#cb6-481" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-482"><a href="#cb6-482" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-483"><a href="#cb6-483" aria-hidden="true" tabindex="-1"></a>:::{.callout-note collapse="true" title="A possible approach"}</span>
+<span id="cb6-484"><a href="#cb6-484" aria-hidden="true" tabindex="-1"></a>One way to approach this problem is to delete all the pipe operators and add them back in one by one. With every additional function, look at the <span class="in">`rain_clean`</span> object to describe what has changed about the data frame.</span>
+<span id="cb6-485"><a href="#cb6-485" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb6-486"><a href="#cb6-486" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-487"><a href="#cb6-487" aria-hidden="true" tabindex="-1"></a><span class="fu">#### b. Make the figure (19 points)</span></span>
+<span id="cb6-488"><a href="#cb6-488" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-489"><a href="#cb6-489" aria-hidden="true" tabindex="-1"></a>Recreate the figure. Specifically, recreate the:  </span>
+<span id="cb6-490"><a href="#cb6-490" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-491"><a href="#cb6-491" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>x-axis (and label),  </span>
+<span id="cb6-492"><a href="#cb6-492" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>y-axis (and label),  </span>
+<span id="cb6-493"><a href="#cb6-493" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>title,  </span>
+<span id="cb6-494"><a href="#cb6-494" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>legend position,  </span>
+<span id="cb6-495"><a href="#cb6-495" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>panel background (blank),  </span>
+<span id="cb6-496"><a href="#cb6-496" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>axis lines and ticks (blank),  </span>
+<span id="cb6-497"><a href="#cb6-497" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>title position,  </span>
+<span id="cb6-498"><a href="#cb6-498" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>geometries, and  </span>
+<span id="cb6-499"><a href="#cb6-499" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>different colors  </span>
+<span id="cb6-500"><a href="#cb6-500" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-501"><a href="#cb6-501" aria-hidden="true" tabindex="-1"></a>Note that you do not need an exact match of the colors (choose whatever colors you want) or legend position (just make sure it's inside the panel and doesn't cover any points).</span>
+<span id="cb6-502"><a href="#cb6-502" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-503"><a href="#cb6-503" aria-hidden="true" tabindex="-1"></a>:::{.callout-note collapse="true" title="My figure doesn't look right when I render my document."}</span>
+<span id="cb6-504"><a href="#cb6-504" aria-hidden="true" tabindex="-1"></a>You will have to set the code chunk options to make a larger figure. Click the gear button in the code chunk to set those options.</span>
+<span id="cb6-505"><a href="#cb6-505" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb6-506"><a href="#cb6-506" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-507"><a href="#cb6-507" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-508"><a href="#cb6-508" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-509"><a href="#cb6-509" aria-hidden="true" tabindex="-1"></a><span class="fu"># Checklist</span></span>
-<span id="cb6-510"><a href="#cb6-510" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-511"><a href="#cb6-511" aria-hidden="true" tabindex="-1"></a>Your submission should:</span>
-<span id="cb6-512"><a href="#cb6-512" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-513"><a href="#cb6-513" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> include your name, the title, and the date **(3 points)**  </span>
-<span id="cb6-514"><a href="#cb6-514" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> include all code with annotations **(20 points)**  </span>
-<span id="cb6-515"><a href="#cb6-515" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> be uploaded to Canvas as a single PDF **(2 points)**  </span>
-<span id="cb6-516"><a href="#cb6-516" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> be organized and readable (for example: no messages, warnings, etc., text is formatted correctly with subscripts where necessary, text and headers are clearly different, code annotations should not run off page) **(8 points)** </span>
-<span id="cb6-517"><a href="#cb6-517" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-518"><a href="#cb6-518" aria-hidden="true" tabindex="-1"></a>Additionally, your submission should only include the components listed below:    </span>
-<span id="cb6-519"><a href="#cb6-519" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-520"><a href="#cb6-520" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a set up chunk at the top of the document, where you have read in your packages and your data  </span>
-<span id="cb6-521"><a href="#cb6-521" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-522"><a href="#cb6-522" aria-hidden="true" tabindex="-1"></a>for Problem 1:  </span>
-<span id="cb6-523"><a href="#cb6-523" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-524"><a href="#cb6-524" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> written responses for a-d  </span>
-<span id="cb6-525"><a href="#cb6-525" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-526"><a href="#cb6-526" aria-hidden="true" tabindex="-1"></a>for Problem 2:  </span>
-<span id="cb6-527"><a href="#cb6-527" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-528"><a href="#cb6-528" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> written responses for a-d  </span>
-<span id="cb6-529"><a href="#cb6-529" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-530"><a href="#cb6-530" aria-hidden="true" tabindex="-1"></a>for Problem 3:  </span>
-<span id="cb6-531"><a href="#cb6-531" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-532"><a href="#cb6-532" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> written responses for a-b  </span>
-<span id="cb6-533"><a href="#cb6-533" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> annotated code for c  </span>
-<span id="cb6-534"><a href="#cb6-534" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> annotated code and table for d  </span>
-<span id="cb6-535"><a href="#cb6-535" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> annotated code and test output for e  </span>
-<span id="cb6-536"><a href="#cb6-536" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> written response for f  </span>
-<span id="cb6-537"><a href="#cb6-537" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> annotated code and figure for g  </span>
-<span id="cb6-538"><a href="#cb6-538" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> written response for h  </span>
-<span id="cb6-539"><a href="#cb6-539" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-540"><a href="#cb6-540" aria-hidden="true" tabindex="-1"></a>for Problem 4:  </span>
-<span id="cb6-541"><a href="#cb6-541" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-542"><a href="#cb6-542" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> responses in annotated code for a  </span>
-<span id="cb6-543"><a href="#cb6-543" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> annotated code and figure for b</span>
-<span id="cb6-544"><a href="#cb6-544" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-545"><a href="#cb6-545" aria-hidden="true" tabindex="-1"></a>Lastly, check out the **rubric on Canvas** to see the point breakdown in more detail.  </span>
-<span id="cb6-546"><a href="#cb6-546" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-547"><a href="#cb6-547" aria-hidden="true" tabindex="-1"></a>**200 points total**</span>
+<span id="cb6-508"><a href="#cb6-508" aria-hidden="true" tabindex="-1"></a><span class="fu"># Checklist</span></span>
+<span id="cb6-509"><a href="#cb6-509" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-510"><a href="#cb6-510" aria-hidden="true" tabindex="-1"></a>Your submission should:</span>
+<span id="cb6-511"><a href="#cb6-511" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-512"><a href="#cb6-512" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> include your name, the title, and the date **(3 points)**  </span>
+<span id="cb6-513"><a href="#cb6-513" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> include all code with annotations **(20 points)**  </span>
+<span id="cb6-514"><a href="#cb6-514" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> be uploaded to Canvas as a single PDF **(2 points)**  </span>
+<span id="cb6-515"><a href="#cb6-515" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> be organized and readable (for example: no messages, warnings, etc., text is formatted correctly with subscripts where necessary, text and headers are clearly different, code annotations should not run off page) **(8 points)** </span>
+<span id="cb6-516"><a href="#cb6-516" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-517"><a href="#cb6-517" aria-hidden="true" tabindex="-1"></a>Additionally, your submission should only include the components listed below:    </span>
+<span id="cb6-518"><a href="#cb6-518" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-519"><a href="#cb6-519" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a set up chunk at the top of the document, where you have read in your packages and your data  </span>
+<span id="cb6-520"><a href="#cb6-520" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-521"><a href="#cb6-521" aria-hidden="true" tabindex="-1"></a>for Problem 1:  </span>
+<span id="cb6-522"><a href="#cb6-522" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-523"><a href="#cb6-523" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> written responses for a-d  </span>
+<span id="cb6-524"><a href="#cb6-524" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-525"><a href="#cb6-525" aria-hidden="true" tabindex="-1"></a>for Problem 2:  </span>
+<span id="cb6-526"><a href="#cb6-526" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-527"><a href="#cb6-527" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> written responses for a-d  </span>
+<span id="cb6-528"><a href="#cb6-528" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-529"><a href="#cb6-529" aria-hidden="true" tabindex="-1"></a>for Problem 3:  </span>
+<span id="cb6-530"><a href="#cb6-530" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-531"><a href="#cb6-531" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> written responses for a-b  </span>
+<span id="cb6-532"><a href="#cb6-532" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> annotated code for c  </span>
+<span id="cb6-533"><a href="#cb6-533" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> annotated code and table for d  </span>
+<span id="cb6-534"><a href="#cb6-534" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> annotated code and test output for e  </span>
+<span id="cb6-535"><a href="#cb6-535" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> written response for f  </span>
+<span id="cb6-536"><a href="#cb6-536" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> annotated code and figure for g  </span>
+<span id="cb6-537"><a href="#cb6-537" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> written response for h  </span>
+<span id="cb6-538"><a href="#cb6-538" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-539"><a href="#cb6-539" aria-hidden="true" tabindex="-1"></a>for Problem 4:  </span>
+<span id="cb6-540"><a href="#cb6-540" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-541"><a href="#cb6-541" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> responses in annotated code for a  </span>
+<span id="cb6-542"><a href="#cb6-542" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> annotated code and figure for b</span>
+<span id="cb6-543"><a href="#cb6-543" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-544"><a href="#cb6-544" aria-hidden="true" tabindex="-1"></a>Lastly, check out the **rubric on Canvas** to see the point breakdown in more detail.  </span>
+<span id="cb6-545"><a href="#cb6-545" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-546"><a href="#cb6-546" aria-hidden="true" tabindex="-1"></a>**200 points total**</span>
+<span id="cb6-547"><a href="#cb6-547" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-548"><a href="#cb6-548" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-549"><a href="#cb6-549" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-550"><a href="#cb6-550" aria-hidden="true" tabindex="-1"></a></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","loop":false,"closeEffect":"zoom","descPosition":"bottom","selector":".lightbox"});
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","openEffect":"zoom","selector":".lightbox","closeEffect":"zoom","loop":false});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

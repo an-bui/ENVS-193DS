@@ -241,7 +241,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">April 30, 2025</p>
+        <p class="date-modified">May 1, 2025</p>
       </div>
     </div>
       
@@ -412,7 +412,27 @@ window.Quarto = {
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">as_factor</span>(name)) <span class="sc">|&gt;</span> <span class="co"># make sure site name is being read in as a factor</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(site, name, size) <span class="sc">|&gt;</span> <span class="co"># select columns of interest</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">site_code =</span> site, <span class="co"># rename site to be site_code</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">site_name =</span> name) <span class="co"># rename name to be site_name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">site_name =</span> name) <span class="co"># rename name to be site_name</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># display some rows from the data frame</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># useful for showing a small part of the data frame</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_sample</span>(pie_crab_clean, <span class="co"># data frame</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">n =</span> <span class="dv">10</span>) <span class="co"># number of rows to show</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 3
+   site_code site_name                      size
+   &lt;chr&gt;     &lt;fct&gt;                         &lt;dbl&gt;
+ 1 ZI        Zeke's Island NERR            11.4 
+ 2 ZI        Zeke's Island NERR            12.5 
+ 3 CC        Cape Cod                      16.6 
+ 4 CC        Cape Cod                      16.1 
+ 5 VCR       Virginia Coastal Reserve LTER 12.9 
+ 6 VCR       Virginia Coastal Reserve LTER 15.1 
+ 7 ZI        Zeke's Island NERR             8.05
+ 8 CC        Cape Cod                      15.5 
+ 9 VCR       Virginia Coastal Reserve LTER 14.6 
+10 VCR       Virginia Coastal Reserve LTER 14.9 </code></pre>
+</div>
 </div>
 </section>
 <section id="b.-quick-summary" class="level4">
@@ -422,15 +442,15 @@ window.Quarto = {
 <li>Calculate the mean, variance, and sample size. Display the object.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating a new object called pie_crab_summary</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pie_crab_summary <span class="ot">&lt;-</span> pie_crab_clean <span class="sc">|&gt;</span> <span class="co"># starting with clean data frame</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(site_name) <span class="sc">|&gt;</span> <span class="co"># group by site</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(size), <span class="co"># calculate mean size</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">var =</span> <span class="fu">var</span>(size), <span class="co"># calculate variance of size</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">length</span>(size)) <span class="co"># calculate number of observations per site (sample size)</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># display pie_crab_summary</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>pie_crab_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating a new object called pie_crab_summary</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pie_crab_summary <span class="ot">&lt;-</span> pie_crab_clean <span class="sc">|&gt;</span> <span class="co"># starting with clean data frame</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(site_name) <span class="sc">|&gt;</span> <span class="co"># group by site</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(size), <span class="co"># calculate mean size</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">var =</span> <span class="fu">var</span>(size), <span class="co"># calculate variance of size</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">length</span>(size)) <span class="co"># calculate number of observations per site (sample size)</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># display pie_crab_summary</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>pie_crab_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
   site_name                      mean   var     n
@@ -445,19 +465,19 @@ window.Quarto = {
 <h4 class="anchored" data-anchor-id="c.-exploring-the-data">c.&nbsp;Exploring the data</h4>
 <p>Create a jitter plot with the mean crab size for each site.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># base layer: ggplot</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pie_crab_clean, <span class="co"># use the clean data set</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> site_name, <span class="co"># x-axis</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> size)) <span class="sc">+</span> <span class="co"># y-axis</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first layer: jitter (each point is an individual crab)</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height =</span> <span class="dv">0</span>, <span class="co"># don't jitter points vertically</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">width =</span> <span class="fl">0.15</span>) <span class="sc">+</span> <span class="co"># narrower jitter (easier to see)</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># second layer: point representing mean</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">geom =</span> <span class="st">"point"</span>, <span class="co"># geometry being plotted</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">fun =</span> mean, <span class="co"># function (calculating the mean)</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">"red"</span>, <span class="co"># color to make it easier to see</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span> <span class="co"># larger point size</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="co"># cleaner plot theme</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># base layer: ggplot</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pie_crab_clean, <span class="co"># use the clean data set</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> site_name, <span class="co"># x-axis</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> size)) <span class="sc">+</span> <span class="co"># y-axis</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first layer: jitter (each point is an individual crab)</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height =</span> <span class="dv">0</span>, <span class="co"># don't jitter points vertically</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">width =</span> <span class="fl">0.15</span>) <span class="sc">+</span> <span class="co"># narrower jitter (easier to see)</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># second layer: point representing mean</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">geom =</span> <span class="st">"point"</span>, <span class="co"># geometry being plotted</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">fun =</span> mean, <span class="co"># function (calculating the mean)</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">"red"</span>, <span class="co"># color to make it easier to see</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span> <span class="co"># larger point size</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="co"># cleaner plot theme</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -476,13 +496,13 @@ window.Quarto = {
 <li>Facet your histogram so that you have 3 panels, with one panel for each site.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># base layer: ggplot</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> pie_crab_clean, </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> size)) <span class="sc">+</span> <span class="co"># x-axis</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first layer: histogram</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">9</span>) <span class="sc">+</span> <span class="co"># number of bins from Rice Rule</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># faceting by site_name: creating 3 different panels</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> site_name) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># base layer: ggplot</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> pie_crab_clean, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> size)) <span class="sc">+</span> <span class="co"># x-axis</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first layer: histogram</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">9</span>) <span class="sc">+</span> <span class="co"># number of bins from Rice Rule</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># faceting by site_name: creating 3 different panels</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> site_name) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -496,16 +516,16 @@ window.Quarto = {
 <li>Facet your QQ plot so that you have 3 panels, with one panel for each site.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># base layer: ggplot</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> pie_crab_clean, </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">sample =</span> size)) <span class="sc">+</span> <span class="co"># y-axis</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first layer: QQ plot reference line</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq_line</span>(<span class="at">color =</span> <span class="st">"orange"</span>) <span class="sc">+</span> </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># second layer: QQ plot points (actual observations)</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>() <span class="sc">+</span> </span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># faceting by site_name</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> site_name, </span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">scales =</span> <span class="st">"free"</span>) <span class="co"># let axes vary between panels</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># base layer: ggplot</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> pie_crab_clean, </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">sample =</span> size)) <span class="sc">+</span> <span class="co"># y-axis</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first layer: QQ plot reference line</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq_line</span>(<span class="at">color =</span> <span class="st">"orange"</span>) <span class="sc">+</span> </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># second layer: QQ plot points (actual observations)</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>() <span class="sc">+</span> </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># faceting by site_name</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> site_name, </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">scales =</span> <span class="st">"free"</span>) <span class="co"># let axes vary between panels</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -518,20 +538,20 @@ window.Quarto = {
 <p><strong>Not perfect (crab sizes from VCR LTER seem not normally distributed) but with large sample sizes for each group, this might not matter too much.</strong></p>
 <p>Do Shapiro-Wilk tests:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cc_crabs <span class="ot">&lt;-</span> pie_crab_clean <span class="sc">|&gt;</span> <span class="co"># use the original data set</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(site_code <span class="sc">==</span> <span class="st">"CC"</span>) <span class="sc">|&gt;</span> <span class="co"># filter to only include Cape Cod</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(size) <span class="co"># extract the size column as a vector</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>vcr_crabs <span class="ot">&lt;-</span> pie_crab_clean <span class="sc">|&gt;</span> </span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(site_code <span class="sc">==</span> <span class="st">"VCR"</span>) <span class="sc">|&gt;</span> <span class="co"># filter to only include Virginia Coastal</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(size)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>zi_crabs <span class="ot">&lt;-</span> pie_crab_clean <span class="sc">|&gt;</span> </span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(site_code <span class="sc">==</span> <span class="st">"ZI"</span>) <span class="sc">|&gt;</span> <span class="co"># filter to only include Zeke's Island</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(size)</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># do the Shapiro-Wilk tests</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(cc_crabs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>cc_crabs <span class="ot">&lt;-</span> pie_crab_clean <span class="sc">|&gt;</span> <span class="co"># use the original data set</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(site_code <span class="sc">==</span> <span class="st">"CC"</span>) <span class="sc">|&gt;</span> <span class="co"># filter to only include Cape Cod</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(size) <span class="co"># extract the size column as a vector</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>vcr_crabs <span class="ot">&lt;-</span> pie_crab_clean <span class="sc">|&gt;</span> </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(site_code <span class="sc">==</span> <span class="st">"VCR"</span>) <span class="sc">|&gt;</span> <span class="co"># filter to only include Virginia Coastal</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(size)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>zi_crabs <span class="ot">&lt;-</span> pie_crab_clean <span class="sc">|&gt;</span> </span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(site_code <span class="sc">==</span> <span class="st">"ZI"</span>) <span class="sc">|&gt;</span> <span class="co"># filter to only include Zeke's Island</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(size)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># do the Shapiro-Wilk tests</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(cc_crabs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
@@ -539,7 +559,7 @@ window.Quarto = {
 data:  cc_crabs
 W = 0.93547, p-value = 0.09418</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(vcr_crabs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(vcr_crabs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
@@ -547,7 +567,7 @@ W = 0.93547, p-value = 0.09418</code></pre>
 data:  vcr_crabs
 W = 0.94447, p-value = 0.12</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(zi_crabs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(zi_crabs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
@@ -563,18 +583,18 @@ W = 0.97446, p-value = 0.5766</code></pre>
 <h4 class="anchored" data-anchor-id="e.-check-2-equal-variances">e. Check 2: equal variances</h4>
 <p>Do a gut check: is the largest variance less than 4× the smallest variance?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fl">4.04</span><span class="sc">*</span><span class="dv">4</span> <span class="sc">&gt;</span> <span class="fl">8.63</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fl">4.04</span><span class="sc">*</span><span class="dv">4</span> <span class="sc">&gt;</span> <span class="fl">8.63</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 <p>Using <code>leveneTest()</code> from <code>car</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># do the Levene test</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">leveneTest</span>(</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  size <span class="sc">~</span> site_name, <span class="co"># formula: crab size as a function of site</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> pie_crab_clean <span class="co"># data frame</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># do the Levene test</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">leveneTest</span>(</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  size <span class="sc">~</span> site_name, <span class="co"># formula: crab size as a function of site</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> pie_crab_clean <span class="co"># data frame</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Levene's Test for Homogeneity of Variance (center = median)
       Df F value  Pr(&gt;F)   
@@ -590,12 +610,12 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="f.-anova" class="level4">
 <h4 class="anchored" data-anchor-id="f.-anova">f.&nbsp;ANOVA</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating an object called crab_anova</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>crab_anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(size <span class="sc">~</span> site_name, <span class="co"># formula</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> pie_crab_clean) <span class="co"># data</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># gives more information</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(crab_anova)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating an object called crab_anova</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>crab_anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(size <span class="sc">~</span> site_name, <span class="co"># formula</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> pie_crab_clean) <span class="co"># data</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># gives more information</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(crab_anova)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value  Pr(&gt;F)    
 site_name    2  442.2  221.10   39.56 5.1e-13 ***
@@ -610,7 +630,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="g.-post-hoc-tukey-hsd" class="level4">
 <h4 class="anchored" data-anchor-id="g.-post-hoc-tukey-hsd">g. Post-hoc: Tukey HSD</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(crab_anova)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(crab_anova)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Tukey multiple comparisons of means
     95% family-wise confidence level
@@ -635,7 +655,7 @@ Cape Cod-Virginia Coastal Reserve LTER           0.7255994</code></pre>
 <h4 class="anchored" data-anchor-id="h.-effect-size">h. effect size</h4>
 <p>Using <code>eta_squared()</code> from <code>rstatix</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eta_squared</span>(crab_anova)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eta_squared</span>(crab_anova)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>site_name 
 0.4706113 </code></pre>
@@ -654,12 +674,12 @@ Cape Cod-Virginia Coastal Reserve LTER           0.7255994</code></pre>
 <section id="a.-clean-and-wrangle-the-data" class="level4">
 <h4 class="anchored" data-anchor-id="a.-clean-and-wrangle-the-data">a. Clean and wrangle the data</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>ramen_ratings_clean <span class="ot">&lt;-</span> ramen_ratings <span class="sc">|&gt;</span> <span class="co"># use the ramen_ratings dataframe</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(brand <span class="sc">==</span> <span class="st">"Maruchan"</span>) <span class="sc">|&gt;</span> <span class="co"># filter to only include Maruchan ramen</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">style =</span> <span class="fu">fct_relevel</span>(style, <span class="st">"Bowl"</span>, <span class="st">"Pack"</span>, <span class="st">"Tray"</span>, <span class="st">"Cup"</span>)) <span class="co"># reorder style factor</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># look at the structure</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(ramen_ratings_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>ramen_ratings_clean <span class="ot">&lt;-</span> ramen_ratings <span class="sc">|&gt;</span> <span class="co"># use the ramen_ratings dataframe</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(brand <span class="sc">==</span> <span class="st">"Maruchan"</span>) <span class="sc">|&gt;</span> <span class="co"># filter to only include Maruchan ramen</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">style =</span> <span class="fu">fct_relevel</span>(style, <span class="st">"Bowl"</span>, <span class="st">"Pack"</span>, <span class="st">"Tray"</span>, <span class="st">"Cup"</span>)) <span class="co"># reorder style factor</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># look at the structure</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(ramen_ratings_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [106 × 6] (S3: tbl_df/tbl/data.frame)
  $ review_number: num [1:106] 3176 3152 3141 3124 3111 ...
@@ -674,15 +694,15 @@ Cape Cod-Virginia Coastal Reserve LTER           0.7255994</code></pre>
 <section id="b.-quick-summary-1" class="level4">
 <h4 class="anchored" data-anchor-id="b.-quick-summary-1">b. Quick summary</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new object called ramen_ratings_summary</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>ramen_ratings_summary <span class="ot">&lt;-</span> ramen_ratings_clean <span class="sc">|&gt;</span> <span class="co"># start with the cleaned data frame</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># group by stle</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(style) <span class="sc">|&gt;</span> </span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># calculate the median</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">median =</span> <span class="fu">median</span>(stars))</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co"># display the object</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>ramen_ratings_summary </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new object called ramen_ratings_summary</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>ramen_ratings_summary <span class="ot">&lt;-</span> ramen_ratings_clean <span class="sc">|&gt;</span> <span class="co"># start with the cleaned data frame</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># group by stle</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(style) <span class="sc">|&gt;</span> </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># calculate the median</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">median =</span> <span class="fu">median</span>(stars))</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># display the object</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>ramen_ratings_summary </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 2
   style median
@@ -697,25 +717,25 @@ Cape Cod-Virginia Coastal Reserve LTER           0.7255994</code></pre>
 <section id="c.-make-a-boxplot-to-compare-star-ratings-across-ramen-styles" class="level4">
 <h4 class="anchored" data-anchor-id="c.-make-a-boxplot-to-compare-star-ratings-across-ramen-styles">c.&nbsp;Make a boxplot to compare star ratings across ramen styles</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># base layer: ggplot</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ramen_ratings_clean, </span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> style, <span class="co"># x-axis</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> stars, <span class="co"># y-axis</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> style)) <span class="sc">+</span> <span class="co"># fill geoms by ramen style</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first layer: boxplot</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">color =</span> <span class="st">"darkgrey"</span>, </span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">outliers =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="co"># taking out outliers because they will be shown in the jitter</span></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># second layer: jitter</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height =</span> <span class="dv">0</span>,</span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">width =</span> <span class="fl">0.1</span>,</span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">size =</span> <span class="dv">2</span>,</span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set custom colors</span></span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"firebrick4"</span>, <span class="st">"orange"</span>, <span class="st">"gold"</span>, <span class="st">"darkgreen"</span>)) <span class="sc">+</span> </span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># minimal theme</span></span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
-<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># take out the legend</span></span>
-<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># base layer: ggplot</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ramen_ratings_clean, </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> style, <span class="co"># x-axis</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> stars, <span class="co"># y-axis</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> style)) <span class="sc">+</span> <span class="co"># fill geoms by ramen style</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first layer: boxplot</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">color =</span> <span class="st">"darkgrey"</span>, </span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">outliers =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="co"># taking out outliers because they will be shown in the jitter</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># second layer: jitter</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height =</span> <span class="dv">0</span>,</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">width =</span> <span class="fl">0.1</span>,</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">size =</span> <span class="dv">2</span>,</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set custom colors</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"firebrick4"</span>, <span class="st">"orange"</span>, <span class="st">"gold"</span>, <span class="st">"darkgreen"</span>)) <span class="sc">+</span> </span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># minimal theme</span></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># take out the legend</span></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -728,10 +748,10 @@ Cape Cod-Virginia Coastal Reserve LTER           0.7255994</code></pre>
 <section id="d.-do-the-kruskal-wallis-test" class="level4">
 <h4 class="anchored" data-anchor-id="d.-do-the-kruskal-wallis-test">d.&nbsp;Do the Kruskal-Wallis test</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  stars <span class="sc">~</span> style, <span class="co"># formula: star ratings as a function of ramen style</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ramen_ratings_clean <span class="co"># data frame</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  stars <span class="sc">~</span> style, <span class="co"># formula: star ratings as a function of ramen style</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ramen_ratings_clean <span class="co"># data frame</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Kruskal-Wallis rank sum test
@@ -747,10 +767,10 @@ Kruskal-Wallis chi-squared = 15.679, df = 3, p-value = 0.00132</code></pre>
 <h4 class="anchored" data-anchor-id="e.-do-a-dunns-post-hoc-test">e. Do a Dunn’s post-hoc test</h4>
 <p>Using <code>dunn_test()</code> from <code>rstatix</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dunn_test</span>(</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  stars <span class="sc">~</span> style, <span class="co"># formula: star ratings as a function of ramen style</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ramen_ratings_clean <span class="co"># data frame</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dunn_test</span>(</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  stars <span class="sc">~</span> style, <span class="co"># formula: star ratings as a function of ramen style</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ramen_ratings_clean <span class="co"># data frame</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 9
   .y.   group1 group2    n1    n2 statistic        p   p.adj p.adj.signif
@@ -770,10 +790,10 @@ Kruskal-Wallis chi-squared = 15.679, df = 3, p-value = 0.00132</code></pre>
 <h4 class="anchored" data-anchor-id="f.-calculate-an-effect-size">f.&nbsp;Calculate an effect size</h4>
 <p>Using <code>kruskal_effsize()</code> from <code>rstatix</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal_effsize</span>(</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  stars <span class="sc">~</span> style, <span class="co"># formula: star ratings as a function of ramen style</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ramen_ratings_clean <span class="co"># data frame</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal_effsize</span>(</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  stars <span class="sc">~</span> style, <span class="co"># formula: star ratings as a function of ramen style</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ramen_ratings_clean <span class="co"># data frame</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 5
   .y.       n effsize method  magnitude
@@ -1256,377 +1276,382 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb35" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Coding workshop: Week 5"</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Parametric and non-parametric comparisons of more than 2 groups"</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [tidyverse, lterdatasampler, effectsize, rstatix, car, shapiro.test, leveneTest, aov, summary, TukeyHSD, eta_squared, kruskal.test, dunn_test, kruskal_effectsize, read_csv, pipe operators, '|&gt;', select, rename, ggplot, geom_histogram, geom_qq, geom_qq_line, facet_wrap, group_by, summarize, as_factor, mutate]</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 8</span></span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Workshop dates: May 1 (Thursday), May 2 (Friday)</span><span class="co">]</span>{style="color: #79ACBD; font-size: 24px;"}</span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Summary</span></span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="fu">### Packages</span></span>
-<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`tidyverse`</span>  </span>
-<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`lterdatasampler`</span>  </span>
-<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`rstatix`</span>  </span>
-<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`car`</span>  </span>
-<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a><span class="fu">### Operations</span></span>
-<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a><span class="fu">#### New functions</span></span>
-<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>make sure a variable is a factor using <span class="in">`as_factor()`</span></span>
-<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>do a Shapiro-Wilk test using <span class="in">`shapiro.test()`</span>  </span>
-<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>do a Levene's test using <span class="in">`car::leveneTest()`</span>  </span>
-<span id="cb35-28"><a href="#cb35-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>do an ANOVA using <span class="in">`aov()`</span>  </span>
-<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>look for more information from model results using <span class="in">`summary()`</span>  </span>
-<span id="cb35-30"><a href="#cb35-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>do post-hoc Tukey test using <span class="in">`TukeyHSD()`</span>  </span>
-<span id="cb35-31"><a href="#cb35-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>calculate effect size for ANOVA using <span class="in">`rstatix::eta_squared()`</span>  </span>
-<span id="cb35-32"><a href="#cb35-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>do Kruskal-Wallis test using <span class="in">`kruskal.test()`</span>  </span>
-<span id="cb35-33"><a href="#cb35-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>do Dunn's test using <span class="in">`rstatix::dunn_test()`</span>  </span>
-<span id="cb35-34"><a href="#cb35-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>calculate effect size for Kruskal-Wallis test using <span class="in">`rstatix::kruskal_effsize()`</span></span>
-<span id="cb35-35"><a href="#cb35-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-36"><a href="#cb35-36" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Review</span></span>
-<span id="cb35-37"><a href="#cb35-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-38"><a href="#cb35-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>read in data using <span class="in">`read_csv()`</span>  </span>
-<span id="cb35-39"><a href="#cb35-39" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>chain functions together using <span class="in">` |&gt; `</span>  </span>
-<span id="cb35-40"><a href="#cb35-40" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>modify columns using <span class="in">`mutate()`</span>  </span>
-<span id="cb35-41"><a href="#cb35-41" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>select columns using <span class="in">`select()`</span>  </span>
-<span id="cb35-42"><a href="#cb35-42" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>rename columns using <span class="in">`rename()`</span>  </span>
-<span id="cb35-43"><a href="#cb35-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>visualize data using <span class="in">`ggplot()`</span>  </span>
-<span id="cb35-44"><a href="#cb35-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>create histograms using <span class="in">`geom_histogram()`</span>  </span>
-<span id="cb35-45"><a href="#cb35-45" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>visualize QQ plots using <span class="in">`geom_qq()`</span> and <span class="in">`geom_qq_line()`</span>  </span>
-<span id="cb35-46"><a href="#cb35-46" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>create multi-panel plots using <span class="in">`facet_wrap()`</span>  </span>
-<span id="cb35-47"><a href="#cb35-47" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>group data using <span class="in">`group_by()`</span>  </span>
-<span id="cb35-48"><a href="#cb35-48" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>summarize data using <span class="in">`summarize()`</span>  </span>
-<span id="cb35-49"><a href="#cb35-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-50"><a href="#cb35-50" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data sources</span></span>
-<span id="cb35-51"><a href="#cb35-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-52"><a href="#cb35-52" aria-hidden="true" tabindex="-1"></a>The Plum Island Ecosystem fiddler crab data is from <span class="in">`lterdatasampler`</span> (data info <span class="co">[</span><span class="ot">here</span><span class="co">](https://lter.github.io/lterdatasampler/articles/pie_crab_vignette.html)</span>). The ramen ratings data set is a Tidy Tuesday dataset - see more about the data and its source <span class="co">[</span><span class="ot">here</span><span class="co">](https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-06-04)</span>.</span>
-<span id="cb35-53"><a href="#cb35-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-54"><a href="#cb35-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Code</span></span>
-<span id="cb35-55"><a href="#cb35-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-56"><a href="#cb35-56" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1. Packages</span></span>
-<span id="cb35-57"><a href="#cb35-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-58"><a href="#cb35-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r read-packages}</span></span>
-<span id="cb35-59"><a href="#cb35-59" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
-<span id="cb35-60"><a href="#cb35-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-61"><a href="#cb35-61" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb35-62"><a href="#cb35-62" aria-hidden="true" tabindex="-1"></a><span class="in">library(lterdatasampler)</span></span>
-<span id="cb35-63"><a href="#cb35-63" aria-hidden="true" tabindex="-1"></a><span class="in">library(effectsize)</span></span>
-<span id="cb35-64"><a href="#cb35-64" aria-hidden="true" tabindex="-1"></a><span class="in">library(rstatix)</span></span>
-<span id="cb35-65"><a href="#cb35-65" aria-hidden="true" tabindex="-1"></a><span class="in">library(car)</span></span>
-<span id="cb35-66"><a href="#cb35-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-67"><a href="#cb35-67" aria-hidden="true" tabindex="-1"></a><span class="in"># for parametric tests</span></span>
-<span id="cb35-68"><a href="#cb35-68" aria-hidden="true" tabindex="-1"></a><span class="in">data(pie_crab)</span></span>
-<span id="cb35-69"><a href="#cb35-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-70"><a href="#cb35-70" aria-hidden="true" tabindex="-1"></a><span class="in"># for non-parametric tests</span></span>
-<span id="cb35-71"><a href="#cb35-71" aria-hidden="true" tabindex="-1"></a><span class="in">ramen_ratings &lt;- read_csv("ramen_ratings.csv")</span></span>
-<span id="cb35-72"><a href="#cb35-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb35-73"><a href="#cb35-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-74"><a href="#cb35-74" aria-hidden="true" tabindex="-1"></a><span class="in">```{r data-for-website}</span></span>
-<span id="cb35-75"><a href="#cb35-75" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
-<span id="cb35-76"><a href="#cb35-76" aria-hidden="true" tabindex="-1"></a><span class="in">#| message: false</span></span>
-<span id="cb35-77"><a href="#cb35-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-78"><a href="#cb35-78" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb35-79"><a href="#cb35-79" aria-hidden="true" tabindex="-1"></a><span class="in">library(lterdatasampler)</span></span>
-<span id="cb35-80"><a href="#cb35-80" aria-hidden="true" tabindex="-1"></a><span class="in">library(effectsize)</span></span>
-<span id="cb35-81"><a href="#cb35-81" aria-hidden="true" tabindex="-1"></a><span class="in">library(rstatix)</span></span>
-<span id="cb35-82"><a href="#cb35-82" aria-hidden="true" tabindex="-1"></a><span class="in">library(car)</span></span>
-<span id="cb35-83"><a href="#cb35-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-84"><a href="#cb35-84" aria-hidden="true" tabindex="-1"></a><span class="in"># for parametric tests</span></span>
-<span id="cb35-85"><a href="#cb35-85" aria-hidden="true" tabindex="-1"></a><span class="in">data(pie_crab)</span></span>
-<span id="cb35-86"><a href="#cb35-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-87"><a href="#cb35-87" aria-hidden="true" tabindex="-1"></a><span class="in">ramen_ratings &lt;- read_csv(here::here("workshop", "data", "ramen_ratings.csv"))</span></span>
-<span id="cb35-88"><a href="#cb35-88" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb35-89"><a href="#cb35-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-90"><a href="#cb35-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-91"><a href="#cb35-91" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. Parametric tests</span></span>
-<span id="cb35-92"><a href="#cb35-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-93"><a href="#cb35-93" aria-hidden="true" tabindex="-1"></a><span class="fu">#### a. Cleaning and wrangling</span></span>
-<span id="cb35-94"><a href="#cb35-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-95"><a href="#cb35-95" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a new object called <span class="in">`pie_crab_clean`</span>.</span>
-<span id="cb35-96"><a href="#cb35-96" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Filter to only include the following sites: Cape Cod, Virginia Coastal Reserve LTER, and Zeke's Island NERR.</span>
-<span id="cb35-97"><a href="#cb35-97" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Make sure <span class="in">`site`</span> is a factor.</span>
-<span id="cb35-98"><a href="#cb35-98" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Select the columns of interest: <span class="in">`site`</span>, <span class="in">`name`</span>, and <span class="in">`code`</span>.</span>
-<span id="cb35-99"><a href="#cb35-99" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Rename the column <span class="in">`name`</span> to <span class="in">`site_name`</span> and <span class="in">`code`</span> to <span class="in">`site_code`</span>. </span>
-<span id="cb35-100"><a href="#cb35-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-101"><a href="#cb35-101" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-cleaning}</span></span>
-<span id="cb35-102"><a href="#cb35-102" aria-hidden="true" tabindex="-1"></a><span class="in">pie_crab_clean &lt;- pie_crab |&gt; # start with the pie_crab dataset</span></span>
-<span id="cb35-103"><a href="#cb35-103" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(site %in% c("CC", "ZI", "VCR")) |&gt; # filter for Cape Cod, Zeke's Island, Virginia Coastal</span></span>
-<span id="cb35-104"><a href="#cb35-104" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(name = as_factor(name)) |&gt; # make sure site name is being read in as a factor</span></span>
-<span id="cb35-105"><a href="#cb35-105" aria-hidden="true" tabindex="-1"></a><span class="in">  select(site, name, size) |&gt; # select columns of interest</span></span>
-<span id="cb35-106"><a href="#cb35-106" aria-hidden="true" tabindex="-1"></a><span class="in">  rename(site_code = site, # rename site to be site_code</span></span>
-<span id="cb35-107"><a href="#cb35-107" aria-hidden="true" tabindex="-1"></a><span class="in">         site_name = name) # rename name to be site_name</span></span>
-<span id="cb35-108"><a href="#cb35-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb35-109"><a href="#cb35-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-110"><a href="#cb35-110" aria-hidden="true" tabindex="-1"></a><span class="fu">#### b. Quick summary</span></span>
-<span id="cb35-111"><a href="#cb35-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-112"><a href="#cb35-112" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a new object called <span class="in">`pie_crab_summary`</span>.</span>
-<span id="cb35-113"><a href="#cb35-113" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Calculate the mean, variance, and sample size. Display the object.</span>
-<span id="cb35-114"><a href="#cb35-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-115"><a href="#cb35-115" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-summary}</span></span>
-<span id="cb35-116"><a href="#cb35-116" aria-hidden="true" tabindex="-1"></a><span class="in"># creating a new object called pie_crab_summary</span></span>
-<span id="cb35-117"><a href="#cb35-117" aria-hidden="true" tabindex="-1"></a><span class="in">pie_crab_summary &lt;- pie_crab_clean |&gt; # starting with clean data frame</span></span>
-<span id="cb35-118"><a href="#cb35-118" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(site_name) |&gt; # group by site</span></span>
-<span id="cb35-119"><a href="#cb35-119" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(mean = mean(size), # calculate mean size</span></span>
-<span id="cb35-120"><a href="#cb35-120" aria-hidden="true" tabindex="-1"></a><span class="in">            var = var(size), # calculate variance of size</span></span>
-<span id="cb35-121"><a href="#cb35-121" aria-hidden="true" tabindex="-1"></a><span class="in">            n = length(size)) # calculate number of observations per site (sample size)</span></span>
-<span id="cb35-122"><a href="#cb35-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-123"><a href="#cb35-123" aria-hidden="true" tabindex="-1"></a><span class="in"># display pie_crab_summary</span></span>
-<span id="cb35-124"><a href="#cb35-124" aria-hidden="true" tabindex="-1"></a><span class="in">pie_crab_summary</span></span>
-<span id="cb35-125"><a href="#cb35-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb35-126"><a href="#cb35-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-127"><a href="#cb35-127" aria-hidden="true" tabindex="-1"></a><span class="fu">#### c. Exploring the data</span></span>
-<span id="cb35-128"><a href="#cb35-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-129"><a href="#cb35-129" aria-hidden="true" tabindex="-1"></a>Create a jitter plot with the mean crab size for each site.</span>
-<span id="cb35-130"><a href="#cb35-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-131"><a href="#cb35-131" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-explore-viz}</span></span>
-<span id="cb35-132"><a href="#cb35-132" aria-hidden="true" tabindex="-1"></a><span class="in"># base layer: ggplot</span></span>
-<span id="cb35-133"><a href="#cb35-133" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(pie_crab_clean, # use the clean data set</span></span>
-<span id="cb35-134"><a href="#cb35-134" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = site_name, # x-axis</span></span>
-<span id="cb35-135"><a href="#cb35-135" aria-hidden="true" tabindex="-1"></a><span class="in">           y = size)) + # y-axis</span></span>
-<span id="cb35-136"><a href="#cb35-136" aria-hidden="true" tabindex="-1"></a><span class="in">  # first layer: jitter (each point is an individual crab)</span></span>
-<span id="cb35-137"><a href="#cb35-137" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_jitter(height = 0, # don't jitter points vertically</span></span>
-<span id="cb35-138"><a href="#cb35-138" aria-hidden="true" tabindex="-1"></a><span class="in">              width = 0.15) + # narrower jitter (easier to see)</span></span>
-<span id="cb35-139"><a href="#cb35-139" aria-hidden="true" tabindex="-1"></a><span class="in">  # second layer: point representing mean</span></span>
-<span id="cb35-140"><a href="#cb35-140" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_summary(geom = "point", # geometry being plotted</span></span>
-<span id="cb35-141"><a href="#cb35-141" aria-hidden="true" tabindex="-1"></a><span class="in">               fun = mean, # function (calculating the mean)</span></span>
-<span id="cb35-142"><a href="#cb35-142" aria-hidden="true" tabindex="-1"></a><span class="in">               color = "red", # color to make it easier to see</span></span>
-<span id="cb35-143"><a href="#cb35-143" aria-hidden="true" tabindex="-1"></a><span class="in">               size = 5) + # larger point size</span></span>
-<span id="cb35-144"><a href="#cb35-144" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal() # cleaner plot theme</span></span>
-<span id="cb35-145"><a href="#cb35-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb35-146"><a href="#cb35-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-147"><a href="#cb35-147" aria-hidden="true" tabindex="-1"></a>Is there a difference in mean crab size between the three sites?  </span>
-<span id="cb35-148"><a href="#cb35-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-149"><a href="#cb35-149" aria-hidden="true" tabindex="-1"></a>**Yes, and Zeke's Island NERR crabs tend to be smaller than those from Cape Cod or Virginia Coastal Reserve LTER.**</span>
-<span id="cb35-150"><a href="#cb35-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-151"><a href="#cb35-151" aria-hidden="true" tabindex="-1"></a><span class="fu">#### d. Check 1: normally distributed variable</span></span>
-<span id="cb35-152"><a href="#cb35-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-153"><a href="#cb35-153" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a histogram of crab size.</span>
-<span id="cb35-154"><a href="#cb35-154" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Facet your histogram so that you have 3 panels, with one panel for each site.</span>
-<span id="cb35-155"><a href="#cb35-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-156"><a href="#cb35-156" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-histogram}</span></span>
-<span id="cb35-157"><a href="#cb35-157" aria-hidden="true" tabindex="-1"></a><span class="in"># base layer: ggplot</span></span>
-<span id="cb35-158"><a href="#cb35-158" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data = pie_crab_clean, </span></span>
-<span id="cb35-159"><a href="#cb35-159" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = size)) + # x-axis</span></span>
-<span id="cb35-160"><a href="#cb35-160" aria-hidden="true" tabindex="-1"></a><span class="in">  # first layer: histogram</span></span>
-<span id="cb35-161"><a href="#cb35-161" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_histogram(bins = 9) + # number of bins from Rice Rule</span></span>
-<span id="cb35-162"><a href="#cb35-162" aria-hidden="true" tabindex="-1"></a><span class="in">  # faceting by site_name: creating 3 different panels</span></span>
-<span id="cb35-163"><a href="#cb35-163" aria-hidden="true" tabindex="-1"></a><span class="in">  facet_wrap(~ site_name) </span></span>
-<span id="cb35-164"><a href="#cb35-164" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb35-165"><a href="#cb35-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-166"><a href="#cb35-166" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a QQ plot of crab size. </span>
-<span id="cb35-167"><a href="#cb35-167" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Facet your QQ plot so that you have 3 panels, with one panel for each site.</span>
-<span id="cb35-168"><a href="#cb35-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-169"><a href="#cb35-169" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-qq}</span></span>
-<span id="cb35-170"><a href="#cb35-170" aria-hidden="true" tabindex="-1"></a><span class="in"># base layer: ggplot</span></span>
-<span id="cb35-171"><a href="#cb35-171" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data = pie_crab_clean, </span></span>
-<span id="cb35-172"><a href="#cb35-172" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(sample = size)) + # y-axis</span></span>
-<span id="cb35-173"><a href="#cb35-173" aria-hidden="true" tabindex="-1"></a><span class="in">  # first layer: QQ plot reference line</span></span>
-<span id="cb35-174"><a href="#cb35-174" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_qq_line(color = "orange") + </span></span>
-<span id="cb35-175"><a href="#cb35-175" aria-hidden="true" tabindex="-1"></a><span class="in">  # second layer: QQ plot points (actual observations)</span></span>
-<span id="cb35-176"><a href="#cb35-176" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_qq() + </span></span>
-<span id="cb35-177"><a href="#cb35-177" aria-hidden="true" tabindex="-1"></a><span class="in">  # faceting by site_name</span></span>
-<span id="cb35-178"><a href="#cb35-178" aria-hidden="true" tabindex="-1"></a><span class="in">  facet_wrap(~ site_name, </span></span>
-<span id="cb35-179"><a href="#cb35-179" aria-hidden="true" tabindex="-1"></a><span class="in">             scales = "free") # let axes vary between panels</span></span>
-<span id="cb35-180"><a href="#cb35-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb35-181"><a href="#cb35-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-182"><a href="#cb35-182" aria-hidden="true" tabindex="-1"></a>What are the outcomes of your visual checks?  </span>
-<span id="cb35-183"><a href="#cb35-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-184"><a href="#cb35-184" aria-hidden="true" tabindex="-1"></a>**Not perfect (crab sizes from VCR LTER seem not normally distributed) but with large sample sizes for each group, this might not matter too much.**  </span>
-<span id="cb35-185"><a href="#cb35-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-186"><a href="#cb35-186" aria-hidden="true" tabindex="-1"></a>Do Shapiro-Wilk tests:</span>
-<span id="cb35-187"><a href="#cb35-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-188"><a href="#cb35-188" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-normality-test}</span></span>
-<span id="cb35-189"><a href="#cb35-189" aria-hidden="true" tabindex="-1"></a><span class="in">cc_crabs &lt;- pie_crab_clean |&gt; # use the original data set</span></span>
-<span id="cb35-190"><a href="#cb35-190" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(site_code == "CC") |&gt; # filter to only include Cape Cod</span></span>
-<span id="cb35-191"><a href="#cb35-191" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(size) # extract the size column as a vector</span></span>
-<span id="cb35-192"><a href="#cb35-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-193"><a href="#cb35-193" aria-hidden="true" tabindex="-1"></a><span class="in">vcr_crabs &lt;- pie_crab_clean |&gt; </span></span>
-<span id="cb35-194"><a href="#cb35-194" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(site_code == "VCR") |&gt; # filter to only include Virginia Coastal</span></span>
-<span id="cb35-195"><a href="#cb35-195" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(size)</span></span>
-<span id="cb35-196"><a href="#cb35-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-197"><a href="#cb35-197" aria-hidden="true" tabindex="-1"></a><span class="in">zi_crabs &lt;- pie_crab_clean |&gt; </span></span>
-<span id="cb35-198"><a href="#cb35-198" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(site_code == "ZI") |&gt; # filter to only include Zeke's Island</span></span>
-<span id="cb35-199"><a href="#cb35-199" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(size)</span></span>
-<span id="cb35-200"><a href="#cb35-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-201"><a href="#cb35-201" aria-hidden="true" tabindex="-1"></a><span class="in"># do the Shapiro-Wilk tests</span></span>
-<span id="cb35-202"><a href="#cb35-202" aria-hidden="true" tabindex="-1"></a><span class="in">shapiro.test(cc_crabs)</span></span>
-<span id="cb35-203"><a href="#cb35-203" aria-hidden="true" tabindex="-1"></a><span class="in">shapiro.test(vcr_crabs)</span></span>
-<span id="cb35-204"><a href="#cb35-204" aria-hidden="true" tabindex="-1"></a><span class="in">shapiro.test(zi_crabs)</span></span>
-<span id="cb35-205"><a href="#cb35-205" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb35-206"><a href="#cb35-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-207"><a href="#cb35-207" aria-hidden="true" tabindex="-1"></a>What are the outcomes of your statistical checks?  </span>
-<span id="cb35-208"><a href="#cb35-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-209"><a href="#cb35-209" aria-hidden="true" tabindex="-1"></a>**With Shapiro-Wilk normality tests, there seems to be no deviation from normality for Cape Cod crab sizes (W = 0.9, p = 0.09), VCR LTER crab sizes (W = 0.9, p = 0.12), or Zeke's Island crab sizes (W = 1, p = 0.6).**  </span>
-<span id="cb35-210"><a href="#cb35-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-211"><a href="#cb35-211" aria-hidden="true" tabindex="-1"></a><span class="fu">#### e. Check 2: equal variances</span></span>
-<span id="cb35-212"><a href="#cb35-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-213"><a href="#cb35-213" aria-hidden="true" tabindex="-1"></a>Do a gut check: is the largest variance less than 4× the smallest variance?</span>
-<span id="cb35-214"><a href="#cb35-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-215"><a href="#cb35-215" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-variances}</span></span>
-<span id="cb35-216"><a href="#cb35-216" aria-hidden="true" tabindex="-1"></a><span class="in">4.04*4 &gt; 8.63</span></span>
-<span id="cb35-217"><a href="#cb35-217" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb35-218"><a href="#cb35-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-219"><a href="#cb35-219" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`leveneTest()`</span> from <span class="in">`car`</span></span>
-<span id="cb35-220"><a href="#cb35-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-221"><a href="#cb35-221" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-levene}</span></span>
-<span id="cb35-222"><a href="#cb35-222" aria-hidden="true" tabindex="-1"></a><span class="in"># do the Levene test</span></span>
-<span id="cb35-223"><a href="#cb35-223" aria-hidden="true" tabindex="-1"></a><span class="in">leveneTest(</span></span>
-<span id="cb35-224"><a href="#cb35-224" aria-hidden="true" tabindex="-1"></a><span class="in">  size ~ site_name, # formula: crab size as a function of site</span></span>
-<span id="cb35-225"><a href="#cb35-225" aria-hidden="true" tabindex="-1"></a><span class="in">  data = pie_crab_clean # data frame</span></span>
-<span id="cb35-226"><a href="#cb35-226" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb35-227"><a href="#cb35-227" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb35-228"><a href="#cb35-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-229"><a href="#cb35-229" aria-hidden="true" tabindex="-1"></a>What are the outcomes of your variance check?  </span>
-<span id="cb35-230"><a href="#cb35-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-231"><a href="#cb35-231" aria-hidden="true" tabindex="-1"></a>**There's a deviation from homogeneity of variance (in other words, the variances are not equal), but since the largest variance is less than 4 times the smallest variance (and the sample sizes are large), this may still be ok.**</span>
-<span id="cb35-232"><a href="#cb35-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-233"><a href="#cb35-233" aria-hidden="true" tabindex="-1"></a><span class="fu">#### f. ANOVA</span></span>
-<span id="cb35-234"><a href="#cb35-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-235"><a href="#cb35-235" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-anova}</span></span>
-<span id="cb35-236"><a href="#cb35-236" aria-hidden="true" tabindex="-1"></a><span class="in"># creating an object called crab_anova</span></span>
-<span id="cb35-237"><a href="#cb35-237" aria-hidden="true" tabindex="-1"></a><span class="in">crab_anova &lt;- aov(size ~ site_name, # formula</span></span>
-<span id="cb35-238"><a href="#cb35-238" aria-hidden="true" tabindex="-1"></a><span class="in">                  data = pie_crab_clean) # data</span></span>
-<span id="cb35-239"><a href="#cb35-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-240"><a href="#cb35-240" aria-hidden="true" tabindex="-1"></a><span class="in"># gives more information</span></span>
-<span id="cb35-241"><a href="#cb35-241" aria-hidden="true" tabindex="-1"></a><span class="in">summary(crab_anova)</span></span>
-<span id="cb35-242"><a href="#cb35-242" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb35-243"><a href="#cb35-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-244"><a href="#cb35-244" aria-hidden="true" tabindex="-1"></a>Summarize results: is there a difference in crab size between the three sites?  </span>
-<span id="cb35-245"><a href="#cb35-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-246"><a href="#cb35-246" aria-hidden="true" tabindex="-1"></a>**There is a difference in crab size between Cape Cod, Virginia Coastal Reserve LTER, and Zeke's Island NERR (one-way ANOVA, F(2, 89) = 39.6, p &lt; 0.001, $\alpha$ = 0.05).**</span>
-<span id="cb35-247"><a href="#cb35-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-248"><a href="#cb35-248" aria-hidden="true" tabindex="-1"></a><span class="fu">#### g. Post-hoc: Tukey HSD</span></span>
-<span id="cb35-249"><a href="#cb35-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-250"><a href="#cb35-250" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-tukey}</span></span>
-<span id="cb35-251"><a href="#cb35-251" aria-hidden="true" tabindex="-1"></a><span class="in">TukeyHSD(crab_anova)</span></span>
-<span id="cb35-252"><a href="#cb35-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb35-253"><a href="#cb35-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-254"><a href="#cb35-254" aria-hidden="true" tabindex="-1"></a>Which pairwise comparisons are actually different? Which ones are not different?  </span>
-<span id="cb35-255"><a href="#cb35-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-256"><a href="#cb35-256" aria-hidden="true" tabindex="-1"></a>**Zeke's Island NERR and Cape Cod crabs are different, and Zeke's Island NERR and Virginia Coastal Reserve LTER crabs are different. Virginial Coastal Reserve LTER and Cape Cod crabs are not different.**</span>
-<span id="cb35-257"><a href="#cb35-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-258"><a href="#cb35-258" aria-hidden="true" tabindex="-1"></a><span class="fu">#### h. effect size</span></span>
-<span id="cb35-259"><a href="#cb35-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-260"><a href="#cb35-260" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`eta_squared()`</span> from <span class="in">`rstatix`</span></span>
-<span id="cb35-261"><a href="#cb35-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-262"><a href="#cb35-262" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-effectsize}</span></span>
-<span id="cb35-263"><a href="#cb35-263" aria-hidden="true" tabindex="-1"></a><span class="in">eta_squared(crab_anova)</span></span>
-<span id="cb35-264"><a href="#cb35-264" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb35-265"><a href="#cb35-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-266"><a href="#cb35-266" aria-hidden="true" tabindex="-1"></a>What is the magnitude of the differences between sites in crab size?  </span>
-<span id="cb35-267"><a href="#cb35-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-268"><a href="#cb35-268" aria-hidden="true" tabindex="-1"></a>**There is a large difference in crab size between sites.**</span>
-<span id="cb35-269"><a href="#cb35-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-270"><a href="#cb35-270" aria-hidden="true" tabindex="-1"></a><span class="fu">#### i. Putting everything together</span></span>
-<span id="cb35-271"><a href="#cb35-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-272"><a href="#cb35-272" aria-hidden="true" tabindex="-1"></a>We found a large ($\eta^2$ = 0.47) difference between sites in mean crab size (one-way ANOVA, F(2, 89) = 39.6, p &lt; 0.001, $\alpha$ = 0.05). The smallest crabs were from Zeke's Island NERR, which were on average 12.1 mm. Zeke's Island crabs were 4.8 mm (95% CI: <span class="co">[</span><span class="ot">3.3, 6.2</span><span class="co">]</span> mm) smaller than crabs from Cape Cod (Tukey's HSD: p &lt; 0.001) and 4.3 mm (95% CI: <span class="co">[</span><span class="ot">2.9, 5.7</span><span class="co">]</span> mm) smaller than crabs from Virginia Coastal Reserve LTER (Tukey's HSD: p &lt; 0.001).  </span>
-<span id="cb35-273"><a href="#cb35-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-274"><a href="#cb35-274" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3. Non-parametric tests</span></span>
-<span id="cb35-275"><a href="#cb35-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-276"><a href="#cb35-276" aria-hidden="true" tabindex="-1"></a><span class="fu">#### a. Clean and wrangle the data</span></span>
-<span id="cb35-277"><a href="#cb35-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-278"><a href="#cb35-278" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-wrangle}</span></span>
-<span id="cb35-279"><a href="#cb35-279" aria-hidden="true" tabindex="-1"></a><span class="in">ramen_ratings_clean &lt;- ramen_ratings |&gt; # use the ramen_ratings dataframe</span></span>
-<span id="cb35-280"><a href="#cb35-280" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(brand == "Maruchan") |&gt; # filter to only include Maruchan ramen</span></span>
-<span id="cb35-281"><a href="#cb35-281" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(style = fct_relevel(style, "Bowl", "Pack", "Tray", "Cup")) # reorder style factor</span></span>
-<span id="cb35-282"><a href="#cb35-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-283"><a href="#cb35-283" aria-hidden="true" tabindex="-1"></a><span class="in"># look at the structure</span></span>
-<span id="cb35-284"><a href="#cb35-284" aria-hidden="true" tabindex="-1"></a><span class="in">str(ramen_ratings_clean)</span></span>
-<span id="cb35-285"><a href="#cb35-285" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb35-286"><a href="#cb35-286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-287"><a href="#cb35-287" aria-hidden="true" tabindex="-1"></a><span class="fu">#### b. Quick summary</span></span>
-<span id="cb35-288"><a href="#cb35-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-289"><a href="#cb35-289" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-summary}</span></span>
-<span id="cb35-290"><a href="#cb35-290" aria-hidden="true" tabindex="-1"></a><span class="in"># create a new object called ramen_ratings_summary</span></span>
-<span id="cb35-291"><a href="#cb35-291" aria-hidden="true" tabindex="-1"></a><span class="in">ramen_ratings_summary &lt;- ramen_ratings_clean |&gt; # start with the cleaned data frame</span></span>
-<span id="cb35-292"><a href="#cb35-292" aria-hidden="true" tabindex="-1"></a><span class="in">  # group by stle</span></span>
-<span id="cb35-293"><a href="#cb35-293" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(style) |&gt; </span></span>
-<span id="cb35-294"><a href="#cb35-294" aria-hidden="true" tabindex="-1"></a><span class="in">  # calculate the median</span></span>
-<span id="cb35-295"><a href="#cb35-295" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(median = median(stars))</span></span>
-<span id="cb35-296"><a href="#cb35-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-297"><a href="#cb35-297" aria-hidden="true" tabindex="-1"></a><span class="in"># display the object</span></span>
-<span id="cb35-298"><a href="#cb35-298" aria-hidden="true" tabindex="-1"></a><span class="in">ramen_ratings_summary </span></span>
-<span id="cb35-299"><a href="#cb35-299" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb35-300"><a href="#cb35-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-301"><a href="#cb35-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-302"><a href="#cb35-302" aria-hidden="true" tabindex="-1"></a><span class="fu">#### c. Make a boxplot to compare star ratings across ramen styles</span></span>
-<span id="cb35-303"><a href="#cb35-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-304"><a href="#cb35-304" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-explore-viz}</span></span>
-<span id="cb35-305"><a href="#cb35-305" aria-hidden="true" tabindex="-1"></a><span class="in"># base layer: ggplot</span></span>
-<span id="cb35-306"><a href="#cb35-306" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data = ramen_ratings_clean, </span></span>
-<span id="cb35-307"><a href="#cb35-307" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = style, # x-axis</span></span>
-<span id="cb35-308"><a href="#cb35-308" aria-hidden="true" tabindex="-1"></a><span class="in">           y = stars, # y-axis</span></span>
-<span id="cb35-309"><a href="#cb35-309" aria-hidden="true" tabindex="-1"></a><span class="in">           color = style)) + # fill geoms by ramen style</span></span>
-<span id="cb35-310"><a href="#cb35-310" aria-hidden="true" tabindex="-1"></a><span class="in">  # first layer: boxplot</span></span>
-<span id="cb35-311"><a href="#cb35-311" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_boxplot(color = "darkgrey", </span></span>
-<span id="cb35-312"><a href="#cb35-312" aria-hidden="true" tabindex="-1"></a><span class="in">               outliers = FALSE) + # taking out outliers because they will be shown in the jitter</span></span>
-<span id="cb35-313"><a href="#cb35-313" aria-hidden="true" tabindex="-1"></a><span class="in">  # second layer: jitter</span></span>
-<span id="cb35-314"><a href="#cb35-314" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_jitter(height = 0,</span></span>
-<span id="cb35-315"><a href="#cb35-315" aria-hidden="true" tabindex="-1"></a><span class="in">              width = 0.1,</span></span>
-<span id="cb35-316"><a href="#cb35-316" aria-hidden="true" tabindex="-1"></a><span class="in">              size = 2,</span></span>
-<span id="cb35-317"><a href="#cb35-317" aria-hidden="true" tabindex="-1"></a><span class="in">              alpha = 0.6) +</span></span>
-<span id="cb35-318"><a href="#cb35-318" aria-hidden="true" tabindex="-1"></a><span class="in">  # set custom colors</span></span>
-<span id="cb35-319"><a href="#cb35-319" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(values = c("firebrick4", "orange", "gold", "darkgreen")) + </span></span>
-<span id="cb35-320"><a href="#cb35-320" aria-hidden="true" tabindex="-1"></a><span class="in">  # minimal theme</span></span>
-<span id="cb35-321"><a href="#cb35-321" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal() + </span></span>
-<span id="cb35-322"><a href="#cb35-322" aria-hidden="true" tabindex="-1"></a><span class="in">  # take out the legend</span></span>
-<span id="cb35-323"><a href="#cb35-323" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none") </span></span>
-<span id="cb35-324"><a href="#cb35-324" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb35-325"><a href="#cb35-325" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-326"><a href="#cb35-326" aria-hidden="true" tabindex="-1"></a><span class="fu">#### d. Do the Kruskal-Wallis test</span></span>
-<span id="cb35-327"><a href="#cb35-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-328"><a href="#cb35-328" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-kw}</span></span>
-<span id="cb35-329"><a href="#cb35-329" aria-hidden="true" tabindex="-1"></a><span class="in">kruskal.test(</span></span>
-<span id="cb35-330"><a href="#cb35-330" aria-hidden="true" tabindex="-1"></a><span class="in">  stars ~ style, # formula: star ratings as a function of ramen style</span></span>
-<span id="cb35-331"><a href="#cb35-331" aria-hidden="true" tabindex="-1"></a><span class="in">  data = ramen_ratings_clean # data frame</span></span>
-<span id="cb35-332"><a href="#cb35-332" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb35-333"><a href="#cb35-333" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb35-334"><a href="#cb35-334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-335"><a href="#cb35-335" aria-hidden="true" tabindex="-1"></a>Is there a difference in ratings between ramen styles?  </span>
-<span id="cb35-336"><a href="#cb35-336" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-337"><a href="#cb35-337" aria-hidden="true" tabindex="-1"></a>**Ramen styles differ in ratings (Kruskal-Wallis rank sum test, $\chi^2$(3) = 15.7, p = 0.0013).**</span>
-<span id="cb35-338"><a href="#cb35-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-339"><a href="#cb35-339" aria-hidden="true" tabindex="-1"></a><span class="fu">#### e. Do a Dunn's post-hoc test</span></span>
-<span id="cb35-340"><a href="#cb35-340" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-341"><a href="#cb35-341" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`dunn_test()`</span> from <span class="in">`rstatix`</span></span>
-<span id="cb35-342"><a href="#cb35-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-343"><a href="#cb35-343" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-post-hoc}</span></span>
-<span id="cb35-344"><a href="#cb35-344" aria-hidden="true" tabindex="-1"></a><span class="in">dunn_test(</span></span>
-<span id="cb35-345"><a href="#cb35-345" aria-hidden="true" tabindex="-1"></a><span class="in">  stars ~ style, # formula: star ratings as a function of ramen style</span></span>
-<span id="cb35-346"><a href="#cb35-346" aria-hidden="true" tabindex="-1"></a><span class="in">  data = ramen_ratings_clean # data frame</span></span>
-<span id="cb35-347"><a href="#cb35-347" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb35-348"><a href="#cb35-348" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb35-349"><a href="#cb35-349" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-350"><a href="#cb35-350" aria-hidden="true" tabindex="-1"></a>Which pairwise comparisons of ramen styles are different from each other?  </span>
-<span id="cb35-351"><a href="#cb35-351" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-352"><a href="#cb35-352" aria-hidden="true" tabindex="-1"></a>**Bowls and packs are different, bowls and trays are different, bowls and cups are different.**</span>
-<span id="cb35-353"><a href="#cb35-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-354"><a href="#cb35-354" aria-hidden="true" tabindex="-1"></a><span class="fu">#### f. Calculate an effect size</span></span>
-<span id="cb35-355"><a href="#cb35-355" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-356"><a href="#cb35-356" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`kruskal_effsize()`</span> from <span class="in">`rstatix`</span></span>
-<span id="cb35-357"><a href="#cb35-357" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-358"><a href="#cb35-358" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-effect-size}</span></span>
-<span id="cb35-359"><a href="#cb35-359" aria-hidden="true" tabindex="-1"></a><span class="in">kruskal_effsize(</span></span>
-<span id="cb35-360"><a href="#cb35-360" aria-hidden="true" tabindex="-1"></a><span class="in">  stars ~ style, # formula: star ratings as a function of ramen style</span></span>
-<span id="cb35-361"><a href="#cb35-361" aria-hidden="true" tabindex="-1"></a><span class="in">  data = ramen_ratings_clean # data frame</span></span>
-<span id="cb35-362"><a href="#cb35-362" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb35-363"><a href="#cb35-363" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb35-364"><a href="#cb35-364" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-365"><a href="#cb35-365" aria-hidden="true" tabindex="-1"></a>What is the magnitude of the effect of ramen style on ratings?  </span>
-<span id="cb35-366"><a href="#cb35-366" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-367"><a href="#cb35-367" aria-hidden="true" tabindex="-1"></a>**There is a moderate ($\eta^2$ = 0.12) effect of ramen style on ratings.**</span>
-<span id="cb35-368"><a href="#cb35-368" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-369"><a href="#cb35-369" aria-hidden="true" tabindex="-1"></a><span class="fu">#### g. Putting everything together</span></span>
-<span id="cb35-370"><a href="#cb35-370" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-371"><a href="#cb35-371" aria-hidden="true" tabindex="-1"></a>We found a moderate ($\eta^2$ = 0.12) difference in ratings between ramen styles (Kruskal-Wallis rank sum test, $\chi^2$(3) = 15.7, p = 0.0013). Bowl-style ramen had a median rating of 4.25 stars, which tended to be more highly rated than pack (Dunn's post-hoc test: Holm adjusted p = 0.04, median rating = 3.75 stars), tray (Dunn's post-hoc test: Holm adjusted p = 0.04, median rating = 3.75 stars), or cup style ramen (Dunn's post-hoc test: Holm adjusted p = 0.0013, median rating = 3.5 stars).</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb36" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Coding workshop: Week 5"</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Parametric and non-parametric comparisons of more than 2 groups"</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [tidyverse, lterdatasampler, effectsize, rstatix, car, shapiro.test, leveneTest, aov, summary, TukeyHSD, eta_squared, kruskal.test, dunn_test, kruskal_effectsize, read_csv, pipe operators, '|&gt;', select, rename, ggplot, geom_histogram, geom_qq, geom_qq_line, facet_wrap, group_by, summarize, as_factor, mutate]</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 8</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Workshop dates: May 1 (Thursday), May 2 (Friday)</span><span class="co">]</span>{style="color: #79ACBD; font-size: 24px;"}</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Summary</span></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a><span class="fu">### Packages</span></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`tidyverse`</span>  </span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`lterdatasampler`</span>  </span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`rstatix`</span>  </span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`car`</span>  </span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a><span class="fu">### Operations</span></span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a><span class="fu">#### New functions</span></span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>make sure a variable is a factor using <span class="in">`as_factor()`</span></span>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>do a Shapiro-Wilk test using <span class="in">`shapiro.test()`</span>  </span>
+<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>do a Levene's test using <span class="in">`car::leveneTest()`</span>  </span>
+<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>do an ANOVA using <span class="in">`aov()`</span>  </span>
+<span id="cb36-29"><a href="#cb36-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>look for more information from model results using <span class="in">`summary()`</span>  </span>
+<span id="cb36-30"><a href="#cb36-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>do post-hoc Tukey test using <span class="in">`TukeyHSD()`</span>  </span>
+<span id="cb36-31"><a href="#cb36-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>calculate effect size for ANOVA using <span class="in">`rstatix::eta_squared()`</span>  </span>
+<span id="cb36-32"><a href="#cb36-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>do Kruskal-Wallis test using <span class="in">`kruskal.test()`</span>  </span>
+<span id="cb36-33"><a href="#cb36-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>do Dunn's test using <span class="in">`rstatix::dunn_test()`</span>  </span>
+<span id="cb36-34"><a href="#cb36-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>calculate effect size for Kruskal-Wallis test using <span class="in">`rstatix::kruskal_effsize()`</span></span>
+<span id="cb36-35"><a href="#cb36-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-36"><a href="#cb36-36" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Review</span></span>
+<span id="cb36-37"><a href="#cb36-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-38"><a href="#cb36-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>read in data using <span class="in">`read_csv()`</span>  </span>
+<span id="cb36-39"><a href="#cb36-39" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>chain functions together using <span class="in">` |&gt; `</span>  </span>
+<span id="cb36-40"><a href="#cb36-40" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>modify columns using <span class="in">`mutate()`</span>  </span>
+<span id="cb36-41"><a href="#cb36-41" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>select columns using <span class="in">`select()`</span>  </span>
+<span id="cb36-42"><a href="#cb36-42" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>rename columns using <span class="in">`rename()`</span>  </span>
+<span id="cb36-43"><a href="#cb36-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>visualize data using <span class="in">`ggplot()`</span>  </span>
+<span id="cb36-44"><a href="#cb36-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>create histograms using <span class="in">`geom_histogram()`</span>  </span>
+<span id="cb36-45"><a href="#cb36-45" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>visualize QQ plots using <span class="in">`geom_qq()`</span> and <span class="in">`geom_qq_line()`</span>  </span>
+<span id="cb36-46"><a href="#cb36-46" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>create multi-panel plots using <span class="in">`facet_wrap()`</span>  </span>
+<span id="cb36-47"><a href="#cb36-47" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>group data using <span class="in">`group_by()`</span>  </span>
+<span id="cb36-48"><a href="#cb36-48" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>summarize data using <span class="in">`summarize()`</span>  </span>
+<span id="cb36-49"><a href="#cb36-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-50"><a href="#cb36-50" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data sources</span></span>
+<span id="cb36-51"><a href="#cb36-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-52"><a href="#cb36-52" aria-hidden="true" tabindex="-1"></a>The Plum Island Ecosystem fiddler crab data is from <span class="in">`lterdatasampler`</span> (data info <span class="co">[</span><span class="ot">here</span><span class="co">](https://lter.github.io/lterdatasampler/articles/pie_crab_vignette.html)</span>). The ramen ratings data set is a Tidy Tuesday dataset - see more about the data and its source <span class="co">[</span><span class="ot">here</span><span class="co">](https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-06-04)</span>.</span>
+<span id="cb36-53"><a href="#cb36-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-54"><a href="#cb36-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Code</span></span>
+<span id="cb36-55"><a href="#cb36-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-56"><a href="#cb36-56" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1. Packages</span></span>
+<span id="cb36-57"><a href="#cb36-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-58"><a href="#cb36-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r read-packages}</span></span>
+<span id="cb36-59"><a href="#cb36-59" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb36-60"><a href="#cb36-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-61"><a href="#cb36-61" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb36-62"><a href="#cb36-62" aria-hidden="true" tabindex="-1"></a><span class="in">library(lterdatasampler)</span></span>
+<span id="cb36-63"><a href="#cb36-63" aria-hidden="true" tabindex="-1"></a><span class="in">library(effectsize)</span></span>
+<span id="cb36-64"><a href="#cb36-64" aria-hidden="true" tabindex="-1"></a><span class="in">library(rstatix)</span></span>
+<span id="cb36-65"><a href="#cb36-65" aria-hidden="true" tabindex="-1"></a><span class="in">library(car)</span></span>
+<span id="cb36-66"><a href="#cb36-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-67"><a href="#cb36-67" aria-hidden="true" tabindex="-1"></a><span class="in"># for parametric tests</span></span>
+<span id="cb36-68"><a href="#cb36-68" aria-hidden="true" tabindex="-1"></a><span class="in">data(pie_crab)</span></span>
+<span id="cb36-69"><a href="#cb36-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-70"><a href="#cb36-70" aria-hidden="true" tabindex="-1"></a><span class="in"># for non-parametric tests</span></span>
+<span id="cb36-71"><a href="#cb36-71" aria-hidden="true" tabindex="-1"></a><span class="in">ramen_ratings &lt;- read_csv("ramen_ratings.csv")</span></span>
+<span id="cb36-72"><a href="#cb36-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-73"><a href="#cb36-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-74"><a href="#cb36-74" aria-hidden="true" tabindex="-1"></a><span class="in">```{r data-for-website}</span></span>
+<span id="cb36-75"><a href="#cb36-75" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
+<span id="cb36-76"><a href="#cb36-76" aria-hidden="true" tabindex="-1"></a><span class="in">#| message: false</span></span>
+<span id="cb36-77"><a href="#cb36-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-78"><a href="#cb36-78" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb36-79"><a href="#cb36-79" aria-hidden="true" tabindex="-1"></a><span class="in">library(lterdatasampler)</span></span>
+<span id="cb36-80"><a href="#cb36-80" aria-hidden="true" tabindex="-1"></a><span class="in">library(effectsize)</span></span>
+<span id="cb36-81"><a href="#cb36-81" aria-hidden="true" tabindex="-1"></a><span class="in">library(rstatix)</span></span>
+<span id="cb36-82"><a href="#cb36-82" aria-hidden="true" tabindex="-1"></a><span class="in">library(car)</span></span>
+<span id="cb36-83"><a href="#cb36-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-84"><a href="#cb36-84" aria-hidden="true" tabindex="-1"></a><span class="in"># for parametric tests</span></span>
+<span id="cb36-85"><a href="#cb36-85" aria-hidden="true" tabindex="-1"></a><span class="in">data(pie_crab)</span></span>
+<span id="cb36-86"><a href="#cb36-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-87"><a href="#cb36-87" aria-hidden="true" tabindex="-1"></a><span class="in">ramen_ratings &lt;- read_csv(here::here("workshop", "data", "ramen_ratings.csv"))</span></span>
+<span id="cb36-88"><a href="#cb36-88" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-89"><a href="#cb36-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-90"><a href="#cb36-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-91"><a href="#cb36-91" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. Parametric tests</span></span>
+<span id="cb36-92"><a href="#cb36-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-93"><a href="#cb36-93" aria-hidden="true" tabindex="-1"></a><span class="fu">#### a. Cleaning and wrangling</span></span>
+<span id="cb36-94"><a href="#cb36-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-95"><a href="#cb36-95" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a new object called <span class="in">`pie_crab_clean`</span>.</span>
+<span id="cb36-96"><a href="#cb36-96" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Filter to only include the following sites: Cape Cod, Virginia Coastal Reserve LTER, and Zeke's Island NERR.</span>
+<span id="cb36-97"><a href="#cb36-97" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Make sure <span class="in">`site`</span> is a factor.</span>
+<span id="cb36-98"><a href="#cb36-98" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Select the columns of interest: <span class="in">`site`</span>, <span class="in">`name`</span>, and <span class="in">`code`</span>.</span>
+<span id="cb36-99"><a href="#cb36-99" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Rename the column <span class="in">`name`</span> to <span class="in">`site_name`</span> and <span class="in">`code`</span> to <span class="in">`site_code`</span>. </span>
+<span id="cb36-100"><a href="#cb36-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-101"><a href="#cb36-101" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-cleaning}</span></span>
+<span id="cb36-102"><a href="#cb36-102" aria-hidden="true" tabindex="-1"></a><span class="in">pie_crab_clean &lt;- pie_crab |&gt; # start with the pie_crab dataset</span></span>
+<span id="cb36-103"><a href="#cb36-103" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(site %in% c("CC", "ZI", "VCR")) |&gt; # filter for Cape Cod, Zeke's Island, Virginia Coastal</span></span>
+<span id="cb36-104"><a href="#cb36-104" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(name = as_factor(name)) |&gt; # make sure site name is being read in as a factor</span></span>
+<span id="cb36-105"><a href="#cb36-105" aria-hidden="true" tabindex="-1"></a><span class="in">  select(site, name, size) |&gt; # select columns of interest</span></span>
+<span id="cb36-106"><a href="#cb36-106" aria-hidden="true" tabindex="-1"></a><span class="in">  rename(site_code = site, # rename site to be site_code</span></span>
+<span id="cb36-107"><a href="#cb36-107" aria-hidden="true" tabindex="-1"></a><span class="in">         site_name = name) # rename name to be site_name</span></span>
+<span id="cb36-108"><a href="#cb36-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-109"><a href="#cb36-109" aria-hidden="true" tabindex="-1"></a><span class="in"># display some rows from the data frame</span></span>
+<span id="cb36-110"><a href="#cb36-110" aria-hidden="true" tabindex="-1"></a><span class="in"># useful for showing a small part of the data frame</span></span>
+<span id="cb36-111"><a href="#cb36-111" aria-hidden="true" tabindex="-1"></a><span class="in">slice_sample(pie_crab_clean, # data frame</span></span>
+<span id="cb36-112"><a href="#cb36-112" aria-hidden="true" tabindex="-1"></a><span class="in">             n = 10) # number of rows to show</span></span>
+<span id="cb36-113"><a href="#cb36-113" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-114"><a href="#cb36-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-115"><a href="#cb36-115" aria-hidden="true" tabindex="-1"></a><span class="fu">#### b. Quick summary</span></span>
+<span id="cb36-116"><a href="#cb36-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-117"><a href="#cb36-117" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a new object called <span class="in">`pie_crab_summary`</span>.</span>
+<span id="cb36-118"><a href="#cb36-118" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Calculate the mean, variance, and sample size. Display the object.</span>
+<span id="cb36-119"><a href="#cb36-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-120"><a href="#cb36-120" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-summary}</span></span>
+<span id="cb36-121"><a href="#cb36-121" aria-hidden="true" tabindex="-1"></a><span class="in"># creating a new object called pie_crab_summary</span></span>
+<span id="cb36-122"><a href="#cb36-122" aria-hidden="true" tabindex="-1"></a><span class="in">pie_crab_summary &lt;- pie_crab_clean |&gt; # starting with clean data frame</span></span>
+<span id="cb36-123"><a href="#cb36-123" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(site_name) |&gt; # group by site</span></span>
+<span id="cb36-124"><a href="#cb36-124" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(mean = mean(size), # calculate mean size</span></span>
+<span id="cb36-125"><a href="#cb36-125" aria-hidden="true" tabindex="-1"></a><span class="in">            var = var(size), # calculate variance of size</span></span>
+<span id="cb36-126"><a href="#cb36-126" aria-hidden="true" tabindex="-1"></a><span class="in">            n = length(size)) # calculate number of observations per site (sample size)</span></span>
+<span id="cb36-127"><a href="#cb36-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-128"><a href="#cb36-128" aria-hidden="true" tabindex="-1"></a><span class="in"># display pie_crab_summary</span></span>
+<span id="cb36-129"><a href="#cb36-129" aria-hidden="true" tabindex="-1"></a><span class="in">pie_crab_summary</span></span>
+<span id="cb36-130"><a href="#cb36-130" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-131"><a href="#cb36-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-132"><a href="#cb36-132" aria-hidden="true" tabindex="-1"></a><span class="fu">#### c. Exploring the data</span></span>
+<span id="cb36-133"><a href="#cb36-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-134"><a href="#cb36-134" aria-hidden="true" tabindex="-1"></a>Create a jitter plot with the mean crab size for each site.</span>
+<span id="cb36-135"><a href="#cb36-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-136"><a href="#cb36-136" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-explore-viz}</span></span>
+<span id="cb36-137"><a href="#cb36-137" aria-hidden="true" tabindex="-1"></a><span class="in"># base layer: ggplot</span></span>
+<span id="cb36-138"><a href="#cb36-138" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(pie_crab_clean, # use the clean data set</span></span>
+<span id="cb36-139"><a href="#cb36-139" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = site_name, # x-axis</span></span>
+<span id="cb36-140"><a href="#cb36-140" aria-hidden="true" tabindex="-1"></a><span class="in">           y = size)) + # y-axis</span></span>
+<span id="cb36-141"><a href="#cb36-141" aria-hidden="true" tabindex="-1"></a><span class="in">  # first layer: jitter (each point is an individual crab)</span></span>
+<span id="cb36-142"><a href="#cb36-142" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_jitter(height = 0, # don't jitter points vertically</span></span>
+<span id="cb36-143"><a href="#cb36-143" aria-hidden="true" tabindex="-1"></a><span class="in">              width = 0.15) + # narrower jitter (easier to see)</span></span>
+<span id="cb36-144"><a href="#cb36-144" aria-hidden="true" tabindex="-1"></a><span class="in">  # second layer: point representing mean</span></span>
+<span id="cb36-145"><a href="#cb36-145" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_summary(geom = "point", # geometry being plotted</span></span>
+<span id="cb36-146"><a href="#cb36-146" aria-hidden="true" tabindex="-1"></a><span class="in">               fun = mean, # function (calculating the mean)</span></span>
+<span id="cb36-147"><a href="#cb36-147" aria-hidden="true" tabindex="-1"></a><span class="in">               color = "red", # color to make it easier to see</span></span>
+<span id="cb36-148"><a href="#cb36-148" aria-hidden="true" tabindex="-1"></a><span class="in">               size = 5) + # larger point size</span></span>
+<span id="cb36-149"><a href="#cb36-149" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal() # cleaner plot theme</span></span>
+<span id="cb36-150"><a href="#cb36-150" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-151"><a href="#cb36-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-152"><a href="#cb36-152" aria-hidden="true" tabindex="-1"></a>Is there a difference in mean crab size between the three sites?  </span>
+<span id="cb36-153"><a href="#cb36-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-154"><a href="#cb36-154" aria-hidden="true" tabindex="-1"></a>**Yes, and Zeke's Island NERR crabs tend to be smaller than those from Cape Cod or Virginia Coastal Reserve LTER.**</span>
+<span id="cb36-155"><a href="#cb36-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-156"><a href="#cb36-156" aria-hidden="true" tabindex="-1"></a><span class="fu">#### d. Check 1: normally distributed variable</span></span>
+<span id="cb36-157"><a href="#cb36-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-158"><a href="#cb36-158" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a histogram of crab size.</span>
+<span id="cb36-159"><a href="#cb36-159" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Facet your histogram so that you have 3 panels, with one panel for each site.</span>
+<span id="cb36-160"><a href="#cb36-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-161"><a href="#cb36-161" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-histogram}</span></span>
+<span id="cb36-162"><a href="#cb36-162" aria-hidden="true" tabindex="-1"></a><span class="in"># base layer: ggplot</span></span>
+<span id="cb36-163"><a href="#cb36-163" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data = pie_crab_clean, </span></span>
+<span id="cb36-164"><a href="#cb36-164" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = size)) + # x-axis</span></span>
+<span id="cb36-165"><a href="#cb36-165" aria-hidden="true" tabindex="-1"></a><span class="in">  # first layer: histogram</span></span>
+<span id="cb36-166"><a href="#cb36-166" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_histogram(bins = 9) + # number of bins from Rice Rule</span></span>
+<span id="cb36-167"><a href="#cb36-167" aria-hidden="true" tabindex="-1"></a><span class="in">  # faceting by site_name: creating 3 different panels</span></span>
+<span id="cb36-168"><a href="#cb36-168" aria-hidden="true" tabindex="-1"></a><span class="in">  facet_wrap(~ site_name) </span></span>
+<span id="cb36-169"><a href="#cb36-169" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-170"><a href="#cb36-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-171"><a href="#cb36-171" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a QQ plot of crab size. </span>
+<span id="cb36-172"><a href="#cb36-172" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Facet your QQ plot so that you have 3 panels, with one panel for each site.</span>
+<span id="cb36-173"><a href="#cb36-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-174"><a href="#cb36-174" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-qq}</span></span>
+<span id="cb36-175"><a href="#cb36-175" aria-hidden="true" tabindex="-1"></a><span class="in"># base layer: ggplot</span></span>
+<span id="cb36-176"><a href="#cb36-176" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data = pie_crab_clean, </span></span>
+<span id="cb36-177"><a href="#cb36-177" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(sample = size)) + # y-axis</span></span>
+<span id="cb36-178"><a href="#cb36-178" aria-hidden="true" tabindex="-1"></a><span class="in">  # first layer: QQ plot reference line</span></span>
+<span id="cb36-179"><a href="#cb36-179" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_qq_line(color = "orange") + </span></span>
+<span id="cb36-180"><a href="#cb36-180" aria-hidden="true" tabindex="-1"></a><span class="in">  # second layer: QQ plot points (actual observations)</span></span>
+<span id="cb36-181"><a href="#cb36-181" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_qq() + </span></span>
+<span id="cb36-182"><a href="#cb36-182" aria-hidden="true" tabindex="-1"></a><span class="in">  # faceting by site_name</span></span>
+<span id="cb36-183"><a href="#cb36-183" aria-hidden="true" tabindex="-1"></a><span class="in">  facet_wrap(~ site_name, </span></span>
+<span id="cb36-184"><a href="#cb36-184" aria-hidden="true" tabindex="-1"></a><span class="in">             scales = "free") # let axes vary between panels</span></span>
+<span id="cb36-185"><a href="#cb36-185" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-186"><a href="#cb36-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-187"><a href="#cb36-187" aria-hidden="true" tabindex="-1"></a>What are the outcomes of your visual checks?  </span>
+<span id="cb36-188"><a href="#cb36-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-189"><a href="#cb36-189" aria-hidden="true" tabindex="-1"></a>**Not perfect (crab sizes from VCR LTER seem not normally distributed) but with large sample sizes for each group, this might not matter too much.**  </span>
+<span id="cb36-190"><a href="#cb36-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-191"><a href="#cb36-191" aria-hidden="true" tabindex="-1"></a>Do Shapiro-Wilk tests:</span>
+<span id="cb36-192"><a href="#cb36-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-193"><a href="#cb36-193" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-normality-test}</span></span>
+<span id="cb36-194"><a href="#cb36-194" aria-hidden="true" tabindex="-1"></a><span class="in">cc_crabs &lt;- pie_crab_clean |&gt; # use the original data set</span></span>
+<span id="cb36-195"><a href="#cb36-195" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(site_code == "CC") |&gt; # filter to only include Cape Cod</span></span>
+<span id="cb36-196"><a href="#cb36-196" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(size) # extract the size column as a vector</span></span>
+<span id="cb36-197"><a href="#cb36-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-198"><a href="#cb36-198" aria-hidden="true" tabindex="-1"></a><span class="in">vcr_crabs &lt;- pie_crab_clean |&gt; </span></span>
+<span id="cb36-199"><a href="#cb36-199" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(site_code == "VCR") |&gt; # filter to only include Virginia Coastal</span></span>
+<span id="cb36-200"><a href="#cb36-200" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(size)</span></span>
+<span id="cb36-201"><a href="#cb36-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-202"><a href="#cb36-202" aria-hidden="true" tabindex="-1"></a><span class="in">zi_crabs &lt;- pie_crab_clean |&gt; </span></span>
+<span id="cb36-203"><a href="#cb36-203" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(site_code == "ZI") |&gt; # filter to only include Zeke's Island</span></span>
+<span id="cb36-204"><a href="#cb36-204" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(size)</span></span>
+<span id="cb36-205"><a href="#cb36-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-206"><a href="#cb36-206" aria-hidden="true" tabindex="-1"></a><span class="in"># do the Shapiro-Wilk tests</span></span>
+<span id="cb36-207"><a href="#cb36-207" aria-hidden="true" tabindex="-1"></a><span class="in">shapiro.test(cc_crabs)</span></span>
+<span id="cb36-208"><a href="#cb36-208" aria-hidden="true" tabindex="-1"></a><span class="in">shapiro.test(vcr_crabs)</span></span>
+<span id="cb36-209"><a href="#cb36-209" aria-hidden="true" tabindex="-1"></a><span class="in">shapiro.test(zi_crabs)</span></span>
+<span id="cb36-210"><a href="#cb36-210" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-211"><a href="#cb36-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-212"><a href="#cb36-212" aria-hidden="true" tabindex="-1"></a>What are the outcomes of your statistical checks?  </span>
+<span id="cb36-213"><a href="#cb36-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-214"><a href="#cb36-214" aria-hidden="true" tabindex="-1"></a>**With Shapiro-Wilk normality tests, there seems to be no deviation from normality for Cape Cod crab sizes (W = 0.9, p = 0.09), VCR LTER crab sizes (W = 0.9, p = 0.12), or Zeke's Island crab sizes (W = 1, p = 0.6).**  </span>
+<span id="cb36-215"><a href="#cb36-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-216"><a href="#cb36-216" aria-hidden="true" tabindex="-1"></a><span class="fu">#### e. Check 2: equal variances</span></span>
+<span id="cb36-217"><a href="#cb36-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-218"><a href="#cb36-218" aria-hidden="true" tabindex="-1"></a>Do a gut check: is the largest variance less than 4× the smallest variance?</span>
+<span id="cb36-219"><a href="#cb36-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-220"><a href="#cb36-220" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-variances}</span></span>
+<span id="cb36-221"><a href="#cb36-221" aria-hidden="true" tabindex="-1"></a><span class="in">4.04*4 &gt; 8.63</span></span>
+<span id="cb36-222"><a href="#cb36-222" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-223"><a href="#cb36-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-224"><a href="#cb36-224" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`leveneTest()`</span> from <span class="in">`car`</span></span>
+<span id="cb36-225"><a href="#cb36-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-226"><a href="#cb36-226" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-levene}</span></span>
+<span id="cb36-227"><a href="#cb36-227" aria-hidden="true" tabindex="-1"></a><span class="in"># do the Levene test</span></span>
+<span id="cb36-228"><a href="#cb36-228" aria-hidden="true" tabindex="-1"></a><span class="in">leveneTest(</span></span>
+<span id="cb36-229"><a href="#cb36-229" aria-hidden="true" tabindex="-1"></a><span class="in">  size ~ site_name, # formula: crab size as a function of site</span></span>
+<span id="cb36-230"><a href="#cb36-230" aria-hidden="true" tabindex="-1"></a><span class="in">  data = pie_crab_clean # data frame</span></span>
+<span id="cb36-231"><a href="#cb36-231" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb36-232"><a href="#cb36-232" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-233"><a href="#cb36-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-234"><a href="#cb36-234" aria-hidden="true" tabindex="-1"></a>What are the outcomes of your variance check?  </span>
+<span id="cb36-235"><a href="#cb36-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-236"><a href="#cb36-236" aria-hidden="true" tabindex="-1"></a>**There's a deviation from homogeneity of variance (in other words, the variances are not equal), but since the largest variance is less than 4 times the smallest variance (and the sample sizes are large), this may still be ok.**</span>
+<span id="cb36-237"><a href="#cb36-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-238"><a href="#cb36-238" aria-hidden="true" tabindex="-1"></a><span class="fu">#### f. ANOVA</span></span>
+<span id="cb36-239"><a href="#cb36-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-240"><a href="#cb36-240" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-anova}</span></span>
+<span id="cb36-241"><a href="#cb36-241" aria-hidden="true" tabindex="-1"></a><span class="in"># creating an object called crab_anova</span></span>
+<span id="cb36-242"><a href="#cb36-242" aria-hidden="true" tabindex="-1"></a><span class="in">crab_anova &lt;- aov(size ~ site_name, # formula</span></span>
+<span id="cb36-243"><a href="#cb36-243" aria-hidden="true" tabindex="-1"></a><span class="in">                  data = pie_crab_clean) # data</span></span>
+<span id="cb36-244"><a href="#cb36-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-245"><a href="#cb36-245" aria-hidden="true" tabindex="-1"></a><span class="in"># gives more information</span></span>
+<span id="cb36-246"><a href="#cb36-246" aria-hidden="true" tabindex="-1"></a><span class="in">summary(crab_anova)</span></span>
+<span id="cb36-247"><a href="#cb36-247" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-248"><a href="#cb36-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-249"><a href="#cb36-249" aria-hidden="true" tabindex="-1"></a>Summarize results: is there a difference in crab size between the three sites?  </span>
+<span id="cb36-250"><a href="#cb36-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-251"><a href="#cb36-251" aria-hidden="true" tabindex="-1"></a>**There is a difference in crab size between Cape Cod, Virginia Coastal Reserve LTER, and Zeke's Island NERR (one-way ANOVA, F(2, 89) = 39.6, p &lt; 0.001, $\alpha$ = 0.05).**</span>
+<span id="cb36-252"><a href="#cb36-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-253"><a href="#cb36-253" aria-hidden="true" tabindex="-1"></a><span class="fu">#### g. Post-hoc: Tukey HSD</span></span>
+<span id="cb36-254"><a href="#cb36-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-255"><a href="#cb36-255" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-tukey}</span></span>
+<span id="cb36-256"><a href="#cb36-256" aria-hidden="true" tabindex="-1"></a><span class="in">TukeyHSD(crab_anova)</span></span>
+<span id="cb36-257"><a href="#cb36-257" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-258"><a href="#cb36-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-259"><a href="#cb36-259" aria-hidden="true" tabindex="-1"></a>Which pairwise comparisons are actually different? Which ones are not different?  </span>
+<span id="cb36-260"><a href="#cb36-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-261"><a href="#cb36-261" aria-hidden="true" tabindex="-1"></a>**Zeke's Island NERR and Cape Cod crabs are different, and Zeke's Island NERR and Virginia Coastal Reserve LTER crabs are different. Virginial Coastal Reserve LTER and Cape Cod crabs are not different.**</span>
+<span id="cb36-262"><a href="#cb36-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-263"><a href="#cb36-263" aria-hidden="true" tabindex="-1"></a><span class="fu">#### h. effect size</span></span>
+<span id="cb36-264"><a href="#cb36-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-265"><a href="#cb36-265" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`eta_squared()`</span> from <span class="in">`rstatix`</span></span>
+<span id="cb36-266"><a href="#cb36-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-267"><a href="#cb36-267" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crab-effectsize}</span></span>
+<span id="cb36-268"><a href="#cb36-268" aria-hidden="true" tabindex="-1"></a><span class="in">eta_squared(crab_anova)</span></span>
+<span id="cb36-269"><a href="#cb36-269" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-270"><a href="#cb36-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-271"><a href="#cb36-271" aria-hidden="true" tabindex="-1"></a>What is the magnitude of the differences between sites in crab size?  </span>
+<span id="cb36-272"><a href="#cb36-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-273"><a href="#cb36-273" aria-hidden="true" tabindex="-1"></a>**There is a large difference in crab size between sites.**</span>
+<span id="cb36-274"><a href="#cb36-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-275"><a href="#cb36-275" aria-hidden="true" tabindex="-1"></a><span class="fu">#### i. Putting everything together</span></span>
+<span id="cb36-276"><a href="#cb36-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-277"><a href="#cb36-277" aria-hidden="true" tabindex="-1"></a>We found a large ($\eta^2$ = 0.47) difference between sites in mean crab size (one-way ANOVA, F(2, 89) = 39.6, p &lt; 0.001, $\alpha$ = 0.05). The smallest crabs were from Zeke's Island NERR, which were on average 12.1 mm. Zeke's Island crabs were 4.8 mm (95% CI: <span class="co">[</span><span class="ot">3.3, 6.2</span><span class="co">]</span> mm) smaller than crabs from Cape Cod (Tukey's HSD: p &lt; 0.001) and 4.3 mm (95% CI: <span class="co">[</span><span class="ot">2.9, 5.7</span><span class="co">]</span> mm) smaller than crabs from Virginia Coastal Reserve LTER (Tukey's HSD: p &lt; 0.001).  </span>
+<span id="cb36-278"><a href="#cb36-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-279"><a href="#cb36-279" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3. Non-parametric tests</span></span>
+<span id="cb36-280"><a href="#cb36-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-281"><a href="#cb36-281" aria-hidden="true" tabindex="-1"></a><span class="fu">#### a. Clean and wrangle the data</span></span>
+<span id="cb36-282"><a href="#cb36-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-283"><a href="#cb36-283" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-wrangle}</span></span>
+<span id="cb36-284"><a href="#cb36-284" aria-hidden="true" tabindex="-1"></a><span class="in">ramen_ratings_clean &lt;- ramen_ratings |&gt; # use the ramen_ratings dataframe</span></span>
+<span id="cb36-285"><a href="#cb36-285" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(brand == "Maruchan") |&gt; # filter to only include Maruchan ramen</span></span>
+<span id="cb36-286"><a href="#cb36-286" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(style = fct_relevel(style, "Bowl", "Pack", "Tray", "Cup")) # reorder style factor</span></span>
+<span id="cb36-287"><a href="#cb36-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-288"><a href="#cb36-288" aria-hidden="true" tabindex="-1"></a><span class="in"># look at the structure</span></span>
+<span id="cb36-289"><a href="#cb36-289" aria-hidden="true" tabindex="-1"></a><span class="in">str(ramen_ratings_clean)</span></span>
+<span id="cb36-290"><a href="#cb36-290" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-291"><a href="#cb36-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-292"><a href="#cb36-292" aria-hidden="true" tabindex="-1"></a><span class="fu">#### b. Quick summary</span></span>
+<span id="cb36-293"><a href="#cb36-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-294"><a href="#cb36-294" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-summary}</span></span>
+<span id="cb36-295"><a href="#cb36-295" aria-hidden="true" tabindex="-1"></a><span class="in"># create a new object called ramen_ratings_summary</span></span>
+<span id="cb36-296"><a href="#cb36-296" aria-hidden="true" tabindex="-1"></a><span class="in">ramen_ratings_summary &lt;- ramen_ratings_clean |&gt; # start with the cleaned data frame</span></span>
+<span id="cb36-297"><a href="#cb36-297" aria-hidden="true" tabindex="-1"></a><span class="in">  # group by stle</span></span>
+<span id="cb36-298"><a href="#cb36-298" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(style) |&gt; </span></span>
+<span id="cb36-299"><a href="#cb36-299" aria-hidden="true" tabindex="-1"></a><span class="in">  # calculate the median</span></span>
+<span id="cb36-300"><a href="#cb36-300" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(median = median(stars))</span></span>
+<span id="cb36-301"><a href="#cb36-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-302"><a href="#cb36-302" aria-hidden="true" tabindex="-1"></a><span class="in"># display the object</span></span>
+<span id="cb36-303"><a href="#cb36-303" aria-hidden="true" tabindex="-1"></a><span class="in">ramen_ratings_summary </span></span>
+<span id="cb36-304"><a href="#cb36-304" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-305"><a href="#cb36-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-306"><a href="#cb36-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-307"><a href="#cb36-307" aria-hidden="true" tabindex="-1"></a><span class="fu">#### c. Make a boxplot to compare star ratings across ramen styles</span></span>
+<span id="cb36-308"><a href="#cb36-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-309"><a href="#cb36-309" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-explore-viz}</span></span>
+<span id="cb36-310"><a href="#cb36-310" aria-hidden="true" tabindex="-1"></a><span class="in"># base layer: ggplot</span></span>
+<span id="cb36-311"><a href="#cb36-311" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data = ramen_ratings_clean, </span></span>
+<span id="cb36-312"><a href="#cb36-312" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = style, # x-axis</span></span>
+<span id="cb36-313"><a href="#cb36-313" aria-hidden="true" tabindex="-1"></a><span class="in">           y = stars, # y-axis</span></span>
+<span id="cb36-314"><a href="#cb36-314" aria-hidden="true" tabindex="-1"></a><span class="in">           color = style)) + # fill geoms by ramen style</span></span>
+<span id="cb36-315"><a href="#cb36-315" aria-hidden="true" tabindex="-1"></a><span class="in">  # first layer: boxplot</span></span>
+<span id="cb36-316"><a href="#cb36-316" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_boxplot(color = "darkgrey", </span></span>
+<span id="cb36-317"><a href="#cb36-317" aria-hidden="true" tabindex="-1"></a><span class="in">               outliers = FALSE) + # taking out outliers because they will be shown in the jitter</span></span>
+<span id="cb36-318"><a href="#cb36-318" aria-hidden="true" tabindex="-1"></a><span class="in">  # second layer: jitter</span></span>
+<span id="cb36-319"><a href="#cb36-319" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_jitter(height = 0,</span></span>
+<span id="cb36-320"><a href="#cb36-320" aria-hidden="true" tabindex="-1"></a><span class="in">              width = 0.1,</span></span>
+<span id="cb36-321"><a href="#cb36-321" aria-hidden="true" tabindex="-1"></a><span class="in">              size = 2,</span></span>
+<span id="cb36-322"><a href="#cb36-322" aria-hidden="true" tabindex="-1"></a><span class="in">              alpha = 0.6) +</span></span>
+<span id="cb36-323"><a href="#cb36-323" aria-hidden="true" tabindex="-1"></a><span class="in">  # set custom colors</span></span>
+<span id="cb36-324"><a href="#cb36-324" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(values = c("firebrick4", "orange", "gold", "darkgreen")) + </span></span>
+<span id="cb36-325"><a href="#cb36-325" aria-hidden="true" tabindex="-1"></a><span class="in">  # minimal theme</span></span>
+<span id="cb36-326"><a href="#cb36-326" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal() + </span></span>
+<span id="cb36-327"><a href="#cb36-327" aria-hidden="true" tabindex="-1"></a><span class="in">  # take out the legend</span></span>
+<span id="cb36-328"><a href="#cb36-328" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none") </span></span>
+<span id="cb36-329"><a href="#cb36-329" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-330"><a href="#cb36-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-331"><a href="#cb36-331" aria-hidden="true" tabindex="-1"></a><span class="fu">#### d. Do the Kruskal-Wallis test</span></span>
+<span id="cb36-332"><a href="#cb36-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-333"><a href="#cb36-333" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-kw}</span></span>
+<span id="cb36-334"><a href="#cb36-334" aria-hidden="true" tabindex="-1"></a><span class="in">kruskal.test(</span></span>
+<span id="cb36-335"><a href="#cb36-335" aria-hidden="true" tabindex="-1"></a><span class="in">  stars ~ style, # formula: star ratings as a function of ramen style</span></span>
+<span id="cb36-336"><a href="#cb36-336" aria-hidden="true" tabindex="-1"></a><span class="in">  data = ramen_ratings_clean # data frame</span></span>
+<span id="cb36-337"><a href="#cb36-337" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb36-338"><a href="#cb36-338" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-339"><a href="#cb36-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-340"><a href="#cb36-340" aria-hidden="true" tabindex="-1"></a>Is there a difference in ratings between ramen styles?  </span>
+<span id="cb36-341"><a href="#cb36-341" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-342"><a href="#cb36-342" aria-hidden="true" tabindex="-1"></a>**Ramen styles differ in ratings (Kruskal-Wallis rank sum test, $\chi^2$(3) = 15.7, p = 0.0013).**</span>
+<span id="cb36-343"><a href="#cb36-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-344"><a href="#cb36-344" aria-hidden="true" tabindex="-1"></a><span class="fu">#### e. Do a Dunn's post-hoc test</span></span>
+<span id="cb36-345"><a href="#cb36-345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-346"><a href="#cb36-346" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`dunn_test()`</span> from <span class="in">`rstatix`</span></span>
+<span id="cb36-347"><a href="#cb36-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-348"><a href="#cb36-348" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-post-hoc}</span></span>
+<span id="cb36-349"><a href="#cb36-349" aria-hidden="true" tabindex="-1"></a><span class="in">dunn_test(</span></span>
+<span id="cb36-350"><a href="#cb36-350" aria-hidden="true" tabindex="-1"></a><span class="in">  stars ~ style, # formula: star ratings as a function of ramen style</span></span>
+<span id="cb36-351"><a href="#cb36-351" aria-hidden="true" tabindex="-1"></a><span class="in">  data = ramen_ratings_clean # data frame</span></span>
+<span id="cb36-352"><a href="#cb36-352" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb36-353"><a href="#cb36-353" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-354"><a href="#cb36-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-355"><a href="#cb36-355" aria-hidden="true" tabindex="-1"></a>Which pairwise comparisons of ramen styles are different from each other?  </span>
+<span id="cb36-356"><a href="#cb36-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-357"><a href="#cb36-357" aria-hidden="true" tabindex="-1"></a>**Bowls and packs are different, bowls and trays are different, bowls and cups are different.**</span>
+<span id="cb36-358"><a href="#cb36-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-359"><a href="#cb36-359" aria-hidden="true" tabindex="-1"></a><span class="fu">#### f. Calculate an effect size</span></span>
+<span id="cb36-360"><a href="#cb36-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-361"><a href="#cb36-361" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`kruskal_effsize()`</span> from <span class="in">`rstatix`</span></span>
+<span id="cb36-362"><a href="#cb36-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-363"><a href="#cb36-363" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ramen-effect-size}</span></span>
+<span id="cb36-364"><a href="#cb36-364" aria-hidden="true" tabindex="-1"></a><span class="in">kruskal_effsize(</span></span>
+<span id="cb36-365"><a href="#cb36-365" aria-hidden="true" tabindex="-1"></a><span class="in">  stars ~ style, # formula: star ratings as a function of ramen style</span></span>
+<span id="cb36-366"><a href="#cb36-366" aria-hidden="true" tabindex="-1"></a><span class="in">  data = ramen_ratings_clean # data frame</span></span>
+<span id="cb36-367"><a href="#cb36-367" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb36-368"><a href="#cb36-368" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-369"><a href="#cb36-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-370"><a href="#cb36-370" aria-hidden="true" tabindex="-1"></a>What is the magnitude of the effect of ramen style on ratings?  </span>
+<span id="cb36-371"><a href="#cb36-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-372"><a href="#cb36-372" aria-hidden="true" tabindex="-1"></a>**There is a moderate ($\eta^2$ = 0.12) effect of ramen style on ratings.**</span>
+<span id="cb36-373"><a href="#cb36-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-374"><a href="#cb36-374" aria-hidden="true" tabindex="-1"></a><span class="fu">#### g. Putting everything together</span></span>
+<span id="cb36-375"><a href="#cb36-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-376"><a href="#cb36-376" aria-hidden="true" tabindex="-1"></a>We found a moderate ($\eta^2$ = 0.12) difference in ratings between ramen styles (Kruskal-Wallis rank sum test, $\chi^2$(3) = 15.7, p = 0.0013). Bowl-style ramen had a median rating of 4.25 stars, which tended to be more highly rated than pack (Dunn's post-hoc test: Holm adjusted p = 0.04, median rating = 3.75 stars), tray (Dunn's post-hoc test: Holm adjusted p = 0.04, median rating = 3.75 stars), or cup style ramen (Dunn's post-hoc test: Holm adjusted p = 0.0013, median rating = 3.5 stars).</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

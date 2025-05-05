@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="An Bui">
-<meta name="description" content="Need help? Check here!">
+<meta name="description" content="storing your personal access token">
 
-<title>Spring 2025 - Fixing code and getting help</title>
+<title>Spring 2025 - Git/GitHub Part 2: personal access token</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -158,14 +158,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <div class="quarto-title-block"><div><h1 class="title">Fixing code and getting help</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+      <div class="quarto-title-block"><div><h1 class="title">Git/GitHub Part 2: personal access token</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
                   <div>
         <div class="description">
-          Need help? Check here!
+          storing your personal access token
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">coding</div>
+                <div class="quarto-category">GitHub</div>
+                <div class="quarto-category">Git</div>
+                <div class="quarto-category">personal access token</div>
               </div>
                   </div>
   </div>
@@ -193,7 +195,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">March 30, 2025</p>
+        <p class="date-modified">May 5, 2025</p>
       </div>
     </div>
       
@@ -207,18 +209,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#before-doing-any-coding-remember" id="toc-before-doing-any-coding-remember" class="nav-link active" data-scroll-target="#before-doing-any-coding-remember">Before doing any coding, remember:</a>
+  <li><a href="#things-to-keep-in-mind" id="toc-things-to-keep-in-mind" class="nav-link active" data-scroll-target="#things-to-keep-in-mind">Things to keep in mind</a>
   <ul class="collapse">
-  <li><a href="#things-will-go-wrong-when-you-are-coding." id="toc-things-will-go-wrong-when-you-are-coding." class="nav-link" data-scroll-target="#things-will-go-wrong-when-you-are-coding.">Things <em>will</em> go wrong when you are coding.</a></li>
-  <li><a href="#start-assignments-with-enough-time-to-troubleshoot" id="toc-start-assignments-with-enough-time-to-troubleshoot" class="nav-link" data-scroll-target="#start-assignments-with-enough-time-to-troubleshoot">Start assignments with enough time to troubleshoot!</a></li>
+  <li><a href="#canvas-video" id="toc-canvas-video" class="nav-link" data-scroll-target="#canvas-video">Canvas video</a></li>
+  <li><a href="#what-is-a-personal-access-token" id="toc-what-is-a-personal-access-token" class="nav-link" data-scroll-target="#what-is-a-personal-access-token">What is a personal access token?</a></li>
   </ul></li>
-  <li><a href="#step-1.-take-a-deep-breath-seriously" id="toc-step-1.-take-a-deep-breath-seriously" class="nav-link" data-scroll-target="#step-1.-take-a-deep-breath-seriously">Step 1. Take a deep breath (seriously)!</a></li>
-  <li><a href="#step-2.-look-for-typos." id="toc-step-2.-look-for-typos." class="nav-link" data-scroll-target="#step-2.-look-for-typos.">Step 2. Look for typos.</a></li>
-  <li><a href="#step-3.-google-the-error." id="toc-step-3.-google-the-error." class="nav-link" data-scroll-target="#step-3.-google-the-error.">Step 3. Google the error.</a></li>
-  <li><a href="#step-4a.-ask-someone-to-look-at-your-code" id="toc-step-4a.-ask-someone-to-look-at-your-code" class="nav-link" data-scroll-target="#step-4a.-ask-someone-to-look-at-your-code">Step 4a. Ask someone to look at your code!</a></li>
-  <li><a href="#step-4b.-try-rubber-duck-debugging" id="toc-step-4b.-try-rubber-duck-debugging" class="nav-link" data-scroll-target="#step-4b.-try-rubber-duck-debugging">Step 4b. Try rubber duck debugging!</a></li>
-  <li><a href="#step-4c.-go-to-sleep" id="toc-step-4c.-go-to-sleep" class="nav-link" data-scroll-target="#step-4c.-go-to-sleep">Step 4c. Go to sleep!</a></li>
-  <li><a href="#step-5.-email-someone-on-the-teaching-team-grace-thuy-tien-or-an" id="toc-step-5.-email-someone-on-the-teaching-team-grace-thuy-tien-or-an" class="nav-link" data-scroll-target="#step-5.-email-someone-on-the-teaching-team-grace-thuy-tien-or-an">Step 5. Email someone on the teaching team (Grace, Thuy-Tien, or An)</a></li>
+  <li><a href="#steps" id="toc-steps" class="nav-link" data-scroll-target="#steps">Steps</a>
+  <ul class="collapse">
+  <li><a href="#in-rstudio" id="toc-in-rstudio" class="nav-link" data-scroll-target="#in-rstudio">In RStudio</a>
+  <ul class="collapse">
+  <li><a href="#install-usethis" id="toc-install-usethis" class="nav-link" data-scroll-target="#install-usethis">1. Install <code>usethis</code></a></li>
+  <li><a href="#generate-a-personal-access-token-using-usethis" id="toc-generate-a-personal-access-token-using-usethis" class="nav-link" data-scroll-target="#generate-a-personal-access-token-using-usethis">2. Generate a personal access token using <code>usethis</code></a></li>
+  </ul></li>
+  <li><a href="#in-your-browser" id="toc-in-your-browser" class="nav-link" data-scroll-target="#in-your-browser">In your browser</a>
+  <ul class="collapse">
+  <li><a href="#fill-in-the-information-about-your-personal-access-token." id="toc-fill-in-the-information-about-your-personal-access-token." class="nav-link" data-scroll-target="#fill-in-the-information-about-your-personal-access-token.">3. Fill in the information about your personal access token.</a></li>
+  <li><a href="#scroll-to-the-bottom-of-the-page-hit-generate-token" id="toc-scroll-to-the-bottom-of-the-page-hit-generate-token" class="nav-link" data-scroll-target="#scroll-to-the-bottom-of-the-page-hit-generate-token">4. Scroll to the bottom of the page, hit Generate token</a></li>
+  <li><a href="#copy-the-personal-access-token-to-your-clipboard" id="toc-copy-the-personal-access-token-to-your-clipboard" class="nav-link" data-scroll-target="#copy-the-personal-access-token-to-your-clipboard">5. Copy the personal access token to your clipboard</a></li>
+  </ul></li>
+  <li><a href="#back-in-rstudio" id="toc-back-in-rstudio" class="nav-link" data-scroll-target="#back-in-rstudio">Back in RStudio</a>
+  <ul class="collapse">
+  <li><a href="#set-the-personal-access-token." id="toc-set-the-personal-access-token." class="nav-link" data-scroll-target="#set-the-personal-access-token.">6. Set the personal access token.</a></li>
+  <li><a href="#paste-your-personal-access-token-when-prompted" id="toc-paste-your-personal-access-token-when-prompted" class="nav-link" data-scroll-target="#paste-your-personal-access-token-when-prompted">7. Paste your personal access token when prompted</a></li>
+  <li><a href="#double-check-that-the-personal-access-token-is-stored" id="toc-double-check-that-the-personal-access-token-is-stored" class="nav-link" data-scroll-target="#double-check-that-the-personal-access-token-is-stored">8. Double check that the personal access token is stored</a></li>
+  </ul></li>
+  </ul></li>
   </ul>
 </nav>
 </nav>
@@ -233,96 +248,105 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../resources/images/monster-error.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../resources/images/monster-error.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%" alt="A frustrated little monster sits on the ground with his hat next to him, saying 'I just need a minute.' Looking on empathetically is the R logo, with the word 'Error' in many different styles behind it."></a></p>
-</figure>
-</div>
-<div style="font-size: 90%; color: #787878;">
-<p>Artwork by <a href="https://allisonhorst.com/"><span class="citation" data-cites="allison_horst">@allison_horst</span></a></p>
-</div>
-<section id="before-doing-any-coding-remember" class="level2">
-<h2 class="anchored" data-anchor-id="before-doing-any-coding-remember">Before doing any coding, remember:</h2>
-<section id="things-will-go-wrong-when-you-are-coding." class="level3">
-<h3 class="anchored" data-anchor-id="things-will-go-wrong-when-you-are-coding.">Things <em>will</em> go wrong when you are coding.</h3>
-<p>This happens to everyone, and is normal! It is totally ok to ask someone on the teaching team to help fix your code; however, you should feel empowered to figure out what is wrong with your code on your own, and we will talk through best practices to do so.</p>
-</section>
-<section id="start-assignments-with-enough-time-to-troubleshoot" class="level3">
-<h3 class="anchored" data-anchor-id="start-assignments-with-enough-time-to-troubleshoot">Start assignments with enough time to troubleshoot!</h3>
-<p>You will run into errors when doing your assignments. Don’t leave things to the last minute! This class requires you to plan in advance to get things done correctly and on time. We talk about assignments in class a week before the due date - take that week to read the assignment, do the easy problems first, try your code, troubleshoot, and finally submit!</p>
-<p>Here are some tried-and-true steps to troubleshooting code in this class, and beyond:</p>
-</section>
-</section>
-<section id="step-1.-take-a-deep-breath-seriously" class="level2">
-<h2 class="anchored" data-anchor-id="step-1.-take-a-deep-breath-seriously">Step 1. Take a deep breath (seriously)!</h2>
-<p>Errors show up in red text and look super alarmed. Easier said than done, but do not be alarmed! Take a moment before panicking, and then…</p>
-</section>
-<section id="step-2.-look-for-typos." class="level2">
-<h2 class="anchored" data-anchor-id="step-2.-look-for-typos.">Step 2. Look for typos.</h2>
-<p>Do you have a period where there should be a comma? Have you spelled everything correctly? Are you missing a parenthesis somewhere? All sorts of things can happen when you’re typing a bunch; double check your code to make sure you don’t have any typos.</p>
-</section>
-<section id="step-3.-google-the-error." class="level2">
-<h2 class="anchored" data-anchor-id="step-3.-google-the-error.">Step 3. Google the error.</h2>
-<p>Chances are you are not the only person who has ever experienced the <em>specific</em> error you are encountering. So, google it!</p>
-<p>You can be smart about how you google things to find a solution to your problem. See Sam Shanny-Csik’s tutorial called <a href="https://ucsb-meds.github.io/teach-me-how-to-google/#1">“Teach Me How to Google”</a> for tips on how to google to find solutions to coding problems.</p>
-<p>For the next step, try at least 2 of these options:</p>
-</section>
-<section id="step-4a.-ask-someone-to-look-at-your-code" class="level2">
-<h2 class="anchored" data-anchor-id="step-4a.-ask-someone-to-look-at-your-code">Step 4a. Ask someone to look at your code!</h2>
-<p>This can be anyone: your housemate who knows how to code, your friend who took this class last year, etc.. Show your code to an actual human being (who knows how to code) and ask them if they can see anything wrong!</p>
-</section>
-<section id="step-4b.-try-rubber-duck-debugging" class="level2">
-<h2 class="anchored" data-anchor-id="step-4b.-try-rubber-duck-debugging">Step 4b. Try rubber duck debugging!</h2>
-<p><a href="https://rubberduckdebugging.com/">Rubber duck debugging</a> is a silly way of talking through what you’re trying to do with your code. Generally, the steps are as follows (feel free to replace the rubber duck with an actual person or another object you want to use):</p>
-<ol type="1">
-<li>Obtain a rubber duck.<br>
-</li>
-<li>Look at the rubber duck.<br>
-</li>
-<li>Explain to the duck <em>out loud, in words</em> what you are trying to do with your code, line by line.<br>
-</li>
-<li>At some point, you will figure out what you did wrong!</li>
-</ol>
-</section>
-<section id="step-4c.-go-to-sleep" class="level2">
-<h2 class="anchored" data-anchor-id="step-4c.-go-to-sleep">Step 4c. Go to sleep!</h2>
-<p>This says it all:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../resources/images/debugger-sleep.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../resources/images/debugger-sleep.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></a></p>
-</figure>
-</div>
-<p>Close your computer! Go for a walk! Take a shower! Go to sleep! Do whatever you want other than keep coding. When you take a break, you might be able to figure out your problem.</p>
-<p>If you’re still stuck then…</p>
-</section>
-<section id="step-5.-email-someone-on-the-teaching-team-grace-thuy-tien-or-an" class="level2">
-<h2 class="anchored" data-anchor-id="step-5.-email-someone-on-the-teaching-team-grace-thuy-tien-or-an">Step 5. Email someone on the teaching team (Grace, Thuy-Tien, or An)</h2>
-<p>We are here to help you! However, <strong>inquiries about how to fix code will only be addressed if they include brief (1-2 sentences each) descriptions of the following</strong>:</p>
-<ol type="1">
-<li>What you’re trying to do<br>
-</li>
-<li>What the problem is<br>
-</li>
-<li>What you have done to try to solve the problem on your own</li>
-</ol>
-<p>We can also best help you if you provide a screenshot of your code or the script so that we can see what is happening.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Be patient with a response!">
+<div class="callout callout-style-default callout-warning callout-titled" title="Have you completed all steps in Git/GitHub Part 1?">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Be patient with a response!
+Have you completed all steps in Git/GitHub Part 1?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Again, we are here to help you - but if you email at 11:58 on Wednesdays right before the homework is due, it’s unlikely that you’ll get a response right away! You can expect a response from one of us within 36 hours of emailing (though we will try to respond sooner than that); plan accordingly!</p>
+<p>If you have not created a GitHub account and entered your information in the <strong>Terminal</strong>, go back to <a href="https://spring-2025.envs-193ds.com/resources/git-configuration">Part 1</a> and complete those steps before moving on to the steps in this part.</p>
 </div>
 </div>
+<section id="things-to-keep-in-mind" class="level1">
+<h1>Things to keep in mind</h1>
+<section id="canvas-video" class="level2">
+<h2 class="anchored" data-anchor-id="canvas-video">Canvas video</h2>
+<p>There is a video on Canvas with all of these steps in the Week 6 module.</p>
+</section>
+<section id="what-is-a-personal-access-token" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-personal-access-token">What is a personal access token?</h2>
+<p>From GitHub’s <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#using-a-token-on-the-command-line">documentation</a>:</p>
+<blockquote class="blockquote">
+<p>Personal access tokens are an alternative to using passwords for authentication to GitHub when using the GitHub API or the command line.</p>
+</blockquote>
+</section>
+</section>
+<section id="steps" class="level1">
+<h1>Steps</h1>
+<section id="in-rstudio" class="level2">
+<h2 class="anchored" data-anchor-id="in-rstudio">In RStudio</h2>
+<section id="install-usethis" class="level3">
+<h3 class="anchored" data-anchor-id="install-usethis">1. Install <code>usethis</code></h3>
+<p>Do this in the console!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"usethis"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><a href="../resources/images/github-prechecks/03_install-usethis.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../resources/images/github-prechecks/03_install-usethis.png" class="img-fluid"></a></p>
+</section>
+<section id="generate-a-personal-access-token-using-usethis" class="level3">
+<h3 class="anchored" data-anchor-id="generate-a-personal-access-token-using-usethis">2. Generate a personal access token using <code>usethis</code></h3>
+<p>Again, do this in the console!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_github_token</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><a href="../resources/images/github-prechecks/04_create-github-token.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../resources/images/github-prechecks/04_create-github-token.png" class="img-fluid"></a></p>
+<p>This will lead you to a web browser.</p>
+<p>(if prompted) in the web browser, enter your GitHub password.</p>
+</section>
+</section>
+<section id="in-your-browser" class="level2">
+<h2 class="anchored" data-anchor-id="in-your-browser">In your browser</h2>
+<section id="fill-in-the-information-about-your-personal-access-token." class="level3">
+<h3 class="anchored" data-anchor-id="fill-in-the-information-about-your-personal-access-token.">3. Fill in the information about your personal access token.</h3>
+<p>Under “Note”, name your PAT. A logical name could be “PAT spring 2025”.</p>
+<p>Under “Expiration”, select 90 days.</p>
+<p><a href="../resources/images/github-prechecks/05_github-token-page.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../resources/images/github-prechecks/05_github-token-page.png" class="img-fluid"></a></p>
+</section>
+<section id="scroll-to-the-bottom-of-the-page-hit-generate-token" class="level3">
+<h3 class="anchored" data-anchor-id="scroll-to-the-bottom-of-the-page-hit-generate-token">4. Scroll to the bottom of the page, hit Generate token</h3>
+<p><strong>DO NOT MODIFY ANY OF THE PRE-SELECTED CHECK BOXES.</strong></p>
+<p><a href="../resources/images/github-prechecks/06_generate-token-button.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../resources/images/github-prechecks/06_generate-token-button.png" class="img-fluid"></a></p>
+</section>
+<section id="copy-the-personal-access-token-to-your-clipboard" class="level3">
+<h3 class="anchored" data-anchor-id="copy-the-personal-access-token-to-your-clipboard">5. Copy the personal access token to your clipboard</h3>
+<p><a href="../resources/images/github-prechecks/07_copy-PAT.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../resources/images/github-prechecks/07_copy-PAT.png" class="img-fluid"></a></p>
+</section>
+</section>
+<section id="back-in-rstudio" class="level2">
+<h2 class="anchored" data-anchor-id="back-in-rstudio">Back in RStudio</h2>
+<section id="set-the-personal-access-token." class="level3">
+<h3 class="anchored" data-anchor-id="set-the-personal-access-token.">6. Set the personal access token.</h3>
+<p>Run this in the console!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gitcreds<span class="sc">::</span><span class="fu">gitcreds_set</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><a href="../resources/images/github-prechecks/08_gitcreds-set.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../resources/images/github-prechecks/08_gitcreds-set.png" class="img-fluid"></a></p>
+</section>
+<section id="paste-your-personal-access-token-when-prompted" class="level3">
+<h3 class="anchored" data-anchor-id="paste-your-personal-access-token-when-prompted">7. Paste your personal access token when prompted</h3>
+<p>Paste your PERSONAL ACCESS TOKEN. NOT YOUR GITHUB PASSWORD. NOT YOUR COMPUTER PASSWORD.</p>
+<p><strong>PASTE YOUR PERSONAL ACCESS TOKEN.</strong></p>
+<p><a href="../resources/images/github-prechecks/09_enter-PAT.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../resources/images/github-prechecks/09_enter-PAT.png" class="img-fluid"></a></p>
+</section>
+<section id="double-check-that-the-personal-access-token-is-stored" class="level3">
+<h3 class="anchored" data-anchor-id="double-check-that-the-personal-access-token-is-stored">8. Double check that the personal access token is stored</h3>
+<p>Again, run this in the console:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">git_sitrep</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Check that your user name and email are correct.</p>
+<p>Check the <code>Personal access token</code> field under <code>GitHub</code>. This should say <code>&lt;discovered&gt;</code>.</p>
+<p><a href="../resources/images/github-prechecks/10_git-sitrep.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../resources/images/github-prechecks/10_git-sitrep.png" class="img-fluid"></a></p>
 
 
 <!-- -->
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -786,86 +810,118 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Fixing code and getting help"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Need help? Check here!"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [coding]</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/monster-error.png)</span>{fig-alt="A frustrated little monster sits on the ground with his hat next to him, saying 'I just need a minute.' Looking on empathetically is the R logo, with the word 'Error' in many different styles behind it." width="80%" fig-align="center"}</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>::: {style="font-size: 90%; color: #787878;"}</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>Artwork by <span class="co">[</span><span class="ot">@allison_horst</span><span class="co">](https://allisonhorst.com/)</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">## Before doing any coding, remember:</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">### Things _will_ go wrong when you are coding. </span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>This happens to everyone, and is normal! It is totally ok to ask someone on the teaching team to help fix your code; however, you should feel empowered to figure out what is wrong with your code on your own, and we will talk through best practices to do so.  </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">### Start assignments with enough time to troubleshoot!</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>You will run into errors when doing your assignments. Don't leave things to the last minute! This class requires you to plan in advance to get things done correctly and on time. We talk about assignments in class a week before the due date - take that week to read the assignment, do the easy problems first, try your code, troubleshoot, and finally submit!  </span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>Here are some tried-and-true steps to troubleshooting code in this class, and beyond:</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 1. Take a deep breath (seriously)!</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>Errors show up in red text and look super alarmed. Easier said than done, but do not be alarmed! Take a moment before panicking, and then...</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 2. Look for typos.</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>Do you have a period where there should be a comma? Have you spelled everything correctly? Are you missing a parenthesis somewhere? All sorts of things can happen when you're typing a bunch; double check your code to make sure you don't have any typos.  </span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 3. Google the error.</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>Chances are you are not the only person who has ever experienced the _specific_ error you are encountering. So, google it!  </span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>You can be smart about how you google things to find a solution to your problem. See Sam Shanny-Csik's tutorial called <span class="co">[</span><span class="ot">"Teach Me How to Google"</span><span class="co">](https://ucsb-meds.github.io/teach-me-how-to-google/#1)</span> for tips on how to google to find solutions to coding problems.  </span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>For the next step, try at least 2 of these options:  </span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 4a. Ask someone to look at your code!</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>This can be anyone: your housemate who knows how to code, your friend who took this class last year, etc.. Show your code to an actual human being (who knows how to code) and ask them if they can see anything wrong!  </span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 4b. Try rubber duck debugging!</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Rubber duck debugging</span><span class="co">](https://rubberduckdebugging.com/)</span> is a silly way of talking through what you're trying to do with your code. Generally, the steps are as follows (feel free to replace the rubber duck with an actual person or another object you want to use):  </span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Obtain a rubber duck.  </span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Look at the rubber duck.  </span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Explain to the duck _out loud, in words_ what you are trying to do with your code, line by line.  </span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>At some point, you will figure out what you did wrong!  </span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 4c. Go to sleep!</span></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>This says it all:</span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/debugger-sleep.png)</span>{width="60%" fig-align="center"}</span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>Close your computer! Go for a walk! Take a shower! Go to sleep! Do whatever you want other than keep coding. When you take a break, you might be able to figure out your problem.  </span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>If you're still stuck then...</span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 5. Email someone on the teaching team (Grace, Thuy-Tien, or An)</span></span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>We are here to help you! However, **inquiries about how to fix code will only be addressed if they include brief (1-2 sentences each) descriptions of the following**:  </span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>What you’re trying to do  </span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>What the problem is  </span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>What you have done to try to solve the problem on your own  </span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>We can also best help you if you provide a screenshot of your code or the script so that we can see what is happening.  </span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>:::{.callout-note title="Be patient with a response!"}</span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>Again, we are here to help you - but if you email at 11:58 on Wednesdays right before the homework is due, it's unlikely that you'll get a response right away! You can expect a response from one of us within 36 hours of emailing (though we will try to respond sooner than that); plan accordingly!</span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Git/GitHub Part 2: personal access token"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "storing your personal access token"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [GitHub, Git, personal access token]</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">  eval: false</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>:::{.callout-warning title="Have you completed all steps in Git/GitHub Part 1?"}</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>If you have not created a GitHub account and entered your information in the **Terminal**, go back to <span class="co">[</span><span class="ot">Part 1</span><span class="co">](https://spring-2025.envs-193ds.com/resources/git-configuration)</span> and complete those steps before moving on to the steps in this part.</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="fu"># Things to keep in mind</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Canvas video</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>There is a video on Canvas with all of these steps in the Week 6 module.</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## What is a personal access token?</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>From GitHub's <span class="co">[</span><span class="ot">documentation</span><span class="co">](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#using-a-token-on-the-command-line)</span>:  </span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Personal access tokens are an alternative to using passwords for authentication to GitHub when using the GitHub API or the command line.</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="fu"># Steps</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## In RStudio</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1. Install `usethis`</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>Do this in the console!</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"usethis"</span>)</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/github-prechecks/03_install-usethis.png)</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. Generate a personal access token using `usethis`</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>Again, do this in the console!</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_github_token</span>()</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/github-prechecks/04_create-github-token.png)</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>This will lead you to a web browser.  </span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>(if prompted) in the web browser, enter your GitHub password.</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a><span class="fu">## In your browser</span></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3. Fill in the information about your personal access token.</span></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>Under "Note", name your PAT. A logical name could be "PAT spring 2025".  </span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>Under "Expiration", select 90 days.</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/github-prechecks/05_github-token-page.png)</span></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4. Scroll to the bottom of the page, hit Generate token</span></span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>**DO NOT MODIFY ANY OF THE PRE-SELECTED CHECK BOXES.**</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/github-prechecks/06_generate-token-button.png)</span></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5. Copy the personal access token to your clipboard</span></span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/github-prechecks/07_copy-PAT.png)</span></span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a><span class="fu">## Back in RStudio</span></span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a><span class="fu">### 6. Set the personal access token.</span></span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>Run this in the console!</span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>gitcreds<span class="sc">::</span><span class="fu">gitcreds_set</span>()</span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/github-prechecks/08_gitcreds-set.png)</span></span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a><span class="fu">### 7. Paste your personal access token when prompted</span></span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>Paste your PERSONAL ACCESS TOKEN. NOT YOUR GITHUB PASSWORD. NOT YOUR COMPUTER PASSWORD.  </span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a>**PASTE YOUR PERSONAL ACCESS TOKEN.**</span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/github-prechecks/09_enter-PAT.png)</span></span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a><span class="fu">### 8. Double check that the personal access token is stored</span></span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a>Again, run this in the console:</span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">git_sitrep</span>()</span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a>Check that your user name and email are correct.  </span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a>Check the <span class="in">`Personal access token`</span> field under <span class="in">`GitHub`</span>. This should say <span class="in">`&lt;discovered&gt;`</span>.</span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a><span class="al">![](/resources/images/github-prechecks/10_git-sitrep.png)</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"loop":false,"selector":".lightbox","openEffect":"zoom","descPosition":"bottom","closeEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

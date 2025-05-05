@@ -1,0 +1,84 @@
+---
+title: "Git/GitHub Part 1: prechecks"
+description: "creating an account and making sure git is on your computer and configured correctly"
+categories: [GitHub, Git]
+---
+
+# Things to keep in mind
+
+## Git vs GitHub
+
+"Git" (pronounced with a hard "g", as in "give") is the software that tracks versions of files on your computer. "GitHub" (also pronounced with a hard "g") is the hosting platform that holds all versions of files tracked by Git.
+
+## Do not track files in folders on OneDrive or iCloud
+
+You **_NEED_** to know where the difference between files on your actual, physical computer vs files held on OneDrive or iCloud. Git _will not work properly_ with files on OneDrive or iCloud (in short, the cloud syncing does not work with version control).  
+
+For every folder you track with Git, you have to make sure it is _not_ on OneDrive or iCloud.  
+
+One easy way make sure that your folders are on your actual computer (again, _not_ on OneDrive or iCloud) is to create a folder called `git` or `github` outside of cloud folders. On my (An's) computer (which is a Mac), the file path to this folder is Macintosh HD > Users > An > `github`. 
+
+With Macs: your root directory is usually Macintosh HD.  
+
+With Windows: your root directory is the C: drive.
+
+## Stay calm and do not panic
+
+You are going to run into problems down the line (when we use Git/GitHub in class) if you do not set this up correctly. _PLEASE_ give yourself time to read the directions and follow the steps exactly as they are laid out. Additionally, reach out to An/Thuy-Tien/Grace for individual help with any of these steps.
+
+## Opportunities to get help before we start using Git/GitHub in class
+
+We are going to start using Git/GitHub in class during week 7 (Thursday the 15th of May and Friday the 16th of May). You can get help in:  
+
+- drop-in hours (Wednesday the 7th or Friday the 9th)
+- in workshop on Thursday the 8th or Friday the 9th (come to any workshop meeting, you don't have to come to the one you're enrolled in)
+
+## In-class technical difficulties
+
+Again, we are going to start using Git/GitHub in class during week 7. If you do not set things up correctly on your own _AND/OR_ if you do not get help during workshop or drop-in, we will not stop to help you.  
+
+**YOU NEED TO SET EVERYTHING UP CORRECTLY BEFORE WEEK 7 WORKSHOP.**
+
+# Steps 
+
+## 1. Create a GitHub account
+
+If you don't have one already, create a [GitHub account](https://github.com/).  
+
+Use your personal email, not your ucsb.edu email (because you will lose access to that email once you graduate).
+
+## 2. Check that you have `git` on your computer
+
+Open RStudio. Open the **Terminal**.  
+
+If you are on a Mac, type `which git` and hit Enter.  
+
+If you are using a Windows machine, type `where git` and hit Enter. 
+
+:::{.callout-tip}
+Click on any screenshot to make it bigger!
+:::
+
+![](/resources/images/github-prechecks/01_which-git.png)
+
+You should see something pop up that looks like a file path. It might look slightly different from this example, which is ok.  
+
+If you do not see a file path, you'll need to install `git`: [https://git-scm.com/downloads](https://git-scm.com/downloads)
+
+## 3. Set your username and email
+
+In the **Terminal**, type `git config --global user.name "your-username-here"` (replace `your-username-here`) with your actual user name. Hit Enter.
+
+:::{.callout-warning title="Pay attention to spaces, dashes, and all punctuation!!!"}
+None of the steps in the Terminal will work without the right spaces, dashes, etc.
+:::
+
+Then (still in the **Terminal**), type `git config --global user.email your-email-here` (replace `your-email-here`) with your email. **No quotation marks around your email!**  
+
+Then (again, still in the **Terminal**), type `git config --list --global`. You should see your user name under the `user.name` field, and your email under the `user.email` field.
+
+![](/resources/images/github-prechecks/02_global-config-options.png)
+
+# Congratulations! You have successfully completed the precheck steps.
+
+Now go to [Git/GitHub Part 2: setting your personal access token]((https://spring-2025.envs-193ds.com/resources/storing-personal-access-token).

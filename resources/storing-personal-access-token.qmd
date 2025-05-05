@@ -1,0 +1,108 @@
+---
+title: "Git/GitHub Part 2: personal access token"
+description: "storing your personal access token"
+categories: [GitHub, Git, personal access token]
+execute:
+  eval: false
+---
+
+:::{.callout-warning title="Have you completed all steps in Git/GitHub Part 1?"}
+
+If you have not created a GitHub account and entered your information in the **Terminal**, go back to [Part 1](https://spring-2025.envs-193ds.com/resources/git-configuration) and complete those steps before moving on to the steps in this part.
+
+:::
+
+# Things to keep in mind
+
+## Canvas video
+
+There is a video on Canvas with all of these steps in the Week 6 module.
+
+## What is a personal access token?
+
+From GitHub's [documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#using-a-token-on-the-command-line):  
+
+> Personal access tokens are an alternative to using passwords for authentication to GitHub when using the GitHub API or the command line.
+
+# Steps
+
+## In RStudio
+
+### 1. Install `usethis`
+
+Do this in the console!
+
+```{r}
+install.packages("usethis")
+```
+
+![](/resources/images/github-prechecks/03_install-usethis.png)
+
+### 2. Generate a personal access token using `usethis`
+
+Again, do this in the console!
+
+```{r}
+usethis::create_github_token()
+```
+
+![](/resources/images/github-prechecks/04_create-github-token.png)
+
+This will lead you to a web browser.  
+
+(if prompted) in the web browser, enter your GitHub password.
+
+## In your browser
+
+### 3. Fill in the information about your personal access token.
+
+Under "Note", name your PAT. A logical name could be "PAT spring 2025".  
+
+Under "Expiration", select 90 days.
+
+![](/resources/images/github-prechecks/05_github-token-page.png)
+
+### 4. Scroll to the bottom of the page, hit Generate token
+
+**DO NOT MODIFY ANY OF THE PRE-SELECTED CHECK BOXES.**
+
+![](/resources/images/github-prechecks/06_generate-token-button.png)
+
+### 5. Copy the personal access token to your clipboard
+
+![](/resources/images/github-prechecks/07_copy-PAT.png)
+
+## Back in RStudio
+
+### 6. Set the personal access token.
+
+Run this in the console!
+
+```{r}
+gitcreds::gitcreds_set()
+```
+
+![](/resources/images/github-prechecks/08_gitcreds-set.png)
+
+### 7. Paste your personal access token when prompted
+
+Paste your PERSONAL ACCESS TOKEN. NOT YOUR GITHUB PASSWORD. NOT YOUR COMPUTER PASSWORD.  
+
+**PASTE YOUR PERSONAL ACCESS TOKEN.**
+
+![](/resources/images/github-prechecks/09_enter-PAT.png)
+
+### 8. Double check that the personal access token is stored
+
+Again, run this in the console:
+
+```{r}
+usethis::git_sitrep()
+```
+
+Check that your user name and email are correct.  
+
+Check the `Personal access token` field under `GitHub`. This should say `<discovered>`.
+
+
+![](/resources/images/github-prechecks/10_git-sitrep.png)

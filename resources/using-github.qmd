@@ -1,21 +1,15 @@
 ---
 title: "Git/GitHub basics"
 description: "cloning, committing, pushing, forking, pulling"
-author:
-  - name: An Bui
-    url: https://an-bui.com/
-    affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology
-    affiliation-url: https://www.eemb.ucsb.edu/
-date: 2024-05-17
-categories: [GitHub, Git]
-format:
-  html:
-    toc: true
-    toc-expand: true
+categories: [git, github]
 filters:
   - lightbox
 lightbox: auto
 ---
+
+:::{.callout-note}
+In class, we will create a GitHub repository and fork a repository. We _might_ not get to GitHub pages or collaborating.
+:::
 
 ## Why are we using Git/GitHub?
 
@@ -38,8 +32,7 @@ Git is what tracks your changes (and allows you to have version control), while 
 If you're having trouble seeing any screenshots, click the image to make it bigger.
 :::
 
-:::{.callout-note}
-#### Definitions
+:::{.callout-note title="Definitions"}
 - **repo**: short for "repository", think of this as a folder  
 - **remote**: your repository on GitHub (in the cloud)  
 - **clone**: essentially making a local copy (i.e. a copy on your computer) of a remote repo  
@@ -63,7 +56,9 @@ Click the green "New" button.
 
 This includes the name, a description, whether it is public or private (keep your repository public for now).  
 
-Additionally, **initialize your repository with a README.** It is very important to start your remote repository with a file, and GitHub does it for you by creating a file called `README.md`. See the [README resource](https://spring-2024.envs-193ds.com/resources/writing-a-readme) for more details about what it is, but for now remember to **always initialize your repository with a README.**
+Additionally, **initialize your repository with a README.** It is very important to start your remote repository with a file, and GitHub does it for you by creating a file called `README.md`.  
+
+A `README` file describes what is in the whole repository (code, data, etc). See the [README resource](https://spring-2025.envs-193ds.com/resources/writing-a-readme) for more details about what it is, but for now remember to **always initialize your repository with a README.**
 
 ![](/resources/images/github/02_filling-in-info.png){width=80%}
 
@@ -176,6 +171,70 @@ In the commit window, you'll see any modified files with changes highlighted in 
 
 ![](/resources/images/github/14_committing-new-changes.png){width=80%}
 
+### Forking
+
+**Forking** is the process by which you can copy and reuse another person's code. Imagine having a meal with someone else, and using your fork to take something from the other person's plate. You can then do whatever you want with the food you've taken: eat it, mix it with other things, etc. This is the idea behind forking.  
+
+#### 1. Navigate to the repository you want to fork.
+
+You should see a button to "Fork" in the top right.
+
+![](/resources/images/github/27_forking.png){width=80%}
+
+#### 2. Create the fork
+
+Click "Fork". You'll be led to a screen to "Create a new fork".  
+
+You can rename the repo if you want, or write a new description. You'll also copy the `main` branch.
+
+![](/resources/images/github/28_forking-screen.png){width=80%}
+
+You will have to wait for a bit.  
+
+Once it's done, you should see a screen that looks like a normal repo with some indications that you have forked someone else's repo:
+
+- under the repo name, you will see "forked from" another repo.  
+- a message saying "This branch is up to date with..."  
+
+![](/resources/images/github/30_forking-success.png){width=80%}
+
+#### 3. Clone the repo.
+
+This is the same process as cloning your own repo.  
+
+Click the green "Code" button and copy the url that shows up.  
+
+Then, create a new project in RStudio.  
+
+Select "Version Control".  
+
+Paste the url you copied and hit tab.  
+
+Make sure that you are creating a project as a subdirectory of your git/github folder.
+
+![](/resources/images/github/31_forking-rstudio.png){width=80%}
+
+#### 4. Work in the repo.
+
+This is the same as working in your own repo: write code, make changes, commit and push them.  
+
+Your changes will only be saved to your forked repo, not to the original repo. Thus, you are reusing people's code and writing new code without overwriting their work.  
+
+#### 5. Incorporate upstream changes (if there are any)
+
+The original repo is "upstream" of your fork. Sometimes, there are upstream changes to the original repo that you want to incorporate into your fork.  
+
+If there are upstream changes you want to have in your fork, then sync your fork by hitting the "Sync fork" button.  
+
+![](/resources/images/github/36_sync-fork.png){width=80%}
+
+These changes will now be in your remote, but not in your local.  
+
+Go back to RStudio and open the Git tab. Click "Pull" to get the changes into your computer.
+
+![](/resources/images/github/51_rstudio-pull.png){width=80%}
+
+
 ### Using GitHub Pages to display rendered .html output
 
 :::{.callout-tip}
@@ -270,9 +329,7 @@ Navigate to that url. You should see your rendered document as a webpage!
 
 ![](/resources/images/github/26_rendered-doc-pages.png){width=80%}
 
-:::{.callout-warning}
-#### Do not fall for `localhost`!
-
+:::{.callout-warning title="Do not fall for `localhost`!"}
 When you first render your document, you can open it up in a browser. It will _look_ like a webpage, but the "url" will include something like `localhost:`. This is not a real url! It is temporary and not shareable. If you're unsure you're looking at the right thing, check the url. If it looks like an actual url, then you have it right.
 :::
 
@@ -280,68 +337,48 @@ When you first render your document, you can open it up in a browser. It will _l
 
 The best way to do this is to put a link somewhere in the README of your repo. For example, the README for [this example repo](https://github.com/an-bui/new-repository) includes the url to the rendered `.html`. 
 
-### Forking
 
-**Forking** is the process by which you can copy and reuse another person's code. Imagine having a meal with someone else, and using your fork to take something from the other person's plate. You can then do whatever you want with the food you've taken: eat it, mix it with other things, etc. This is the idea behind forking.  
 
-#### 1. Navigate to the repository you want to fork.
 
-You should see a button to "Fork" in the top right.
 
-![](/resources/images/github/27_forking.png){width=80%}
+### Browsing your remote repo 
 
-#### 2. Create the fork
+GitHub allows you to easily browse the history of your repository. Think of this as time travel!
 
-Click "Fork". You'll be led to a screen to "Create a new fork".  
+#### 1. Find your commit history
 
-You can rename the repo if you want, or write a new description. You'll also copy the `main` branch.
+Each commit/push you make to your repo gets stored in your commit history. The commit history is a list of all the commits you've made.  
 
-![](/resources/images/github/28_forking-screen.png){width=80%}
+Find your commit history in your repo. It should look like an arrow in a circle with the number of commits you've made. Click this.
 
-You will have to wait for a bit.  
+![](/resources/images/github/44_look-at-commit-history.png){width=80%}
 
-Once it's done, you should see a screen that looks like a normal repo with some indications that you have forked someone else's repo:
+#### 2. Browse your commit history
 
-- under the repo name, you will see "forked from" another repo.  
-- a message saying "This branch is up to date with..."  
+You can see the list of all commits you've made.  
 
-![](/resources/images/github/30_forking-success.png){width=80%}
+To see the details of a particular commit, click on the commit message.
 
-#### 3. Clone the repo.
+This will lead you to a screen that displays the old verson on the left and what was added in that particular commit on the right.
 
-This is the same process as cloning your own repo.  
+![](/resources/images/github/46_looking-at-changes.png){width=80%}
 
-Click the green "Code" button and copy the url that shows up.  
+#### 3. Browse your repository
 
-Then, create a new project in RStudio.  
+Back in the commit history, you have the option to browse your repository at the time of that commit (!!!).
 
-Select "Version Control".  
+![](/resources/images/github/47_option-to-browse.png){width=80%}
 
-Paste the url you copied and hit tab.  
+If you click the `<>` button, it will take you back to the repository at the time of that commit. You can navigate the same way you would in a regular repository. 
 
-Make sure that you are creating a project as a subdirectory of your git/github folder.
 
-![](/resources/images/github/31_forking-rstudio.png){width=80%}
+![](/resources/images/github/48_browsing.png){width=80%}
 
-#### 4. Work in the repo.
+The url with the long code at the end indicates that you are browsing an old version of your repo. 
 
-This is the same as working in your own repo: write code, make changes, commit and push them.  
-
-Your changes will only be saved to your forked repo, not to the original repo. Thus, you are reusing people's code and writing new code without overwriting their work.  
-
-#### 5. Incorporate upstream changes (if there are any)
-
-The original repo is "upstream" of your fork. Sometimes, there are upstream changes to the original repo that you want to incorporate into your fork.  
-
-If there are upstream changes you want to have in your fork, then sync your fork by hitting the "Sync fork" button.  
-
-![](/resources/images/github/36_sync-fork.png){width=80%}
-
-These changes will now be in your remote, but not in your local.  
-
-Go back to RStudio and open the Git tab. Click "Pull" to get the changes into your computer.
-
-![](/resources/images/github/51_rstudio-pull.png){width=80%}
+:::{.callout-note title="GitHub for failing safely"}
+The time travel aspect of GitHub is one of the best reasons to use GitHub. If you are committing/pushing your changes regularly, you will have each version of your repository saved in the cloud. These versions are all easily browsable. If you've deleted something and you decide you want it back, then _you can go back and get it._ Nothing is gone forever, and that's a good thing when you're changing your code, working with others, and adding more to your work.
+:::
 
 ### Collaborating
 
@@ -420,46 +457,3 @@ You will then see the changes on your computer!
 ![](/resources/images/github/53_new-changes-on-computer.png){width=80%}
 
 You can keep working in your document as usual. You can also edit your collaborator's work. For example, maybe you needed to add some comments to the code to annotate it, or maybe you need to change one of their functions to something new. Whatever it might be, be sure to continue communicating with your collaborators so that everyone is on the same page.
-
-
-### Browsing your remote repo 
-
-GitHub allows you to easily browse the history of your repository. Think of this as time travel!
-
-#### 1. Find your commit history
-
-Each commit/push you make to your repo gets stored in your commit history. The commit history is a list of all the commits you've made.  
-
-Find your commit history in your repo. It should look like an arrow in a circle with the number of commits you've made. Click this.
-
-![](/resources/images/github/44_look-at-commit-history.png){width=80%}
-
-#### 2. Browse your commit history
-
-You can see the list of all commits you've made.  
-
-To see the details of a particular commit, click on the commit message.
-
-This will lead you to a screen that displays the old verson on the left and what was added in that particular commit on the right.
-
-![](/resources/images/github/46_looking-at-changes.png){width=80%}
-
-#### 3. Browse your repository
-
-Back in the commit history, you have the option to browse your repository at the time of that commit (!!!).
-
-![](/resources/images/github/47_option-to-browse.png){width=80%}
-
-If you click the `<>` button, it will take you back to the repository at the time of that commit. You can navigate the same way you would in a regular repository. 
-
-
-![](/resources/images/github/48_browsing.png){width=80%}
-
-The url with the long code at the end indicates that you are browsing an old version of your repo. 
-
-:::{.callout-note}
-#### GitHub for failing safely
-
-The time travel aspect of GitHub is one of the best reasons to use GitHub. If you are committing/pushing your changes regularly, you will have each version of your repository saved in the cloud. These versions are all easily browsable. If you've deleted something and you decide you want it back, then _you can go back and get it._ Nothing is gone forever, and that's a good thing when you're changing your code, working with others, and adding more to your work.
-:::
-

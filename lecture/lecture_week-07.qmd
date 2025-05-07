@@ -176,8 +176,10 @@ Seems like there is a linear relationship between temperature and abalone growth
 ### b. fitting a model
 
 ```{r abalone-model-and-checks}
-abalone_model <- lm(growth ~ temperature,
-                    data = abalone)
+abalone_model <- lm(
+  growth ~ temperature,
+  data = abalone
+)
 
 # just checking DHARMa residuals just in case
 DHARMa::simulateResiduals(abalone_model, plot = TRUE)
@@ -233,11 +235,16 @@ anova(abalone_model)
 ### d. visualizing the model
 
 ```{r abalone-plot}
-model_preds <- ggpredict(abalone_model,
-                         terms = "temperature")
+model_preds <- ggpredict(
+  abalone_model,
+  terms = "temperature"
+)
 
 # look at the output:
 model_preds
+
+ggpredict(abalone_model, 
+          terms = "temperature[18]")
 
 # plotting without 95% CI
 ggplot(abalone, # using the actual data

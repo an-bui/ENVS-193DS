@@ -353,7 +353,7 @@ abalone_clean <- abalone |> # start with abalone object
   # select columns of interest
   select(mean_p_h, change_in_area_mm2_d_1_25, recirculation_treatment) |> 
   # rename columns
-  rename(mean_ph = mean_p_h, 
+  rename(ph = mean_p_h, 
          change_in_area = change_in_area_mm2_d_1_25,
          recirculation = recirculation_treatment) |> 
   # recod recirculation
@@ -365,7 +365,7 @@ abalone_clean <- abalone |> # start with abalone object
 
 # base layer: ggplot
 ggplot(data = abalone_clean,
-       aes(x = mean_ph,
+       aes(x = ph,
            y = change_in_area)) +
   # first layer: points representing abalones
   geom_point(size = 4,
@@ -373,9 +373,13 @@ ggplot(data = abalone_clean,
              fill = "firebrick3",
              shape = 21)
 
+abalone_clean |> 
+  select(ph, change_in_area) |> 
+  slice_sample(n = 5)
+
 abalone_model <- lm(
-  change_in_area ~ mean_ph, # formula: change in area as a function of pH
-  data = abalone_clean      # data frame: abalone_clean
+  change_in_area ~ ph,  # formula: change in area as a function of pH
+  data = abalone_clean  # data frame: abalone_clean
 )
 
 DHARMa::simulateResiduals(abalone_model) |> 
@@ -390,11 +394,40 @@ summary(abalone_model)
 # creating a new object called abalone_preds
 abalone_preds <- ggpredict(
   abalone_model,      # model object
-  terms = "mean_ph"   # predictor (in quotation marks)
+  terms = "ph"        # predictor (in quotation marks)
 )
 
 # display the predictions
 abalone_preds
+
+# find predicted growth at ph = 7.9
+ggpredict(
+  abalone_model,
+  terms = "ph[7.9]"
+)
+
+# find predicted growth at ph = 7.9
+ggpredict(
+  abalone_model,
+  terms = "ph[8.23]"
+)
+
+# find predicted growth at ph = 8
+ggpredict(
+  abalone_model,
+  terms = "ph[8]"
+)
+
+# model summary in a neat table
+as_flextable(abalone_model)
+
+# model summary in a neat table
+tbl_regression(abalone_model,
+               intercept = TRUE,
+               label = list(`(Intercept)` = "Intercept", 
+                            `ph` = "pH")) |> 
+  as_flex_table() 
+
 
 # look at the column names
 colnames(abalone_preds)
@@ -405,7 +438,7 @@ class(abalone_preds)
 # base layer: ggplot
 # using clean data frame
 ggplot(data = abalone_clean,
-       aes(x = mean_ph,
+       aes(x = ph,
            y = change_in_area)) +
   # first layer: points representing abalones
   geom_point(size = 4,
@@ -427,8 +460,18 @@ ggplot(data = abalone_clean,
                 y = predicted),
             linewidth = 1) +
   # axis labels
-  labs(x = "Mean pH", 
+  labs(x = "pH", 
        y = expression("Change in shell area ("*mm^{2}~d^-1*")"))
+
+ggplot(data = abalone_clean,
+       aes(x = ph,
+           y = change_in_area)) +
+  # first layer: points representing abalones
+  geom_point(size = 4,
+             stroke = 1,
+             fill = "firebrick3",
+             shape = 21) +
+  geom_smooth(method = "lm")
 ```
 
 ## 4. Exponential growth example
@@ -566,7 +609,7 @@ plot(model)
 ### a. abalone correlation
 
 ```{r abalone-correlation}
-cor.test(abalone_clean$mean_ph, abalone_clean$change_in_area,
+cor.test(abalone_clean$ph, abalone_clean$change_in_area,
          method = "pearson")
 ```
 

@@ -2,7 +2,7 @@
 title: "OPTIONAL practice problem - everything is a linear model"
 editor: source
 freeze: auto
-date: 2024-05-22
+date: 2025-05-19
 date-modified: last-modified
 ---
 
@@ -37,8 +37,8 @@ data(penguins)
 ### 1. Calculate the mean body masses and lower and upper bounds of the 95% CI around the mean for each penguins species.
 
 ```{r}
-penguins %>% 
-  group_by(species) %>% # group by species
+penguins |> 
+  group_by(species) |> # group by species
   reframe(mean = mean(body_mass_g, na.rm = TRUE), # calculating mean
           se = sd(body_mass_g, na.rm = TRUE)/sqrt(length(body_mass_g)), # calculating SE
           tval = qt(p = 0.05/2, df = length(body_mass_g), lower.tail = FALSE), # finding t-value
@@ -102,20 +102,20 @@ ggplot(data = penguins,
 Statistically evaluating normality:   
 
 ```{r}
-adelie <- penguins %>% 
-  filter(species == "Adelie") %>% # filtering for Adelie
+adelie <- penguins |> 
+  filter(species == "Adelie") |> # filtering for Adelie
   pull(body_mass_g) # pulling body mass as a vector
 
 shapiro.test(adelie)
 
-chinstrap <- penguins %>% 
-  filter(species == "Chinstrap") %>% # filtering for chinstrap
+chinstrap <- penguins |> 
+  filter(species == "Chinstrap") |> # filtering for chinstrap
   pull(body_mass_g)
 
 shapiro.test(chinstrap)
 
-gentoo <- penguins %>% 
-  filter(species == "Gentoo") %>% # filtering for Gentoo
+gentoo <- penguins |> 
+  filter(species == "Gentoo") |> # filtering for Gentoo
   pull(body_mass_g)
 
 shapiro.test(gentoo)
@@ -182,7 +182,7 @@ Then, plot for good measure!
 
 ```{r}
 ggpredict(penguins_lm, # getting model predictions
-          terms = c("species")) %>% # only predictor is species
+          terms = c("species")) |> # only predictor is species
   # quick option to plot from ggpredict
   plot(show_data = TRUE, # show the underlying data
        jitter = TRUE) # shake the points around a bit

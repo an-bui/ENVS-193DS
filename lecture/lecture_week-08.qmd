@@ -1,24 +1,9 @@
 ---
 title: "Week 8 figures - Lectures 14 and 15"
-editor: source
-freeze: auto
-execute:
-  message: false
-  warning: false
-format:
-  html: 
-    code-fold: true
-author:
-  - name: An Bui
-    url: https://an-bui.com/
-    affiliation: UC Santa Barbara, Ecology, Evolution, and Marine Biology
-    affiliation-url: https://www.eemb.ucsb.edu/
-published-title: "Lecture date"
-date: 2024-05-20
-date-modified: last-modified
+date: 2025-05-19
 categories: [multiple linear regression, AIC]
 citation:
-  url: https://spring-2024.envs-193ds.com/lecture/lecture_week-08.html
+  url: https://spring-2025.envs-193ds.com/lecture/lecture_week-08.html
 ---
 
 ```{r libraries}
@@ -45,6 +30,7 @@ library(performance)
 library(broom)
 library(DHARMa)
 library(MuMIn)
+library(gtsummary)
 ```
 
 # multiple linear regression equation
@@ -341,7 +327,14 @@ ggpredict(lm(growth ~ humidity, data = plant_df),
 
 summary(plant_lm)
 summary(lm(growth ~ humidity, data = plant_df))
-```
+
+
+
+tbl_regression(plant_lm,
+               label = list(humidity = "Humidity (%)",
+                            fertilizer = "Fertilizer treatment")) |> 
+  as_flex_table() 
+``` 
 
 
 # frog example

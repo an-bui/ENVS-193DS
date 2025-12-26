@@ -1,176 +1,208 @@
 ---
-title: "OPTIONAL practice problem - Central Limit Theorem"
+title: "OPTIONAL practice problem - Do a Wilcoxon signed rank test by hand"
 editor: source
 freeze: auto
-date: 2024-04-18
+date: 2025-04-30
 date-modified: last-modified
 ---
 
-## 1. Description
-
-In this optional problem, you'll test out the Central Limit Theorem by repeatedly "sampling" a population with a uniform distribution with sample sizes of n = 2, n = 15, and n = 30. You'll create histograms of the sampling distributions (i.e. means from the samples you generate) to see how the spread of the sampling distribution gets narrower with increasing sample size.    
-
-## 2. General guidance
-
-You don't have to follow these steps exactly (or at all), but this is a workflow that might make sense. Try it out on your own!
-
-### a. Steps
-
-1. Create a script or Quarto document to work in.  
-2. Copy/paste the code in the Set up code chunk into your script. Run the code.  
-3. Calculate the population mean. Store this as an object.  
-4. Find the function that allows you to "sample" from a vector of numbers. If you don't know the function, one google search could be "r sample numbers".  
-5. Resample (i.e. take a sample multiple times) 100 times from the population, taking a sample of n = 2 each time.  
-6. Calculate the mean every time you take a sample. Store each mean in a list.  
-7. Create a histogram of your sample means using the list from step 6.  
-8. Repeat steps 2-5 for n = 15, and n = 30.
-
-:::{.callout-tip}
-# `for()` loops
-
-Doing repetitive tasks like steps 5-6 can get tiresome. You probably do not want to sample and calculate a mean "by hand" 300 times. Instead, you can write what's called a `for()` loop. One resource for writing `for()` loops is in the [chapter on Iteration](https://r4ds.had.co.nz/iteration.html) in _R for Data Science_. There are other resources out there too! Try finding one that you like.  
-:::
-
-### b. Set up code
-
-```{r}
-#| fig-width: 12
-#| fig-height: 8
+```{r document-set-up}
+#| echo: false
 #| message: false
 
-# read in the tidyverse
+# package
 library(tidyverse)
 
-# set seed: makes sure the "random" generation comes up with the same combination of numbers every time
-set.seed(1)
-
-# generate 10000 numbers from a uniform distribution for the population
-uniform <- runif(10000, min = 2, max = 8)
-
-# turn the vector into a data frame
-uniformdf <- as.data.frame(uniform)
-
-# make a histogram for the population
-ggplot(data = uniformdf, 
-       aes(x = uniform)) +
-  geom_histogram(breaks = seq(2, 8, length.out = 41), 
-                 fill = "firebrick", 
-                 alpha = 0.7, 
-                 color = "firebrick") +
-  geom_vline(xintercept = mean(uniform), 
-             linewidth = 2) +
-  scale_x_continuous(breaks = seq(from = 2, to = 8, by = 1)) +
-  scale_y_continuous(expand = c(0, 0), 
-                     limits = c(0, 305)) +
-  labs(x = "Continuous value", y = "Count") +
-  theme_bw() +
-  theme(panel.grid = element_blank(),
-        axis.text = element_text(size = 18),
-        axis.title = element_text(size = 18))
+theme_set(theme_bw() +
+            theme(text = element_text(family = "Lato", size = 12)))
 ```
 
-## 3. Solution
+## 1. Description
 
-### a. Resampling using a `for()` loop
+In this practice problem, you'll do a Wilcoxon signed rank test comparing paired samples to each other by hand, then double check your work with R. This is the non-parametric version of the paired t-test.  
 
-```{r resampling-for}
-# for() loop to sample 100x and calculate the mean
+## 2. Steps
 
-# creating holding vectors
-store2 <- c()
-store15 <- c()
-store30 <- c()
+### a. Values
 
-for(i in 1:100) {
-  
-  # sample from the population, calculate the mean, store that mean in the vector
-  store2[i] <- mean(sample(uniform, 2, replace = FALSE))
-  store15[i] <- mean(sample(uniform, 15, replace = FALSE))
-  store30[i] <- mean(sample(uniform, 30, replace = FALSE))
+Start with these values:  
 
-}
+:::: {.columns}
+::: {.column width="40%"}
 
-# double checking that the holding vectors actually have values in them
-head(store2)
-head(store15)
-head(store30)
+| Before | After |
+|:------:|:-----:|
+| 1.2    | 1.6   |
+| 2.0    | 2.8   |
+| 0.8    | 0.7   |
+| 0.6    | 0.6   |
+| 1.3    | 1.5   |
+| 3.2    | 2.7   |
+| 0.9    | 1.1   |
+
+:::
+::::
+
+### b. Calculate the differences between samples
+
+Then, calculate the differences between those values. You should get something that looks like this:
+
+:::: {.columns}
+::: {.column width="40%"}
+
+| Differences    |
+|:--------------:|
+| -0.4           |
+| -0.8           |
+| 0.1            |
+| 0.0            |
+| -0.2           |
+| 0.5            |
+| -0.2           |
+
+:::
+::::
+
+### c. Take out 0, arrange by magnitude
+
+Then, omit all observations of 0 and arrange your numbers by magnitude. You should get something that looks like this:
+
+:::: {.columns}
+::: {.column width="40%"}
+
+| Ordered magnitude    |
+|:--------------------:|
+| 0.1                  |
+| -0.2                 |
+| -0.2                 |
+| -0.4                 |
+| 0.5                  |
+| -0.8                 |
+
+:::
+::::
+
+### d. Give each value a "sign" and a "rank"
+
+This is the "signed rank" part of the test: assign each value a sign (+ or -), then rank (1, 2, 3, 4, etc.) You should get something that looks like this:
+
+:::: {.columns}
+::: {.column width="40%"}
+
+| Ordered magnitude    |   Signed rank        |
+|:--------------------:|:--------------------:|
+| 0.1                  |      + 1             |
+| -0.2                 |      - 2             |
+| -0.2                 |      - 2             |
+| -0.4                 |      - 4             |
+| 0.5                  |      + 5             |
+| -0.8                 |      - 6             |
+
+:::
+::::
+
+### e. Sum the magnitudes of the + and - values
+
+Sum the magnitudes of the + and - values. This will be the -W and +W statistic. You then choose the lower statistic.
+
+In this case, you should get:  
+
++W = 1 + 5 = 6  
+-W = 2 + 2 + 4 + 6 = 14  
+
+Pick the lowest one: +W = 6.  
+
+### e. Run the test in R to check your work.
+
+Start with this data frame:
+
+```{r}
+# creating a data frame with "before" and "after" values
+# each row is an individual with a measurement taken "before" and "after"
+df <- tibble(before = c(1.2, 2.0, 0.8, 0.6, 1.3, 3.2, 0.9), 
+             after = c(1.6, 2.8, 0.7, 0.6, 1.5, 2.7, 1.1)) 
 ```
 
-### b. n = 2 histogram
+Then run a Wilcoxon signed rank test (note the `paired = TRUE` argument).
 
-Before plotting the histogram, I'll put the output from the `for()` loop into a data frame. 
-
-```{r making-df}
-# putting everything together in a data frame (not necessary but nice to do)
-df <- cbind(store2, store15, store30) %>% 
-  as.data.frame()
+```{r}
+wilcox.test(x = df$before,
+            y = df$after,
+            paired = TRUE) # argument for a paired test
 ```
 
-Then, I'll plot the first histogram for n = 2.
+### f. Try a one-sample test.
 
-```{r n2-histogram}
-# making a histogram for n = 2
-ggplot(data = df) +
-  # making a histogram
-  geom_histogram(aes(x = store2), 
-                 bins = 10, 
-                 alpha = 0.7, 
-                 fill = "chocolate1", 
-                 color = "chocolate1") +
-  # controlling the axes
-  coord_cartesian(xlim = c(2, 8), ylim = c(0, 30)) +
-  scale_y_continuous(expand = c(0, 0)) +
-  # controlling plot aesthetics
-  labs(x = "Sample means", y = "Count") +
-  theme_bw() +
-  theme(panel.grid = element_blank(),
-        axis.text = element_text(size = 18),
-        axis.title = element_text(size = 18),
-        plot.margin = unit(c(0.5, 0.5, 0.1, 0.1), "cm"))
+Compare the following values to $\mu = 7$:
+
+:::: {.columns}
+::: {.column width="40%"}
+
+| Sample |
+|:------:|
+| 2.8    |
+| 8.3    |
+| 4.5    |
+| 6.7    |
+| 8.1    |
+| 7.2    |
+| 7.8    |
+
+:::
+::::
+
+
+First, calculate the difference between each observation and the $\mu$, which is 7:
+
+:::: {.columns}
+::: {.column width="40%"}
+
+| Sample |  Difference  |
+|:------:|:------------:|
+| 2.8    |  -4.2        |
+| 8.3    |  1.3         |
+| 4.5    |  -2.5        |
+| 6.7    |  -0.3        |
+| 8.1    |  1.1         |
+| 7.2    |  0.2         |
+| 7.8    |  0.8         |
+
+:::
+::::
+
+
+Then order each difference and assign a sign and rank:
+
+:::: {.columns}
+::: {.column width="40%"}
+
+| Ordered magnitude    |   Signed rank        |
+|:--------------------:|:--------------------:|
+| 0.2                  |      + 1             |
+| -0.3                 |      - 2             |
+| 0.8                  |      + 3             |
+| 1.1                  |      + 4             |
+| 1.3                  |      + 5             |
+| -2.5                 |      - 6             |
+| -4.2                 |      - 7             |
+
+:::
+::::
+
+
+Then sum the magnitudes:  
+
++W = 1 + 3 + 4 + 5 = 13   
+-W = 2 + 6 + 7 = 15  
+
+For this example, W = 13.  
+
+Then, double check your work in R:
+
+```{r}
+wilcox.test(c(2.8, 8.3, 4.5, 6.7, 8.1, 7.2, 7.8),
+            mu = 7)
 ```
 
-### c. n = 15 histogram
 
-```{r n15-histogram}
-# histogram for n = 15
-ggplot(data = df) +
-  # making a histogram
-  geom_histogram(aes(x = store15), 
-                 bins = 12, 
-                 alpha = 0.7, 
-                 fill = "darkorchid4", 
-                 color = "darkorchid4") +
-  # controlling the axes
-  coord_cartesian(xlim = c(2, 8), ylim = c(0, 30)) +
-  scale_y_continuous(expand = c(0, 0)) +
-  # controlling plot aesthetics
-  labs(x = "Sample means", y = "Count") +
-  theme_bw() +
-  theme(panel.grid = element_blank(),
-        axis.text = element_text(size = 18),
-        axis.title = element_text(size = 18),
-        plot.margin = unit(c(0.5, 0.5, 0.1, 0.1), "cm"))
-```
 
-### d. n = 30 histogram
-
-```{r n30-histogram}
-# histogram for n = 30
-ggplot(data = df) +
-  # making a histogram
-  geom_histogram(aes(x = store30), 
-                 bins = 12, 
-                 alpha = 0.7, 
-                 fill = "lightseagreen", 
-                 color = "lightseagreen") +
-  # controlling the axes
-  coord_cartesian(xlim = c(2, 8), ylim = c(0, 30)) +
-  scale_y_continuous(expand = c(0, 0)) +
-  # controlling plot aesthetics
-  labs(x = "Sample means", y = "Count") +
-  theme_bw() +
-  theme(panel.grid = element_blank(),
-        axis.text = element_text(size = 18),
-        axis.title = element_text(size = 18),
-        plot.margin = unit(c(0.5, 0.5, 0.1, 0.1), "cm"))
-```

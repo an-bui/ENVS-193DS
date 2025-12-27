@@ -129,13 +129,17 @@ First, if you look at the "Environment" tab, you should see an object called `pa
 If you're not sure if your data is in R, the first thing to check is the "Environment". If you've read in everything correctly, you should see an object in there. If not, you know something is wrong!
 :::
 
-Second, you can use the `View()` function to look at the actual data.
+Second, you can use the `View()` function to look at the actual data.  
+
+Type `View(parks_visits)` in the console.
 
 ```{r viewing-data}
 #| eval: false
 
 View(parks_visits)
 ```
+
+Note: only use `View()` in the console! 
 
 ### 5. cleaning and wranging
 
@@ -173,11 +177,33 @@ When reading your code aloud, you can read the pipe as "and then"
 
 ```{r jt-example}
 # create a new object called `jtnp`
-jtnp <- parks_visits |> # start with the `parks_visits` data frame
+mean_jtnp_visits <- parks_visits |> # start with the `parks_visits` data frame
   filter(park == "jtnp") |> # filter to only include Joshua tree
   summarize(mean_visits = mean(visits)) # calculate the mean number of visits at Joshua Tree
 ```
- 
+
+When you run these lines of code, the code shows up in the console but the output does not. If you want to see any object, you can type in the object name and run that.
+
+```{r display-mean}
+mean_jtnp_visits
+```
+
+You should see the mean number of visits to Joshua Tree across all years and all months pop up.  
+
+But what if you want to know the mean number of visits to Joshua Tree in 2024 only? You can add another argument to the `filter()` call with the `&` (read: "and") operator. The `&` operator lets you include multiple arguments in `filter()`.
+
+```{r mean-jtnp-2024-calc}
+mean_jtnp_visits_2024 <- parks_visits |> # start with parks_visits object
+  filter(park == "jtnp" & year == "2024") |> # filter to only include jtnp and 2024
+  summarize(mean_visits = mean(visits)) # calculate mean number of visits
+```
+
+What's the mean number of visits to Joshua Tree in 2024 across all months?
+
+```{r mean-jtnp-2024-display}
+mean_jtnp_visits_2024
+```
+
 ### 7. Visualizing data
 
 Let's say we want to visualize the average monthly visits for Channel Islands, Joshua Tree, and Death Valley. We can use a boxplot to do that. Remember that a boxplot is an easy way to represent the **central tendency** (using the median) and **spread** (using quantiles) of a variable.  

@@ -24,20 +24,19 @@ Within your `ENVS-193DS` folder, create a _new_ folder for Homework 2. Name it w
 
 Download the homework files from Canvas into your homework folder. This includes:  
 
-- the homework template  
 - `sbpm.csv`  
 
 #### c. Create an Rproject for this homework assignment
 
 Create an Rproj file within your `homework-02` folder. If you need help with this, watch the "Creating an Rproject" video on Canvas.  
 
-#### d. In the template, write code to load in the packages you need.
+#### d. At the top of your document, insert a code chunk. Write code to load in the packages you need.
 
 You will probably need to use the `tidyverse`, and potentially `janitor`. 
 
-#### e. Read the Canvas data into R.
+#### e. Store the data as an object called `sbpm`.
 
-Store this as an object called `sbpm`. 
+Refer to workshop code if you are lost.
 
 ### Task 2. Read about the Environmental Protection Agency's Outdoor Air Quality data.
 
@@ -73,41 +72,36 @@ Include the code to to this at the top of the template. You will want to do this
 
 ## Part 2. Problems
 
-### Problem 1. Burrowing owl abundance
+### Problem 1. Native bunchgrasses.
 
-Managers at Dangermond Reserve are interested in the return of burrowing owls to the reserve. You conduct weekly surveys for burrowing owls from October to February and collect the following data on the number of burrowing owls you see each week:
+Managers are interested in the recovery of a native bunchgrass species, California fescue (_Festuca californica_) in a local oak woodland. You are conducting surveys in different sites within the oak woodland, and count the following numbers of individuals in 13 different sites:
 
 $$
-0, 2, 0, 3, 1, 4, 1, 2
+4, 6, 4, 5, 5, 4, 2, 3, 6, 4, 2, 0, 1
 $$
 
 a. What kind of data did you collect, and why? Explain in 1-2 sentences. **(2 points)**  
-b. What is a better description of the variability in burrowing owl count, standard deviation or standard error? Explain why in 1 sentence. Calculate the metric of your choice, showing your work. Round your final answer to 1 decimal point, and show the correct units. **(5 points)**  
-c. What is a better description of the uncertainty in burrowing owl count, standard deviation or standard error? Explain why in 1 sentence. Calculate the metric of your choice, showing your work. Round your final answer to 1 decimal point, and show the correct units. **(5 points)**  
+b. What is a better description of the variability in bunchgrass count, standard deviation or standard error? Explain why in 1 sentence. Calculate the metric of your choice, showing your work. Round your final answer to 1 decimal point, and show the correct units. **(5 points)**  
+c. What is a better description of the uncertainty in bunchgrass count, standard deviation or standard error? Explain why in 1 sentence. Calculate the metric of your choice, showing your work. Round your final answer to 1 decimal point, and show the correct units. **(5 points)**  
 
-### Problem 2. Fire and particulate matter (96 points)
+### Problem 2. Lobster weights
 
-In 2017-2018, the Thomas Fire burned 281,893 acres in Santa Barbara County and Ventura County. At the time, it was the largest wildfire in California history. The fire started on December 4th and was fully contained on January 12, 2018. You'll be working with EPA data on particulate matter during the fire.  
+Marine protected areas (MPAs) off the coast of California designate regions of the ocean in which fishing is not allowed. As a result, many fished species have a refuge to grow and reproduce.  
 
-In this problem, you will visualize the data two different ways. You will then answer the question: **from the start of the Thomas Fire on December 4th until it was contained on January 12th, was there a difference in PM2.5 between Goleta and Santa Barbara?**  
+In this problem, you will visualize data and answer the question: **is there a difference in mean weight of California spiny lobster (_Panulirus interruptus_) between an MPA and a non-MPA site?**  
 
-a. Create a line graph with date on the x-axis and PM 2.5 on the y-axis. Color each line by the location of the sensor (hint: there should be 5 locations). Label the x-axis, y-axis, and legend colors. **(18 points)**  
-
-b. Create a new object called `gol_sb` to filter the `sbpm` data frame to only include observations from Goleta and Santa Barbara. **Only show the code; do _not_ display the data frame.** **(2 points)**  
-
-c. In one sentence, write your hypotheses to answer the question: **from the start of the fire until when it was contained, was there a difference in PM2.5 between Goleta and Santa Barbara?** in _biological terms_ (_not_ statistical or mathematical terms). Make sure you have a _null_ and _alternative_ hypothesis. **(2 points)**  
-
-d. Using the `gol_sb` object, create a boxplot with jittered points, with location on the x-axis and PM 2.5 on the y-axis. Make sure the jittered points do not move along the y-axis. Label the x and y-axes. Additionally:  
+a. Create a plot showing mean lobster weight and standard deviation, along with the underlying data (i.e. the raw observations) jittered horizontally. Use an approach from class. Label the x and y-axes. Additionally:  
 
    - color by site and change the colors from the default   
    - make sure each site has a different shape  
    - use a ggplot theme that is not the default  
    - make sure the legend is not showing  
-   **(26 points)**
 
-e. Using the `gol_sb` object, make a QQ plot. Make sure there are two panels for each location. You do not need to label the x and y-axes. **(10 points)**
+b. In one sentence, write your hypotheses to answer the question: **is there a difference in mean weight of California spiny lobster between an MPA and a non-MPA site** in _biological terms_ (_not_ statistical or mathematical terms). Make sure you have a _null_ and _alternative_ hypothesis. **(2 points)**  
 
-f. In one sentence, describe whether the variable (PM 2.5) is normally distributed or not. Use visual components (e.g. shape, distribution) of the QQ plot you made to justify your characterization of the variable. **(4 points)**  
+c. Using the `lobsters` object, make a QQ plot. Make sure there are two panels for each location. You do not need to label the x and y-axes. **(10 points)**
+
+f. In one sentence, describe whether the variable of interest is normally distributed or not. Use visual components (e.g. shape, distribution) of the QQ plot you made to justify your characterization of the variable. **(4 points)**  
 
 g. Check your variances using `var.test()`. In one sentence, describe whether the groups have equal variances or not. **(4 points)**   
 
@@ -121,8 +115,6 @@ i. In one sentence each, describe:
 
     - Why a t-test would have been appropriate for testing your hypothesis in part a   
     - How you evaluated normality and homogeneity of variance  
-    - If the variable was not normally distributed, how you justified using a t-test  
-    **(6 points)**
     
 j. Describe the results in 1-2 full sentences in your own words. Make sure to include the:  
 

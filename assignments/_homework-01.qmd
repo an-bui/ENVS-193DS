@@ -17,7 +17,11 @@ Read these instructions before starting your homework and follow them carefully.
 You will not need to submit any materials for tasks, but you are expected to complete the material/steps.
 :::
 
-### Task 1. Set up your folders and `.Rproj` file
+### Task 1. Read the class guidelines and policies on using AI
+
+If you think you might use any AI tools (e.g. Copilot, ChatGPT, Claude), read the [guidelines and policies](https://winter-2026.envs-193ds.com/resources/genai) before starting your assignment.
+
+### Task 2. Set up your folders and `.Rproj` file
 
 #### a. Create a new folder for this homework assignment within your `ENVS-193DS` folder.
 
@@ -35,14 +39,28 @@ Download the homework files from Canvas into your homework folder on your comput
 
 Create an Rproj file within your `homework-01` folder. If you need help with this, watch the "Creating an Rproject" video on Canvas.  
 
-### Task 2. Set up your code.
+### Task 3. Set up your code.
 
 At the top of the template (or your own Quarto doc):
 
-- Load the `tidyverse` package.  
-- Read in data file 1 using `read_csv(“glacial_volume_loss_copy.csv”)` and store that as an object named `glaciers`.  
+- Load the `tidyverse` package. Make sure the messages will not show up in your final document.  
 
-### Task 3. Read about metadata from NOAA's National Centers for Environmental Information
+```{r}
+#| eval: false
+
+library(tidyverse)
+```
+
+- Read in the data as an object called `glaciers`.  
+
+```{r}
+#| eval: false
+
+glaciers <- read_csv("glacial_volume_loss.csv")
+```
+
+
+### Task 4. Read about metadata from NOAA's National Centers for Environmental Information
 
 Read the overview page on metadata [here](https://www.ncei.noaa.gov/resources/metadata) to understand what metadata is.  
 
@@ -99,7 +117,7 @@ By doing this before you code up your figure, you'll be able to gain some intuit
 :::  
 
 c. Create a histogram of annual sea level rise using `ggplot()`. Label the x- and y-axes.   
-d. Create a scatterplot of cumulative sea level rise through time (year on the x-axis, cumulative sea level rise on the y-axis) using `ggplot()`. Label the x- and y-axes.   
+d. Create a timeseries plot with points and a line representing cumulative sea level rise through time (year on the x-axis, cumulative sea level rise on the y-axis) using `ggplot()`. Label the x- and y-axes.   
 
 ### Problem 3. Personal data
 
@@ -124,7 +142,7 @@ i. design a data sheet with some example data: what are the columns and what are
 
 :::{.callout-note title="Need an example? Here's An's." collapse="true"}
 
-a. Question: Do I go on longer runs on non-work days?   
+a. Question: Does my run distance differ between work and non-work days?     
 b. My response variable is length of run, measured in miles.  
 c. My predictor variable is work day (yes or no).  
 d. I would record the date and time of day.  
@@ -153,6 +171,16 @@ i. ![](/assignments/images/homework-01/example-data-sheet.png)
 
 :::{.callout-note title="When can I start collecting data?" collapse="true"}
 An will give you feedback and recommendations for what to pursue for this project on Canvas on Monday the 26th-Tuesday the 27th. That means that **you should be able to start collecting data by the end of week 4**, if not sooner.
+:::
+
+:::{.callout-note title="Using ordinal scales"}
+Lots of folks like to assign values to "productivity", "restedness", etc. For example, you could assign a study session some number between 1-5 in terms of productivity, where 1 is not at all productive and 5 is very productive.  
+
+If you plan on using a scale, you need to clearly articulate:  
+- what each number means (e.g. from a scale from 1-5, what does 1, 2, 3, 4, 5, mean), and  
+- how you would tell the difference between numbers (e.g. how would you tell the difference between 3 and 4)  
+
+Usually, this means you will have to determine what defines "productivity". Is it number of pages you wrote in a paper? Does it mean the number of minutes spent in a word doc or R script? You have to decide what numerical tools you will use to assign a level to each "study session".
 :::
 
 ### Problem 4. Setting up statistical critique
@@ -214,13 +242,14 @@ Lastly, check out the **rubric on Canvas** to see the component breakdown in mor
 
 You will only receive full marks for annotations if you have:  
 
-- comments on each line of visualization code and/or ggplot geom/theme call (not needed for each argument, though good to have)  
+- meaningful comments on each line of visualization code and/or ggplot geom/theme call (not needed for each argument, though good to have)  
 
 You will only receive full marks for readability if:  
 
 - all messages/warnings are hidden  
 - all code is contained in code chunks (double check line breaks in comments once you render your document)  
-- all text is where it’s supposed to be (headers and main text show up correctly)
+- all text is where it’s supposed to be (all components like headers, main text, superscripts/subscripts, etc. show up correctly)  
+- code includes carriage returns, spaces, etc. to make pipe operations and arguments clear
 
 ## Frequently Asked Questions
 

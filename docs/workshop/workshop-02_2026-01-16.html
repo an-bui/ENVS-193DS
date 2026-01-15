@@ -204,7 +204,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">January 13, 2026</p>
+        <p class="date-modified">January 15, 2026</p>
       </div>
     </div>
       
@@ -230,7 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#cleaning-up" id="toc-cleaning-up" class="nav-link" data-scroll-target="#cleaning-up">2. Cleaning up</a></li>
   <li><a href="#making-a-boxplotjitter-plot" id="toc-making-a-boxplotjitter-plot" class="nav-link" data-scroll-target="#making-a-boxplotjitter-plot">3. Making a boxplot/jitter plot</a></li>
   <li><a href="#making-a-histogram" id="toc-making-a-histogram" class="nav-link" data-scroll-target="#making-a-histogram">4. Making a histogram</a></li>
-  <li><a href="#visualizing-spread-variance-and-confidence" id="toc-visualizing-spread-variance-and-confidence" class="nav-link" data-scroll-target="#visualizing-spread-variance-and-confidence">5. Visualizing spread, variance, and confidence</a></li>
+  <li><a href="#visualizing-spread-uncertainty-and-confidence" id="toc-visualizing-spread-uncertainty-and-confidence" class="nav-link" data-scroll-target="#visualizing-spread-uncertainty-and-confidence">5. Visualizing spread, uncertainty, and confidence</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -407,8 +407,8 @@ Note
 <p>Can you tell from looking at the histogram which production type tends to produce more fish? Why or why not?</p>
 <p><strong>Yes. There are no observations for aquaculture at high catch (in millions); most of the observations for aquaculture are lower than 1 million tons, while capture production ranges up to 6 million tons.</strong></p>
 </section>
-<section id="visualizing-spread-variance-and-confidence" class="level3">
-<h3 class="anchored" data-anchor-id="visualizing-spread-variance-and-confidence">5. Visualizing spread, variance, and confidence</h3>
+<section id="visualizing-spread-uncertainty-and-confidence" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-spread-uncertainty-and-confidence">5. Visualizing spread, uncertainty, and confidence</h3>
 <section id="a.-calculations" class="level4">
 <h4 class="anchored" data-anchor-id="a.-calculations">a. Calculations</h4>
 <div class="cell">
@@ -422,8 +422,8 @@ Note
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">se =</span> sd<span class="sc">/</span><span class="fu">sqrt</span>(n), <span class="co"># calculate the standard error</span></span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">tval =</span> <span class="fu">qt</span>(<span class="at">p =</span> <span class="fl">0.05</span><span class="sc">/</span><span class="dv">2</span>, <span class="at">df =</span> df, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>), <span class="co"># find the t value</span></span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">margin =</span> tval<span class="sc">*</span>se, <span class="co"># calculate the margin of error</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">ci_lower =</span> mean <span class="sc">-</span> tval<span class="sc">*</span>se, <span class="co"># calculate the lower bound of the confidence interval</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">ci_higher =</span> mean <span class="sc">+</span> tval<span class="sc">*</span>se <span class="co"># calculate the upper bound of the confidence interval</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">ci_lower =</span> mean <span class="sc">-</span> margin, <span class="co"># calculate the lower bound of the confidence interval</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">ci_higher =</span> mean <span class="sc">+</span> margin <span class="co"># calculate the upper bound of the confidence interval</span></span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>          ) </span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>production_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -453,9 +453,9 @@ capture     4.381083 4.068038 4.694128</code></pre>
 </section>
 <section id="b.-visualizations" class="level4">
 <h4 class="anchored" data-anchor-id="b.-visualizations">b. Visualizations</h4>
-<p>When visualizing the central tendency (in this case, mean) and spread (standard deviation) or variance (standard error) or confidence (confidence intervals), you can stack geoms on top of each other.</p>
+<p>When visualizing the central tendency (in this case, mean) and spread (standard deviation) or uncertainty (standard error) or confidence (confidence intervals), you can stack geoms on top of each other.</p>
 <p>To visualize the mean, we’ll use <code>geom_point()</code>. Remember that <code>geom_point()</code> can be used for any plot you want to make that involves a point.</p>
-<p>To visualize the spread/variance/confidence, we’ll use <code>geom_errorbar()</code>. This is the geom that creates two lines that can extend away from a point.</p>
+<p>To visualize the spread/uncertainty/confidence, we’ll use <code>geom_errorbar()</code>. This is the geom that creates two lines that can extend away from a point.</p>
 <section id="standard-deviation" class="level5">
 <h5 class="anchored" data-anchor-id="standard-deviation">Standard deviation</h5>
 <p>First, we’ll visualize standard deviation.</p>
@@ -531,7 +531,7 @@ capture     4.381083 4.068038 4.694128</code></pre>
 </section>
 <section id="c.-geom_pointrange" class="level4">
 <h4 class="anchored" data-anchor-id="c.-geom_pointrange">c.&nbsp;<code>geom_pointrange()</code></h4>
-<p>We can also visualize means and spread/variance/confidence intervals using the <code>geom_pointrange()</code> function.</p>
+<p>We can also visualize means and spread/uncertainty/confidence intervals using the <code>geom_pointrange()</code> function.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> production_summary, <span class="co"># use the summary data frame</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> type, </span>
@@ -1240,7 +1240,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb16-139"><a href="#cb16-139" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-140"><a href="#cb16-140" aria-hidden="true" tabindex="-1"></a>**Yes. There are no observations for aquaculture at high catch (in millions); most of the observations for aquaculture are lower than 1 million tons, while capture production ranges up to 6 million tons.**</span>
 <span id="cb16-141"><a href="#cb16-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-142"><a href="#cb16-142" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5. Visualizing spread, variance, and confidence</span></span>
+<span id="cb16-142"><a href="#cb16-142" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5. Visualizing spread, uncertainty, and confidence</span></span>
 <span id="cb16-143"><a href="#cb16-143" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-144"><a href="#cb16-144" aria-hidden="true" tabindex="-1"></a><span class="fu">#### a. Calculations</span></span>
 <span id="cb16-145"><a href="#cb16-145" aria-hidden="true" tabindex="-1"></a></span>
@@ -1255,8 +1255,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb16-154"><a href="#cb16-154" aria-hidden="true" tabindex="-1"></a><span class="in">            se = sd/sqrt(n), # calculate the standard error</span></span>
 <span id="cb16-155"><a href="#cb16-155" aria-hidden="true" tabindex="-1"></a><span class="in">            tval = qt(p = 0.05/2, df = df, lower.tail = FALSE), # find the t value</span></span>
 <span id="cb16-156"><a href="#cb16-156" aria-hidden="true" tabindex="-1"></a><span class="in">            margin = tval*se, # calculate the margin of error</span></span>
-<span id="cb16-157"><a href="#cb16-157" aria-hidden="true" tabindex="-1"></a><span class="in">            ci_lower = mean - tval*se, # calculate the lower bound of the confidence interval</span></span>
-<span id="cb16-158"><a href="#cb16-158" aria-hidden="true" tabindex="-1"></a><span class="in">            ci_higher = mean + tval*se # calculate the upper bound of the confidence interval</span></span>
+<span id="cb16-157"><a href="#cb16-157" aria-hidden="true" tabindex="-1"></a><span class="in">            ci_lower = mean - margin, # calculate the lower bound of the confidence interval</span></span>
+<span id="cb16-158"><a href="#cb16-158" aria-hidden="true" tabindex="-1"></a><span class="in">            ci_higher = mean + margin # calculate the upper bound of the confidence interval</span></span>
 <span id="cb16-159"><a href="#cb16-159" aria-hidden="true" tabindex="-1"></a><span class="in">          ) </span></span>
 <span id="cb16-160"><a href="#cb16-160" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-161"><a href="#cb16-161" aria-hidden="true" tabindex="-1"></a><span class="in">production_summary</span></span>
@@ -1278,11 +1278,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb16-177"><a href="#cb16-177" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-178"><a href="#cb16-178" aria-hidden="true" tabindex="-1"></a><span class="fu">#### b. Visualizations</span></span>
 <span id="cb16-179"><a href="#cb16-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-180"><a href="#cb16-180" aria-hidden="true" tabindex="-1"></a>When visualizing the central tendency (in this case, mean) and spread (standard deviation) or variance (standard error) or confidence (confidence intervals), you can stack geoms on top of each other.  </span>
+<span id="cb16-180"><a href="#cb16-180" aria-hidden="true" tabindex="-1"></a>When visualizing the central tendency (in this case, mean) and spread (standard deviation) or uncertainty (standard error) or confidence (confidence intervals), you can stack geoms on top of each other.  </span>
 <span id="cb16-181"><a href="#cb16-181" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-182"><a href="#cb16-182" aria-hidden="true" tabindex="-1"></a>To visualize the mean, we'll use <span class="in">`geom_point()`</span>. Remember that <span class="in">`geom_point()`</span> can be used for any plot you want to make that involves a point.    </span>
 <span id="cb16-183"><a href="#cb16-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-184"><a href="#cb16-184" aria-hidden="true" tabindex="-1"></a>To visualize the spread/variance/confidence, we'll use <span class="in">`geom_errorbar()`</span>. This is the geom that creates two lines that can extend away from a point.  </span>
+<span id="cb16-184"><a href="#cb16-184" aria-hidden="true" tabindex="-1"></a>To visualize the spread/uncertainty/confidence, we'll use <span class="in">`geom_errorbar()`</span>. This is the geom that creates two lines that can extend away from a point.  </span>
 <span id="cb16-185"><a href="#cb16-185" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-186"><a href="#cb16-186" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Standard deviation</span></span>
 <span id="cb16-187"><a href="#cb16-187" aria-hidden="true" tabindex="-1"></a></span>
@@ -1340,7 +1340,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb16-239"><a href="#cb16-239" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-240"><a href="#cb16-240" aria-hidden="true" tabindex="-1"></a><span class="fu">#### c. `geom_pointrange()`</span></span>
 <span id="cb16-241"><a href="#cb16-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-242"><a href="#cb16-242" aria-hidden="true" tabindex="-1"></a>We can also visualize means and spread/variance/confidence intervals using the <span class="in">`geom_pointrange()`</span> function.</span>
+<span id="cb16-242"><a href="#cb16-242" aria-hidden="true" tabindex="-1"></a>We can also visualize means and spread/uncertainty/confidence intervals using the <span class="in">`geom_pointrange()`</span> function.</span>
 <span id="cb16-243"><a href="#cb16-243" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-244"><a href="#cb16-244" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ci-95-plot-with-pointrange}</span></span>
 <span id="cb16-245"><a href="#cb16-245" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data = production_summary, # use the summary data frame</span></span>

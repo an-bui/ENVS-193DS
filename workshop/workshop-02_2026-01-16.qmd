@@ -137,7 +137,7 @@ Can you tell from looking at the histogram which production type tends to produc
 
 **Yes. There are no observations for aquaculture at high catch (in millions); most of the observations for aquaculture are lower than 1 million tons, while capture production ranges up to 6 million tons.**
 
-### 5. Visualizing spread, variance, and confidence
+### 5. Visualizing spread, uncertainty, and confidence
 
 #### a. Calculations
 
@@ -152,8 +152,8 @@ production_summary <- production_clean |> # start with the production_clean data
             se = sd/sqrt(n), # calculate the standard error
             tval = qt(p = 0.05/2, df = df, lower.tail = FALSE), # find the t value
             margin = tval*se, # calculate the margin of error
-            ci_lower = mean - tval*se, # calculate the lower bound of the confidence interval
-            ci_higher = mean + tval*se # calculate the upper bound of the confidence interval
+            ci_lower = mean - margin, # calculate the lower bound of the confidence interval
+            ci_higher = mean + margin # calculate the upper bound of the confidence interval
           ) 
 
 production_summary
@@ -175,11 +175,11 @@ How could you write about this confidence interval?
 
 #### b. Visualizations
 
-When visualizing the central tendency (in this case, mean) and spread (standard deviation) or variance (standard error) or confidence (confidence intervals), you can stack geoms on top of each other.  
+When visualizing the central tendency (in this case, mean) and spread (standard deviation) or uncertainty (standard error) or confidence (confidence intervals), you can stack geoms on top of each other.  
 
 To visualize the mean, we'll use `geom_point()`. Remember that `geom_point()` can be used for any plot you want to make that involves a point.    
 
-To visualize the spread/variance/confidence, we'll use `geom_errorbar()`. This is the geom that creates two lines that can extend away from a point.  
+To visualize the spread/uncertainty/confidence, we'll use `geom_errorbar()`. This is the geom that creates two lines that can extend away from a point.  
 
 ##### Standard deviation
 
@@ -237,7 +237,7 @@ ggplot(data = production_summary, # use the summary data frame
 
 #### c. `geom_pointrange()`
 
-We can also visualize means and spread/variance/confidence intervals using the `geom_pointrange()` function.
+We can also visualize means and spread/uncertainty/confidence intervals using the `geom_pointrange()` function.
 
 ```{r ci-95-plot-with-pointrange}
 ggplot(data = production_summary, # use the summary data frame

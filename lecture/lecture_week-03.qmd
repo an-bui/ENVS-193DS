@@ -571,16 +571,19 @@ t.test(rats, mice, var.equal = TRUE)
 t.test(rats, mice, var.equal = FALSE)
 ```
 
-```{r manual-calc}
-(mean(rats) - mean(mice))/sqrt((var(rats) + var(mice))/2)
-```
+This is the effect size calculated using `effsize::cohen.d()`:
 
 ```{r using-function}
 cohen.d(rats, mice)
 ```
 
+and this is the effect size calculated by hand:
 
-testing test statistic formula to compare against t-test from above:
+```{r manual-calc}
+(mean(rats) - mean(mice))/sqrt((var(rats) + var(mice))/2)
+```
+
+Calculating the test statistic and degrees of freedom by hand. Setting up the variables here:
 
 ```{r test-statistic-test}
 xa <- mean(rats)
@@ -591,15 +594,19 @@ varb <- var(mice)
 
 nA <- length(rats)
 nB <- length(mice)
+```
 
+The test statistic from the test above is `r t.test(rats, mice, var.equal = TRUE)$statistic`. This is the test statistic calculated by hand:
+
+```{r}
 (xa - xb)/sqrt((vara/nA)+(varb/nB))
-(nA - 1) + (nB - 1)
-
-(((vara/nA)+(varb/nB))^2)/((vara/nA)^2/(nA-1)+(varb/nB)^2/(nB-1))
 ```
 
 
+The degrees of freedom from the Welch's t-test is `r t.test(rats, mice, var.equal = FALSE)$parameter`. This is the degrees of freedom calculated by hand: 
 
-
+```{r}
+(((vara/nA)+(varb/nB))^2)/((vara/nA)^2/(nA-1)+(varb/nB)^2/(nB-1))
+```
 
 

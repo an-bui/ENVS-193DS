@@ -1,190 +1,208 @@
 ---
-title: "OPTIONAL practice problem - everything is a linear model"
+title: "OPTIONAL practice problem - Do a Wilcoxon signed rank test by hand"
 editor: source
 freeze: auto
-date: 2025-05-19
+date: 2025-04-30
 date-modified: last-modified
 ---
 
-## Description
-
-Linear models share the same parametric base as ANOVAs (and t-tests!). This means that if you were to compare your results from an ANOVA to a linear model, you would see the same result.  
-
-However, the presentation of those results is slightly different, so it's not always obvious if you're just looking at R output. For example, with a linear model, you would see the estimates for each level of a factor relative to a reference level. Compare this with an ANOVA, where you would see sum of squares, mean squares, F-statistic, and p-value.  
-
-Prove to yourself that ANOVAs are actually just linear models!
-
-## Set up
-
-Install `palmerpenguins` if you don't have it already. Read in the data using `data(penguins)`.  
-
-The question we will ask is: [**How does body mass differ between penguin species?**]{style="color: #008080;"}
-
-```{r}
+```{r document-set-up}
+#| echo: false
 #| message: false
 
+# package
 library(tidyverse)
-library(palmerpenguins)
-library(car)
-library(ggeffects)
 
-data(penguins)
+theme_set(theme_bw() +
+            theme(text = element_text(family = "Lato", size = 12)))
 ```
 
+## 1. Description
 
-## Problem
+In this practice problem, you'll do a Wilcoxon signed rank test comparing paired samples to each other by hand, then double check your work with R. This is the non-parametric version of the paired t-test.  
 
-### 1. Calculate the mean body masses and lower and upper bounds of the 95% CI around the mean for each penguins species.
+## 2. Steps
 
-```{r}
-penguins |> 
-  group_by(species) |> # group by species
-  reframe(mean = mean(body_mass_g, na.rm = TRUE), # calculating mean
-          se = sd(body_mass_g, na.rm = TRUE)/sqrt(length(body_mass_g)), # calculating SE
-          tval = qt(p = 0.05/2, df = length(body_mass_g), lower.tail = FALSE), # finding t-value
-          margin = se*tval, # calculating margin of error
-          conf_low = mean - margin, # calculating the lower bound of the CI
-          conf_high = mean + margin, # calculating the upper bound of the CI
-          var = var(body_mass_g, na.rm = TRUE) # also calculating variance here for efficiency
-          ) 
-```
+### a. Values
 
-:::{.callout-note}
-Stop and think: keep in mind what those means and 95% CI around the means are!
-:::
+Start with these values:  
 
-### 2. Create a figure with species on the x-axis and body mass on the y-axis, with means, 95% CIs, and the underlying data.
+:::: {.columns}
+::: {.column width="40%"}
 
-```{r}
-#| warning: false
-
-ggplot(data = penguins, # penguins data
-       aes(x = species, # x-axis
-           y = body_mass_g)) + # y-axis
-  geom_point(position = position_jitter(width = 0.2, # shake points left and right
-                                        height = 0), # not up and down
-             alpha = 0.2) + # transparency
-  stat_summary(geom = "pointrange", # plot means and CIs
-               fun.data = mean_cl_normal) # calculating mean and 95% confidence interval
-```
-
-:::{.callout-note}
-Stop and think: do you think there's a difference between species in body mass?
-:::
-
-### 3. Use ANOVA to determine the difference in body mass between penguin species.  
-
-Do any assumption checks as needed.  
-
-First, Levene's test:
-
-```{r}
-leveneTest(body_mass_g ~ species, # formula
-           data = penguins) # data
-```
-
-Significantly different variances in body mass between species! But looking at the calculated variances, they are for practical purposes equal.  
-
-Visually evaluating normality:  
-
-```{r}
-#| warning: false
-
-ggplot(data = penguins,
-       aes(sample = body_mass_g)) + # argument for a QQ plot
-  geom_qq_line(lty = 2, 
-               color = "grey") + # adding a reference line
-  geom_qq() + # QQ
-  theme_classic() + # cleaner background, easier to see things
-  facet_wrap(~species)
-```
-
-Statistically evaluating normality:   
-
-```{r}
-adelie <- penguins |> 
-  filter(species == "Adelie") |> # filtering for Adelie
-  pull(body_mass_g) # pulling body mass as a vector
-
-shapiro.test(adelie)
-
-chinstrap <- penguins |> 
-  filter(species == "Chinstrap") |> # filtering for chinstrap
-  pull(body_mass_g)
-
-shapiro.test(chinstrap)
-
-gentoo <- penguins |> 
-  filter(species == "Gentoo") |> # filtering for Gentoo
-  pull(body_mass_g)
-
-shapiro.test(gentoo)
-```
-
-Probably ok.
-
-```{r}
-penguins_anova <- aov(body_mass_g ~ species, # formula
-                      data = penguins) # data
-
-# show the ANOVA table: sums of squares, mean squares, f-statistic, p-value
-summary(penguins_anova)
-```
-
-:::{.callout-note}
-Stop and think: what is the result of your ANOVA?
-:::
-
-Then, do a post-hoc:  
-
-```{r}
-TukeyHSD(penguins_anova)
-```
-
-:::{.callout-note}
-Stop and think: what is the result of your post-hoc test?
-:::
-
-### 4. Use a linear model to determine the difference in body mass between penguin species.
-
-```{r}
-penguins_lm <- lm(body_mass_g ~ species,
-                  data = penguins)
-
-par(mfrow = c(2, 2)) # displaying all diagnostic plots in 2x2 grid
-plot(penguins_lm) # diagnostic plots
-
-summary(penguins_lm) # model estimates and information
-```
-
-:::{.callout-note}
-
-Stop and think about this result.
-
-- How do the estimates compare to your calculated means?  
-- How do the F-statistic, degrees of freedom, and p-value for the model compare to the ANOVA summary?  
-- What components of the ANOVA summary go into the R^2^?  
+| Before | After |
+|:------:|:-----:|
+| 1.2    | 1.6   |
+| 2.0    | 2.8   |
+| 0.8    | 0.7   |
+| 0.6    | 0.6   |
+| 1.3    | 1.5   |
+| 3.2    | 2.7   |
+| 0.9    | 1.1   |
 
 :::
+::::
 
-Then, get the model predictions:
+### b. Calculate the differences between samples
 
-```{r}
-ggpredict(penguins_lm, 
-          terms = c("species")) # only predictor in the model is species
-```
+Then, calculate the differences between those values. You should get something that looks like this:
 
-:::{.callout-note}
-Stop and think: compare these with your calculated means and 95% CIs.
+:::: {.columns}
+::: {.column width="40%"}
+
+| Differences    |
+|:--------------:|
+| -0.4           |
+| -0.8           |
+| 0.1            |
+| 0.0            |
+| -0.2           |
+| 0.5            |
+| -0.2           |
+
 :::
+::::
 
-Then, plot for good measure!
+### c. Take out 0, arrange by magnitude
+
+Then, omit all observations of 0 and arrange your numbers by magnitude. You should get something that looks like this:
+
+:::: {.columns}
+::: {.column width="40%"}
+
+| Ordered magnitude    |
+|:--------------------:|
+| 0.1                  |
+| -0.2                 |
+| -0.2                 |
+| -0.4                 |
+| 0.5                  |
+| -0.8                 |
+
+:::
+::::
+
+### d. Give each value a "sign" and a "rank"
+
+This is the "signed rank" part of the test: assign each value a sign (+ or -), then rank (1, 2, 3, 4, etc.) You should get something that looks like this:
+
+:::: {.columns}
+::: {.column width="40%"}
+
+| Ordered magnitude    |   Signed rank        |
+|:--------------------:|:--------------------:|
+| 0.1                  |      + 1             |
+| -0.2                 |      - 2             |
+| -0.2                 |      - 2             |
+| -0.4                 |      - 4             |
+| 0.5                  |      + 5             |
+| -0.8                 |      - 6             |
+
+:::
+::::
+
+### e. Sum the magnitudes of the + and - values
+
+Sum the magnitudes of the + and - values. This will be the -W and +W statistic. You then choose the lower statistic.
+
+In this case, you should get:  
+
++W = 1 + 5 = 6  
+-W = 2 + 2 + 4 + 6 = 14  
+
+Pick the lowest one: +W = 6.  
+
+### e. Run the test in R to check your work.
+
+Start with this data frame:
 
 ```{r}
-ggpredict(penguins_lm, # getting model predictions
-          terms = c("species")) |> # only predictor is species
-  # quick option to plot from ggpredict
-  plot(show_data = TRUE, # show the underlying data
-       jitter = TRUE) # shake the points around a bit
+# creating a data frame with "before" and "after" values
+# each row is an individual with a measurement taken "before" and "after"
+df <- tibble(before = c(1.2, 2.0, 0.8, 0.6, 1.3, 3.2, 0.9), 
+             after = c(1.6, 2.8, 0.7, 0.6, 1.5, 2.7, 1.1)) 
 ```
+
+Then run a Wilcoxon signed rank test (note the `paired = TRUE` argument).
+
+```{r}
+wilcox.test(x = df$before,
+            y = df$after,
+            paired = TRUE) # argument for a paired test
+```
+
+### f. Try a one-sample test.
+
+Compare the following values to $\mu = 7$:
+
+:::: {.columns}
+::: {.column width="40%"}
+
+| Sample |
+|:------:|
+| 2.8    |
+| 8.3    |
+| 4.5    |
+| 6.7    |
+| 8.1    |
+| 7.2    |
+| 7.8    |
+
+:::
+::::
+
+
+First, calculate the difference between each observation and the $\mu$, which is 7:
+
+:::: {.columns}
+::: {.column width="40%"}
+
+| Sample |  Difference  |
+|:------:|:------------:|
+| 2.8    |  -4.2        |
+| 8.3    |  1.3         |
+| 4.5    |  -2.5        |
+| 6.7    |  -0.3        |
+| 8.1    |  1.1         |
+| 7.2    |  0.2         |
+| 7.8    |  0.8         |
+
+:::
+::::
+
+
+Then order each difference and assign a sign and rank:
+
+:::: {.columns}
+::: {.column width="40%"}
+
+| Ordered magnitude    |   Signed rank        |
+|:--------------------:|:--------------------:|
+| 0.2                  |      + 1             |
+| -0.3                 |      - 2             |
+| 0.8                  |      + 3             |
+| 1.1                  |      + 4             |
+| 1.3                  |      + 5             |
+| -2.5                 |      - 6             |
+| -4.2                 |      - 7             |
+
+:::
+::::
+
+
+Then sum the magnitudes:  
+
++W = 1 + 3 + 4 + 5 = 13   
+-W = 2 + 6 + 7 = 15  
+
+For this example, W = 13.  
+
+Then, double check your work in R:
+
+```{r}
+wilcox.test(c(2.8, 8.3, 4.5, 6.7, 8.1, 7.2, 7.8),
+            mu = 7)
+```
+
+
 

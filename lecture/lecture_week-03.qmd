@@ -609,4 +609,46 @@ The degrees of freedom from the Welch's t-test is `r t.test(rats, mice, var.equa
 (((vara/nA)+(varb/nB))^2)/((vara/nA)^2/(nA-1)+(varb/nB)^2/(nB-1))
 ```
 
+Making a histogram and QQ plot for visual evaluation of normality:
+
+```{r}
+df <- cbind(
+  rats, mice
+) |> 
+  as_tibble() |> 
+  pivot_longer(cols = rats:mice,
+               names_to = "type",
+               values_to = "tail_length") 
+
+ggplot(data = df, 
+       aes(x = tail_length,
+           fill = type)) +
+  geom_histogram(bins = 7,
+                 color = "black") +
+  facet_wrap(~type) +
+  scale_y_continuous(expand = c(0, 0)) +
+  scale_fill_manual(values = c(
+    "rats" = "orange",
+    "mice" = "darkgreen"
+  )) +
+  theme(legend.position = "none",
+        strip.background = element_rect(color = "#FFFFFF"),
+        strip.text = element_text(color = "#FFFFFF")) +
+  labs(x = "Tail length (mm)")
+
+ggplot(data = df, 
+       aes(sample = tail_length,
+           color = type)) +
+  geom_qq_line(color = "blue",
+               alpha = 0.6) +
+  geom_qq(size = 3) +
+  facet_wrap(~type) +
+  scale_color_manual(values = c(
+    "rats" = "orange",
+    "mice" = "darkgreen"
+  )) +
+  theme(legend.position = "none",
+        strip.background = element_rect(color = "#FFFFFF"),
+        strip.text = element_text(color = "#FFFFFF"))
+```
 

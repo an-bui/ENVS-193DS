@@ -2,11 +2,11 @@
 title: "Midterm"
 editor: source
 published-title: "Due date"
-date: 2025-05-07
+date: 2026-02-12
 date-modified: last-modified
 ---
 
-[Due on Wednesday May 7 (Week 6) at 11:59 PM]{style="color: #79ACBD; font-size: 24px;"}
+[Due on Thursday the 12th (Week 6) at 11:59 PM]{style="color: #79ACBD; font-size: 24px;"}
 
 # Description
 
@@ -36,24 +36,10 @@ Start a new Quarto or RMarkdown document for your midterm. Make sure you read in
 Read in and store the data for Problem 3 as an object called `tussocks`.  
 
 Read in and store the data for Problem 4 as an object called `rain`.
-
-:::{.callout-note collapse="true" title="Do we have a template?"}
-You will **not** have a template.  
-
-You are responsible for creating a new Quarto document, setting the document up (i.e. reading in packages and data at the top of the doc), and making sure it renders properly (as a PDF or word doc, with the title, your name, and the date).  
-
-Stuck? See the video on Canvas about creating and rendering Quarto documents for help.  
-
-If you are using RMarkdown, the process is the same. 
-:::
  
 # Problems
 
-## Problem 1. Understanding and critiquing written communication (20 points) 
-
-### Skills you will demonstrate
-
-In this problem, you will be responsible for demonstrating your understanding of the different components of a statistical test. All numbers describe a different statistical concept; how well do you understand what those numbers represent?
+## Problem 1. Understanding and critiquing written communication 
 
 ### Description
 
@@ -64,39 +50,39 @@ In this problem, you will be responsible for demonstrating your understanding of
 #| eval: false
 
 set.seed(1)
-sheephead <- tibble(
-  mpa = rnorm(n = 60, mean = 60, sd = 5),
-  non_mpa = rnorm(n = 60, mean = 50, sd = 10)
+urchins <- tibble(
+  mpa = rnorm(n = 60, mean = 18, sd = 5),
+  non_mpa = rnorm(n = 60, mean = 14, sd = 10)
 ) |> 
   pivot_longer(cols = mpa:non_mpa,
                names_to = "type",
-               values_to = "length_cm")
+               values_to = "diameter_cm")
 
-t.test(length_cm ~ type,
-       data = sheephead)
+t.test(diameter_cm ~ type,
+       data = urchins)
 ```
 
 
-You're a fisheries manager interested in the effects of marine protected areas on the size of California sheephead _(Bodianus pulcher)_. You find a study in which researchers examined exactly this effect. In their results section, the researchers wrote:  
+You're a fisheries manager interested in the effects of marine protected areas on the size of red urchins (_Mesocentrotus franciscanus_). You find a study in which researchers examined exactly this effect. In their results section, the researchers wrote:  
 
-> We found a difference in sheephead length (in centimeters) between marine protected areas and 
-> non-protected areas (Welch's two-sample t-test, t(83.6) = 7.2, p < 0.001, $\alpha$ = 0.05).
+> We found a difference in red urchin diameter (cm) between marine protected areas and 
+> non-protected areas (Welch's two-sample t-test, t(85.1) = 3.39, p = 0.001, $\alpha$ = 0.05).
 
 ### Components
 
-#### a. Hypotheses (4 points) 
+#### a. Hypotheses
 
 The researchers didn't state their hypotheses explicitly anywhere in their paper. In one sentence _each_, write the null ($H_0$) and alternative ($H_A$) hypotheses in _statistical_ terms.
 
-#### b. Test type (2 points) 
+#### b. Test type 
 
 The researchers ran a Welch's two sample t-test. What must have been true for them to use a Welch's t-test? Respond in 1 or 2 sentences _only_.
 
-#### c. Test summary components (10 points) 
+#### c. Test summary components 
 
 In parentheses, the researchers cite some information about their statistical test:  
 
-> t(105.6) = 6.6, p < 0.001, $\alpha$ = 0.05  
+> t(85.1) = 3.39, p = 0.001, $\alpha$ = 0.05
 
 In one sentence _each_, explain the meaning of:  
 
@@ -108,17 +94,13 @@ In one sentence _each_, explain the meaning of:
 
 **Be specific**: what is the term that describes the component, and what does that component represent?
 
-#### d. Missing information (4 points) 
+#### d. Missing information
 
 Unfortunately, this one sentence is the extent of the researchers' communication about their statistics. Identify 2 other components or statistics they could have included (note that there may be more than 2 additional components that could make sense).  
 
 For each of your pieces of "missing information", explain why it would be relevant to the questions or hypotheses.
 
-## Problem 2. Interpretation and communication (41 points) 
-
-### Skills you will demonstrate
-
-In this problem, you will be responsible for interpreting the results of a test with which you may be familiar, but haven't seen. You will also **demonstrate your ability to interpret code output and synthesize the statistics in writing to ground the stats in biology** for a scientific audience.  
+## Problem 2. Interpretation and communication
 
 ### Description
 
@@ -259,9 +241,7 @@ You will reproduce the analysis in: Steketee, Jess K., Adrian V. Rocha, Laura Go
 
 You will specifically recreate the components in this passage:  
 
-**REPLACE THIS WITH THE DIAMETER DATA**
-
-> Although tussock density was lower at the burned site, tussocks were larger.
+> Although tussock density was lower at the burned site... average tussock mound diameters were larger by 4 cm (Table 1; p < 0.001).
 
 ### Getting the data
 
@@ -275,18 +255,24 @@ Download the data into your midterm directory. To understand the data structure,
 
 ### Components
 
-#### a. Variables (4 points) 
+#### a. Variables 
 
 In 1-2 sentences, describe the response variable (with units) and predictor variable (include each group). Be sure to explain the _type_ of each variable (categorical, continuous, etc.).
 
-#### b. Hypotheses (4 points) 
+#### b. Hypotheses
 
 In one sentence _each_, write the null ($H_0$) and alternative ($H_A$) hypotheses in _statistical_ terms.
 
-#### c. Cleaning and organizing data (10 points)
+#### c. Checking your understanding
+
+Find Table 1 (as referenced in the paper). In 1-2 sentences, summarize the  
+- means and SEs as the authors calculated them and  
+- your interpretation of the difference between groups (i.e. why is it)
+
+#### c. Cleaning and organizing data
 
 :::{.callout-note collapse="true" title="Response variable column in original dataset"}
-Use the "Average Moss (cm)" column for tussock height.
+Use the "Average diameter" column for tussock height.
 :::
 
 Create an object called `tussocks_clean`. Clean the data by:  
@@ -297,18 +283,19 @@ Create an object called `tussocks_clean`. Clean the data by:
    a. replace `Sev` with `Burned`  
    b. replace `Unb` with `Unburned`  
 
-3. selecting only the site and height column  
+3. selecting only the site and diameter column  
 
 Use the pipe operator to string functions together.  
 
 Once you are done, display 5 rows from `tussocks_clean` using the `slice_sample()` function. _DO NOT SUBSET THE DATA FRAME. THIS IS FOR DISPLAYING THE CONTENTS ONLY._ 
 
-#### d. Summarizing and table displays (12 points) 
+#### d. Summarizing and table displays
 
 Create an object called `tussocks_summary` using the `tussocks_clean` data frame to calculate the:  
 
 - means,  
 - standard deviations,  
+- sample sizes,  
 - standard errors, and   
 - 95% confidence intervals of the means  
 for the response variable within the two groups.  
@@ -328,19 +315,19 @@ Show _all_ code for your calculations and making/polishing the table.
 **Render your document to make sure your table looks right.** Do not assume that just because your code works, your table will render correctly. 
 :::
 
-#### e. Tests and effect sizes (6 points) 
+#### e. Tests and effect sizes 
 
-Use a Welch's t-test to compare mean tussock height between groups.  
+Use a Welch's t-test to compare mean tussock diameter (cm) between groups.  
 
 Calculate the appropriate effect size.  
 
-#### f. Written communication (15 points)
+#### f. Written communication 
 
 The authors communicated about the results of this test in the text above (in the Description) and in a table in the paper.  
 
 In 1-2 sentences _only_, write an updated interpretation with results of the test and effect size. Be sure to include all components of the test summary (for example, degrees of freedom, distribution, test statistic, confidence interval, etc.) that are important for understanding its structure.  
 
-#### g. Making a new figure (13 points)
+#### g. Making a new figure
 
 Plots like Figure 3b in the paper show means and whiskers (in this case, standard error), but do not show the data structure and can mask important information about the spread of the observations in each sample.  
 
@@ -353,11 +340,11 @@ Make a new figure that displays the mean and standard error (as in figure 3b) bu
   - take out the legend  
   - include a plot title and put your name as the subtitle  
 
-#### h. Caption (10 points)
+#### h. Caption
 
 Write a caption for your figure in part g. Include a data citation.
 
-## Problem 4. Cleaning, wrangling, and visualization (33 points)
+## Problem 4. Cleaning, wrangling, and visualization 
 
 ### Skills you will demonstrate
 

@@ -558,23 +558,56 @@ rats <- rnorm(n = 20, mean = 178, sd = 43)
 set.seed(1)
 mice <- rnorm(n = 20, mean = 120, sd = 20)
 
-mean(rats)
-mean(mice)
-var(rats)
-var(mice)
-var(rats)/var(mice)
-var.test(rats, mice)
+rodent_df <- cbind(
+  rats, mice
+) |> 
+  as_tibble() |> 
+  pivot_longer(cols = rats:mice,
+               names_to = "type",
+               values_to = "tail_length") |> 
+  mutate(type = case_match(
+    type,
+    "mice" ~ "Cactus mouse",
+    "rats" ~ "Agile kangaroo rat"
+  )) 
+
+options(pillar.max_dec_width = 10)
+
+rodent_df |> 
+  group_by(type) |> 
+  summarize(var = var(tail_length)) |> 
+  ungroup()
+
+options("digits" = 7)
+var.test(
+  tail_length ~ type,
+  data = rodent_df
+)
+
+
 ```
 
 ```{r}
-t.test(rats, mice, var.equal = TRUE)
-t.test(rats, mice, var.equal = FALSE)
+t.test(
+  tail_length ~ type,
+  data = rodent_df,
+  var.equal = TRUE
+)
+
+t.test(
+  tail_length ~ type,
+  data = rodent_df,
+  var.equal = FALSE
+)
 ```
 
 This is the effect size calculated using `effsize::cohen.d()`:
 
 ```{r using-function}
-cohen.d(rats, mice)
+cohen.d(
+  tail_length ~ type,
+  data = rodent_df
+)
 ```
 
 and this is the effect size calculated by hand:
@@ -612,15 +645,7 @@ The degrees of freedom from the Welch's t-test is `r t.test(rats, mice, var.equa
 Making a histogram and QQ plot for visual evaluation of normality:
 
 ```{r}
-df <- cbind(
-  rats, mice
-) |> 
-  as_tibble() |> 
-  pivot_longer(cols = rats:mice,
-               names_to = "type",
-               values_to = "tail_length") 
-
-ggplot(data = df, 
+ggplot(data = rodent_df, 
        aes(x = tail_length,
            fill = type)) +
   geom_histogram(bins = 7,
@@ -636,7 +661,7 @@ ggplot(data = df,
         strip.text = element_text(color = "#FFFFFF")) +
   labs(x = "Tail length (mm)")
 
-ggplot(data = df, 
+ggplot(data = rodent_df, 
        aes(sample = tail_length,
            color = type)) +
   geom_qq_line(color = "blue",

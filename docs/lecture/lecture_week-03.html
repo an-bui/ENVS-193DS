@@ -1061,7 +1061,7 @@ mean of x mean of y
 <span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"rats"</span> <span class="sc">~</span> <span class="st">"Agile kangaroo rat"</span></span>
 <span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>  )) </span>
 <span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">pillar.max_dec_width =</span> <span class="dv">10</span>)</span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">pillar.sigfig =</span> <span class="dv">5</span>)</span>
 <span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>rodent_df <span class="sc">|&gt;</span> </span>
 <span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(type) <span class="sc">|&gt;</span> </span>
@@ -1070,10 +1070,10 @@ mean of x mean of y
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
-  type                 var
-  &lt;chr&gt;              &lt;dbl&gt;
-1 Agile kangaroo rat 1542.
-2 Cactus mouse        334.</code></pre>
+  type                   var
+  &lt;chr&gt;                &lt;dbl&gt;
+1 Agile kangaroo rat 1542.1 
+2 Cactus mouse        333.61</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -1216,8 +1216,8 @@ d estimate: 2.036988 (large)
 <span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>type) <span class="sc">+</span></span>
 <span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
 <span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"rats"</span> <span class="ot">=</span> <span class="st">"orange"</span>,</span>
-<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mice"</span> <span class="ot">=</span> <span class="st">"darkgreen"</span></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Agile kangaroo rat"</span> <span class="ot">=</span> <span class="st">"orange"</span>,</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Cactus mouse"</span> <span class="ot">=</span> <span class="st">"darkgreen"</span></span>
 <span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
 <span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
 <span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"#FFFFFF"</span>),</span>
@@ -1241,8 +1241,8 @@ d estimate: 2.036988 (large)
 <span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
 <span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>type) <span class="sc">+</span></span>
 <span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"rats"</span> <span class="ot">=</span> <span class="st">"orange"</span>,</span>
-<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mice"</span> <span class="ot">=</span> <span class="st">"darkgreen"</span></span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Agile kangaroo rat"</span> <span class="ot">=</span> <span class="st">"orange"</span>,</span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Cactus mouse"</span> <span class="ot">=</span> <span class="st">"darkgreen"</span></span>
 <span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
 <span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
 <span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"#FFFFFF"</span>),</span>
@@ -2308,7 +2308,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb56-573"><a href="#cb56-573" aria-hidden="true" tabindex="-1"></a>    <span class="st">"rats"</span> <span class="sc">~</span> <span class="st">"Agile kangaroo rat"</span></span>
 <span id="cb56-574"><a href="#cb56-574" aria-hidden="true" tabindex="-1"></a>  )) </span>
 <span id="cb56-575"><a href="#cb56-575" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-576"><a href="#cb56-576" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">pillar.max_dec_width =</span> <span class="dv">10</span>)</span>
+<span id="cb56-576"><a href="#cb56-576" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">pillar.sigfig =</span> <span class="dv">5</span>)</span>
 <span id="cb56-577"><a href="#cb56-577" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb56-578"><a href="#cb56-578" aria-hidden="true" tabindex="-1"></a>rodent_df <span class="sc">|&gt;</span> </span>
 <span id="cb56-579"><a href="#cb56-579" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(type) <span class="sc">|&gt;</span> </span>
@@ -2390,8 +2390,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb56-663"><a href="#cb56-663" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>type) <span class="sc">+</span></span>
 <span id="cb56-664"><a href="#cb56-664" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
 <span id="cb56-665"><a href="#cb56-665" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb56-666"><a href="#cb56-666" aria-hidden="true" tabindex="-1"></a>    <span class="st">"rats"</span> <span class="ot">=</span> <span class="st">"orange"</span>,</span>
-<span id="cb56-667"><a href="#cb56-667" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mice"</span> <span class="ot">=</span> <span class="st">"darkgreen"</span></span>
+<span id="cb56-666"><a href="#cb56-666" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Agile kangaroo rat"</span> <span class="ot">=</span> <span class="st">"orange"</span>,</span>
+<span id="cb56-667"><a href="#cb56-667" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Cactus mouse"</span> <span class="ot">=</span> <span class="st">"darkgreen"</span></span>
 <span id="cb56-668"><a href="#cb56-668" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
 <span id="cb56-669"><a href="#cb56-669" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
 <span id="cb56-670"><a href="#cb56-670" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"#FFFFFF"</span>),</span>
@@ -2406,8 +2406,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb56-679"><a href="#cb56-679" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
 <span id="cb56-680"><a href="#cb56-680" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>type) <span class="sc">+</span></span>
 <span id="cb56-681"><a href="#cb56-681" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb56-682"><a href="#cb56-682" aria-hidden="true" tabindex="-1"></a>    <span class="st">"rats"</span> <span class="ot">=</span> <span class="st">"orange"</span>,</span>
-<span id="cb56-683"><a href="#cb56-683" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mice"</span> <span class="ot">=</span> <span class="st">"darkgreen"</span></span>
+<span id="cb56-682"><a href="#cb56-682" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Agile kangaroo rat"</span> <span class="ot">=</span> <span class="st">"orange"</span>,</span>
+<span id="cb56-683"><a href="#cb56-683" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Cactus mouse"</span> <span class="ot">=</span> <span class="st">"darkgreen"</span></span>
 <span id="cb56-684"><a href="#cb56-684" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
 <span id="cb56-685"><a href="#cb56-685" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
 <span id="cb56-686"><a href="#cb56-686" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"#FFFFFF"</span>),</span>

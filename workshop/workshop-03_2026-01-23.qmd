@@ -282,3 +282,51 @@ Summarize the results of the t-test in one sentence. Before you do, make sure yo
 **We found a significant difference in sugar maple stem lengths between calcium-treated (n = 120) and reference (n = 120) watersheds (Student's t-test, t(238) = 3.8, p < 0.001, $\alpha$ = 0.05).**      
 
 **END OF WORKSHOP 3**
+
+## 3. Extra stuff
+
+### Setting global options for code execution
+
+If you want _any_ messages to be hidden in your rendered Quarto document, then you can adjust the **YAML** at the top of the document. This is the section that has 3 dashes at the beginning and end (where you enter your name, the date, and your execution option).  
+
+The **YAML** controls the aesthetics of the rendered doc (or PDF, or HTML) that is created from your Quarto document. See more details [here](https://rpubs.com/drgregmartin/1266674) and [here from the Quarto user manual](https://quarto-tdg.org/yaml).  
+
+To adjust the YAML for a .qmd file for which you want all messages to be hidden, you can add the following lines to the YAML:
+
+```{r}
+#| eval: false
+
+execute:
+  message: false
+```
+
+So the complete YAML for workshop 3, for example, would look something like this:
+
+```{r}
+#| eval: false
+
+---
+title: "Week 3 workshop: sugar maples"
+author: "An Bui"
+format: docx
+execute:
+  message: false
+---
+```
+
+:::{.callout-note title="Indentations matter!" collapse="true"}
+When adjusting settings in the YAML, you need to be very careful about the indentations. The YAML code as written above will work, but YAML code written without the tab before `message` (example below) will not.  
+
+```{r}
+#| eval: false
+
+---
+title: "Week 3 workshop: sugar maples"
+author: "An Bui"
+format: docx
+execute:
+message: false
+---
+```
+
+:::

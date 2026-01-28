@@ -1,9 +1,9 @@
 ---
 title: "Week 4 figures - Lectures 7 and 8"
-date: 2025-04-21
+date: 2026-01-26
 categories: [effect size, power analysis, confidence intervals]
 citation:
-  url: https://spring-2025.envs-193ds.com/lecture/lecture_week-04.html
+  url: https://winter-2026.envs-193ds.com/lecture/lecture_week-04.html
 ---
 
 
@@ -310,10 +310,16 @@ ggplot(data = needlegrass,
 Doing a t-test:
 
 ```{r t-test}
-var.test(height_cm ~ plot_type,
-       data = needlegrass)
-t.test(height_cm ~ plot_type,
-       data = needlegrass)
+var.test(
+  height_cm ~ plot_type,
+  data = needlegrass
+)
+
+t.test(
+  height_cm ~ plot_type,
+  data = needlegrass,
+  var.equal = TRUE
+)
 
 vect <- dt(x = seq(from = -10, to = 10, by = 0.5), df = 66.334) %>% 
   enframe()
@@ -329,13 +335,18 @@ Cohen's d:
 
 ```{r cohens-d}
 # pooled SD
-cohens_d(height_cm ~ plot_type,
-       data = needlegrass)
+cohens_d(
+  height_cm ~ plot_type,
+  data = needlegrass,
+  pooled_sd = TRUE
+)
 
 # unpooled SD
-cohens_d(height_cm ~ plot_type,
-       data = needlegrass, 
-       pooled_sd = FALSE)
+cohens_d(
+  height_cm ~ plot_type,
+  data = needlegrass, 
+  pooled_sd = FALSE
+)
 
 # by hand
 needlegrass_sum <- needlegrass %>% 

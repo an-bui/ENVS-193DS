@@ -248,11 +248,110 @@ We found a large ($\eta^2$ = 0.47) difference between sites in mean crab carapac
 
 #### Figure 2. 
 
-**Figure 2. Histograms of crab carapace width.** Columns represent counts of individual crabs. Distributions of crab carapace width are represented in three panels: Zeke's Island NERR (left), Virginia Coastal Reserve LTER (center), and Cape Cod (right). Data originally from: Johnson, D. 2019. Fiddler crab body size in salt marshes from Florida to Massachusetts, USA at PIE and VCR LTER and NOAA NERR sites during summer 2016. ver 1. Environmental Data Initiative. https://doi.org/10.6073/pasta/4c27d2e778d3325d3830a5142e3839bb. Accessed via `lterdatasampler` package.
+**Figure 2. Histograms of crab carapace width.** Columns represent counts of individual crabs. Distributions of crab carapace width are represented in three panels: Zeke's Island NERR (left), Virginia Coastal Reserve LTER (center), and Cape Cod (right). Data originally from: Johnson, D. 2019. Fiddler crab body size in salt marshes from Florida to Massachusetts, USA at PIE and VCR LTER and NOAA NERR sites during summer 2016. ver 1. Environmental Data Initiative. https://doi.org/10.6073/pasta/4c27d2e778d3325d3830a5142e3839bb. Accessed via `lterdatasampler` package.  
+
+Alternative option if you have a figure made using the same dataset as a previous figure:  
+
+**Figure 2. Histograms of crab carapace widths.** Bars represent counts of crab sizes. Distributions are shown for three sites: Zeke's Island NERR (left), Virginia Coastal Reserve (center), and Cape Cod (right). Data source and access as in Figure 1. 
 
 #### Figure 3.
 
-**Figure 3. Quantile-Quantile (QQ) plots of crab carapace width.** Points represent individual observations of crab carapace width. Lines represent reference line relating theoretical quantiles (x-axis) and sample quantiles (y-axis). Panels represent different sites: Zeke's Island NERR (left), Virginia Coastal Reserve LTER (center), and Cape Cod (right). Data originally from: Johnson, D. 2019. Fiddler crab body size in salt marshes from Florida to Massachusetts, USA at PIE and VCR LTER and NOAA NERR sites during summer 2016. ver 1. Environmental Data Initiative. https://doi.org/10.6073/pasta/4c27d2e778d3325d3830a5142e3839bb. Accessed via `lterdatasampler` package.
+**Figure 3. Quantile-Quantile (QQ) plots of crab carapace width.** Points represent individual observations of crab carapace width. Lines represent reference line relating theoretical quantiles (x-axis) and sample quantiles (y-axis). Panels represent different sites: Zeke's Island NERR (left), Virginia Coastal Reserve LTER (center), and Cape Cod (right). Data originally from: Johnson, D. 2019. Fiddler crab body size in salt marshes from Florida to Massachusetts, USA at PIE and VCR LTER and NOAA NERR sites during summer 2016. ver 1. Environmental Data Initiative. https://doi.org/10.6073/pasta/4c27d2e778d3325d3830a5142e3839bb. Accessed via `lterdatasampler` package.  
+
+Alternative option if you have a figure made using the same dataset as a previous figure: 
+
+**Figure 3. Quantile-quantile (QQ) plots of crab carapace widths.** Points represent individual crab carapace width measurements. Lines represent reference quantiles of sample (y-axis) and standard normal theoretical (x-axis) distributions. Panels, data source, and access as in Figure 2.
 
 
 **END OF WORKSHOP 5**
+
+## Extra stuff
+
+### More applications of `stat_summary()`
+
+`stat_summary()` in the `ggplot2` package is a useful function to do quick summary visualizations within a plot.  
+
+In class, we used `stat_summary()` to plot mean carapace widths at each site in red (see the "Exploring the data" section above).  
+
+You can also use `stat_summary()` to visualize means and bars (representing standard deviation, standard error, confidence intervals, etc.).  
+
+For example, here is a plot using `stat_summary()` to visualize means and standard errors:
+
+```{r}
+#| label: mean and SD
+
+# base layer: ggplot
+ggplot(pie_crab_clean, # use the clean data set
+       aes(x = site_name, # x-axis
+           y = size)) + # y-axis
+  # first layer: jitter (each point is an individual crab)
+  geom_jitter(height = 0, # don't jitter points vertically
+              width = 0.15) + # narrower jitter (easier to see)
+  # second layer: point representing mean
+  stat_summary(geom = "pointrange", # geometry being plotted
+               fun.data = mean_sdl, # function to calculate mean and sd (note new argument name)
+               color = "red", # color to make it easier to see
+               size = 1) + # larger point size
+  theme_minimal() + # cleaner plot theme
+  labs(x = "Site name",
+       y = "Carapace width (mm)",
+       caption = "Mean \U00B1 standard deviation")
+
+```
+
+And standard error:
+
+```{r}
+#| label: mean and SE
+
+# base layer: ggplot
+ggplot(pie_crab_clean, # use the clean data set
+       aes(x = site_name, # x-axis
+           y = size)) + # y-axis
+  # first layer: jitter (each point is an individual crab)
+  geom_jitter(height = 0, # don't jitter points vertically
+              width = 0.15) + # narrower jitter (easier to see)
+  # second layer: point representing mean
+  stat_summary(geom = "pointrange", # geometry being plotted
+               fun.data = mean_se, # function to calculate mean and SE (note new argument name)
+               color = "red", # color to make it easier to see
+               size = 1) + # larger point size
+  theme_minimal() + # cleaner plot theme
+  labs(x = "Site name",
+       y = "Carapace width (mm)",
+       caption = "Mean \U00B1 standard error")
+
+```
+
+And a 95% confidence interval:
+
+```{r}
+#| label: mean and confidence interval
+
+# base layer: ggplot
+ggplot(pie_crab_clean, # use the clean data set
+       aes(x = site_name, # x-axis
+           y = size)) + # y-axis
+  # first layer: jitter (each point is an individual crab)
+  geom_jitter(height = 0, # don't jitter points vertically
+              width = 0.15) + # narrower jitter (easier to see)
+  # second layer: point representing mean
+  stat_summary(geom = "pointrange", # geometry being plotted
+               fun.data = mean_cl_normal, # function to calculate range for confidence interval (note new argument name)
+               color = "red", # color to make it easier to see
+               size = 1) + # larger point size
+  theme_minimal() + # cleaner plot theme
+  labs(x = "Site name",
+       y = "Carapace width (mm)",
+       caption = "Means with 95% confidence interval")
+
+```
+
+
+
+
+
+
+
+
+

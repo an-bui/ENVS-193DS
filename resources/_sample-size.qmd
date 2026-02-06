@@ -1,0 +1,52 @@
+---
+title: "Sample size"
+description: "why do we care about sample sizes?"
+categories: [extra stuff]
+---
+
+# Why try to increase sample size?
+
+Remember when we talked about power in lecture. Power is the probability of correctly rejecting the null hypothesis in favor of the alternative hypothesis.  
+
+Power increases as sample size increases. That means that as sample size increases, the probability of correctly rejecting the null hypothesis also increases.  
+
+Conceptually, you can think of this as increasing the amount of information (i.e. the number of observations) that you have in your hands to make a decision about the null hypothesis.  
+
+# Why does this matter for interpretation?
+
+```{r}
+set.seed(666)
+
+data_frame <- tibble(
+  x = rnorm(n = 100, mean = 20, sd = 0.5),
+  y = rnorm(n = 100, mean = 20.2, sd = 0.5)
+) |> 
+  pivot_longer(cols = x:y,
+               names_to = "group",
+               values_to = "value")
+
+data_frame_small <- tibble(
+  x = rnorm(n = 20, mean = 20, sd = 0.5),
+  y = rnorm(n = 20, mean = 20.2, sd = 0.5)
+) |> 
+  pivot_longer(cols = x:y,
+               names_to = "group",
+               values_to = "value")
+
+t.test(
+  value ~ group,
+  data = data_frame,
+  var.equal = TRUE
+)
+
+t.test(
+  value ~ group,
+  data = data_frame_small,
+  var.equal = TRUE
+)
+```
+
+
+
+
+

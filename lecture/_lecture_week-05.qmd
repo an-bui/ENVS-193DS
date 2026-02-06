@@ -277,17 +277,22 @@ ggplot(data = penguins,
 ### a. Mann-Whitney U
 
 ```{r wilcox-example}
-wilcox_df <- cbind(Sample1 = c(1.1, 2.4, 1.8, 0.4, 1.6), 
-                   Sample2 = c(5.4, 3.1, 2.3, 1.9, 4.2)) %>% 
+sharks <- cbind(sb = c(1.25, 1.21, 1.18, 1.14, 1.15), 
+                sd = c(1.42, 1.44, 1.45, 1.51, 1.20)) %>% 
   as_tibble() %>% 
-  pivot_longer(cols = Sample1:Sample2) %>% 
-  rename(sample = name) %>% 
-  arrange(sample)
+  pivot_longer(cols = sb:sd) %>% 
+  rename(site = name,
+         length_m = value) 
 
-wilcox_df
+wilcox.test(
+  length_m ~ site,
+  data = sharks
+)
 
-wilcox.test(value ~ sample,
-            data = wilcox_df)
+cliffs_delta(
+  length_m ~ site,
+  data = sharks
+)
 ```
 
 ### b. Wilcoxon signed-rank
@@ -344,7 +349,7 @@ rstatix::kruskal_effsize(value ~ sample,
                          data = kruskal_df)
 
 rstatix::dunn_test(value ~ sample,
-                         data = kruskal_df)
+                   data = kruskal_df)
 ```
 
 

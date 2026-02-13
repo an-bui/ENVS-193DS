@@ -1,9 +1,14 @@
 ---
 title: "Week 5 figures - Lectures 9 and 10"
-date: 2025-04-28
+date: 2026-02-03
 categories: [analysis of variance, eta squared, shapiro-wilk, levene, mann-whitney U, wilcoxon signed-rank, kruskal-wallis, cliffs delta]
 citation:
-  url: https://spring-2025.envs-193ds.com/lecture/lecture_week-05.html
+  url: https://winter-2026.envs-193ds.com/lecture/lecture_week-05.html
+engine: knitr
+knitr:
+  opts_chunk: 
+    R.options:
+      width: 120
 ---
 
 ## 0. Set up
@@ -28,6 +33,7 @@ library(palmerpenguins)
 # analysis
 library(car)
 library(effectsize)
+library(rstatix)
 ```
 
 ## 1. Math
@@ -282,7 +288,32 @@ sharks <- cbind(sb = c(1.25, 1.21, 1.18, 1.14, 1.15),
   as_tibble() %>% 
   pivot_longer(cols = sb:sd) %>% 
   rename(site = name,
-         length_m = value) 
+         length_m = value) |> 
+  mutate(site = case_match(
+    site,
+    "sb" ~ "Santa Barbara",
+    "sd" ~ "San Diego"
+  ),
+  site = fct_relevel(as_factor(site), "Santa Barbara", "San Diego"))
+
+ggplot(data = sharks,
+       aes(x = site,
+           y = length_m)) +
+  geom_boxplot(aes(fill = site),
+               outliers = FALSE,
+               width = 0.5) +
+  geom_jitter(
+    width = 0.2,
+    height = 0,
+    shape = 21
+  ) +
+  labs(x = "Site", 
+       y = "Length (m)") +
+  scale_fill_manual(values = c(
+    "San Diego" = "goldenrod",
+    "Santa Barbara" = "turquoise"
+  )) +
+  theme(legend.position = "none")
 
 wilcox.test(
   length_m ~ site,
@@ -310,6 +341,65 @@ wilcox.test(value ~ sample,
 ```
 
 ### c. Kruskal-Wallis
+
+```{r}
+sharks_monterey <- cbind(sb = c(1.25, 1.21, 1.18, 1.14, 1.15), 
+                         sd = c(1.42, 1.44, 1.45, 1.51, 1.20),
+                         mt = c(1.09, 1.08, 1.07, 1.07, 1.06)) %>% 
+  as_tibble() %>% 
+  pivot_longer(cols = sb:mt) %>% 
+  rename(site = name,
+         length_m = value) |> 
+  mutate(site = case_match(
+    site,
+    "sb" ~ "Santa Barbara",
+    "sd" ~ "San Diego",
+    "mt" ~ "Monterey"
+  ),
+  site = fct_relevel(as_factor(site), "Monterey", "Santa Barbara", "San Diego"))
+
+sharks_monterey |> 
+  group_by(site) |> 
+  summarize(median = median(length_m)) |> 
+  ungroup()
+
+kruskal.test(
+  length_m ~ site,
+  data = sharks_monterey
+)
+
+dunn_test(
+  length_m ~ site,
+  data = sharks_monterey,
+  p.adjust.method = "bonferroni"
+)
+
+kruskal_effsize(
+  length_m ~ site,
+  data = sharks_monterey
+)
+
+ggplot(data = sharks_monterey,
+       aes(x = site,
+           y = length_m)) +
+  geom_boxplot(aes(fill = site),
+               outliers = FALSE,
+               width = 0.5) +
+  geom_jitter(
+    width = 0.2,
+    height = 0,
+    shape = 21
+  ) +
+  labs(x = "Site", 
+       y = "Length (m)") +
+  scale_fill_manual(values = c(
+    "San Diego" = "goldenrod",
+    "Santa Barbara" = "turquoise",
+    "Monterey" = "tomato4"
+  )) +
+  theme(legend.position = "none")
+```
+
 
 ```{r}
 kruskal_df <- cbind(Sample1 = round(rnorm(n = 5, mean = 4, sd = 1), 1), 

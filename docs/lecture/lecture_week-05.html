@@ -227,7 +227,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">February 12, 2026</p>
+        <p class="date-modified">February 17, 2026</p>
       </div>
     </div>
       
@@ -304,7 +304,8 @@ window.Quarto = {
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># analysis</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effectsize)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dunn.test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -371,15 +372,15 @@ U_2 &amp;= \Sigma R_2 - n_2(n_2 + 1)/2 = 38 - 5(5+1)/2 = 23
 <div class="cell-output cell-output-stdout">
 <pre><code>   weight      feed
 1     222    casein
-2     404    casein
-3     216    casein
-4     181   linseed
-5     257   linseed
-6     229   linseed
-7     309   linseed
-8     318 sunflower
-9     334 sunflower
-10    340 sunflower</code></pre>
+2     390    casein
+3     168 horsebean
+4     203   linseed
+5     315  meatmeal
+6     380  meatmeal
+7     250   soybean
+8     295 sunflower
+9     340 sunflower
+10    339 sunflower</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -832,10 +833,16 @@ Kruskal-Wallis chi-squared = 11.601, df = 2, p-value = 0.003026</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal_effsize</span>(</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  length_m <span class="sc">~</span> site,</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sharks_monterey</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dunn.test</span>(</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> sharks_monterey<span class="sc">$</span>length_m,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">g =</span> sharks_monterey<span class="sc">$</span>site,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"bonferroni"</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal_effsize</span>(</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  length_m <span class="sc">~</span> site,</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sharks_monterey</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 5
@@ -906,7 +913,7 @@ Kruskal-Wallis chi-squared = 11.601, df = 2, p-value = 0.003026</code></pre>
 <pre><code># A tibble: 1 × 6
   .y.       n statistic    df       p method        
 * &lt;chr&gt; &lt;int&gt;     &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;         
-1 value    15      10.7     2 0.00485 Kruskal-Wallis</code></pre>
+1 value    15      10.6     2 0.00489 Kruskal-Wallis</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -918,7 +925,7 @@ Kruskal-Wallis chi-squared = 11.601, df = 2, p-value = 0.003026</code></pre>
     Kruskal-Wallis rank sum test
 
 data:  value by sample
-Kruskal-Wallis chi-squared = 10.659, df = 2, p-value = 0.004846</code></pre>
+Kruskal-Wallis chi-squared = 10.64, df = 2, p-value = 0.004893</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -939,7 +946,7 @@ Kruskal-Wallis chi-squared = 10.659, df = 2, p-value = 0.004846</code></pre>
 <pre><code># A tibble: 1 × 5
   .y.       n effsize method  magnitude
 * &lt;chr&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;ord&gt;    
-1 value    15   0.722 eta2[H] large    </code></pre>
+1 value    15   0.720 eta2[H] large    </code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -950,9 +957,9 @@ Kruskal-Wallis chi-squared = 10.659, df = 2, p-value = 0.004846</code></pre>
 <pre><code># A tibble: 3 × 9
   .y.   group1  group2     n1    n2 statistic       p   p.adj p.adj.signif
 * &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;       
-1 value Sample1 Sample2     5     5      1.42 0.157   0.157   ns          
-2 value Sample1 Sample3     5     5      3.26 0.00113 0.00339 **          
-3 value Sample2 Sample3     5     5      1.84 0.0658  0.132   ns          </code></pre>
+1 value Sample1 Sample2     5     5      1.84 0.0660  0.132   ns          
+2 value Sample1 Sample3     5     5      3.25 0.00114 0.00343 **          
+3 value Sample2 Sample3     5     5      1.41 0.157   0.157   ns          </code></pre>
 </div>
 </div>
 
@@ -1469,416 +1476,423 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb51-34"><a href="#cb51-34" aria-hidden="true" tabindex="-1"></a><span class="in">library(car)</span></span>
 <span id="cb51-35"><a href="#cb51-35" aria-hidden="true" tabindex="-1"></a><span class="in">library(effectsize)</span></span>
 <span id="cb51-36"><a href="#cb51-36" aria-hidden="true" tabindex="-1"></a><span class="in">library(rstatix)</span></span>
-<span id="cb51-37"><a href="#cb51-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-38"><a href="#cb51-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-39"><a href="#cb51-39" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Math</span></span>
-<span id="cb51-40"><a href="#cb51-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-41"><a href="#cb51-41" aria-hidden="true" tabindex="-1"></a><span class="fu">### a. sum of squares</span></span>
-<span id="cb51-42"><a href="#cb51-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-43"><a href="#cb51-43" aria-hidden="true" tabindex="-1"></a>Among groups:</span>
-<span id="cb51-44"><a href="#cb51-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-45"><a href="#cb51-45" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb51-46"><a href="#cb51-46" aria-hidden="true" tabindex="-1"></a>\sum^k_{i = 1}\sum^n_{j = 1}(\bar{y_i} - \bar{y})^2</span>
-<span id="cb51-47"><a href="#cb51-47" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb51-48"><a href="#cb51-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-49"><a href="#cb51-49" aria-hidden="true" tabindex="-1"></a>where k is the number of groups, i is ith group, n is the number of observations per group, j is the jth observation. $\bar{y_i}$ is the mean of group i, while $\bar{y}$ is the grand mean (of all samples pooled together).  </span>
-<span id="cb51-50"><a href="#cb51-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-51"><a href="#cb51-51" aria-hidden="true" tabindex="-1"></a>Within groups:</span>
-<span id="cb51-52"><a href="#cb51-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-53"><a href="#cb51-53" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb51-54"><a href="#cb51-54" aria-hidden="true" tabindex="-1"></a>\sum^k_{i = 1}\sum^n_{j = 1}(y_{ij} - \bar{y_i})^2</span>
-<span id="cb51-55"><a href="#cb51-55" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb51-56"><a href="#cb51-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-57"><a href="#cb51-57" aria-hidden="true" tabindex="-1"></a>where $y_{ij}$ is the jth observation in the ith group, and $\bar{y_i}$ is the mean of group i.  </span>
-<span id="cb51-58"><a href="#cb51-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-59"><a href="#cb51-59" aria-hidden="true" tabindex="-1"></a>Total sum of squares:  </span>
-<span id="cb51-60"><a href="#cb51-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-61"><a href="#cb51-61" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb51-62"><a href="#cb51-62" aria-hidden="true" tabindex="-1"></a>\sum^k_{i = 1}\sum^n_{j = 1}(y_{ij} - \bar{y})^2</span>
-<span id="cb51-63"><a href="#cb51-63" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb51-64"><a href="#cb51-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-65"><a href="#cb51-65" aria-hidden="true" tabindex="-1"></a>where $y_{ij}$ is the jth observation in the ith group, and $\bar{y}$ is the grand mean.</span>
-<span id="cb51-66"><a href="#cb51-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-67"><a href="#cb51-67" aria-hidden="true" tabindex="-1"></a><span class="fu">### b. mean squares</span></span>
-<span id="cb51-68"><a href="#cb51-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-69"><a href="#cb51-69" aria-hidden="true" tabindex="-1"></a>Among groups:</span>
-<span id="cb51-70"><a href="#cb51-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-71"><a href="#cb51-71" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb51-72"><a href="#cb51-72" aria-hidden="true" tabindex="-1"></a>\frac{SS_{among \ group}}{k - 1}</span>
-<span id="cb51-73"><a href="#cb51-73" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb51-74"><a href="#cb51-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-75"><a href="#cb51-75" aria-hidden="true" tabindex="-1"></a>Within groups:  </span>
-<span id="cb51-76"><a href="#cb51-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-77"><a href="#cb51-77" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb51-78"><a href="#cb51-78" aria-hidden="true" tabindex="-1"></a>\frac{SS_{within \ group}}{n - k}</span>
-<span id="cb51-79"><a href="#cb51-79" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb51-80"><a href="#cb51-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-81"><a href="#cb51-81" aria-hidden="true" tabindex="-1"></a><span class="fu">### c. F-ratio/F-statistic</span></span>
-<span id="cb51-82"><a href="#cb51-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-83"><a href="#cb51-83" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb51-84"><a href="#cb51-84" aria-hidden="true" tabindex="-1"></a>\frac{MS_{among \ group}}{MS_{within \ group}}</span>
-<span id="cb51-85"><a href="#cb51-85" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb51-86"><a href="#cb51-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-87"><a href="#cb51-87" aria-hidden="true" tabindex="-1"></a>Put another way, the F-ratio is the ratio of among group variance to within group variance. If the among group variance is larger than within group variance, the F-ratio is large, and therefore the probability of among group variance being equal to within group variance is small. Thus, you would reject the null hypothesis if the F-ratio is large.</span>
-<span id="cb51-88"><a href="#cb51-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-89"><a href="#cb51-89" aria-hidden="true" tabindex="-1"></a><span class="fu">### d. η squared</span></span>
-<span id="cb51-90"><a href="#cb51-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-91"><a href="#cb51-91" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb51-92"><a href="#cb51-92" aria-hidden="true" tabindex="-1"></a>\eta^2 = \frac{SS_{among \ group}}{SS_{among \ group} + SS_{within \ group}}</span>
-<span id="cb51-93"><a href="#cb51-93" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb51-94"><a href="#cb51-94" aria-hidden="true" tabindex="-1"></a><span class="fu">### e. U statistic </span></span>
-<span id="cb51-95"><a href="#cb51-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-96"><a href="#cb51-96" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb51-97"><a href="#cb51-97" aria-hidden="true" tabindex="-1"></a>\begin{align}</span>
-<span id="cb51-98"><a href="#cb51-98" aria-hidden="true" tabindex="-1"></a>U_1 &amp;= \Sigma R_1 - n_1(n_1 + 1)/2 = 17 - 5(5+1)/2 = 2 <span class="sc">\\</span></span>
-<span id="cb51-99"><a href="#cb51-99" aria-hidden="true" tabindex="-1"></a>U_2 &amp;= \Sigma R_2 - n_2(n_2 + 1)/2 = 38 - 5(5+1)/2 = 23</span>
-<span id="cb51-100"><a href="#cb51-100" aria-hidden="true" tabindex="-1"></a>\end{align}</span>
-<span id="cb51-101"><a href="#cb51-101" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb51-102"><a href="#cb51-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-103"><a href="#cb51-103" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Warm up: code for a figure</span></span>
-<span id="cb51-104"><a href="#cb51-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-105"><a href="#cb51-105" aria-hidden="true" tabindex="-1"></a><span class="in">```{r chickwts-figure}</span></span>
-<span id="cb51-106"><a href="#cb51-106" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 12</span></span>
-<span id="cb51-107"><a href="#cb51-107" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 8</span></span>
-<span id="cb51-108"><a href="#cb51-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-109"><a href="#cb51-109" aria-hidden="true" tabindex="-1"></a><span class="in"># random sample of 10 rows from data frame</span></span>
-<span id="cb51-110"><a href="#cb51-110" aria-hidden="true" tabindex="-1"></a><span class="in">sample_n(chickwts, 10) %&gt;% </span></span>
-<span id="cb51-111"><a href="#cb51-111" aria-hidden="true" tabindex="-1"></a><span class="in">  arrange(feed)</span></span>
-<span id="cb51-112"><a href="#cb51-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-113"><a href="#cb51-113" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data = chickwts,           # data frame: chickwts</span></span>
-<span id="cb51-114"><a href="#cb51-114" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = feed,              # x-axis: feed type</span></span>
-<span id="cb51-115"><a href="#cb51-115" aria-hidden="true" tabindex="-1"></a><span class="in">           y = weight,            # y-axis: chick weight</span></span>
-<span id="cb51-116"><a href="#cb51-116" aria-hidden="true" tabindex="-1"></a><span class="in">           fill = feed)) +        # fill by feed type  </span></span>
-<span id="cb51-117"><a href="#cb51-117" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_boxplot() +                # creates a boxplot</span></span>
-<span id="cb51-118"><a href="#cb51-118" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_jitter(height = 0,         # prevents jitter from moving points along y-axis</span></span>
-<span id="cb51-119"><a href="#cb51-119" aria-hidden="true" tabindex="-1"></a><span class="in">              width = 0.2) +      # narrows spread of jitter along x-axis</span></span>
-<span id="cb51-120"><a href="#cb51-120" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none") # removes legend</span></span>
-<span id="cb51-121"><a href="#cb51-121" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-122"><a href="#cb51-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-37"><a href="#cb51-37" aria-hidden="true" tabindex="-1"></a><span class="in">library(dunn.test)</span></span>
+<span id="cb51-38"><a href="#cb51-38" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-39"><a href="#cb51-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-40"><a href="#cb51-40" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Math</span></span>
+<span id="cb51-41"><a href="#cb51-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-42"><a href="#cb51-42" aria-hidden="true" tabindex="-1"></a><span class="fu">### a. sum of squares</span></span>
+<span id="cb51-43"><a href="#cb51-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-44"><a href="#cb51-44" aria-hidden="true" tabindex="-1"></a>Among groups:</span>
+<span id="cb51-45"><a href="#cb51-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-46"><a href="#cb51-46" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb51-47"><a href="#cb51-47" aria-hidden="true" tabindex="-1"></a>\sum^k_{i = 1}\sum^n_{j = 1}(\bar{y_i} - \bar{y})^2</span>
+<span id="cb51-48"><a href="#cb51-48" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb51-49"><a href="#cb51-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-50"><a href="#cb51-50" aria-hidden="true" tabindex="-1"></a>where k is the number of groups, i is ith group, n is the number of observations per group, j is the jth observation. $\bar{y_i}$ is the mean of group i, while $\bar{y}$ is the grand mean (of all samples pooled together).  </span>
+<span id="cb51-51"><a href="#cb51-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-52"><a href="#cb51-52" aria-hidden="true" tabindex="-1"></a>Within groups:</span>
+<span id="cb51-53"><a href="#cb51-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-54"><a href="#cb51-54" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb51-55"><a href="#cb51-55" aria-hidden="true" tabindex="-1"></a>\sum^k_{i = 1}\sum^n_{j = 1}(y_{ij} - \bar{y_i})^2</span>
+<span id="cb51-56"><a href="#cb51-56" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb51-57"><a href="#cb51-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-58"><a href="#cb51-58" aria-hidden="true" tabindex="-1"></a>where $y_{ij}$ is the jth observation in the ith group, and $\bar{y_i}$ is the mean of group i.  </span>
+<span id="cb51-59"><a href="#cb51-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-60"><a href="#cb51-60" aria-hidden="true" tabindex="-1"></a>Total sum of squares:  </span>
+<span id="cb51-61"><a href="#cb51-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-62"><a href="#cb51-62" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb51-63"><a href="#cb51-63" aria-hidden="true" tabindex="-1"></a>\sum^k_{i = 1}\sum^n_{j = 1}(y_{ij} - \bar{y})^2</span>
+<span id="cb51-64"><a href="#cb51-64" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb51-65"><a href="#cb51-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-66"><a href="#cb51-66" aria-hidden="true" tabindex="-1"></a>where $y_{ij}$ is the jth observation in the ith group, and $\bar{y}$ is the grand mean.</span>
+<span id="cb51-67"><a href="#cb51-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-68"><a href="#cb51-68" aria-hidden="true" tabindex="-1"></a><span class="fu">### b. mean squares</span></span>
+<span id="cb51-69"><a href="#cb51-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-70"><a href="#cb51-70" aria-hidden="true" tabindex="-1"></a>Among groups:</span>
+<span id="cb51-71"><a href="#cb51-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-72"><a href="#cb51-72" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb51-73"><a href="#cb51-73" aria-hidden="true" tabindex="-1"></a>\frac{SS_{among \ group}}{k - 1}</span>
+<span id="cb51-74"><a href="#cb51-74" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb51-75"><a href="#cb51-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-76"><a href="#cb51-76" aria-hidden="true" tabindex="-1"></a>Within groups:  </span>
+<span id="cb51-77"><a href="#cb51-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-78"><a href="#cb51-78" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb51-79"><a href="#cb51-79" aria-hidden="true" tabindex="-1"></a>\frac{SS_{within \ group}}{n - k}</span>
+<span id="cb51-80"><a href="#cb51-80" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb51-81"><a href="#cb51-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-82"><a href="#cb51-82" aria-hidden="true" tabindex="-1"></a><span class="fu">### c. F-ratio/F-statistic</span></span>
+<span id="cb51-83"><a href="#cb51-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-84"><a href="#cb51-84" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb51-85"><a href="#cb51-85" aria-hidden="true" tabindex="-1"></a>\frac{MS_{among \ group}}{MS_{within \ group}}</span>
+<span id="cb51-86"><a href="#cb51-86" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb51-87"><a href="#cb51-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-88"><a href="#cb51-88" aria-hidden="true" tabindex="-1"></a>Put another way, the F-ratio is the ratio of among group variance to within group variance. If the among group variance is larger than within group variance, the F-ratio is large, and therefore the probability of among group variance being equal to within group variance is small. Thus, you would reject the null hypothesis if the F-ratio is large.</span>
+<span id="cb51-89"><a href="#cb51-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-90"><a href="#cb51-90" aria-hidden="true" tabindex="-1"></a><span class="fu">### d. η squared</span></span>
+<span id="cb51-91"><a href="#cb51-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-92"><a href="#cb51-92" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb51-93"><a href="#cb51-93" aria-hidden="true" tabindex="-1"></a>\eta^2 = \frac{SS_{among \ group}}{SS_{among \ group} + SS_{within \ group}}</span>
+<span id="cb51-94"><a href="#cb51-94" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb51-95"><a href="#cb51-95" aria-hidden="true" tabindex="-1"></a><span class="fu">### e. U statistic </span></span>
+<span id="cb51-96"><a href="#cb51-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-97"><a href="#cb51-97" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb51-98"><a href="#cb51-98" aria-hidden="true" tabindex="-1"></a>\begin{align}</span>
+<span id="cb51-99"><a href="#cb51-99" aria-hidden="true" tabindex="-1"></a>U_1 &amp;= \Sigma R_1 - n_1(n_1 + 1)/2 = 17 - 5(5+1)/2 = 2 <span class="sc">\\</span></span>
+<span id="cb51-100"><a href="#cb51-100" aria-hidden="true" tabindex="-1"></a>U_2 &amp;= \Sigma R_2 - n_2(n_2 + 1)/2 = 38 - 5(5+1)/2 = 23</span>
+<span id="cb51-101"><a href="#cb51-101" aria-hidden="true" tabindex="-1"></a>\end{align}</span>
+<span id="cb51-102"><a href="#cb51-102" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb51-103"><a href="#cb51-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-104"><a href="#cb51-104" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Warm up: code for a figure</span></span>
+<span id="cb51-105"><a href="#cb51-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-106"><a href="#cb51-106" aria-hidden="true" tabindex="-1"></a><span class="in">```{r chickwts-figure}</span></span>
+<span id="cb51-107"><a href="#cb51-107" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 12</span></span>
+<span id="cb51-108"><a href="#cb51-108" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 8</span></span>
+<span id="cb51-109"><a href="#cb51-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-110"><a href="#cb51-110" aria-hidden="true" tabindex="-1"></a><span class="in"># random sample of 10 rows from data frame</span></span>
+<span id="cb51-111"><a href="#cb51-111" aria-hidden="true" tabindex="-1"></a><span class="in">sample_n(chickwts, 10) %&gt;% </span></span>
+<span id="cb51-112"><a href="#cb51-112" aria-hidden="true" tabindex="-1"></a><span class="in">  arrange(feed)</span></span>
+<span id="cb51-113"><a href="#cb51-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-114"><a href="#cb51-114" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data = chickwts,           # data frame: chickwts</span></span>
+<span id="cb51-115"><a href="#cb51-115" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = feed,              # x-axis: feed type</span></span>
+<span id="cb51-116"><a href="#cb51-116" aria-hidden="true" tabindex="-1"></a><span class="in">           y = weight,            # y-axis: chick weight</span></span>
+<span id="cb51-117"><a href="#cb51-117" aria-hidden="true" tabindex="-1"></a><span class="in">           fill = feed)) +        # fill by feed type  </span></span>
+<span id="cb51-118"><a href="#cb51-118" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_boxplot() +                # creates a boxplot</span></span>
+<span id="cb51-119"><a href="#cb51-119" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_jitter(height = 0,         # prevents jitter from moving points along y-axis</span></span>
+<span id="cb51-120"><a href="#cb51-120" aria-hidden="true" tabindex="-1"></a><span class="in">              width = 0.2) +      # narrows spread of jitter along x-axis</span></span>
+<span id="cb51-121"><a href="#cb51-121" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none") # removes legend</span></span>
+<span id="cb51-122"><a href="#cb51-122" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb51-123"><a href="#cb51-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-124"><a href="#cb51-124" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Analysis of variance</span></span>
-<span id="cb51-125"><a href="#cb51-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-126"><a href="#cb51-126" aria-hidden="true" tabindex="-1"></a>Central question: How does bill length differ between penguin species?</span>
-<span id="cb51-127"><a href="#cb51-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-128"><a href="#cb51-128" aria-hidden="true" tabindex="-1"></a><span class="fu">### a. Exploratory data visualization</span></span>
-<span id="cb51-129"><a href="#cb51-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-130"><a href="#cb51-130" aria-hidden="true" tabindex="-1"></a><span class="in">```{r penguins-explore}</span></span>
-<span id="cb51-131"><a href="#cb51-131" aria-hidden="true" tabindex="-1"></a><span class="in">penguins_jitter &lt;- ggplot(data = penguins,</span></span>
-<span id="cb51-132"><a href="#cb51-132" aria-hidden="true" tabindex="-1"></a><span class="in">                          aes(x = species,</span></span>
-<span id="cb51-133"><a href="#cb51-133" aria-hidden="true" tabindex="-1"></a><span class="in">                              y = bill_length_mm,</span></span>
-<span id="cb51-134"><a href="#cb51-134" aria-hidden="true" tabindex="-1"></a><span class="in">                              color = species)) +</span></span>
-<span id="cb51-135"><a href="#cb51-135" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_jitter(width = 0.2,</span></span>
-<span id="cb51-136"><a href="#cb51-136" aria-hidden="true" tabindex="-1"></a><span class="in">              height = 0,</span></span>
-<span id="cb51-137"><a href="#cb51-137" aria-hidden="true" tabindex="-1"></a><span class="in">              shape = 21) +</span></span>
-<span id="cb51-138"><a href="#cb51-138" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(values = c("#209c90", "#018ca9", "#27c839")) +</span></span>
-<span id="cb51-139"><a href="#cb51-139" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Species",</span></span>
-<span id="cb51-140"><a href="#cb51-140" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Bill length (mm)") +</span></span>
-<span id="cb51-141"><a href="#cb51-141" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none")</span></span>
-<span id="cb51-142"><a href="#cb51-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-143"><a href="#cb51-143" aria-hidden="true" tabindex="-1"></a><span class="in">penguins_jitter</span></span>
-<span id="cb51-144"><a href="#cb51-144" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-145"><a href="#cb51-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-146"><a href="#cb51-146" aria-hidden="true" tabindex="-1"></a><span class="fu">### b. histogram and qq plots</span></span>
-<span id="cb51-147"><a href="#cb51-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-148"><a href="#cb51-148" aria-hidden="true" tabindex="-1"></a><span class="in">```{r penguins-hist-and-qq}</span></span>
-<span id="cb51-149"><a href="#cb51-149" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 12</span></span>
-<span id="cb51-150"><a href="#cb51-150" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 14</span></span>
-<span id="cb51-151"><a href="#cb51-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-152"><a href="#cb51-152" aria-hidden="true" tabindex="-1"></a><span class="in">hist &lt;- ggplot(data = penguins,</span></span>
-<span id="cb51-153"><a href="#cb51-153" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = bill_length_mm,</span></span>
-<span id="cb51-154"><a href="#cb51-154" aria-hidden="true" tabindex="-1"></a><span class="in">           fill = species)) +</span></span>
-<span id="cb51-155"><a href="#cb51-155" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_histogram(bins = 14,</span></span>
-<span id="cb51-156"><a href="#cb51-156" aria-hidden="true" tabindex="-1"></a><span class="in">                 color = "black") +</span></span>
-<span id="cb51-157"><a href="#cb51-157" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_manual(values = c("#209c90", "#018ca9", "#27c839")) +</span></span>
-<span id="cb51-158"><a href="#cb51-158" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_y_continuous(expand = c(0, 0)) +</span></span>
-<span id="cb51-159"><a href="#cb51-159" aria-hidden="true" tabindex="-1"></a><span class="in">  facet_wrap(~ species, scales = "free", ncol = 1) +</span></span>
-<span id="cb51-160"><a href="#cb51-160" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Bill length (mm)",</span></span>
-<span id="cb51-161"><a href="#cb51-161" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Count") +</span></span>
-<span id="cb51-162"><a href="#cb51-162" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none",</span></span>
-<span id="cb51-163"><a href="#cb51-163" aria-hidden="true" tabindex="-1"></a><span class="in">        strip.background = element_rect(color = "white"),</span></span>
-<span id="cb51-164"><a href="#cb51-164" aria-hidden="true" tabindex="-1"></a><span class="in">        strip.text = element_text(size = 20))</span></span>
-<span id="cb51-165"><a href="#cb51-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-166"><a href="#cb51-166" aria-hidden="true" tabindex="-1"></a><span class="in">qq &lt;- ggplot(data = penguins,</span></span>
-<span id="cb51-167"><a href="#cb51-167" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(sample = bill_length_mm)) +</span></span>
-<span id="cb51-168"><a href="#cb51-168" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_qq_line() +</span></span>
-<span id="cb51-169"><a href="#cb51-169" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_qq(aes(color = species)) +</span></span>
-<span id="cb51-170"><a href="#cb51-170" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(values = c("#209c90", "#018ca9", "#27c839")) +</span></span>
-<span id="cb51-171"><a href="#cb51-171" aria-hidden="true" tabindex="-1"></a><span class="in">  facet_wrap(~ species, scales = "free", ncol = 1) +</span></span>
-<span id="cb51-172"><a href="#cb51-172" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Theoretical quantile",</span></span>
-<span id="cb51-173"><a href="#cb51-173" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Value") +</span></span>
-<span id="cb51-174"><a href="#cb51-174" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none",</span></span>
-<span id="cb51-175"><a href="#cb51-175" aria-hidden="true" tabindex="-1"></a><span class="in">        strip.background = element_rect(color = "white"),</span></span>
-<span id="cb51-176"><a href="#cb51-176" aria-hidden="true" tabindex="-1"></a><span class="in">        strip.text = element_text(size = 20))</span></span>
-<span id="cb51-177"><a href="#cb51-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-178"><a href="#cb51-178" aria-hidden="true" tabindex="-1"></a><span class="in">hist + qq</span></span>
-<span id="cb51-179"><a href="#cb51-179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-180"><a href="#cb51-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-181"><a href="#cb51-181" aria-hidden="true" tabindex="-1"></a><span class="fu">### c. Shapiro-Wilk normality test</span></span>
-<span id="cb51-182"><a href="#cb51-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-183"><a href="#cb51-183" aria-hidden="true" tabindex="-1"></a>General: Is the response variable normally distributed?  </span>
-<span id="cb51-184"><a href="#cb51-184" aria-hidden="true" tabindex="-1"></a>Example: Is bill length normally distributed?</span>
-<span id="cb51-185"><a href="#cb51-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-186"><a href="#cb51-186" aria-hidden="true" tabindex="-1"></a><span class="in">```{r penguins-shapiro-wilk}</span></span>
-<span id="cb51-187"><a href="#cb51-187" aria-hidden="true" tabindex="-1"></a><span class="in"># first, wrangle</span></span>
-<span id="cb51-188"><a href="#cb51-188" aria-hidden="true" tabindex="-1"></a><span class="in">adelie &lt;- penguins %&gt;% </span></span>
-<span id="cb51-189"><a href="#cb51-189" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(species == "Adelie") %&gt;% </span></span>
-<span id="cb51-190"><a href="#cb51-190" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(bill_length_mm)</span></span>
-<span id="cb51-191"><a href="#cb51-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-192"><a href="#cb51-192" aria-hidden="true" tabindex="-1"></a><span class="in">chinstrap &lt;- penguins %&gt;% </span></span>
-<span id="cb51-193"><a href="#cb51-193" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(species == "Chinstrap") %&gt;% </span></span>
-<span id="cb51-194"><a href="#cb51-194" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(bill_length_mm)</span></span>
-<span id="cb51-195"><a href="#cb51-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-196"><a href="#cb51-196" aria-hidden="true" tabindex="-1"></a><span class="in">gentoo &lt;- penguins %&gt;% </span></span>
-<span id="cb51-197"><a href="#cb51-197" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(species == "Gentoo") %&gt;% </span></span>
-<span id="cb51-198"><a href="#cb51-198" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(bill_length_mm)</span></span>
-<span id="cb51-199"><a href="#cb51-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-200"><a href="#cb51-200" aria-hidden="true" tabindex="-1"></a><span class="in"># then, do the shapiro-wilk test</span></span>
-<span id="cb51-201"><a href="#cb51-201" aria-hidden="true" tabindex="-1"></a><span class="in">shapiro.test(adelie)</span></span>
-<span id="cb51-202"><a href="#cb51-202" aria-hidden="true" tabindex="-1"></a><span class="in">shapiro.test(chinstrap)</span></span>
-<span id="cb51-203"><a href="#cb51-203" aria-hidden="true" tabindex="-1"></a><span class="in">shapiro.test(gentoo)</span></span>
-<span id="cb51-204"><a href="#cb51-204" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-205"><a href="#cb51-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-206"><a href="#cb51-206" aria-hidden="true" tabindex="-1"></a><span class="fu">### d. Levene test of variances</span></span>
-<span id="cb51-207"><a href="#cb51-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-208"><a href="#cb51-208" aria-hidden="true" tabindex="-1"></a>General: Are the group variances equal?  </span>
-<span id="cb51-209"><a href="#cb51-209" aria-hidden="true" tabindex="-1"></a>Example: Are the species variances equal?</span>
-<span id="cb51-210"><a href="#cb51-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-211"><a href="#cb51-211" aria-hidden="true" tabindex="-1"></a><span class="in">```{r penguins-levene}</span></span>
-<span id="cb51-212"><a href="#cb51-212" aria-hidden="true" tabindex="-1"></a><span class="in">leveneTest(bill_length_mm ~ species,</span></span>
-<span id="cb51-213"><a href="#cb51-213" aria-hidden="true" tabindex="-1"></a><span class="in">           data = penguins)</span></span>
-<span id="cb51-214"><a href="#cb51-214" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-215"><a href="#cb51-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-216"><a href="#cb51-216" aria-hidden="true" tabindex="-1"></a><span class="in">```{r penguins-var-calc}</span></span>
-<span id="cb51-217"><a href="#cb51-217" aria-hidden="true" tabindex="-1"></a><span class="in">penguins |&gt; </span></span>
-<span id="cb51-218"><a href="#cb51-218" aria-hidden="true" tabindex="-1"></a><span class="in">  drop_na(bill_length_mm) |&gt; </span></span>
-<span id="cb51-219"><a href="#cb51-219" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(species) |&gt; </span></span>
-<span id="cb51-220"><a href="#cb51-220" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(variance = var(bill_length_mm, na.rm = TRUE),</span></span>
-<span id="cb51-221"><a href="#cb51-221" aria-hidden="true" tabindex="-1"></a><span class="in">            n = length(bill_length_mm)) </span></span>
-<span id="cb51-222"><a href="#cb51-222" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-223"><a href="#cb51-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-124"><a href="#cb51-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-125"><a href="#cb51-125" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Analysis of variance</span></span>
+<span id="cb51-126"><a href="#cb51-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-127"><a href="#cb51-127" aria-hidden="true" tabindex="-1"></a>Central question: How does bill length differ between penguin species?</span>
+<span id="cb51-128"><a href="#cb51-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-129"><a href="#cb51-129" aria-hidden="true" tabindex="-1"></a><span class="fu">### a. Exploratory data visualization</span></span>
+<span id="cb51-130"><a href="#cb51-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-131"><a href="#cb51-131" aria-hidden="true" tabindex="-1"></a><span class="in">```{r penguins-explore}</span></span>
+<span id="cb51-132"><a href="#cb51-132" aria-hidden="true" tabindex="-1"></a><span class="in">penguins_jitter &lt;- ggplot(data = penguins,</span></span>
+<span id="cb51-133"><a href="#cb51-133" aria-hidden="true" tabindex="-1"></a><span class="in">                          aes(x = species,</span></span>
+<span id="cb51-134"><a href="#cb51-134" aria-hidden="true" tabindex="-1"></a><span class="in">                              y = bill_length_mm,</span></span>
+<span id="cb51-135"><a href="#cb51-135" aria-hidden="true" tabindex="-1"></a><span class="in">                              color = species)) +</span></span>
+<span id="cb51-136"><a href="#cb51-136" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_jitter(width = 0.2,</span></span>
+<span id="cb51-137"><a href="#cb51-137" aria-hidden="true" tabindex="-1"></a><span class="in">              height = 0,</span></span>
+<span id="cb51-138"><a href="#cb51-138" aria-hidden="true" tabindex="-1"></a><span class="in">              shape = 21) +</span></span>
+<span id="cb51-139"><a href="#cb51-139" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(values = c("#209c90", "#018ca9", "#27c839")) +</span></span>
+<span id="cb51-140"><a href="#cb51-140" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Species",</span></span>
+<span id="cb51-141"><a href="#cb51-141" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Bill length (mm)") +</span></span>
+<span id="cb51-142"><a href="#cb51-142" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none")</span></span>
+<span id="cb51-143"><a href="#cb51-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-144"><a href="#cb51-144" aria-hidden="true" tabindex="-1"></a><span class="in">penguins_jitter</span></span>
+<span id="cb51-145"><a href="#cb51-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-146"><a href="#cb51-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-147"><a href="#cb51-147" aria-hidden="true" tabindex="-1"></a><span class="fu">### b. histogram and qq plots</span></span>
+<span id="cb51-148"><a href="#cb51-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-149"><a href="#cb51-149" aria-hidden="true" tabindex="-1"></a><span class="in">```{r penguins-hist-and-qq}</span></span>
+<span id="cb51-150"><a href="#cb51-150" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 12</span></span>
+<span id="cb51-151"><a href="#cb51-151" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 14</span></span>
+<span id="cb51-152"><a href="#cb51-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-153"><a href="#cb51-153" aria-hidden="true" tabindex="-1"></a><span class="in">hist &lt;- ggplot(data = penguins,</span></span>
+<span id="cb51-154"><a href="#cb51-154" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = bill_length_mm,</span></span>
+<span id="cb51-155"><a href="#cb51-155" aria-hidden="true" tabindex="-1"></a><span class="in">           fill = species)) +</span></span>
+<span id="cb51-156"><a href="#cb51-156" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_histogram(bins = 14,</span></span>
+<span id="cb51-157"><a href="#cb51-157" aria-hidden="true" tabindex="-1"></a><span class="in">                 color = "black") +</span></span>
+<span id="cb51-158"><a href="#cb51-158" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_manual(values = c("#209c90", "#018ca9", "#27c839")) +</span></span>
+<span id="cb51-159"><a href="#cb51-159" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_y_continuous(expand = c(0, 0)) +</span></span>
+<span id="cb51-160"><a href="#cb51-160" aria-hidden="true" tabindex="-1"></a><span class="in">  facet_wrap(~ species, scales = "free", ncol = 1) +</span></span>
+<span id="cb51-161"><a href="#cb51-161" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Bill length (mm)",</span></span>
+<span id="cb51-162"><a href="#cb51-162" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Count") +</span></span>
+<span id="cb51-163"><a href="#cb51-163" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none",</span></span>
+<span id="cb51-164"><a href="#cb51-164" aria-hidden="true" tabindex="-1"></a><span class="in">        strip.background = element_rect(color = "white"),</span></span>
+<span id="cb51-165"><a href="#cb51-165" aria-hidden="true" tabindex="-1"></a><span class="in">        strip.text = element_text(size = 20))</span></span>
+<span id="cb51-166"><a href="#cb51-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-167"><a href="#cb51-167" aria-hidden="true" tabindex="-1"></a><span class="in">qq &lt;- ggplot(data = penguins,</span></span>
+<span id="cb51-168"><a href="#cb51-168" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(sample = bill_length_mm)) +</span></span>
+<span id="cb51-169"><a href="#cb51-169" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_qq_line() +</span></span>
+<span id="cb51-170"><a href="#cb51-170" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_qq(aes(color = species)) +</span></span>
+<span id="cb51-171"><a href="#cb51-171" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(values = c("#209c90", "#018ca9", "#27c839")) +</span></span>
+<span id="cb51-172"><a href="#cb51-172" aria-hidden="true" tabindex="-1"></a><span class="in">  facet_wrap(~ species, scales = "free", ncol = 1) +</span></span>
+<span id="cb51-173"><a href="#cb51-173" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Theoretical quantile",</span></span>
+<span id="cb51-174"><a href="#cb51-174" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Value") +</span></span>
+<span id="cb51-175"><a href="#cb51-175" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none",</span></span>
+<span id="cb51-176"><a href="#cb51-176" aria-hidden="true" tabindex="-1"></a><span class="in">        strip.background = element_rect(color = "white"),</span></span>
+<span id="cb51-177"><a href="#cb51-177" aria-hidden="true" tabindex="-1"></a><span class="in">        strip.text = element_text(size = 20))</span></span>
+<span id="cb51-178"><a href="#cb51-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-179"><a href="#cb51-179" aria-hidden="true" tabindex="-1"></a><span class="in">hist + qq</span></span>
+<span id="cb51-180"><a href="#cb51-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-181"><a href="#cb51-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-182"><a href="#cb51-182" aria-hidden="true" tabindex="-1"></a><span class="fu">### c. Shapiro-Wilk normality test</span></span>
+<span id="cb51-183"><a href="#cb51-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-184"><a href="#cb51-184" aria-hidden="true" tabindex="-1"></a>General: Is the response variable normally distributed?  </span>
+<span id="cb51-185"><a href="#cb51-185" aria-hidden="true" tabindex="-1"></a>Example: Is bill length normally distributed?</span>
+<span id="cb51-186"><a href="#cb51-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-187"><a href="#cb51-187" aria-hidden="true" tabindex="-1"></a><span class="in">```{r penguins-shapiro-wilk}</span></span>
+<span id="cb51-188"><a href="#cb51-188" aria-hidden="true" tabindex="-1"></a><span class="in"># first, wrangle</span></span>
+<span id="cb51-189"><a href="#cb51-189" aria-hidden="true" tabindex="-1"></a><span class="in">adelie &lt;- penguins %&gt;% </span></span>
+<span id="cb51-190"><a href="#cb51-190" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(species == "Adelie") %&gt;% </span></span>
+<span id="cb51-191"><a href="#cb51-191" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(bill_length_mm)</span></span>
+<span id="cb51-192"><a href="#cb51-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-193"><a href="#cb51-193" aria-hidden="true" tabindex="-1"></a><span class="in">chinstrap &lt;- penguins %&gt;% </span></span>
+<span id="cb51-194"><a href="#cb51-194" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(species == "Chinstrap") %&gt;% </span></span>
+<span id="cb51-195"><a href="#cb51-195" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(bill_length_mm)</span></span>
+<span id="cb51-196"><a href="#cb51-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-197"><a href="#cb51-197" aria-hidden="true" tabindex="-1"></a><span class="in">gentoo &lt;- penguins %&gt;% </span></span>
+<span id="cb51-198"><a href="#cb51-198" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(species == "Gentoo") %&gt;% </span></span>
+<span id="cb51-199"><a href="#cb51-199" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(bill_length_mm)</span></span>
+<span id="cb51-200"><a href="#cb51-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-201"><a href="#cb51-201" aria-hidden="true" tabindex="-1"></a><span class="in"># then, do the shapiro-wilk test</span></span>
+<span id="cb51-202"><a href="#cb51-202" aria-hidden="true" tabindex="-1"></a><span class="in">shapiro.test(adelie)</span></span>
+<span id="cb51-203"><a href="#cb51-203" aria-hidden="true" tabindex="-1"></a><span class="in">shapiro.test(chinstrap)</span></span>
+<span id="cb51-204"><a href="#cb51-204" aria-hidden="true" tabindex="-1"></a><span class="in">shapiro.test(gentoo)</span></span>
+<span id="cb51-205"><a href="#cb51-205" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-206"><a href="#cb51-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-207"><a href="#cb51-207" aria-hidden="true" tabindex="-1"></a><span class="fu">### d. Levene test of variances</span></span>
+<span id="cb51-208"><a href="#cb51-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-209"><a href="#cb51-209" aria-hidden="true" tabindex="-1"></a>General: Are the group variances equal?  </span>
+<span id="cb51-210"><a href="#cb51-210" aria-hidden="true" tabindex="-1"></a>Example: Are the species variances equal?</span>
+<span id="cb51-211"><a href="#cb51-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-212"><a href="#cb51-212" aria-hidden="true" tabindex="-1"></a><span class="in">```{r penguins-levene}</span></span>
+<span id="cb51-213"><a href="#cb51-213" aria-hidden="true" tabindex="-1"></a><span class="in">leveneTest(bill_length_mm ~ species,</span></span>
+<span id="cb51-214"><a href="#cb51-214" aria-hidden="true" tabindex="-1"></a><span class="in">           data = penguins)</span></span>
+<span id="cb51-215"><a href="#cb51-215" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-216"><a href="#cb51-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-217"><a href="#cb51-217" aria-hidden="true" tabindex="-1"></a><span class="in">```{r penguins-var-calc}</span></span>
+<span id="cb51-218"><a href="#cb51-218" aria-hidden="true" tabindex="-1"></a><span class="in">penguins |&gt; </span></span>
+<span id="cb51-219"><a href="#cb51-219" aria-hidden="true" tabindex="-1"></a><span class="in">  drop_na(bill_length_mm) |&gt; </span></span>
+<span id="cb51-220"><a href="#cb51-220" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(species) |&gt; </span></span>
+<span id="cb51-221"><a href="#cb51-221" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(variance = var(bill_length_mm, na.rm = TRUE),</span></span>
+<span id="cb51-222"><a href="#cb51-222" aria-hidden="true" tabindex="-1"></a><span class="in">            n = length(bill_length_mm)) </span></span>
+<span id="cb51-223"><a href="#cb51-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb51-224"><a href="#cb51-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-225"><a href="#cb51-225" aria-hidden="true" tabindex="-1"></a><span class="fu">### e. analysis of variance</span></span>
-<span id="cb51-226"><a href="#cb51-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-227"><a href="#cb51-227" aria-hidden="true" tabindex="-1"></a><span class="in">```{r penguins-anova}</span></span>
-<span id="cb51-228"><a href="#cb51-228" aria-hidden="true" tabindex="-1"></a><span class="in"># do the actual test</span></span>
-<span id="cb51-229"><a href="#cb51-229" aria-hidden="true" tabindex="-1"></a><span class="in"># model object stored as `penguins_anova`</span></span>
-<span id="cb51-230"><a href="#cb51-230" aria-hidden="true" tabindex="-1"></a><span class="in">penguins_anova &lt;- aov(bill_length_mm ~ species,</span></span>
-<span id="cb51-231"><a href="#cb51-231" aria-hidden="true" tabindex="-1"></a><span class="in">                      data = penguins)</span></span>
-<span id="cb51-232"><a href="#cb51-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-233"><a href="#cb51-233" aria-hidden="true" tabindex="-1"></a><span class="in"># output of the test</span></span>
-<span id="cb51-234"><a href="#cb51-234" aria-hidden="true" tabindex="-1"></a><span class="in">penguins_anova</span></span>
-<span id="cb51-235"><a href="#cb51-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-236"><a href="#cb51-236" aria-hidden="true" tabindex="-1"></a><span class="in"># more information</span></span>
-<span id="cb51-237"><a href="#cb51-237" aria-hidden="true" tabindex="-1"></a><span class="in">summary(penguins_anova)</span></span>
-<span id="cb51-238"><a href="#cb51-238" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-239"><a href="#cb51-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-240"><a href="#cb51-240" aria-hidden="true" tabindex="-1"></a><span class="fu">### f. post hoc test</span></span>
-<span id="cb51-241"><a href="#cb51-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-242"><a href="#cb51-242" aria-hidden="true" tabindex="-1"></a>Which group comparisons are different?</span>
-<span id="cb51-243"><a href="#cb51-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-244"><a href="#cb51-244" aria-hidden="true" tabindex="-1"></a><span class="in">```{r penguins-tukey-hsd}</span></span>
-<span id="cb51-245"><a href="#cb51-245" aria-hidden="true" tabindex="-1"></a><span class="in">TukeyHSD(penguins_anova)</span></span>
-<span id="cb51-246"><a href="#cb51-246" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-247"><a href="#cb51-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-248"><a href="#cb51-248" aria-hidden="true" tabindex="-1"></a><span class="fu">### g. effect size</span></span>
-<span id="cb51-249"><a href="#cb51-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-250"><a href="#cb51-250" aria-hidden="true" tabindex="-1"></a><span class="in">```{r penguins-eta-squared}</span></span>
-<span id="cb51-251"><a href="#cb51-251" aria-hidden="true" tabindex="-1"></a><span class="in">eta_squared(penguins_anova)</span></span>
-<span id="cb51-252"><a href="#cb51-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-253"><a href="#cb51-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-254"><a href="#cb51-254" aria-hidden="true" tabindex="-1"></a><span class="fu">### h. example of writing</span></span>
-<span id="cb51-255"><a href="#cb51-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-256"><a href="#cb51-256" aria-hidden="true" tabindex="-1"></a>Without the stats: Our results suggest a difference in bill length between species, with a large effect of species. Species differed in bill length, and pairwise comparisons between species showed that all three species differed from each other. Generally, Adelie penguins tend to have shorter bills than Chinstrap and Gentoo penguins. Gentoo penguins tend to have shorter bills than  Chinstrap penguins.</span>
-<span id="cb51-257"><a href="#cb51-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-258"><a href="#cb51-258" aria-hidden="true" tabindex="-1"></a>With the stats: Our results suggest a difference in bill length between species, with a large ($\eta^2$ = 0.71) effect of species. Species differed in bill length (one-way ANOVA, F(2, 339) = 410.6, p &lt; 0.001, $\alpha$ = 0.05), and pairwise comparisons between species showed that all three species differed from each other. Generally, Adelie penguins tend to have 10.0 mm shorter bills than Chinstrap (Tukey HSD, p &lt; 0.001, 95% confidence interval: <span class="co">[</span><span class="ot">9.0, 11.1</span><span class="co">]</span> mm) penguins and 8.7 mm shorter than Gentoo (Tukey HSD, p &lt; 0.001, 95% confidence interval: <span class="co">[</span><span class="ot">7.9, 9.6</span><span class="co">]</span> mm) penguins. Gentoo penguins tend to have 1.3 mm shorter bills than Chinstrap penguins (Tukey HSD, p = 0.008, 95% confidence interval: <span class="co">[</span><span class="ot">0.3, 2.4</span><span class="co">]</span> mm).  </span>
-<span id="cb51-259"><a href="#cb51-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-260"><a href="#cb51-260" aria-hidden="true" tabindex="-1"></a><span class="fu">### i. a "finalized" figure</span></span>
-<span id="cb51-261"><a href="#cb51-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-262"><a href="#cb51-262" aria-hidden="true" tabindex="-1"></a><span class="in">```{r penguins-final-fig}</span></span>
-<span id="cb51-263"><a href="#cb51-263" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data = penguins,</span></span>
-<span id="cb51-264"><a href="#cb51-264" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = species,</span></span>
-<span id="cb51-265"><a href="#cb51-265" aria-hidden="true" tabindex="-1"></a><span class="in">           y = bill_length_mm,</span></span>
-<span id="cb51-266"><a href="#cb51-266" aria-hidden="true" tabindex="-1"></a><span class="in">           color = species)) +</span></span>
-<span id="cb51-267"><a href="#cb51-267" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_jitter(width = 0.2,</span></span>
-<span id="cb51-268"><a href="#cb51-268" aria-hidden="true" tabindex="-1"></a><span class="in">              height = 0,</span></span>
-<span id="cb51-269"><a href="#cb51-269" aria-hidden="true" tabindex="-1"></a><span class="in">              shape = 21,</span></span>
-<span id="cb51-270"><a href="#cb51-270" aria-hidden="true" tabindex="-1"></a><span class="in">              alpha = 0.4) +</span></span>
-<span id="cb51-271"><a href="#cb51-271" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_summary(geom = "pointrange",</span></span>
-<span id="cb51-272"><a href="#cb51-272" aria-hidden="true" tabindex="-1"></a><span class="in">               fun.data = mean_cl_normal,</span></span>
-<span id="cb51-273"><a href="#cb51-273" aria-hidden="true" tabindex="-1"></a><span class="in">               size = 0.8,</span></span>
-<span id="cb51-274"><a href="#cb51-274" aria-hidden="true" tabindex="-1"></a><span class="in">               linewidth = 1) +</span></span>
-<span id="cb51-275"><a href="#cb51-275" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(values = c("#209c90", "#018ca9", "#27c839")) +</span></span>
-<span id="cb51-276"><a href="#cb51-276" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Species",</span></span>
-<span id="cb51-277"><a href="#cb51-277" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Bill length (mm)") +</span></span>
-<span id="cb51-278"><a href="#cb51-278" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none")</span></span>
-<span id="cb51-279"><a href="#cb51-279" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-280"><a href="#cb51-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-281"><a href="#cb51-281" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4. Non parametric tests</span></span>
-<span id="cb51-282"><a href="#cb51-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-283"><a href="#cb51-283" aria-hidden="true" tabindex="-1"></a><span class="fu">### a. Mann-Whitney U</span></span>
-<span id="cb51-284"><a href="#cb51-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-285"><a href="#cb51-285" aria-hidden="true" tabindex="-1"></a><span class="in">```{r wilcox-example}</span></span>
-<span id="cb51-286"><a href="#cb51-286" aria-hidden="true" tabindex="-1"></a><span class="in">sharks &lt;- cbind(sb = c(1.25, 1.21, 1.18, 1.14, 1.15), </span></span>
-<span id="cb51-287"><a href="#cb51-287" aria-hidden="true" tabindex="-1"></a><span class="in">                sd = c(1.42, 1.44, 1.45, 1.51, 1.20)) %&gt;% </span></span>
-<span id="cb51-288"><a href="#cb51-288" aria-hidden="true" tabindex="-1"></a><span class="in">  as_tibble() %&gt;% </span></span>
-<span id="cb51-289"><a href="#cb51-289" aria-hidden="true" tabindex="-1"></a><span class="in">  pivot_longer(cols = sb:sd) %&gt;% </span></span>
-<span id="cb51-290"><a href="#cb51-290" aria-hidden="true" tabindex="-1"></a><span class="in">  rename(site = name,</span></span>
-<span id="cb51-291"><a href="#cb51-291" aria-hidden="true" tabindex="-1"></a><span class="in">         length_m = value) |&gt; </span></span>
-<span id="cb51-292"><a href="#cb51-292" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(site = case_match(</span></span>
-<span id="cb51-293"><a href="#cb51-293" aria-hidden="true" tabindex="-1"></a><span class="in">    site,</span></span>
-<span id="cb51-294"><a href="#cb51-294" aria-hidden="true" tabindex="-1"></a><span class="in">    "sb" ~ "Santa Barbara",</span></span>
-<span id="cb51-295"><a href="#cb51-295" aria-hidden="true" tabindex="-1"></a><span class="in">    "sd" ~ "San Diego"</span></span>
-<span id="cb51-296"><a href="#cb51-296" aria-hidden="true" tabindex="-1"></a><span class="in">  ),</span></span>
-<span id="cb51-297"><a href="#cb51-297" aria-hidden="true" tabindex="-1"></a><span class="in">  site = fct_relevel(as_factor(site), "Santa Barbara", "San Diego"))</span></span>
-<span id="cb51-298"><a href="#cb51-298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-299"><a href="#cb51-299" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data = sharks,</span></span>
-<span id="cb51-300"><a href="#cb51-300" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = site,</span></span>
-<span id="cb51-301"><a href="#cb51-301" aria-hidden="true" tabindex="-1"></a><span class="in">           y = length_m)) +</span></span>
-<span id="cb51-302"><a href="#cb51-302" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_boxplot(aes(fill = site),</span></span>
-<span id="cb51-303"><a href="#cb51-303" aria-hidden="true" tabindex="-1"></a><span class="in">               outliers = FALSE,</span></span>
-<span id="cb51-304"><a href="#cb51-304" aria-hidden="true" tabindex="-1"></a><span class="in">               width = 0.5) +</span></span>
-<span id="cb51-305"><a href="#cb51-305" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_jitter(</span></span>
-<span id="cb51-306"><a href="#cb51-306" aria-hidden="true" tabindex="-1"></a><span class="in">    width = 0.2,</span></span>
-<span id="cb51-307"><a href="#cb51-307" aria-hidden="true" tabindex="-1"></a><span class="in">    height = 0,</span></span>
-<span id="cb51-308"><a href="#cb51-308" aria-hidden="true" tabindex="-1"></a><span class="in">    shape = 21</span></span>
-<span id="cb51-309"><a href="#cb51-309" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
-<span id="cb51-310"><a href="#cb51-310" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Site", </span></span>
-<span id="cb51-311"><a href="#cb51-311" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Length (m)") +</span></span>
-<span id="cb51-312"><a href="#cb51-312" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_manual(values = c(</span></span>
-<span id="cb51-313"><a href="#cb51-313" aria-hidden="true" tabindex="-1"></a><span class="in">    "San Diego" = "goldenrod",</span></span>
-<span id="cb51-314"><a href="#cb51-314" aria-hidden="true" tabindex="-1"></a><span class="in">    "Santa Barbara" = "turquoise"</span></span>
-<span id="cb51-315"><a href="#cb51-315" aria-hidden="true" tabindex="-1"></a><span class="in">  )) +</span></span>
-<span id="cb51-316"><a href="#cb51-316" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none")</span></span>
-<span id="cb51-317"><a href="#cb51-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-318"><a href="#cb51-318" aria-hidden="true" tabindex="-1"></a><span class="in">wilcox.test(</span></span>
-<span id="cb51-319"><a href="#cb51-319" aria-hidden="true" tabindex="-1"></a><span class="in">  length_m ~ site,</span></span>
-<span id="cb51-320"><a href="#cb51-320" aria-hidden="true" tabindex="-1"></a><span class="in">  data = sharks</span></span>
-<span id="cb51-321"><a href="#cb51-321" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb51-322"><a href="#cb51-322" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-323"><a href="#cb51-323" aria-hidden="true" tabindex="-1"></a><span class="in">cliffs_delta(</span></span>
-<span id="cb51-324"><a href="#cb51-324" aria-hidden="true" tabindex="-1"></a><span class="in">  length_m ~ site,</span></span>
-<span id="cb51-325"><a href="#cb51-325" aria-hidden="true" tabindex="-1"></a><span class="in">  data = sharks</span></span>
-<span id="cb51-326"><a href="#cb51-326" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb51-327"><a href="#cb51-327" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-328"><a href="#cb51-328" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-329"><a href="#cb51-329" aria-hidden="true" tabindex="-1"></a><span class="fu">### b. Wilcoxon signed-rank</span></span>
-<span id="cb51-330"><a href="#cb51-330" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-331"><a href="#cb51-331" aria-hidden="true" tabindex="-1"></a><span class="in">```{r wilcox-demo}</span></span>
-<span id="cb51-332"><a href="#cb51-332" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
-<span id="cb51-333"><a href="#cb51-333" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-334"><a href="#cb51-334" aria-hidden="true" tabindex="-1"></a><span class="in"># for a comparison of one group against a theoretical median</span></span>
-<span id="cb51-335"><a href="#cb51-335" aria-hidden="true" tabindex="-1"></a><span class="in">wilcox.test(Sample1, mu = theoretical)</span></span>
-<span id="cb51-336"><a href="#cb51-336" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-337"><a href="#cb51-337" aria-hidden="true" tabindex="-1"></a><span class="in"># for a comparison of two groups</span></span>
-<span id="cb51-338"><a href="#cb51-338" aria-hidden="true" tabindex="-1"></a><span class="in">wilcox.test(value ~ sample,</span></span>
-<span id="cb51-339"><a href="#cb51-339" aria-hidden="true" tabindex="-1"></a><span class="in">            data = wilcox_df, </span></span>
-<span id="cb51-340"><a href="#cb51-340" aria-hidden="true" tabindex="-1"></a><span class="in">            paired = TRUE)</span></span>
-<span id="cb51-341"><a href="#cb51-341" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-342"><a href="#cb51-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-343"><a href="#cb51-343" aria-hidden="true" tabindex="-1"></a><span class="fu">### c. Kruskal-Wallis</span></span>
-<span id="cb51-344"><a href="#cb51-344" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-347"><a href="#cb51-347" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb51-348"><a href="#cb51-348" aria-hidden="true" tabindex="-1"></a>sharks_monterey <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">sb =</span> <span class="fu">c</span>(<span class="fl">1.25</span>, <span class="fl">1.21</span>, <span class="fl">1.18</span>, <span class="fl">1.14</span>, <span class="fl">1.15</span>), </span>
-<span id="cb51-349"><a href="#cb51-349" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sd =</span> <span class="fu">c</span>(<span class="fl">1.42</span>, <span class="fl">1.44</span>, <span class="fl">1.45</span>, <span class="fl">1.51</span>, <span class="fl">1.20</span>),</span>
-<span id="cb51-350"><a href="#cb51-350" aria-hidden="true" tabindex="-1"></a>                         <span class="at">mt =</span> <span class="fu">c</span>(<span class="fl">1.09</span>, <span class="fl">1.08</span>, <span class="fl">1.07</span>, <span class="fl">1.07</span>, <span class="fl">1.06</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-351"><a href="#cb51-351" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb51-352"><a href="#cb51-352" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> sb<span class="sc">:</span>mt) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-353"><a href="#cb51-353" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">site =</span> name,</span>
-<span id="cb51-354"><a href="#cb51-354" aria-hidden="true" tabindex="-1"></a>         <span class="at">length_m =</span> value) <span class="sc">|&gt;</span> </span>
-<span id="cb51-355"><a href="#cb51-355" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">site =</span> <span class="fu">case_match</span>(</span>
-<span id="cb51-356"><a href="#cb51-356" aria-hidden="true" tabindex="-1"></a>    site,</span>
-<span id="cb51-357"><a href="#cb51-357" aria-hidden="true" tabindex="-1"></a>    <span class="st">"sb"</span> <span class="sc">~</span> <span class="st">"Santa Barbara"</span>,</span>
-<span id="cb51-358"><a href="#cb51-358" aria-hidden="true" tabindex="-1"></a>    <span class="st">"sd"</span> <span class="sc">~</span> <span class="st">"San Diego"</span>,</span>
-<span id="cb51-359"><a href="#cb51-359" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mt"</span> <span class="sc">~</span> <span class="st">"Monterey"</span></span>
-<span id="cb51-360"><a href="#cb51-360" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb51-361"><a href="#cb51-361" aria-hidden="true" tabindex="-1"></a>  <span class="at">site =</span> <span class="fu">fct_relevel</span>(<span class="fu">as_factor</span>(site), <span class="st">"Monterey"</span>, <span class="st">"Santa Barbara"</span>, <span class="st">"San Diego"</span>))</span>
-<span id="cb51-362"><a href="#cb51-362" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-363"><a href="#cb51-363" aria-hidden="true" tabindex="-1"></a>sharks_monterey <span class="sc">|&gt;</span> </span>
-<span id="cb51-364"><a href="#cb51-364" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(site) <span class="sc">|&gt;</span> </span>
-<span id="cb51-365"><a href="#cb51-365" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">median =</span> <span class="fu">median</span>(length_m)) <span class="sc">|&gt;</span> </span>
-<span id="cb51-366"><a href="#cb51-366" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb51-367"><a href="#cb51-367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-368"><a href="#cb51-368" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(</span>
-<span id="cb51-369"><a href="#cb51-369" aria-hidden="true" tabindex="-1"></a>  length_m <span class="sc">~</span> site,</span>
-<span id="cb51-370"><a href="#cb51-370" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sharks_monterey</span>
-<span id="cb51-371"><a href="#cb51-371" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb51-372"><a href="#cb51-372" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-373"><a href="#cb51-373" aria-hidden="true" tabindex="-1"></a><span class="fu">dunn_test</span>(</span>
-<span id="cb51-374"><a href="#cb51-374" aria-hidden="true" tabindex="-1"></a>  length_m <span class="sc">~</span> site,</span>
-<span id="cb51-375"><a href="#cb51-375" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sharks_monterey,</span>
-<span id="cb51-376"><a href="#cb51-376" aria-hidden="true" tabindex="-1"></a>  <span class="at">p.adjust.method =</span> <span class="st">"bonferroni"</span></span>
-<span id="cb51-377"><a href="#cb51-377" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb51-378"><a href="#cb51-378" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-379"><a href="#cb51-379" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal_effsize</span>(</span>
-<span id="cb51-380"><a href="#cb51-380" aria-hidden="true" tabindex="-1"></a>  length_m <span class="sc">~</span> site,</span>
-<span id="cb51-381"><a href="#cb51-381" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sharks_monterey</span>
-<span id="cb51-382"><a href="#cb51-382" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb51-383"><a href="#cb51-383" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-384"><a href="#cb51-384" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> sharks_monterey,</span>
-<span id="cb51-385"><a href="#cb51-385" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> site,</span>
-<span id="cb51-386"><a href="#cb51-386" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> length_m)) <span class="sc">+</span></span>
-<span id="cb51-387"><a href="#cb51-387" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill =</span> site),</span>
-<span id="cb51-388"><a href="#cb51-388" aria-hidden="true" tabindex="-1"></a>               <span class="at">outliers =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb51-389"><a href="#cb51-389" aria-hidden="true" tabindex="-1"></a>               <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb51-390"><a href="#cb51-390" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(</span>
-<span id="cb51-391"><a href="#cb51-391" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.2</span>,</span>
-<span id="cb51-392"><a href="#cb51-392" aria-hidden="true" tabindex="-1"></a>    <span class="at">height =</span> <span class="dv">0</span>,</span>
-<span id="cb51-393"><a href="#cb51-393" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="dv">21</span></span>
-<span id="cb51-394"><a href="#cb51-394" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb51-395"><a href="#cb51-395" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Site"</span>, </span>
-<span id="cb51-396"><a href="#cb51-396" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Length (m)"</span>) <span class="sc">+</span></span>
-<span id="cb51-397"><a href="#cb51-397" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb51-398"><a href="#cb51-398" aria-hidden="true" tabindex="-1"></a>    <span class="st">"San Diego"</span> <span class="ot">=</span> <span class="st">"goldenrod"</span>,</span>
-<span id="cb51-399"><a href="#cb51-399" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Santa Barbara"</span> <span class="ot">=</span> <span class="st">"turquoise"</span>,</span>
-<span id="cb51-400"><a href="#cb51-400" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Monterey"</span> <span class="ot">=</span> <span class="st">"tomato4"</span></span>
-<span id="cb51-401"><a href="#cb51-401" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
-<span id="cb51-402"><a href="#cb51-402" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb51-403"><a href="#cb51-403" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-404"><a href="#cb51-404" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-405"><a href="#cb51-405" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-408"><a href="#cb51-408" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb51-409"><a href="#cb51-409" aria-hidden="true" tabindex="-1"></a>kruskal_df <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">Sample1 =</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">5</span>, <span class="at">mean =</span> <span class="dv">4</span>, <span class="at">sd =</span> <span class="dv">1</span>), <span class="dv">1</span>), </span>
-<span id="cb51-410"><a href="#cb51-410" aria-hidden="true" tabindex="-1"></a>                    <span class="at">Sample2 =</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">5</span>, <span class="at">mean =</span> <span class="dv">6</span>, <span class="at">sd =</span> <span class="dv">1</span>), <span class="dv">1</span>),</span>
-<span id="cb51-411"><a href="#cb51-411" aria-hidden="true" tabindex="-1"></a>                    <span class="at">Sample3 =</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">5</span>, <span class="at">mean =</span> <span class="dv">8</span>, <span class="at">sd =</span> <span class="dv">1</span>), <span class="dv">1</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-412"><a href="#cb51-412" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb51-413"><a href="#cb51-413" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> Sample1<span class="sc">:</span>Sample3) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-414"><a href="#cb51-414" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">sample =</span> name) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-415"><a href="#cb51-415" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(sample)</span>
-<span id="cb51-416"><a href="#cb51-416" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-417"><a href="#cb51-417" aria-hidden="true" tabindex="-1"></a>rank_by_hand <span class="ot">&lt;-</span> kruskal_df <span class="sc">%&gt;%</span> </span>
-<span id="cb51-418"><a href="#cb51-418" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(value) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-419"><a href="#cb51-419" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">"ranks"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-420"><a href="#cb51-420" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ranks =</span> <span class="fu">as.numeric</span>(ranks)) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-421"><a href="#cb51-421" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-422"><a href="#cb51-422" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="at">sum_ranks =</span> <span class="fu">sum</span>(ranks))</span>
+<span id="cb51-225"><a href="#cb51-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-226"><a href="#cb51-226" aria-hidden="true" tabindex="-1"></a><span class="fu">### e. analysis of variance</span></span>
+<span id="cb51-227"><a href="#cb51-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-228"><a href="#cb51-228" aria-hidden="true" tabindex="-1"></a><span class="in">```{r penguins-anova}</span></span>
+<span id="cb51-229"><a href="#cb51-229" aria-hidden="true" tabindex="-1"></a><span class="in"># do the actual test</span></span>
+<span id="cb51-230"><a href="#cb51-230" aria-hidden="true" tabindex="-1"></a><span class="in"># model object stored as `penguins_anova`</span></span>
+<span id="cb51-231"><a href="#cb51-231" aria-hidden="true" tabindex="-1"></a><span class="in">penguins_anova &lt;- aov(bill_length_mm ~ species,</span></span>
+<span id="cb51-232"><a href="#cb51-232" aria-hidden="true" tabindex="-1"></a><span class="in">                      data = penguins)</span></span>
+<span id="cb51-233"><a href="#cb51-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-234"><a href="#cb51-234" aria-hidden="true" tabindex="-1"></a><span class="in"># output of the test</span></span>
+<span id="cb51-235"><a href="#cb51-235" aria-hidden="true" tabindex="-1"></a><span class="in">penguins_anova</span></span>
+<span id="cb51-236"><a href="#cb51-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-237"><a href="#cb51-237" aria-hidden="true" tabindex="-1"></a><span class="in"># more information</span></span>
+<span id="cb51-238"><a href="#cb51-238" aria-hidden="true" tabindex="-1"></a><span class="in">summary(penguins_anova)</span></span>
+<span id="cb51-239"><a href="#cb51-239" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-240"><a href="#cb51-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-241"><a href="#cb51-241" aria-hidden="true" tabindex="-1"></a><span class="fu">### f. post hoc test</span></span>
+<span id="cb51-242"><a href="#cb51-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-243"><a href="#cb51-243" aria-hidden="true" tabindex="-1"></a>Which group comparisons are different?</span>
+<span id="cb51-244"><a href="#cb51-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-245"><a href="#cb51-245" aria-hidden="true" tabindex="-1"></a><span class="in">```{r penguins-tukey-hsd}</span></span>
+<span id="cb51-246"><a href="#cb51-246" aria-hidden="true" tabindex="-1"></a><span class="in">TukeyHSD(penguins_anova)</span></span>
+<span id="cb51-247"><a href="#cb51-247" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-248"><a href="#cb51-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-249"><a href="#cb51-249" aria-hidden="true" tabindex="-1"></a><span class="fu">### g. effect size</span></span>
+<span id="cb51-250"><a href="#cb51-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-251"><a href="#cb51-251" aria-hidden="true" tabindex="-1"></a><span class="in">```{r penguins-eta-squared}</span></span>
+<span id="cb51-252"><a href="#cb51-252" aria-hidden="true" tabindex="-1"></a><span class="in">eta_squared(penguins_anova)</span></span>
+<span id="cb51-253"><a href="#cb51-253" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-254"><a href="#cb51-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-255"><a href="#cb51-255" aria-hidden="true" tabindex="-1"></a><span class="fu">### h. example of writing</span></span>
+<span id="cb51-256"><a href="#cb51-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-257"><a href="#cb51-257" aria-hidden="true" tabindex="-1"></a>Without the stats: Our results suggest a difference in bill length between species, with a large effect of species. Species differed in bill length, and pairwise comparisons between species showed that all three species differed from each other. Generally, Adelie penguins tend to have shorter bills than Chinstrap and Gentoo penguins. Gentoo penguins tend to have shorter bills than  Chinstrap penguins.</span>
+<span id="cb51-258"><a href="#cb51-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-259"><a href="#cb51-259" aria-hidden="true" tabindex="-1"></a>With the stats: Our results suggest a difference in bill length between species, with a large ($\eta^2$ = 0.71) effect of species. Species differed in bill length (one-way ANOVA, F(2, 339) = 410.6, p &lt; 0.001, $\alpha$ = 0.05), and pairwise comparisons between species showed that all three species differed from each other. Generally, Adelie penguins tend to have 10.0 mm shorter bills than Chinstrap (Tukey HSD, p &lt; 0.001, 95% confidence interval: <span class="co">[</span><span class="ot">9.0, 11.1</span><span class="co">]</span> mm) penguins and 8.7 mm shorter than Gentoo (Tukey HSD, p &lt; 0.001, 95% confidence interval: <span class="co">[</span><span class="ot">7.9, 9.6</span><span class="co">]</span> mm) penguins. Gentoo penguins tend to have 1.3 mm shorter bills than Chinstrap penguins (Tukey HSD, p = 0.008, 95% confidence interval: <span class="co">[</span><span class="ot">0.3, 2.4</span><span class="co">]</span> mm).  </span>
+<span id="cb51-260"><a href="#cb51-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-261"><a href="#cb51-261" aria-hidden="true" tabindex="-1"></a><span class="fu">### i. a "finalized" figure</span></span>
+<span id="cb51-262"><a href="#cb51-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-263"><a href="#cb51-263" aria-hidden="true" tabindex="-1"></a><span class="in">```{r penguins-final-fig}</span></span>
+<span id="cb51-264"><a href="#cb51-264" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data = penguins,</span></span>
+<span id="cb51-265"><a href="#cb51-265" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = species,</span></span>
+<span id="cb51-266"><a href="#cb51-266" aria-hidden="true" tabindex="-1"></a><span class="in">           y = bill_length_mm,</span></span>
+<span id="cb51-267"><a href="#cb51-267" aria-hidden="true" tabindex="-1"></a><span class="in">           color = species)) +</span></span>
+<span id="cb51-268"><a href="#cb51-268" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_jitter(width = 0.2,</span></span>
+<span id="cb51-269"><a href="#cb51-269" aria-hidden="true" tabindex="-1"></a><span class="in">              height = 0,</span></span>
+<span id="cb51-270"><a href="#cb51-270" aria-hidden="true" tabindex="-1"></a><span class="in">              shape = 21,</span></span>
+<span id="cb51-271"><a href="#cb51-271" aria-hidden="true" tabindex="-1"></a><span class="in">              alpha = 0.4) +</span></span>
+<span id="cb51-272"><a href="#cb51-272" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_summary(geom = "pointrange",</span></span>
+<span id="cb51-273"><a href="#cb51-273" aria-hidden="true" tabindex="-1"></a><span class="in">               fun.data = mean_cl_normal,</span></span>
+<span id="cb51-274"><a href="#cb51-274" aria-hidden="true" tabindex="-1"></a><span class="in">               size = 0.8,</span></span>
+<span id="cb51-275"><a href="#cb51-275" aria-hidden="true" tabindex="-1"></a><span class="in">               linewidth = 1) +</span></span>
+<span id="cb51-276"><a href="#cb51-276" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(values = c("#209c90", "#018ca9", "#27c839")) +</span></span>
+<span id="cb51-277"><a href="#cb51-277" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Species",</span></span>
+<span id="cb51-278"><a href="#cb51-278" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Bill length (mm)") +</span></span>
+<span id="cb51-279"><a href="#cb51-279" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none")</span></span>
+<span id="cb51-280"><a href="#cb51-280" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-281"><a href="#cb51-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-282"><a href="#cb51-282" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4. Non parametric tests</span></span>
+<span id="cb51-283"><a href="#cb51-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-284"><a href="#cb51-284" aria-hidden="true" tabindex="-1"></a><span class="fu">### a. Mann-Whitney U</span></span>
+<span id="cb51-285"><a href="#cb51-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-286"><a href="#cb51-286" aria-hidden="true" tabindex="-1"></a><span class="in">```{r wilcox-example}</span></span>
+<span id="cb51-287"><a href="#cb51-287" aria-hidden="true" tabindex="-1"></a><span class="in">sharks &lt;- cbind(sb = c(1.25, 1.21, 1.18, 1.14, 1.15), </span></span>
+<span id="cb51-288"><a href="#cb51-288" aria-hidden="true" tabindex="-1"></a><span class="in">                sd = c(1.42, 1.44, 1.45, 1.51, 1.20)) %&gt;% </span></span>
+<span id="cb51-289"><a href="#cb51-289" aria-hidden="true" tabindex="-1"></a><span class="in">  as_tibble() %&gt;% </span></span>
+<span id="cb51-290"><a href="#cb51-290" aria-hidden="true" tabindex="-1"></a><span class="in">  pivot_longer(cols = sb:sd) %&gt;% </span></span>
+<span id="cb51-291"><a href="#cb51-291" aria-hidden="true" tabindex="-1"></a><span class="in">  rename(site = name,</span></span>
+<span id="cb51-292"><a href="#cb51-292" aria-hidden="true" tabindex="-1"></a><span class="in">         length_m = value) |&gt; </span></span>
+<span id="cb51-293"><a href="#cb51-293" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(site = case_match(</span></span>
+<span id="cb51-294"><a href="#cb51-294" aria-hidden="true" tabindex="-1"></a><span class="in">    site,</span></span>
+<span id="cb51-295"><a href="#cb51-295" aria-hidden="true" tabindex="-1"></a><span class="in">    "sb" ~ "Santa Barbara",</span></span>
+<span id="cb51-296"><a href="#cb51-296" aria-hidden="true" tabindex="-1"></a><span class="in">    "sd" ~ "San Diego"</span></span>
+<span id="cb51-297"><a href="#cb51-297" aria-hidden="true" tabindex="-1"></a><span class="in">  ),</span></span>
+<span id="cb51-298"><a href="#cb51-298" aria-hidden="true" tabindex="-1"></a><span class="in">  site = fct_relevel(as_factor(site), "Santa Barbara", "San Diego"))</span></span>
+<span id="cb51-299"><a href="#cb51-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-300"><a href="#cb51-300" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data = sharks,</span></span>
+<span id="cb51-301"><a href="#cb51-301" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(x = site,</span></span>
+<span id="cb51-302"><a href="#cb51-302" aria-hidden="true" tabindex="-1"></a><span class="in">           y = length_m)) +</span></span>
+<span id="cb51-303"><a href="#cb51-303" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_boxplot(aes(fill = site),</span></span>
+<span id="cb51-304"><a href="#cb51-304" aria-hidden="true" tabindex="-1"></a><span class="in">               outliers = FALSE,</span></span>
+<span id="cb51-305"><a href="#cb51-305" aria-hidden="true" tabindex="-1"></a><span class="in">               width = 0.5) +</span></span>
+<span id="cb51-306"><a href="#cb51-306" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_jitter(</span></span>
+<span id="cb51-307"><a href="#cb51-307" aria-hidden="true" tabindex="-1"></a><span class="in">    width = 0.2,</span></span>
+<span id="cb51-308"><a href="#cb51-308" aria-hidden="true" tabindex="-1"></a><span class="in">    height = 0,</span></span>
+<span id="cb51-309"><a href="#cb51-309" aria-hidden="true" tabindex="-1"></a><span class="in">    shape = 21</span></span>
+<span id="cb51-310"><a href="#cb51-310" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
+<span id="cb51-311"><a href="#cb51-311" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Site", </span></span>
+<span id="cb51-312"><a href="#cb51-312" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Length (m)") +</span></span>
+<span id="cb51-313"><a href="#cb51-313" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_manual(values = c(</span></span>
+<span id="cb51-314"><a href="#cb51-314" aria-hidden="true" tabindex="-1"></a><span class="in">    "San Diego" = "goldenrod",</span></span>
+<span id="cb51-315"><a href="#cb51-315" aria-hidden="true" tabindex="-1"></a><span class="in">    "Santa Barbara" = "turquoise"</span></span>
+<span id="cb51-316"><a href="#cb51-316" aria-hidden="true" tabindex="-1"></a><span class="in">  )) +</span></span>
+<span id="cb51-317"><a href="#cb51-317" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none")</span></span>
+<span id="cb51-318"><a href="#cb51-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-319"><a href="#cb51-319" aria-hidden="true" tabindex="-1"></a><span class="in">wilcox.test(</span></span>
+<span id="cb51-320"><a href="#cb51-320" aria-hidden="true" tabindex="-1"></a><span class="in">  length_m ~ site,</span></span>
+<span id="cb51-321"><a href="#cb51-321" aria-hidden="true" tabindex="-1"></a><span class="in">  data = sharks</span></span>
+<span id="cb51-322"><a href="#cb51-322" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb51-323"><a href="#cb51-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-324"><a href="#cb51-324" aria-hidden="true" tabindex="-1"></a><span class="in">cliffs_delta(</span></span>
+<span id="cb51-325"><a href="#cb51-325" aria-hidden="true" tabindex="-1"></a><span class="in">  length_m ~ site,</span></span>
+<span id="cb51-326"><a href="#cb51-326" aria-hidden="true" tabindex="-1"></a><span class="in">  data = sharks</span></span>
+<span id="cb51-327"><a href="#cb51-327" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb51-328"><a href="#cb51-328" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-329"><a href="#cb51-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-330"><a href="#cb51-330" aria-hidden="true" tabindex="-1"></a><span class="fu">### b. Wilcoxon signed-rank</span></span>
+<span id="cb51-331"><a href="#cb51-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-332"><a href="#cb51-332" aria-hidden="true" tabindex="-1"></a><span class="in">```{r wilcox-demo}</span></span>
+<span id="cb51-333"><a href="#cb51-333" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb51-334"><a href="#cb51-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-335"><a href="#cb51-335" aria-hidden="true" tabindex="-1"></a><span class="in"># for a comparison of one group against a theoretical median</span></span>
+<span id="cb51-336"><a href="#cb51-336" aria-hidden="true" tabindex="-1"></a><span class="in">wilcox.test(Sample1, mu = theoretical)</span></span>
+<span id="cb51-337"><a href="#cb51-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-338"><a href="#cb51-338" aria-hidden="true" tabindex="-1"></a><span class="in"># for a comparison of two groups</span></span>
+<span id="cb51-339"><a href="#cb51-339" aria-hidden="true" tabindex="-1"></a><span class="in">wilcox.test(value ~ sample,</span></span>
+<span id="cb51-340"><a href="#cb51-340" aria-hidden="true" tabindex="-1"></a><span class="in">            data = wilcox_df, </span></span>
+<span id="cb51-341"><a href="#cb51-341" aria-hidden="true" tabindex="-1"></a><span class="in">            paired = TRUE)</span></span>
+<span id="cb51-342"><a href="#cb51-342" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-343"><a href="#cb51-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-344"><a href="#cb51-344" aria-hidden="true" tabindex="-1"></a><span class="fu">### c. Kruskal-Wallis</span></span>
+<span id="cb51-345"><a href="#cb51-345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-348"><a href="#cb51-348" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-349"><a href="#cb51-349" aria-hidden="true" tabindex="-1"></a>sharks_monterey <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">sb =</span> <span class="fu">c</span>(<span class="fl">1.25</span>, <span class="fl">1.21</span>, <span class="fl">1.18</span>, <span class="fl">1.14</span>, <span class="fl">1.15</span>), </span>
+<span id="cb51-350"><a href="#cb51-350" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sd =</span> <span class="fu">c</span>(<span class="fl">1.42</span>, <span class="fl">1.44</span>, <span class="fl">1.45</span>, <span class="fl">1.51</span>, <span class="fl">1.20</span>),</span>
+<span id="cb51-351"><a href="#cb51-351" aria-hidden="true" tabindex="-1"></a>                         <span class="at">mt =</span> <span class="fu">c</span>(<span class="fl">1.09</span>, <span class="fl">1.08</span>, <span class="fl">1.07</span>, <span class="fl">1.07</span>, <span class="fl">1.06</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-352"><a href="#cb51-352" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb51-353"><a href="#cb51-353" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> sb<span class="sc">:</span>mt) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-354"><a href="#cb51-354" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">site =</span> name,</span>
+<span id="cb51-355"><a href="#cb51-355" aria-hidden="true" tabindex="-1"></a>         <span class="at">length_m =</span> value) <span class="sc">|&gt;</span> </span>
+<span id="cb51-356"><a href="#cb51-356" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">site =</span> <span class="fu">case_match</span>(</span>
+<span id="cb51-357"><a href="#cb51-357" aria-hidden="true" tabindex="-1"></a>    site,</span>
+<span id="cb51-358"><a href="#cb51-358" aria-hidden="true" tabindex="-1"></a>    <span class="st">"sb"</span> <span class="sc">~</span> <span class="st">"Santa Barbara"</span>,</span>
+<span id="cb51-359"><a href="#cb51-359" aria-hidden="true" tabindex="-1"></a>    <span class="st">"sd"</span> <span class="sc">~</span> <span class="st">"San Diego"</span>,</span>
+<span id="cb51-360"><a href="#cb51-360" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mt"</span> <span class="sc">~</span> <span class="st">"Monterey"</span></span>
+<span id="cb51-361"><a href="#cb51-361" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb51-362"><a href="#cb51-362" aria-hidden="true" tabindex="-1"></a>  <span class="at">site =</span> <span class="fu">fct_relevel</span>(<span class="fu">as_factor</span>(site), <span class="st">"Monterey"</span>, <span class="st">"Santa Barbara"</span>, <span class="st">"San Diego"</span>))</span>
+<span id="cb51-363"><a href="#cb51-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-364"><a href="#cb51-364" aria-hidden="true" tabindex="-1"></a>sharks_monterey <span class="sc">|&gt;</span> </span>
+<span id="cb51-365"><a href="#cb51-365" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(site) <span class="sc">|&gt;</span> </span>
+<span id="cb51-366"><a href="#cb51-366" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">median =</span> <span class="fu">median</span>(length_m)) <span class="sc">|&gt;</span> </span>
+<span id="cb51-367"><a href="#cb51-367" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb51-368"><a href="#cb51-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-369"><a href="#cb51-369" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(</span>
+<span id="cb51-370"><a href="#cb51-370" aria-hidden="true" tabindex="-1"></a>  length_m <span class="sc">~</span> site,</span>
+<span id="cb51-371"><a href="#cb51-371" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sharks_monterey</span>
+<span id="cb51-372"><a href="#cb51-372" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb51-373"><a href="#cb51-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-374"><a href="#cb51-374" aria-hidden="true" tabindex="-1"></a><span class="fu">dunn_test</span>(</span>
+<span id="cb51-375"><a href="#cb51-375" aria-hidden="true" tabindex="-1"></a>  length_m <span class="sc">~</span> site,</span>
+<span id="cb51-376"><a href="#cb51-376" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sharks_monterey,</span>
+<span id="cb51-377"><a href="#cb51-377" aria-hidden="true" tabindex="-1"></a>  <span class="at">p.adjust.method =</span> <span class="st">"bonferroni"</span></span>
+<span id="cb51-378"><a href="#cb51-378" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb51-379"><a href="#cb51-379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-380"><a href="#cb51-380" aria-hidden="true" tabindex="-1"></a><span class="fu">dunn.test</span>(</span>
+<span id="cb51-381"><a href="#cb51-381" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> sharks_monterey<span class="sc">$</span>length_m,</span>
+<span id="cb51-382"><a href="#cb51-382" aria-hidden="true" tabindex="-1"></a>  <span class="at">g =</span> sharks_monterey<span class="sc">$</span>site,</span>
+<span id="cb51-383"><a href="#cb51-383" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"bonferroni"</span></span>
+<span id="cb51-384"><a href="#cb51-384" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb51-385"><a href="#cb51-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-386"><a href="#cb51-386" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal_effsize</span>(</span>
+<span id="cb51-387"><a href="#cb51-387" aria-hidden="true" tabindex="-1"></a>  length_m <span class="sc">~</span> site,</span>
+<span id="cb51-388"><a href="#cb51-388" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sharks_monterey</span>
+<span id="cb51-389"><a href="#cb51-389" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb51-390"><a href="#cb51-390" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-391"><a href="#cb51-391" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> sharks_monterey,</span>
+<span id="cb51-392"><a href="#cb51-392" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> site,</span>
+<span id="cb51-393"><a href="#cb51-393" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> length_m)) <span class="sc">+</span></span>
+<span id="cb51-394"><a href="#cb51-394" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill =</span> site),</span>
+<span id="cb51-395"><a href="#cb51-395" aria-hidden="true" tabindex="-1"></a>               <span class="at">outliers =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb51-396"><a href="#cb51-396" aria-hidden="true" tabindex="-1"></a>               <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb51-397"><a href="#cb51-397" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(</span>
+<span id="cb51-398"><a href="#cb51-398" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.2</span>,</span>
+<span id="cb51-399"><a href="#cb51-399" aria-hidden="true" tabindex="-1"></a>    <span class="at">height =</span> <span class="dv">0</span>,</span>
+<span id="cb51-400"><a href="#cb51-400" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="dv">21</span></span>
+<span id="cb51-401"><a href="#cb51-401" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb51-402"><a href="#cb51-402" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Site"</span>, </span>
+<span id="cb51-403"><a href="#cb51-403" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Length (m)"</span>) <span class="sc">+</span></span>
+<span id="cb51-404"><a href="#cb51-404" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb51-405"><a href="#cb51-405" aria-hidden="true" tabindex="-1"></a>    <span class="st">"San Diego"</span> <span class="ot">=</span> <span class="st">"goldenrod"</span>,</span>
+<span id="cb51-406"><a href="#cb51-406" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Santa Barbara"</span> <span class="ot">=</span> <span class="st">"turquoise"</span>,</span>
+<span id="cb51-407"><a href="#cb51-407" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Monterey"</span> <span class="ot">=</span> <span class="st">"tomato4"</span></span>
+<span id="cb51-408"><a href="#cb51-408" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb51-409"><a href="#cb51-409" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb51-410"><a href="#cb51-410" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-411"><a href="#cb51-411" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-412"><a href="#cb51-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-415"><a href="#cb51-415" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-416"><a href="#cb51-416" aria-hidden="true" tabindex="-1"></a>kruskal_df <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">Sample1 =</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">5</span>, <span class="at">mean =</span> <span class="dv">4</span>, <span class="at">sd =</span> <span class="dv">1</span>), <span class="dv">1</span>), </span>
+<span id="cb51-417"><a href="#cb51-417" aria-hidden="true" tabindex="-1"></a>                    <span class="at">Sample2 =</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">5</span>, <span class="at">mean =</span> <span class="dv">6</span>, <span class="at">sd =</span> <span class="dv">1</span>), <span class="dv">1</span>),</span>
+<span id="cb51-418"><a href="#cb51-418" aria-hidden="true" tabindex="-1"></a>                    <span class="at">Sample3 =</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">5</span>, <span class="at">mean =</span> <span class="dv">8</span>, <span class="at">sd =</span> <span class="dv">1</span>), <span class="dv">1</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-419"><a href="#cb51-419" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb51-420"><a href="#cb51-420" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> Sample1<span class="sc">:</span>Sample3) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-421"><a href="#cb51-421" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">sample =</span> name) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-422"><a href="#cb51-422" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(sample)</span>
 <span id="cb51-423"><a href="#cb51-423" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-424"><a href="#cb51-424" aria-hidden="true" tabindex="-1"></a>R1 <span class="ot">&lt;-</span> rank_by_hand[<span class="dv">1</span>, <span class="dv">2</span>]</span>
-<span id="cb51-425"><a href="#cb51-425" aria-hidden="true" tabindex="-1"></a>R2 <span class="ot">&lt;-</span> rank_by_hand[<span class="dv">2</span>, <span class="dv">2</span>]</span>
-<span id="cb51-426"><a href="#cb51-426" aria-hidden="true" tabindex="-1"></a>R3 <span class="ot">&lt;-</span> rank_by_hand[<span class="dv">3</span>, <span class="dv">2</span>]</span>
-<span id="cb51-427"><a href="#cb51-427" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">15</span></span>
-<span id="cb51-428"><a href="#cb51-428" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb51-429"><a href="#cb51-429" aria-hidden="true" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb51-430"><a href="#cb51-430" aria-hidden="true" tabindex="-1"></a>n3 <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb51-431"><a href="#cb51-431" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-432"><a href="#cb51-432" aria-hidden="true" tabindex="-1"></a>rstatix<span class="sc">::</span><span class="fu">kruskal_test</span>(value <span class="sc">~</span> sample,</span>
-<span id="cb51-433"><a href="#cb51-433" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> kruskal_df)</span>
-<span id="cb51-434"><a href="#cb51-434" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(value <span class="sc">~</span> sample,</span>
-<span id="cb51-435"><a href="#cb51-435" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> kruskal_df)</span>
-<span id="cb51-436"><a href="#cb51-436" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-437"><a href="#cb51-437" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-438"><a href="#cb51-438" aria-hidden="true" tabindex="-1"></a><span class="co">#((12 * STATISTIC / (n * (n + 1)) - 3 * (n + 1)) / (1 - sum(TIES^3 - TIES) / (n^3 - n)))</span></span>
-<span id="cb51-439"><a href="#cb51-439" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-440"><a href="#cb51-440" aria-hidden="true" tabindex="-1"></a>(<span class="dv">12</span><span class="sc">/</span>(n<span class="sc">*</span>(n<span class="sc">+</span><span class="dv">1</span>)))<span class="sc">*</span>((R1<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>n1 <span class="sc">+</span> (R2<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>n2 <span class="sc">+</span> (R3<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>n3) <span class="sc">-</span> <span class="dv">3</span><span class="sc">*</span>(n <span class="sc">+</span> <span class="dv">1</span>)</span>
-<span id="cb51-441"><a href="#cb51-441" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-442"><a href="#cb51-442" aria-hidden="true" tabindex="-1"></a>rstatix<span class="sc">::</span><span class="fu">kruskal_effsize</span>(value <span class="sc">~</span> sample,</span>
-<span id="cb51-443"><a href="#cb51-443" aria-hidden="true" tabindex="-1"></a>                         <span class="at">data =</span> kruskal_df)</span>
+<span id="cb51-424"><a href="#cb51-424" aria-hidden="true" tabindex="-1"></a>rank_by_hand <span class="ot">&lt;-</span> kruskal_df <span class="sc">%&gt;%</span> </span>
+<span id="cb51-425"><a href="#cb51-425" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(value) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-426"><a href="#cb51-426" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">"ranks"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-427"><a href="#cb51-427" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ranks =</span> <span class="fu">as.numeric</span>(ranks)) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-428"><a href="#cb51-428" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-429"><a href="#cb51-429" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="at">sum_ranks =</span> <span class="fu">sum</span>(ranks))</span>
+<span id="cb51-430"><a href="#cb51-430" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-431"><a href="#cb51-431" aria-hidden="true" tabindex="-1"></a>R1 <span class="ot">&lt;-</span> rank_by_hand[<span class="dv">1</span>, <span class="dv">2</span>]</span>
+<span id="cb51-432"><a href="#cb51-432" aria-hidden="true" tabindex="-1"></a>R2 <span class="ot">&lt;-</span> rank_by_hand[<span class="dv">2</span>, <span class="dv">2</span>]</span>
+<span id="cb51-433"><a href="#cb51-433" aria-hidden="true" tabindex="-1"></a>R3 <span class="ot">&lt;-</span> rank_by_hand[<span class="dv">3</span>, <span class="dv">2</span>]</span>
+<span id="cb51-434"><a href="#cb51-434" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb51-435"><a href="#cb51-435" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb51-436"><a href="#cb51-436" aria-hidden="true" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb51-437"><a href="#cb51-437" aria-hidden="true" tabindex="-1"></a>n3 <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb51-438"><a href="#cb51-438" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-439"><a href="#cb51-439" aria-hidden="true" tabindex="-1"></a>rstatix<span class="sc">::</span><span class="fu">kruskal_test</span>(value <span class="sc">~</span> sample,</span>
+<span id="cb51-440"><a href="#cb51-440" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> kruskal_df)</span>
+<span id="cb51-441"><a href="#cb51-441" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(value <span class="sc">~</span> sample,</span>
+<span id="cb51-442"><a href="#cb51-442" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> kruskal_df)</span>
+<span id="cb51-443"><a href="#cb51-443" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb51-444"><a href="#cb51-444" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-445"><a href="#cb51-445" aria-hidden="true" tabindex="-1"></a>rstatix<span class="sc">::</span><span class="fu">dunn_test</span>(value <span class="sc">~</span> sample,</span>
-<span id="cb51-446"><a href="#cb51-446" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> kruskal_df)</span>
-<span id="cb51-447"><a href="#cb51-447" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-445"><a href="#cb51-445" aria-hidden="true" tabindex="-1"></a><span class="co">#((12 * STATISTIC / (n * (n + 1)) - 3 * (n + 1)) / (1 - sum(TIES^3 - TIES) / (n^3 - n)))</span></span>
+<span id="cb51-446"><a href="#cb51-446" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-447"><a href="#cb51-447" aria-hidden="true" tabindex="-1"></a>(<span class="dv">12</span><span class="sc">/</span>(n<span class="sc">*</span>(n<span class="sc">+</span><span class="dv">1</span>)))<span class="sc">*</span>((R1<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>n1 <span class="sc">+</span> (R2<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>n2 <span class="sc">+</span> (R3<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>n3) <span class="sc">-</span> <span class="dv">3</span><span class="sc">*</span>(n <span class="sc">+</span> <span class="dv">1</span>)</span>
 <span id="cb51-448"><a href="#cb51-448" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-449"><a href="#cb51-449" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-450"><a href="#cb51-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-449"><a href="#cb51-449" aria-hidden="true" tabindex="-1"></a>rstatix<span class="sc">::</span><span class="fu">kruskal_effsize</span>(value <span class="sc">~</span> sample,</span>
+<span id="cb51-450"><a href="#cb51-450" aria-hidden="true" tabindex="-1"></a>                         <span class="at">data =</span> kruskal_df)</span>
+<span id="cb51-451"><a href="#cb51-451" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-452"><a href="#cb51-452" aria-hidden="true" tabindex="-1"></a>rstatix<span class="sc">::</span><span class="fu">dunn_test</span>(value <span class="sc">~</span> sample,</span>
+<span id="cb51-453"><a href="#cb51-453" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> kruskal_df)</span>
+<span id="cb51-454"><a href="#cb51-454" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-455"><a href="#cb51-455" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-456"><a href="#cb51-456" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-457"><a href="#cb51-457" aria-hidden="true" tabindex="-1"></a></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

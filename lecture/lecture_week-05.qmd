@@ -34,6 +34,7 @@ library(palmerpenguins)
 library(car)
 library(effectsize)
 library(rstatix)
+library(dunn.test)
 ```
 
 ## 1. Math
@@ -372,6 +373,12 @@ dunn_test(
   length_m ~ site,
   data = sharks_monterey,
   p.adjust.method = "bonferroni"
+)
+
+dunn.test(
+  x = sharks_monterey$length_m,
+  g = sharks_monterey$site,
+  method = "bonferroni"
 )
 
 kruskal_effsize(

@@ -94,12 +94,19 @@ soil_df <- tibble(
   # compaction
   force_mpa = round(rnorm(n = n, mean = 0.7, sd = 0.03), 3),
   # root length
-  root_mm = round(rnorm(n = n, mean = -1, sd = 0.02)*force_mpa, 3) + 5
+  root_mm = round(rnorm(n = n, mean = -1, sd = 0.02)*force_mpa, 3) + 5,
+  # soil salinity
+  salinity = round(rnorm(n = n, mean = 3, sd = 0.3)*force_mpa, 3)
 ) 
 
 ggplot(data = soil_df,
        aes(x = force_mpa,
            y = root_mm)) +
+  geom_point()
+
+ggplot(data = soil_df,
+       aes(x = force_mpa,
+           y = salinity)) +
   geom_point()
 
 soil_lm <- lm(
@@ -113,6 +120,9 @@ plot(soil_lm)
 summary(soil_lm)
 
 cor.test(soil_df$root_mm, soil_df$force_mpa,
+         method = "pearson")
+
+cor.test(soil_df$salinity, soil_df$force_mpa,
          method = "pearson")
 
 cor.test(soil_df$root_mm, soil_df$force_mpa,

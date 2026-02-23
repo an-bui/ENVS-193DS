@@ -102,21 +102,30 @@ ggplot(data = soil_df,
            y = root_mm)) +
   geom_point()
 
-soil_lm <- lm(root_mm ~ force_mpa,
-              data = soil_df)
+soil_lm <- lm(
+  root_mm ~ force_mpa,
+  data = soil_df
+)
 
 par(mfrow = c(2, 2))
 plot(soil_lm)
 
 summary(soil_lm)
 
-cor.test(soil_df$root_mm, soil_df$force_mpa)
+cor.test(soil_df$root_mm, soil_df$force_mpa,
+         method = "pearson")
 
-model_preds <- ggpredict(soil_lm,
-                         terms = "force_mpa [0.63:0.77 by = 0.01]") 
+cor.test(soil_df$root_mm, soil_df$force_mpa,
+         method = "spearman")
 
-ggpredict(soil_lm,
-          terms = "force_mpa [0.63:0.77 by = 0.01]") %>% 
+model_preds <- ggpredict(
+  soil_lm,
+  terms = "force_mpa [0.63:0.77 by = 0.01]"
+) 
+
+ggpredict(
+  soil_lm,
+  terms = "force_mpa [0.63:0.77 by = 0.01]") |> 
   plot(show_data = TRUE)
 
 flextable::as_flextable(soil_lm) 

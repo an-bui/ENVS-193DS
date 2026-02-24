@@ -4,6 +4,9 @@ editor: source
 published-title: "Due date"
 date: 2026-03-05
 date-modified: last-modified
+format: 
+  html:
+    toc-depth: 5
 ---
 
 [Due on Thursday 5 March at 11:59 PM]{style="color: #79ACBD; font-size: 24px;"}
@@ -23,12 +26,13 @@ Read the instructions carefully and make sure you have all the components on the
 4. Commit and push the `gitignore` and `.Rproj` files with the commit message: `initial commit`.
 5. Create two new folders in your `ENVS-193DS_homework-03` folder: one for `code` and another for `data`.
 6. Create a new Quarto or RMarkdown document for your homework submission in the `code` folder.
-7. At the top of your document, include a link to _your GitHub repository_.
+7. At the top of your document, include a link to _your GitHub repository_ as a hyperlink.
 8. Download the soil salinity data to your `data` folder.
-9. Do all of your set up (reading in packages/data) at the top of your .qmd file.
-  At minimum, you should have the following packages read in: `tidyverse`, `here`, and either `gt` or `flextable`. Other packages you may find useful would be `janitor` or `readxl`.  
-  Store the salinity data as an object called `salinity`.  
-  Store your personal data as an object with whatever name you think makes sense.  
+9. Do all of your set up (reading in packages/data) at the top of your .qmd file.  
+  - At minimum, you should have the following packages read in: `tidyverse` and `here`.  
+  - Other packages you may find useful would be `janitor` or `readxl`.  
+  - Store the salinity data as an object called `salinity`.  
+  - Store your personal data as an object with whatever name you think makes sense.  
 
 Throughout the course of doing your homework, make at least 10 commits and pushes to the remote.  
 
@@ -59,6 +63,7 @@ Try committing and pushing your changes here! Write an _informative_ commit mess
 Create a visualization that would be appropriate for showing the relationship between soil salinity (in mS/cm) and California pickleweed biomass (in g).  
 
 In addition to using the correct geometries, be sure to:  
+
 - relabel the x- and y-axes and include units  
 - use different colors from the `ggplot()` defaults  
 - use a different theme from the `ggplot()` default  
@@ -69,7 +74,8 @@ Try committing and pushing your changes here! Write an _informative_ commit mess
 
 #### c. Check your assumptions and run your test.  
 
-In the order that is appropriate, create separate sections to:  
+In the order that is appropriate, create separate sections using subheaders to:  
+
 - check your assumptions  
 - run your test  
 
@@ -92,7 +98,7 @@ In 1-3 sentences each, write about:
 - which test you used, and why  
 - your interpretation of your test (along with the appropriate summary of the test in parentheses)  
 
-:::{.callout-tip title="Double check your writing!" collapse="true"}
+:::{.callout-note title="Double check your writing!" collapse="true"}
 
 "We fail to reject the null hypothesis" or "We reject the null hypothesis" is not interpretation. This is a decision you made.  
 
@@ -108,7 +114,7 @@ Try committing and pushing your changes here! Write an _informative_ commit mess
 
 #### e. Write about the implications of your test.
 
-You're working on a team of people at this restoration site who are also concerned about pickleweed planting. In 1-3 sentences, write what you would communicate to them about the results of this test and what it means for pickleweed planting success at your site.   
+You're working on a team of people at this restoration site who are also concerned about pickleweed planting. In 2-3 sentences, write what you would communicate to them about the results of this test and what it means for pickleweed planting success at your site.   
 
 Be cognizant of your audience as you are writing: what would they need to know to take action?    
 
@@ -128,54 +134,47 @@ In your description, be specific about the tests, their components, and their re
 
 ### Problem 2. Personal data
 
-:::{.callout-note}
+:::{.callout-note title="Before doing this problem..." collapse="true"}
 Before doing this problem, update your spreadsheet with your new observations. Save your data as a .csv or .xlsx in your `data` folder.
 :::
 
-#### a. Data summarizing
+#### a. Updating your visualizations
 
-In 1-2 sentences, describe how you could summarize your data to compare your response variable between categories or groups of your choosing. For example, are you counting observations and comparing counts between groups? Are you taking the mean and comparing means between groups? Are you finding the maximum, minimum, range? Are you adding numbers together?  
+Revisit the visualizations you created in homework 2.  
 
-Be sure to describe _why_ comparing between the groups you chose is informative. For example, you might calculate the mean number of steps you take to compare between week days, but what about those weekdays is _different_ (e.g. "I could calculate the mean number of steps I took to compare average step count between weekdays because I have more classes on Monday than on any other day of the week, so I think I walk more on Monday.")
+Provide the code and output for _updated_ plots with your most recent observations.  
+
+**Note:** if you think that a _different_ plot type or _different_ variables would be more interesting to visualize, then change your plots!  
+
+You should have the annotated code and output for _two_ plots.  
+
+For each plot, be sure to:  
+
+- label the x- and y- axes and provide units
+- include the date of the most recent observation as a _subtitle_
+- clean up the visual clutter (e.g. grids, backgrounds)
+- use colors that are different from the `ggplot()` defaults
+
+:::{.callout-note title="Reuse your code!" collapse="true"}
+If you are happy with the plots you made for homework 2 (and you received full marks on those plots, or your revised plots), then reuse your code! You don't have to write completely new code for plots that you've already made.
+:::
 
 :::{.callout-tip}
 Try committing and pushing your changes here! Write an _informative_ commit message.
 :::
 
-#### b. Visualization
+#### b. Captions
 
-Using the summary you described in part a, **create a visualization of your data comparing your summarized response variable between groups**. If you are calculating a mean or median, show the underlying data in addition to your summary.  
-
-Use colors in your figure (that are not the default ggplot settings).  
-
-Make sure your axis labels are full, readable text (not just your column names).  
-
-:::{.callout-note}
-See [From Data to Viz](https://www.data-to-viz.com/) for new ideas for visualization.  
-:::
+In text (not in code), write captions for _both_ your figures.
 
 :::{.callout-tip}
 Try committing and pushing your changes here! Write an _informative_ commit message.
 :::
-
-#### c. Caption
-
-Write a _caption_ for your figure.
-
-:::{.callout-tip}
-Try committing and pushing your changes here! Write an _informative_ commit message.
-:::
-
-#### d. Table presentation
-
-Using `gt` or `flextable`, create a table with the same data summary that you describe in part a and visualized in part b. For example, if you described and visualized means, make a table with means. If you need to, round any numbers to one decimal point.  
-
-Display the output.  
 
 :::{.callout-tip}
 Try _rendering_ your document here! Commit and push your changes, then find the url to your rendered output (if you get stuck, see the video on Canvas and/or the Git/GitHub basics page under the "Resources" tab).
 
-Double check that your rendered document looks the way you would expect (e.g. tables all correct, text is formatted correctly). If not, go back and fix any issues or ask for help.
+Double check that your rendered document looks the way you would expect (e.g. figures all correct, text is formatted correctly). If not, go back and fix any issues or ask for help.
 :::
 
 ### Problem 3. Affective visualization
@@ -189,7 +188,7 @@ When thinking of affective visualization, you can expand your ideas of what data
 - [Jill Pelto's paintings](https://www.jillpelto.com/gallery-1)
 - [Lorraine Woodruff-Long's warming strips quilt ](https://www.instagram.com/p/C689Kybxget/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==)
 - [Stefanie Posavec and Giorgia Lupi's Dear Data project](https://www.dear-data.com/all)
-- [Environmental Graphiti](https://www.environmentalgraphiti.org/series-folder)  
+- [Environmental Graphiti](https://www.environmentalgraphiti.org/all-series)  
 
 See slides from the data visualization lecture for more ideas.
 
@@ -223,6 +222,17 @@ For example, if you are making a sculpture, you could draw your form and create 
 If you are making a digital drawing, you could draw an outline and start some color/tonal work without finishing your entire piece.
 :::
 
+:::{.callout-note title="You will need to have a _final_ version by workshop week 10. Plan accordingly!" collapse="true"}
+
+The timeline for your affective visualization is as follows:  
+
+- week 8-9: brainstorm, draft  
+- week 9: peer feedback in workshop  
+- week 10: present final version in workshop  
+
+That means you will have _one_ week between getting feedback and incorporating it into your final version. Plan accordingly.
+:::
+
 :::{.callout-tip}
 Try committing and pushing your changes here! Write an _informative_ commit message.
 
@@ -235,17 +245,49 @@ An artist statement gives the audience context to understand your work. For each
 
 - the content of your piece (what are you showing?)
 - the influences (what did techniques/artists/etc. did you find influential in creating your work?)
-- the form of your work (watercolor, oil painting, etc.)
+- the form of your work (watercolor, oil painting, crocheted object, etc.)
 - your process (how did you create your work?)
 
 :::{.callout-tip}
 Try committing and pushing your changes here! Write an _informative_ commit message.
 :::
 
-:::{.callout-note title="This is prep for workshop during week 9!"}
-During week 9, we will spend time providing peer review for your affective visualization. If you turn in your homework next Thursday, you will have a draft of your affective visualization and artist statement that is ready for peer review.  
+#### e. Prep your materials to share in class.
 
-_You will only earn a token for workshop attendance week 9 if you have a draft of your visualization and artist statement to share for peer review. No exceptions._
+In workshop week 9, you will present your draft and providing feedback on your learning partners' drafts.  
+
+To prepare for this, create a presentation on Google slides with:  
+
+- one slide on:  
+  - your project's central question and why you wanted to ask that question  
+  - the main variables (one response and one predictor) that you are measuring and how you think your predictor variable influences your response variable    
+- one slide on:  
+  - the other variables you measured and how each of them relate to your main variable  
+- one slide depicting one of the two visualizations you made for homework 2, updated to include your new observations  
+- one slide on:  
+  - your idea for your affective visualization  
+  - what inspiration you took from which sources  
+  - the medium in which you will create your affective visualization
+- one slide on:
+  - your draft
+  - your anticipated artist statement
+  - the feedback that would be most helpful to you at this particular point (e.g. "I need help figuring out what other variables to depict and how", "I think these colors work but I'm not sure - are there better ones?")  
+  
+**In your homework submission, include a "View" link to your slides as a _hyperlink_.**
+  
+:::{.callout-note title="Go look at your previous homework assignments to get this information!"}
+
+You already have thoughts down on most of the points you should be hitting in your slides from your homework assignments. Go back and find that information so that you don't have to write completely new text!
+:::
+
+:::{.callout-note title="This is prep for workshop during week 9!"}
+During week 9, we will spend time providing peer review for your affective visualization. If you turn in your homework next Thursday, you will have created your slides.  
+
+_You will only earn a token for workshop attendance week 9 if you have slides ready to share. No exceptions._
+:::
+
+:::{.callout-tip}
+Try committing and pushing your changes here! Write an _informative_ commit message.
 :::
 
 ### Problem 4. Statistical critique
@@ -266,7 +308,7 @@ Try committing and pushing your changes here! Write an _informative_ commit mess
 
 #### b. Visual clarity
 
-In 1-3 sentences, answer the question that best fits your paper.  
+In 2-4 sentences, answer the question that best fits your paper.  
 
 If you inserted a figure in Part a: How clearly did the authors _visually_ represent their statistics in figures? For example, are the x- and y-axes in a logical position? Do they show summary statistics (means and SE, for example) and/or model predictions, and if so, do they show the underlying data?  
 
@@ -284,21 +326,21 @@ In 2-4 sentences, answer the question that best fits your paper.
 
 If you inserted a figure in Part a: How well did the authors handle "visual clutter"? How would you describe the the data:ink ratio?  
 
-Remember that data:ink ratio is _not_ an actual ratio, but a way of thinking about the amount of visual clutter relative to the information being presented.  
-
 If you inserted a table in Part b: How well did the authors handle "visual clutter"? Is there any bolding/italic text to draw your eye to specific numbers?   
 
-If you have neither: Critique another figure or table in the text for aesthetic clarity (and insert a screenshot of that figure/table in your submission).
+If you have neither: Critique another figure or table in the text for aesthetic clarity (and insert a screenshot of that figure/table in your submission).  
+
+Remember that data:ink ratio is _not_ an actual ratio, but a way of thinking about the amount of visual clutter relative to the information being presented.  
 
 :::{.callout-tip}
 Try committing and pushing your changes here! Write an _informative_ commit message.
 :::
 
-#### d. Recommendations (can be longer than 4 sentences)
+#### d. Recommendations
 
-What recommendations would you make to make the figure or table better? What would you take out, add, or change? Provide explanations/justifications for each of your recommendations.  
+In 2-4 sentences, outline what recommendations would you make to make the figure or table better. What would you take out, add, or change? Provide explanations/justifications for each of your recommendations.  
 
-**Alternatively**, if they did not represent their statistics in a figure, what kind of figure would you recommend to them? Describe the x- and y-axes, with any geometries and aesthetics (colors, etc.). Provide enough explanation such that someone would be able to create the figure you describe in code. Provide explanations/justifications for the figure you would recommend.    
+**Alternatively**, if the authors did not represent their statistics in a figure, what kind of figure would you recommend to them? Describe the x- and y-axes, with any geometries and aesthetics (colors, etc.). Provide enough explanation such that someone would be able to create the figure you describe in code. Provide explanations/justifications for the figure you would recommend.    
 
 :::{.callout-tip}
 Try committing and pushing your changes here! Write an _informative_ commit message.
@@ -320,7 +362,7 @@ Your GitHub repository should:
 Your rendered html should:  
 
 - [ ] be organized and readable (for example: no messages, warnings, etc., text is formatted correctly with subscripts or mathematical notation where necessary, text and headers are clearly different)  
-- [ ] include a floating table of contents (see code from workshop 7 and 8 for a reference in Quarto and RMarkdown)  
+- [ ] include a floating table of contents (see code from workshop 7 and 8 for a reference in the YAML at the top of the `.qmd` file)  
 
 Additionally, your rendered html should include only the components listed below:  
 
@@ -331,24 +373,25 @@ Additionally, your rendered html should include only the components listed below
 for Problem 1:  
 
 - [ ] written responses for a
-- [ ] code with annotations and output for b
-- [ ] code with annotations and output with writing for c
+- [ ] annotated code and output for b
+- [ ] annotated code, its output, and written responses for c
 - [ ] written responses for d
-- [ ] written responses for e
+- [ ] annotated code, its output, and written responses for e
 
 for Problem 2:  
 
 - [ ] written responses for a
-- [ ] code with annotations and output for b
+- [ ] annotated code and output for b
 - [ ] written responses for c
-- [ ] code with annotations and output for d
+- [ ] annotated code and output for d
 
 for Problem 3:  
 
 - [ ] written responses for a
 - [ ] image for b
-- [ ] image and/or code with annotations and output for c
+- [ ] image for c
 - [ ] written responses for d
+- [ ] link to your slides for e (make sure you share the link as a "View" link)
 
 for Problem 4:  
 

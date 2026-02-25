@@ -9,6 +9,9 @@ citation:
 ```{r libraries}
 # cleaning
 library(tidyverse)
+library(readxl)
+library(here)
+library(janitor)
 
 # visualization
 theme_set(theme_classic() +
@@ -31,6 +34,13 @@ library(broom)
 library(DHARMa)
 library(MuMIn)
 library(gtsummary)
+
+drought_exp <- read_xlsx(
+  # file path
+  here("data", "Valliere_etal_EcoApps_Data.xlsx"),
+  # specifying which sheet you want to read in
+  sheet = "First Harvest"
+)
 ```
 
 # multiple linear regression equation
@@ -250,9 +260,13 @@ tibble(
   herbivores = sample(x = c("absent", "present"), size = 10, replace = TRUE, prob = c(0.5, 0.5))
 )
 
-tibble(
+df <- tibble(
   fertilizer = sample(x = c("low", "medium", "high"), size = 10, replace = TRUE, prob = c(0.3, 0.3, 0.3))
-)
+) |> 
+  mutate(fertilizer = as_factor(fertilizer),
+         fertilizer = fct_relevel(fertilizer, "low", "medium", "high"))
+
+str(df)
 
 df <- tibble(
   year = sample(x = c("1st", "2nd", "3rd", "4th", "5th"), size = 20, replace = TRUE, prob = c(0.2, 0.2, 0.2, 0.2, 0.2))
@@ -534,5 +548,134 @@ c("lower" = model_summary$coef[2,1] - qt(0.975, df = model_summary$df[2]) * mode
 Confidence interval for a single coefficient:
 in words: estimate plus or minus the t-value at your confidence level * standard error
 
+# Valliere et al.
 
+```{r}
+drought_exp_clean <- drought_exp |> 
+  clean_names() |> 
+  mutate(water = case_when(
+    water == "WW" ~ "Well watered",
+    water == "DS" ~ "Drought stressed"
+  )) |> 
+  rename(treatment = water,
+         species_name = species) |> 
+  mutate(treatment = as_factor(treatment))
+
+
+str(drought_exp_clean)
+
+pull(drought_exp_clean, treatment)
+
+slice_sample(drought_exp_clean,
+             n = 10)
+
+ggplot(data = drought_exp_clean,
+       aes(x = sla,
+           y = total_g)) +
+  geom_point(color = "darkgreen")
+
+ggplot(data = drought_exp_clean,
+       aes(x = reorder(species_name, -sla),
+           y = sla,
+           color = species_name)) +
+  geom_jitter(height = 0,
+              width = 0.2) +
+  theme(legend.position = "none")
+
+ggplot(data = drought_exp_clean,
+       aes(x = treatment,
+           y = total_g,
+           color = treatment)) +
+  geom_jitter(height = 0,
+              width = 0.2) +
+  scale_color_manual(values = c(
+    "Well watered" = "lightseagreen",
+    "Drought stressed" = "orangered3"
+  )) +
+  theme(legend.position = "none")
+
+mod <- lm(
+  total_g ~ sla + treatment,
+  data = drought_exp_clean
+)
+
+model0 <- lm(
+  total_g ~ 1,
+  data = drought_exp_clean
+)
+
+model1 <- lm(
+  total_g ~ sla + treatment + species_name,
+  data = drought_exp_clean
+)
+
+model4 <- lm(
+  total_g ~ treatment + species_name,
+  data = drought_exp_clean
+)
+
+par(mfrow = c(2, 2))
+plot(mod)
+
+summary(mod)
+
+ggpredict(
+  mod,
+  terms = c("sla")
+) |> 
+  plot(show_data = TRUE)
+
+preds <- ggpredict(
+  mod,
+  terms = c("sla", "treatment")
+) |> 
+  rename(treatment = group)
+
+ggpredict(
+  mod,
+  terms = c("sla", "treatment")
+) |> 
+  plot(show_data = TRUE) +
+  scale_color_manual(values = c(
+    "Well watered" = "lightseagreen",
+    "Drought stressed" = "orangered3"
+  )) +
+  scale_fill_manual(values = c(
+    "Well watered" = "lightseagreen",
+    "Drought stressed" = "orangered3"
+  )) 
+
+as_flextable(mod)
+
+tbl_regression(mod)
+
+ggplot(data = drought_exp_clean,
+       aes(x = sla,
+           y = total_g)) +
+  geom_point(aes(color = treatment)) +
+  geom_ribbon(data = preds,
+              aes(x = x,
+                  y = predicted,
+                  ymin = conf.low,
+                  ymax = conf.high,
+                  fill = treatment),
+              alpha = 0.3) +
+  geom_line(data = preds,
+              aes(x = x,
+                  y = predicted,
+                  color = treatment)) +
+  scale_color_manual(values = c(
+    "Well watered" = "lightseagreen",
+    "Drought stressed" = "orangered3"
+  )) +
+  scale_fill_manual(values = c(
+    "Well watered" = "lightseagreen",
+    "Drought stressed" = "orangered3"
+  )) +
+  labs(x = "Specific leaf area (cm\U00B2/g)",
+       y = "Total mass (g)",
+       color = "Treatment",
+       fill = "Treatment")
+
+```
 

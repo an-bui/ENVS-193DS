@@ -1006,22 +1006,22 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">replace =</span> <span class="cn">TRUE</span></span>
 <span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>  ),</span>
 <span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">length =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">30</span>, <span class="at">mean =</span> <span class="fl">56.1</span>, <span class="at">sd =</span> <span class="dv">3</span>) <span class="sc">+</span> <span class="fl">1.2</span><span class="sc">*</span>age) <span class="sc">|&gt;</span> </span>
-<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">case_when</span>(</span>
-<span id="cb61-13"><a href="#cb61-13" aria-hidden="true" tabindex="-1"></a>    length <span class="sc">&gt;</span> <span class="fu">mean</span>(length) <span class="sc">~</span> <span class="st">"m"</span>,</span>
-<span id="cb61-14"><a href="#cb61-14" aria-hidden="true" tabindex="-1"></a>    length <span class="sc">&lt;</span> <span class="fu">mean</span>(length) <span class="sc">~</span> <span class="st">"f"</span></span>
+<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">curl =</span> <span class="fu">case_when</span>(</span>
+<span id="cb61-13"><a href="#cb61-13" aria-hidden="true" tabindex="-1"></a>    length <span class="sc">&gt;</span> <span class="fu">mean</span>(length) <span class="sc">~</span> <span class="st">"curl"</span>,</span>
+<span id="cb61-14"><a href="#cb61-14" aria-hidden="true" tabindex="-1"></a>    length <span class="sc">&lt;</span> <span class="fu">mean</span>(length) <span class="sc">~</span> <span class="st">"no curl"</span></span>
 <span id="cb61-15"><a href="#cb61-15" aria-hidden="true" tabindex="-1"></a>  ),</span>
 <span id="cb61-16"><a href="#cb61-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">length =</span> <span class="fu">case_when</span>(</span>
 <span id="cb61-17"><a href="#cb61-17" aria-hidden="true" tabindex="-1"></a>    species <span class="sc">==</span> <span class="st">"DesertBighorn"</span><span class="sc">~</span> length <span class="sc">+</span> <span class="fl">5.6</span>,</span>
 <span id="cb61-18"><a href="#cb61-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">.default =</span> length</span>
 <span id="cb61-19"><a href="#cb61-19" aria-hidden="true" tabindex="-1"></a>  ),</span>
 <span id="cb61-20"><a href="#cb61-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">length =</span> <span class="fu">case_when</span>(</span>
-<span id="cb61-21"><a href="#cb61-21" aria-hidden="true" tabindex="-1"></a>    sex <span class="sc">==</span> <span class="st">"m"</span> <span class="sc">~</span> length <span class="sc">+</span> <span class="fl">10.5</span>,</span>
-<span id="cb61-22"><a href="#cb61-22" aria-hidden="true" tabindex="-1"></a>    sex <span class="sc">==</span> <span class="st">"f"</span> <span class="sc">~</span> length</span>
+<span id="cb61-21"><a href="#cb61-21" aria-hidden="true" tabindex="-1"></a>    curl <span class="sc">==</span> <span class="st">"curl"</span> <span class="sc">~</span> length <span class="sc">+</span> <span class="fl">10.5</span>,</span>
+<span id="cb61-22"><a href="#cb61-22" aria-hidden="true" tabindex="-1"></a>    curl <span class="sc">==</span> <span class="st">"no curl"</span> <span class="sc">~</span> length</span>
 <span id="cb61-23"><a href="#cb61-23" aria-hidden="true" tabindex="-1"></a>  ))</span>
 <span id="cb61-24"><a href="#cb61-24" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb61-25"><a href="#cb61-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb61-26"><a href="#cb61-26" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
-<span id="cb61-27"><a href="#cb61-27" aria-hidden="true" tabindex="-1"></a>  length <span class="sc">~</span> age <span class="sc">+</span> species <span class="sc">+</span> sex,</span>
+<span id="cb61-27"><a href="#cb61-27" aria-hidden="true" tabindex="-1"></a>  length <span class="sc">~</span> age <span class="sc">+</span> species <span class="sc">+</span> curl,</span>
 <span id="cb61-28"><a href="#cb61-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sheep</span>
 <span id="cb61-29"><a href="#cb61-29" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb61-30"><a href="#cb61-30" aria-hidden="true" tabindex="-1"></a></span>
@@ -1042,7 +1042,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = length ~ age + species + sex, data = sheep)
+lm(formula = length ~ age + species + curl, data = sheep)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
@@ -1050,10 +1050,10 @@ Residuals:
 
 Coefficients:
                      Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)           65.0419     1.7327  37.538  &lt; 2e-16 ***
+(Intercept)           80.4463     2.4985  32.198  &lt; 2e-16 ***
 age                    0.6106     0.1725   3.541  0.00153 ** 
 speciesEasternSierra  -5.3184     0.9753  -5.453 1.02e-05 ***
-sexm                  15.4045     1.3227  11.646 8.11e-12 ***
+curlno curl          -15.4045     1.3227 -11.646 8.11e-12 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -1065,7 +1065,7 @@ F-statistic: 157.4 on 3 and 26 DF,  p-value: &lt; 2.2e-16</code></pre>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpredict</span>(</span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  mod,</span>
-<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"age"</span>, <span class="st">"species"</span>, <span class="st">"sex"</span>)</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"age"</span>, <span class="st">"species"</span>, <span class="st">"curl"</span>)</span>
 <span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
 <span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">show_data =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1924,22 +1924,22 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb65-386"><a href="#cb65-386" aria-hidden="true" tabindex="-1"></a>    <span class="at">replace =</span> <span class="cn">TRUE</span></span>
 <span id="cb65-387"><a href="#cb65-387" aria-hidden="true" tabindex="-1"></a>  ),</span>
 <span id="cb65-388"><a href="#cb65-388" aria-hidden="true" tabindex="-1"></a>  <span class="at">length =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">30</span>, <span class="at">mean =</span> <span class="fl">56.1</span>, <span class="at">sd =</span> <span class="dv">3</span>) <span class="sc">+</span> <span class="fl">1.2</span><span class="sc">*</span>age) <span class="sc">|&gt;</span> </span>
-<span id="cb65-389"><a href="#cb65-389" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">case_when</span>(</span>
-<span id="cb65-390"><a href="#cb65-390" aria-hidden="true" tabindex="-1"></a>    length <span class="sc">&gt;</span> <span class="fu">mean</span>(length) <span class="sc">~</span> <span class="st">"m"</span>,</span>
-<span id="cb65-391"><a href="#cb65-391" aria-hidden="true" tabindex="-1"></a>    length <span class="sc">&lt;</span> <span class="fu">mean</span>(length) <span class="sc">~</span> <span class="st">"f"</span></span>
+<span id="cb65-389"><a href="#cb65-389" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">curl =</span> <span class="fu">case_when</span>(</span>
+<span id="cb65-390"><a href="#cb65-390" aria-hidden="true" tabindex="-1"></a>    length <span class="sc">&gt;</span> <span class="fu">mean</span>(length) <span class="sc">~</span> <span class="st">"curl"</span>,</span>
+<span id="cb65-391"><a href="#cb65-391" aria-hidden="true" tabindex="-1"></a>    length <span class="sc">&lt;</span> <span class="fu">mean</span>(length) <span class="sc">~</span> <span class="st">"no curl"</span></span>
 <span id="cb65-392"><a href="#cb65-392" aria-hidden="true" tabindex="-1"></a>  ),</span>
 <span id="cb65-393"><a href="#cb65-393" aria-hidden="true" tabindex="-1"></a>  <span class="at">length =</span> <span class="fu">case_when</span>(</span>
 <span id="cb65-394"><a href="#cb65-394" aria-hidden="true" tabindex="-1"></a>    species <span class="sc">==</span> <span class="st">"DesertBighorn"</span><span class="sc">~</span> length <span class="sc">+</span> <span class="fl">5.6</span>,</span>
 <span id="cb65-395"><a href="#cb65-395" aria-hidden="true" tabindex="-1"></a>    <span class="at">.default =</span> length</span>
 <span id="cb65-396"><a href="#cb65-396" aria-hidden="true" tabindex="-1"></a>  ),</span>
 <span id="cb65-397"><a href="#cb65-397" aria-hidden="true" tabindex="-1"></a>  <span class="at">length =</span> <span class="fu">case_when</span>(</span>
-<span id="cb65-398"><a href="#cb65-398" aria-hidden="true" tabindex="-1"></a>    sex <span class="sc">==</span> <span class="st">"m"</span> <span class="sc">~</span> length <span class="sc">+</span> <span class="fl">10.5</span>,</span>
-<span id="cb65-399"><a href="#cb65-399" aria-hidden="true" tabindex="-1"></a>    sex <span class="sc">==</span> <span class="st">"f"</span> <span class="sc">~</span> length</span>
+<span id="cb65-398"><a href="#cb65-398" aria-hidden="true" tabindex="-1"></a>    curl <span class="sc">==</span> <span class="st">"curl"</span> <span class="sc">~</span> length <span class="sc">+</span> <span class="fl">10.5</span>,</span>
+<span id="cb65-399"><a href="#cb65-399" aria-hidden="true" tabindex="-1"></a>    curl <span class="sc">==</span> <span class="st">"no curl"</span> <span class="sc">~</span> length</span>
 <span id="cb65-400"><a href="#cb65-400" aria-hidden="true" tabindex="-1"></a>  ))</span>
 <span id="cb65-401"><a href="#cb65-401" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb65-402"><a href="#cb65-402" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb65-403"><a href="#cb65-403" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
-<span id="cb65-404"><a href="#cb65-404" aria-hidden="true" tabindex="-1"></a>  length <span class="sc">~</span> age <span class="sc">+</span> species <span class="sc">+</span> sex,</span>
+<span id="cb65-404"><a href="#cb65-404" aria-hidden="true" tabindex="-1"></a>  length <span class="sc">~</span> age <span class="sc">+</span> species <span class="sc">+</span> curl,</span>
 <span id="cb65-405"><a href="#cb65-405" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sheep</span>
 <span id="cb65-406"><a href="#cb65-406" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb65-407"><a href="#cb65-407" aria-hidden="true" tabindex="-1"></a></span>
@@ -1950,7 +1950,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb65-412"><a href="#cb65-412" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb65-413"><a href="#cb65-413" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpredict</span>(</span>
 <span id="cb65-414"><a href="#cb65-414" aria-hidden="true" tabindex="-1"></a>  mod,</span>
-<span id="cb65-415"><a href="#cb65-415" aria-hidden="true" tabindex="-1"></a>  <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"age"</span>, <span class="st">"species"</span>, <span class="st">"sex"</span>)</span>
+<span id="cb65-415"><a href="#cb65-415" aria-hidden="true" tabindex="-1"></a>  <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"age"</span>, <span class="st">"species"</span>, <span class="st">"curl"</span>)</span>
 <span id="cb65-416"><a href="#cb65-416" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
 <span id="cb65-417"><a href="#cb65-417" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">show_data =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb65-418"><a href="#cb65-418" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>

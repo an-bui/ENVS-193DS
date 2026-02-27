@@ -368,22 +368,22 @@ sheep <- tibble(
     replace = TRUE
   ),
   length = rnorm(n = 30, mean = 56.1, sd = 3) + 1.2*age) |> 
-  mutate(sex = case_when(
-    length > mean(length) ~ "m",
-    length < mean(length) ~ "f"
+  mutate(curl = case_when(
+    length > mean(length) ~ "curl",
+    length < mean(length) ~ "no curl"
   ),
   length = case_when(
     species == "DesertBighorn"~ length + 5.6,
     .default = length
   ),
   length = case_when(
-    sex == "m" ~ length + 10.5,
-    sex == "f" ~ length
+    curl == "curl" ~ length + 10.5,
+    curl == "no curl" ~ length
   ))
   
 
 mod <- lm(
-  length ~ age + species + sex,
+  length ~ age + species + curl,
   data = sheep
 )
 
@@ -394,7 +394,7 @@ summary(mod)
 
 ggpredict(
   mod,
-  terms = c("age", "species", "sex")
+  terms = c("age", "species", "curl")
 ) |> 
   plot(show_data = TRUE)
 ```

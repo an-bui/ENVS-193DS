@@ -1,6 +1,6 @@
 ---
 title: "Week 9 figures - Lecture 16"
-date: 2025-05-28
+date: 2026-03-02
 categories: [multiple linear regression, AIC]
 citation:
   url: https://spring-2025.envs-193ds.com/lecture/lecture_week-09.html
@@ -351,6 +351,53 @@ $$
 $$
 
 
+# bighorn sheep example
+
+length = 56.1 + 0.41 × Age + 5.6 × DesertBighorn
+
+
+```{r}
+set.seed(666)
+
+sheep <- tibble(
+  age = rpois(n = 30, lambda = 10),
+  species = sample(
+    c("DesertBighorn",
+      "EasternSierra"),
+    size = 30,
+    replace = TRUE
+  ),
+  length = rnorm(n = 30, mean = 56.1, sd = 3) + 1.2*age) |> 
+  mutate(sex = case_when(
+    length > mean(length) ~ "m",
+    length < mean(length) ~ "f"
+  ),
+  length = case_when(
+    species == "DesertBighorn"~ length + 5.6,
+    .default = length
+  ),
+  length = case_when(
+    sex == "m" ~ length + 10.5,
+    sex == "f" ~ length
+  ))
+  
+
+mod <- lm(
+  length ~ age + species + sex,
+  data = sheep
+)
+
+par(mfrow = c(2, 2))
+plot(mod)
+
+summary(mod)
+
+ggpredict(
+  mod,
+  terms = c("age", "species", "sex")
+) |> 
+  plot(show_data = TRUE)
+```
 
 
 

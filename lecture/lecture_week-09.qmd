@@ -201,6 +201,11 @@ summary(frog_mod2) # interaction
 model.sel(frog_mod1, # no interaction
           frog_mod2) # interaction
 
+AICc(
+  frog_mod1, # no interaction
+  frog_mod2 # interaction
+)
+
 ggpredict(frog_mod2,
           terms = c("weight [all]",
                     "color")) %>% 
@@ -361,9 +366,9 @@ set.seed(666)
 
 sheep <- tibble(
   age = rpois(n = 30, lambda = 10),
-  species = sample(
+  subspecies = sample(
     c("DesertBighorn",
-      "EasternSierra"),
+      "SierraNevada"),
     size = 30,
     replace = TRUE
   ),
@@ -373,7 +378,7 @@ sheep <- tibble(
     length < mean(length) ~ "no curl"
   ),
   length = case_when(
-    species == "DesertBighorn"~ length + 5.6,
+    subspecies == "DesertBighorn"~ length + 5.6,
     .default = length
   ),
   length = case_when(
@@ -383,7 +388,7 @@ sheep <- tibble(
   
 
 mod <- lm(
-  length ~ age + species + curl,
+  length ~ age + subspecies + curl,
   data = sheep
 )
 
@@ -394,7 +399,7 @@ summary(mod)
 
 ggpredict(
   mod,
-  terms = c("age", "species", "curl")
+  terms = c("age", "subspecies", "curl")
 ) |> 
   plot(show_data = TRUE)
 ```

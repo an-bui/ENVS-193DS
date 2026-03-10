@@ -1,9 +1,9 @@
 ---
 title: "Week 10 figures - Lectures 17 and 18"
-date: 2025-05-28
+date: 2026-03-10
 categories: [generalized linear model, logistic regression]
 citation:
-  url: https://spring-2025.envs-193ds.com/lecture/lecture_week-10.html
+  url: https://winter-2026.envs-193ds.com/lecture/lecture_week-10.html
 ---
 
 ```{r}
@@ -112,6 +112,18 @@ $$
 \eta = logit(p_i) = log(\frac{p_i}{1 - p_i})
 $$
 
+## inverse logit
+
+$$
+\frac{1}{1+e^{-x}}
+$$
+
+## model equation
+
+$$
+log(\frac{p}{1-p}) = 13.0974 - 0.6741 \times distance
+$$
+
 # binomial/bernoulli example
 
 ```{r}
@@ -155,6 +167,8 @@ liz_mod <- glm(pushup ~ distance,
 
 summary(liz_mod)
 
+plogis(13.0974)
+
 plot(
   simulateResiduals(liz_mod)
 )
@@ -162,7 +176,7 @@ plot(
 confint(liz_mod)
 
 mod_preds <- ggpredict(liz_mod,
-          terms = "distance [3:40 by = 1]") 
+                       terms = "distance [3:40 by = 1]") 
 
 ggplot(lizard,
        aes(x = distance,
@@ -180,6 +194,10 @@ ggplot(lizard,
                 y = predicted)) +
   scale_y_continuous(limits = c(0, 1),
                      breaks = c(0, 1)) 
+
+# what is the probability of a pushup at 20cm?
+ggpredict(liz_mod,
+          terms = "distance [0]")
 
 # what is the probability of a pushup at 20cm?
 ggpredict(liz_mod,

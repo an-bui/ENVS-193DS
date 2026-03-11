@@ -11,11 +11,13 @@ citation:
 library(tidyverse)
 
 # visualization
-theme_set(theme_classic() +
+theme_set(theme_bw() +
             theme(panel.grid = element_blank(),
                   axis.text = element_text(size = 18),
                   axis.title = element_text(size = 18),
-                  text = element_text(family = "Lato")))
+                  text = element_text(family = "Lato"),
+                  strip.text = element_text(size = 16),
+                  strip.background = element_rect(fill = "#FFFFFF")))
 library(patchwork)
 library(ggeffects)
 library(flextable)
@@ -32,6 +34,9 @@ library(broom)
 library(DHARMa)
 library(MuMIn)
 library(lmtest)
+
+bats <- read_csv(here::here("data", 
+                      "Cleaned Inf MYLU Band Recap Data for Ecotraps Analysis.csv")) 
 ```
 
 # math notation
@@ -122,6 +127,16 @@ $$
 
 $$
 log(\frac{p}{1-p}) = 13.0974 - 0.6741 \times distance
+$$
+
+# bat equations
+
+$$
+log(\frac{p}{1-p}) = 5.9443 - 0.7178x
+$$
+
+$$
+log(\frac{p}{1-p}) = 0.9239 - 1.2317x
 $$
 
 # binomial/bernoulli example
@@ -300,4 +315,144 @@ lambda20 <- ggplot(pois_df, aes(x = lambda20)) +
 lambda1 + lambda5 + lambda20
 ```
 
+# bat example
+
+```{r}
+#| fig-height: 8
+#| fig-width: 10
+bats_clean <- bats |> 
+  # create categories for disease load based on log-transformed values
+  mutate(disease_load = case_when(
+    logearlyloads < -3 ~ "low",
+    between(logearlyloads, -3, -2) ~ "moderate",
+    between(logearlyloads, -2, 0) ~ "high",
+  ),
+  # set factor levels for disease load: low --> high
+  disease_load = fct_relevel(disease_load, "low", "moderate", "high")) |> 
+  # rename columns for clearer interpretation
+  rename(recapture_prob = EverRecapturedYN.x,
+         temp = earlytemp) |> 
+  # select columns of interest
+  select(recapture_prob, temp, disease_load) |> 
+  filter(disease_load != "high")
+
+bat_mod <- glm(recapture_prob ~ temp * disease_load,
+               data = bats_clean,
+               family = "binomial")
+
+plot(
+  simulateResiduals(bat_mod)
+)
+
+summary(bat_mod)
+
+model_preds <- ggpredict(bat_mod, 
+                         terms = c("temp[4.5:12.3]", 
+                                   "disease_load")) |> 
+  rename(disease_load = group)
+
+model_preds_with0 <- ggpredict(bat_mod, 
+                         terms = c("temp[0:12.3]", 
+                                   "disease_load")) |> 
+  rename(disease_load = group)
+
+ggpredict(bat_mod,
+          terms = c("temp [0]",
+                    "disease_load"))
+
+ggpredict(bat_mod,
+          terms = c("temp [4.8]",
+                    "disease_load"))
+
+ggpredict(bat_mod,
+          terms = c("temp [12.3]",
+                    "disease_load"))
+
+ggplot(data = bats_clean,
+       aes(x = temp,
+           y = recapture_prob)) +
+  geom_point(aes(color = disease_load),
+             shape = 21) + 
+  scale_color_manual(values = c(
+    "low" = "tomato4",
+    "moderate" = "turquoise4"
+  )) +
+  scale_x_continuous(limits = c(4, 12.5),
+                     breaks = c(4, 6, 8, 10, 12)) +
+  facet_wrap(~ disease_load) +
+  theme(legend.position = "none")
+
+ggplot(data = bats_clean,
+       aes(x = temp,
+           y = recapture_prob)) +
+  geom_point(aes(color = disease_load),
+             shape = 21) +
+  geom_line(data = model_preds,
+            aes(x = x,
+                y = predicted,
+                color = disease_load),
+            linewidth = 2) +
+  geom_ribbon(data = model_preds,
+              aes(x = x,
+                  y = predicted,
+                  ymin = conf.low,
+                  ymax = conf.high,
+                  fill = disease_load),
+              alpha = 0.1) +
+  facet_wrap(~ disease_load) + 
+  scale_color_manual(values = c(
+    "low" = "tomato4",
+    "moderate" = "turquoise4"
+  )) +
+  scale_x_continuous(limits = c(4, 12.5),
+                     breaks = c(4, 6, 8, 10, 12)) +
+  theme(legend.position = "none")
+
+ggplot(data = model_preds_with0,
+       aes(x = x,
+           y = predicted)) +
+  geom_ribbon(aes(x = x,
+                  y = predicted,
+                  ymin = conf.low,
+                  ymax = conf.high,
+                  fill = disease_load),
+              alpha = 0.1) +
+  geom_line(aes(color = disease_load),
+            linewidth = 2) + 
+  scale_color_manual(values = c(
+    "low" = "tomato4",
+    "moderate" = "turquoise4"
+  )) +
+  scale_fill_manual(values = c(
+    "low" = "tomato4",
+    "moderate" = "turquoise4"
+  )) +
+  facet_wrap(~ disease_load) +
+  scale_x_continuous(limits = c(0, 12.5),
+                     breaks = c(0, 2, 4, 6, 8, 10, 12)) +
+  theme(legend.position = "none")
+
+ggplot(data = model_preds_with0,
+       aes(x = x,
+           y = predicted)) +
+  geom_point(data = bats_clean,
+             aes(x = temp,
+                 y = recapture_prob,
+                 color = disease_load),
+             shape = 21) +
+  geom_line(aes(color = disease_load),
+            linewidth = 2) + 
+  scale_color_manual(values = c(
+    "low" = "tomato4",
+    "moderate" = "turquoise4"
+  )) +
+  scale_fill_manual(values = c(
+    "low" = "tomato4",
+    "moderate" = "turquoise4"
+  )) +
+  facet_wrap(~ disease_load) +
+  scale_x_continuous(limits = c(0, 12.5),
+                     breaks = c(0, 2, 4, 6, 8, 10, 12)) +
+  theme(legend.position = "none")
+```
 

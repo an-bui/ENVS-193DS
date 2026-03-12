@@ -336,6 +336,11 @@ bats_clean <- bats |>
   select(recapture_prob, temp, disease_load) |> 
   filter(disease_load != "high")
 
+slice_sample(
+  bats_clean,
+  n = 10
+)
+
 bat_mod <- glm(recapture_prob ~ temp * disease_load,
                data = bats_clean,
                family = "binomial")
@@ -454,5 +459,7 @@ ggplot(data = model_preds_with0,
   scale_x_continuous(limits = c(0, 12.5),
                      breaks = c(0, 2, 4, 6, 8, 10, 12)) +
   theme(legend.position = "none")
+
+as_flextable(bat_mod)
 ```
 

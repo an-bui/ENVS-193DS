@@ -36,12 +36,12 @@ library(MuMIn)
 library(lmtest)
 
 bats <- read_csv(here::here("data", 
-                      "Cleaned Inf MYLU Band Recap Data for Ecotraps Analysis.csv")) 
+                            "Cleaned Inf MYLU Band Recap Data for Ecotraps Analysis.csv")) 
 ```
 
 # math notation
 
-## simple linear regression
+### simple linear regression
 
 $$
 E[y_i] = a + bx_i
@@ -51,7 +51,7 @@ $$
 var[y_i] = s^2
 $$
 
-## generalized form:
+### generalized form:
 
 $$
 E[y_i] = a + bx_i
@@ -61,9 +61,9 @@ $$
 var[y_i] = v(E[y_i])
 $$
 
-# GLM structure using Gaussian example
+## GLM structure using Gaussian example
 
-## random component
+### random component
 
 $$
 Y_i \sim N(\mu_i, \sigma^2)
@@ -73,7 +73,7 @@ $$
 Y_i \sim Normal(\mu_i, \sigma^2)
 $$
 
-## systematic component
+### systematic component
 
 $$
 \eta_i = \sum^{p-1}_{n = 0}\beta_jx_{ij}
@@ -83,23 +83,23 @@ $$
 \mu_i = \beta_0 + \beta x_i
 $$
 
-## link
+### link
 
 $$
 \eta = g(\mu_i) 
 $$
 
-# GLM structure using binary example
+## GLM structure using binary example
 
-## random
+### random
 
 $$
 E(Y) = p
 $$
 
-## systematic
+### systematic
 
-## link
+### link
 
 $$
 \eta = g(p) = log(\frac{p_i}{1 - p_i})
@@ -117,19 +117,19 @@ $$
 \eta = logit(p_i) = log(\frac{p_i}{1 - p_i})
 $$
 
-## inverse logit
+### inverse logit
 
 $$
 \frac{1}{1+e^{-x}}
 $$
 
-## model equation
+### model equation
 
 $$
 log(\frac{p}{1-p}) = 13.0974 - 0.6741 \times distance
 $$
 
-# bat equations
+## bat equations
 
 $$
 log(\frac{p}{1-p}) = 5.9443 - 0.7178x
@@ -317,10 +317,11 @@ lambda1 + lambda5 + lambda20
 
 # bat example
 
+## cleaning and displaying rows
+
 ```{r}
-#| fig-height: 8
-#| fig-width: 10
 bats_clean <- bats |> 
+  mutate(date.x = mdy(date.x)) |> 
   # create categories for disease load based on log-transformed values
   mutate(disease_load = case_when(
     logearlyloads < -3 ~ "low",
@@ -330,18 +331,23 @@ bats_clean <- bats |>
   # set factor levels for disease load: low --> high
   disease_load = fct_relevel(disease_load, "low", "moderate", "high")) |> 
   # rename columns for clearer interpretation
-  rename(recapture_prob = EverRecapturedYN.x,
+  rename(recaptured_yn = EverRecapturedYN.x,
          temp = earlytemp) |> 
   # select columns of interest
-  select(recapture_prob, temp, disease_load) |> 
+  select(recaptured_yn, temp, disease_load) |> 
   filter(disease_load != "high")
 
 slice_sample(
   bats_clean,
   n = 10
 )
+```
 
-bat_mod <- glm(recapture_prob ~ temp * disease_load,
+
+## fitting model and looking at diagnostics
+
+```{r}
+bat_mod <- glm(recaptured_yn ~ temp * disease_load,
                data = bats_clean,
                family = "binomial")
 
@@ -350,14 +356,18 @@ plot(
 )
 
 summary(bat_mod)
+```
 
+## generating predictions
+
+```{r}
 model_preds <- ggpredict(bat_mod, 
-                         terms = c("temp[4.5:12.3]", 
+                         terms = c("temp[all]", 
                                    "disease_load")) |> 
   rename(disease_load = group)
 
 model_preds_with0 <- ggpredict(bat_mod, 
-                         terms = c("temp[0:12.3]", 
+                         terms = c("temp[0:12.3 by = 0.1]", 
                                    "disease_load")) |> 
   rename(disease_load = group)
 
@@ -370,16 +380,28 @@ ggpredict(bat_mod,
                     "disease_load"))
 
 ggpredict(bat_mod,
+          terms = c("temp [8.0]",
+                    "disease_load"))
+
+ggpredict(bat_mod,
           terms = c("temp [12.3]",
                     "disease_load"))
+```
+
+## plotting
+
+```{r}
+#| fig-height: 6
+#| fig-width: 10
+
 
 ggplot(data = bats_clean,
        aes(x = temp,
-           y = recapture_prob)) +
+           y = recaptured_yn)) +
   geom_point(aes(color = disease_load),
              shape = 21) + 
   scale_color_manual(values = c(
-    "low" = "tomato4",
+    "low" = "tomato2",
     "moderate" = "turquoise4"
   )) +
   scale_x_continuous(limits = c(4, 12.5),
@@ -389,7 +411,7 @@ ggplot(data = bats_clean,
 
 ggplot(data = bats_clean,
        aes(x = temp,
-           y = recapture_prob)) +
+           y = recaptured_yn)) +
   geom_point(aes(color = disease_load),
              shape = 21) +
   geom_line(data = model_preds,
@@ -404,13 +426,19 @@ ggplot(data = bats_clean,
                   ymax = conf.high,
                   fill = disease_load),
               alpha = 0.1) +
-  facet_wrap(~ disease_load) + 
+  facet_wrap(~ disease_load,
+             labeller = labeller(
+               disease_load = c(low = "Low disease load", 
+                                moderate = "Moderate disease load")
+             )) + 
   scale_color_manual(values = c(
-    "low" = "tomato4",
+    "low" = "tomato2",
     "moderate" = "turquoise4"
   )) +
   scale_x_continuous(limits = c(4, 12.5),
                      breaks = c(4, 6, 8, 10, 12)) +
+  labs(x = "Temperature (\U00B0 C)",
+       y = "Probability of recapture success") +
   theme(legend.position = "none")
 
 ggplot(data = model_preds_with0,
@@ -425,11 +453,11 @@ ggplot(data = model_preds_with0,
   geom_line(aes(color = disease_load),
             linewidth = 2) + 
   scale_color_manual(values = c(
-    "low" = "tomato4",
+    "low" = "tomato2",
     "moderate" = "turquoise4"
   )) +
   scale_fill_manual(values = c(
-    "low" = "tomato4",
+    "low" = "tomato2",
     "moderate" = "turquoise4"
   )) +
   facet_wrap(~ disease_load) +
@@ -442,17 +470,17 @@ ggplot(data = model_preds_with0,
            y = predicted)) +
   geom_point(data = bats_clean,
              aes(x = temp,
-                 y = recapture_prob,
+                 y = recaptured_yn,
                  color = disease_load),
              shape = 21) +
   geom_line(aes(color = disease_load),
             linewidth = 2) + 
   scale_color_manual(values = c(
-    "low" = "tomato4",
+    "low" = "tomato2",
     "moderate" = "turquoise4"
   )) +
   scale_fill_manual(values = c(
-    "low" = "tomato4",
+    "low" = "tomato2",
     "moderate" = "turquoise4"
   )) +
   facet_wrap(~ disease_load) +

@@ -34,6 +34,7 @@ library(broom)
 library(DHARMa)
 library(MuMIn)
 library(lmtest)
+library(emmeans)
 
 bats <- read_csv(here::here("data", 
                             "Cleaned Inf MYLU Band Recap Data for Ecotraps Analysis.csv")) 
@@ -136,7 +137,7 @@ log(\frac{p}{1-p}) = 5.9443 - 0.7178x
 $$
 
 $$
-log(\frac{p}{1-p}) = 0.9239 - 1.2317x
+log(\frac{p}{1-p}) = 0.9239 - 0.2039x
 $$
 
 # binomial/bernoulli example
@@ -387,6 +388,17 @@ ggpredict(bat_mod,
           terms = c("temp [12.3]",
                     "disease_load"))
 ```
+
+## generating effects
+
+```{r}
+emtrends(bat_mod,
+         specs = "disease_load",
+         var = "temp")
+
+# moderate
+```
+
 
 ## plotting
 

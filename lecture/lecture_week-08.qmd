@@ -34,6 +34,7 @@ library(broom)
 library(DHARMa)
 library(MuMIn)
 library(gtsummary)
+library(emmeans)
 
 drought_exp <- read_xlsx(
   # file path
@@ -498,6 +499,8 @@ plot(model2)
 summary(model1)
 summary(model2)
 model.sel(model1, model2)
+emmeans(model2,
+        specs = c("weight", "color"))
 
 ggpredict(model1,
           terms = c("weight [2:4 by = 0.01]", 
@@ -630,6 +633,10 @@ preds <- ggpredict(
   terms = c("sla", "treatment")
 ) |> 
   rename(treatment = group)
+
+ggpredict(
+  mod,
+  terms = c("sla[0]", "treatment"))
 
 ggpredict(
   mod,

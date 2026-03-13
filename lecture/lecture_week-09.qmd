@@ -35,6 +35,7 @@ library(DHARMa)
 library(MuMIn)
 library(lmtest)
 library(equatiomatic)
+library(emmeans)
 ```
 
 ```{r}
@@ -195,6 +196,10 @@ frog_mod2 <- lm(toxicity ~ weight * color, # interaction
 simulateResiduals(frog_mod1) %>% plot() # no interaction
 simulateResiduals(frog_mod2) %>% plot() # interaction
 
+emtrends(frog_mod2,
+         specs = "color",
+         var = "weight")
+
 summary(frog_mod1) # no interaction
 summary(frog_mod2) # interaction
 
@@ -205,6 +210,10 @@ AICc(
   frog_mod1, # no interaction
   frog_mod2 # interaction
 )
+
+ggpredict(frog_mod2,
+          terms = c("weight [0]",
+                    "color"))
 
 ggpredict(frog_mod2,
           terms = c("weight [all]",

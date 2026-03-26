@@ -1,37 +1,42 @@
 ---
 title: "Coding workshop: Week 3"
 subtitle: "basic t-tests and their assumptions"
-categories: [tidyverse, lterdatasampler, data, geom_qq, geom_qq_line, facet_wrap, var.test, t.test, rownames_to_column, geom_pointrange, pipe operators, '|>', mutate, case_when, gglpot, geom_boxplot, geom_jitter, geom_histogram, group_by, summarize]
+date: 2026-04-17
+categories: [tidyverse, lterdatasampler, data, geom_qq, geom_qq_line, facet_wrap, var.test, t.test, rownames_to_column, geom_pointrange, pipe operators, '|>', mutate, case_when, gglpot, geom_boxplot, geom_jitter, geom_histogram, group_by, ungroup, summarize]
 ---
 
-[Workshop date: 23 January]{style="color: #79ACBD; font-size: 24px;"}
+[Workshop date: Friday 17 April]{style="color: #79ACBD; font-size: 24px;"}
 
 ## 1. Summary
 
 ### Packages
-- `tidyverse`  
-- `lterdatasampler`  
+
+- `tidyverse`
+- `lterdatasampler`
 
 ### Operations
 
 #### New functions
-- display data from package using `data()`  
-- visualize QQ plots using `geom_qq()` and `geom_qq_line()`  
-- create multi-panel plots using `facet_wrap()`  
-- compare group variances using `var.test()`  
-- do t-tests using `t.test()`  
-- make rownames into a separate column using `rownames_to_column()`  
+
+- display data from package using `data()`
+- visualize QQ plots using `geom_qq()` and `geom_qq_line()`
+- create multi-panel plots using `facet_wrap()`
+- compare group variances using `var.test()`
+- do t-tests using `t.test()`
+- make rownames into a separate column using `rownames_to_column()`
 - use `geom_pointrange()` to show means and 95% CI
 
 #### Review
-- chain functions together using ` |> `  
-- filtering observations using `filter()`  
-- manipulate columns using `mutate()` and `case_when()`  
-- visualize data using `ggplot()`  
-- create boxplots using `geom_boxplot()` and show observation values using `geom_jitter()`  
-- create histograms using `geom_histogram()`  
-- group data using `group_by()`  
-- summarize data using `summarize()`  
+
+- chain functions together using ` |> `
+- filtering observations using `filter()`
+- manipulate columns using `mutate()` and `case_when()`
+- visualize data using `ggplot()`
+- create boxplots using `geom_boxplot()` and show observation values using `geom_jitter()`
+- create histograms using `geom_histogram()`
+- group data using `group_by()`
+- undo grouping using `ungroup()`
+- summarize data using `summarize()`
 
 ### General Quarto formatting tips
 
@@ -101,9 +106,9 @@ Name the code chunk `boxplot with jitter`.
 ```{r boxplot-and-jitter}
 # base layer: ggplot
 ggplot(data = maples_2003, # starting data frame
-       aes(x = watershed, # x-axis
-           y = stem_length, # y-axis
-           color = watershed)) + # coloring by watershed
+       mapping = aes(x = watershed, # x-axis
+                     y = stem_length, # y-axis
+                     color = watershed)) + # coloring by watershed
   # first layer: boxplot
   geom_boxplot() +
   # second layer: jitter plot
@@ -119,7 +124,7 @@ Use `facet_wrap()` to create separate panels for each watershed.
 
 ```{r histogram}
 ggplot(data = maples_2003, # starting data frame
-       aes(x = stem_length)) + # x-axis (no y-axis for histogram)
+       mapping = aes(x = stem_length)) + # x-axis (no y-axis for histogram)
   geom_histogram(bins = 6) + # number of bins from Rice Rule
   facet_wrap(~watershed) # creating two panels to show watersheds separately
 ```
@@ -131,7 +136,7 @@ Use `facet_wrap()` to create separate panels for each watershed.
 ```{r qq-plot}
 # base layer: ggplot call
 ggplot(data = maples_2003, # starting data frame
-       aes(sample = stem_length)) + # y-axis for QQ plot (no x-axis for QQ plot)
+       mapping = aes(sample = stem_length)) + # y-axis for QQ plot (no x-axis for QQ plot)
   # first layer: QQ reference line 
   geom_qq_line(color = "blue") + # showing this in blue so it's easier to see
   # second layer: QQ plot
@@ -150,7 +155,8 @@ Next, we'll check our variances. We can make sure we know where the F test resul
 # calculate variances
 stem_length_var <- maples_2003 |> # starting data frame
   group_by(watershed) |> # group by watershed
-  summarize(variance = var(stem_length)) # calculate variances
+  summarize(variance = var(stem_length)) |> # calculate variances
+  ungroup()
 
 # calculate variance ratio (use this number to double check against results of var.test)
 205.7026/194.3021
@@ -214,10 +220,18 @@ In this code chunk, we are calculating the means and 95% confidence intervals. N
 
 ```{r ci-calculation}
 maples_ci <- maples_2003 |> # start with the maples_2003 data frame
-  group_by(watershed) |> # group by watershed
-  summarize(ci = mean_cl_normal(stem_length)) |> # calculate the 95% CI
-  deframe() |> # expand the data frame
-  rownames_to_column("watershed") # make the data frame rownames a column called "watershed"
+  group_by(watershed) |> # group by production type
+  summarize(mean = mean(stem_length), # calculate the mean
+            n = length(stem_length), # count the number of observations
+            df = n - 1, # calculate the degrees of freedom
+            sd = sd(stem_length), # calculate the standard deviation
+            se = sd/sqrt(n), # calculate the standard error
+            tval = qt(p = 0.05/2, df = df, lower.tail = FALSE), # find the t value
+            margin = tval*se, # calculate the margin of error
+            ci_lower = mean - margin, # calculate the lower bound of the confidence interval
+            ci_upper = mean + margin # calculate the upper bound of the confidence interval
+          ) |> 
+  ungroup() # ungrouping the data frame
 ```
 
 Before moving on, look at the `maples_ci` object to make sure you know what it contains.  
@@ -227,9 +241,9 @@ Note that this visualization uses two data frames. We use `maples_2003` to show 
 ```{r ci-visualization}
 # base layer: ggplot with the x- and y-axes
 ggplot(data = maples_2003, # using the maples_2003 data frame
-       aes(x = watershed, # x-axis
-           y = stem_length, # y-axis
-           color = watershed)) + # coloring points by watershed
+       mapping = aes(x = watershed, # x-axis
+                     y = stem_length, # y-axis
+                     color = watershed)) + # coloring points by watershed
   # first layer: showing the underlying data
   geom_jitter(height = 0, # no jitter in the vertical direction
               width = 0.1, # smaller jitter in the horizontal direction
@@ -239,8 +253,8 @@ ggplot(data = maples_2003, # using the maples_2003 data frame
   geom_pointrange(data = maples_ci, # using the maples_ci data frame
                   aes(x = watershed, # x-axis
                       y = y, # y-axis
-                      ymax = ymax, # upper bound of confidence interval
-                      ymin = ymin)) + # lower bound of confidence interval
+                      ymax = ci_lower, # upper bound of confidence interval
+                      ymin = ci_upper)) + # lower bound of confidence interval
   labs(x = "Watershed", # labeling the axes
        y = "Stem length (cm)") +
   # figure customization
@@ -278,6 +292,8 @@ Summarize the results of the t-test in one sentence. Before you do, make sure yo
 4. p-value  
 
 **p < 0.001 (don't need to give exact number for anything below 0.001)**  
+
+Results summary:  
 
 **We found a significant difference in sugar maple stem lengths between calcium-treated (n = 120) and reference (n = 120) watersheds (Student's t-test, t(238) = 3.8, p < 0.001, $\alpha$ = 0.05).**      
 

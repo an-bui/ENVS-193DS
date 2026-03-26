@@ -2,12 +2,12 @@
 title: "Homework 1"
 editor: source
 published-title: "Due date"
-date: 2026-01-22
+date: 2026-04-17
 date-modified: last-modified
 categories: [homework]
 ---
 
-[Due on Thursday 22 January at 11:59 PM]{style="color: #79ACBD; font-size: 24px;"}
+[Due on Thursday 17 April at 11:59 PM]{style="color: #79ACBD; font-size: 24px;"}
 
 Read these instructions before starting your homework and follow them carefully. See the end of this assignment for a checklist of components that your assignment must have at minimum to qualify for revision/resubmission. Only submit the items in that list, in the order requested.
 
@@ -19,7 +19,7 @@ You will not need to submit any materials for tasks, but you are expected to com
 
 ### Task 1. Read the class guidelines and policies on using AI
 
-If you think you might use any AI tools (e.g. Copilot, ChatGPT, Claude), read the [guidelines and policies](https://winter-2026.envs-193ds.com/resources/genai) before starting your assignment.
+If you think you might use any AI tools (e.g. Copilot, ChatGPT, Claude), read the [guidelines and policies](https://spring-2026.envs-193ds.com/resources/genai) before starting your assignment.
 
 ### Task 2. Set up your folders and `.Rproj` file
 
@@ -72,16 +72,16 @@ Then, click through to the "Introduction to Metadata" page (under "Learn") and r
 
 ### Problem 1. Measures of central tendency and data spread
 
-Bird egg size can be an indicator of survival success of young birds - the more massive the egg, the higher the chances of survival. You've measured the following masses (in g) from a nest of California Towhee eggs:
+Snout-to-vent length (SVL, measured in mm) is a common characteristic to measure to characterize frog size. You measure the SVL for 7 Baja California treefrogs (_Pseudacris hypochondriaca_):
 
 $$
-3.92, 4.03, 4.15, 4.00, 4.10, 4.12
+36, 33, 32, 28, 36, 31, 33
 $$
 
   a. In one sentence, categorize this data set: what type of data did you collect, and why is it that type?  
-  b. Calculate the sample mean. Express your answer with the correct units and round to 2 decimal points. Show your work in code.  
-  c. Calculate the sample variance. Express your answer with the correct units and round to 2 decimal points. Show your work in code.  
-  d. Calculate the sample standard deviation. Express your answer with the correct units and round to 2 decimal points. Show your work in code.  
+  b. Calculate the sample mean, showing your work with annotated code. In writing, express your answer with the correct units and round to the nearest whole number.
+  c. Calculate the sample variance, showing your work with annotated code. In writing, express your answer with the correct units and round to the nearest whole number.
+  d. Calculate the sample standard deviation, showing your work with annotated code. In writing, express your answer with the correct units and round to the nearest whole number. 
 
 ### Problem 2. Visualizing data
 
@@ -131,66 +131,71 @@ d. Create a timeseries plot with points and a line representing cumulative sea l
 
 ### Problem 3. Personal data
 
-This quarter, you'll collect data from your own life to see how data science concepts are part of your daily existence. For this homework assignment, you'll come up with **two ideas for data collection**. The data you collect:  
+This quarter, you'll collect data from your own life to see how data science concepts are part of your daily existence. For this homework assignment, you'll plan your personal data project. The data you collect:  
 
 - has to be something you can get at least 30 observations on between week 4 and week 9 (e.g. minutes to get from ENVS 193DS to your next class, not number of shark views per week)  
 - has to be something that you could actually remember to write down (e.g. liters of water consumed in a day, not time spent on tiktok)  
 - has to be be shaped by a question    
 - has to include variables that would be *appropriate* to share with the class  
 
-For each idea you have (remember you have to come up with two ideas), you should:  
+For your idea, you should:  
 
-a. articulate a question   
-b. describe your response variable (i.e. your variable of interest)   
-c. describe your predictor variable   
-d. describe what variables you should measure or record that indicate the _time_ of the observation (for example: date or time of day) 
-e. describe 4 additional variables you think you should measure or record that could also influence your response variable     
-f. describe what type of data all your variables are with units   
-g. describe the sources of your data (e.g. phone step tracker, screen time tracker, self)   
-h. describe when you would take down data for an observation   
-i. design a data sheet with some example data: what are the columns and what are the rows?   
+a. articulate a question
+b. describe your response variable (i.e. your variable of interest) and its units
+c. describe your predictor variable and its units or levels
+d. describe what variables you should measure or record that indicate the _time_ of the observation (for example: date or time of day)
+e. describe 4 additional variables you think you should measure or record that could also influence your response variable and _what their effects might be_ 
+f. describe what type of data all your variables are with units
+g. describe the sources of all your variables (e.g. phone step tracker, screen time tracker, self)
+h. describe when you would take down data for an observation
+i. design a data sheet with some example data: what are the columns and what are the rows?
 
 :::{.callout-note title="Need an example? Here's An's." collapse="true"}
 
-a. Question: Does my run distance differ between work and non-work days?     
+a. Question: Does my run length differ across types of run?     
 b. My response variable is length of run, measured in miles.  
-c. My predictor variable is work day (yes or no).  
-d. I would record the date and time of day.  
-e. duration, average pace, cadence, temperature, elevation, type of run, run location, hydration level  
+c. My predictor variable is run type (road, trail, or mix).  
+d. I would record the date and time of day of each run.  
+e.  
+
+- duration: a longer time period spent running would lead to a longer distance run
+- average pace: a faster average pace might lead to a shorter run length because I am running faster but will likely get tired more quickly.
+- elevation: elevation would likely influence run length because the higher the elevation gain, the more strenuous the run. However, the run would likely be shorter because I would get tired.
+- run location: run location might influence how long I run for; if I run around the neighborhood, I might go for a shorter run than if I was at NCOS or in the front country because there are more places to explore.
+
 f.  
 
 - date (yyyy-mm-dd): continuous  
 - time of day (hh:mm, 24 hour time): continuous  
-- duration (mm:ss): continuous  
+- duration (minutes and seconds, in length of time): continuous  
 - length (miles): continuous  
 - average pace (min/mile): continuous  
-- cadence (steps/min): continuous  
-- temperature (F): continuous  
-- elevation (feet): continuous  
+- elevation gain (feet): continuous  
 - type of run (road, trail, mix): categorical    
 - run location (neighborhood, front country, NCOS, other): categorical   
-- hydration level (> 2 L, between 1-2 L, less than 1 L): categorical   
-- work day (yes/no): binary categorical   
 
-g. Date, time of day, duration, length, average pace, cadence, temperature, and elevation are all variables that I could get from Strava (a running tracking app). The 4 additional variables that I could _not_ get from Strava and could influence the length of my run are: type of run, run location, hydration level, and work day. I would assign these categories myself.    
+g. Date, time of day, duration, length, average pace, and elevation are all variables that I could get from Strava (a running tracking app). I would assign type of run and run location myself.    
 
 h. I would record my data after every run.  
 
 i. ![](/assignments/images/homework-01/example-data-sheet.png)
 :::
 
-:::{.callout-note title="When can I start collecting data?" collapse="true"}
-An will give you feedback and recommendations for what to pursue for this project on Canvas on Monday the 26th-Tuesday the 27th. That means that **you should be able to start collecting data by the end of week 4**, if not sooner.
-:::
-
 :::{.callout-note title="Using ordinal scales"}
-Lots of folks like to assign values to "productivity", "restedness", etc. For example, you could assign a study session some number between 1-5 in terms of productivity, where 1 is not at all productive and 5 is very productive.  
+Lots of folks like to assign values to "productivity", "restedness", etc.  
 
-If you plan on using a scale, you need to clearly articulate:  
-- what each number means (e.g. from a scale from 1-5, what does 1, 2, 3, 4, 5, mean), and  
-- how you would tell the difference between numbers (e.g. how would you tell the difference between 3 and 4)  
+For example, you could assign a study session some number between 1-5 in terms of productivity, where 1 is not at all productive and 5 is very productive. Alternatively, you might assign character levels "high", "medium", and "low" to daily energy level.  
+
+If you plan on using a scale defined by numbers or characters, you need to clearly articulate:  
+
+- what each number/character means (e.g. from a scale from 1-5, what does 1, 2, 3, 4, 5, mean), and  
+- how you would tell the difference between levels (e.g. how would you tell the difference between "high" and "low")  
 
 Usually, this means you will have to determine what defines "productivity". Is it number of pages you wrote in a paper? Does it mean the number of minutes spent in a word doc or R script? You have to decide what numerical tools you will use to assign a level to each "study session".
+:::
+
+:::{.callout-note title="When can I start collecting data?" collapse="true"}
+You will receive feedback on your ideas after you turn in your assignment. That means that **you should be able to start collecting data by the end of week 4**, if not sooner.
 :::
 
 ### Problem 4. Setting up statistical critique
@@ -209,8 +214,7 @@ a. For each paper, read the Abstract to get a general sense of what the paper is
     - Linear model or linear regression  
     - Spearman correlation  
     - Pearson correlation  
-    - logistic regression  
-    - Generalized linear mixed effect model  
+    - logistic regression OR binomial model
     
 b. Once you’ve verified that your paper includes at least one of the above listed terms, find the [digital object identifier (DOI)](https://www.doi.org/the-identifier/what-is-a-doi/), which is a unique identifier in the form of a URL for a paper. You will know it is a DOI if it has **doi.org** somewhere in the URL.  
 c. Once you find the DOI for your paper, add it to the [Google form](https://docs.google.com/forms/d/e/1FAIpQLSf7DYvu5BSmCSsB-XOBEYO3EKr9p_36yMGuhknF7PqT-HQz4w/viewform?usp=publish-editor). Repeat this for all three papers.   
@@ -220,9 +224,12 @@ If you want to see what other people have chosen, see the class responses [here]
 :::
 
 d. In your homework document, list the papers in alphabetical order by author last name.   
+
 Your citations should take the form:  
 Last name, first name, et al. Year. “Paper title.” _Journal title_ volume:issue. DOI.   
+
 Example:  
+
 Sanford, E., et al. 2019. “Widespread shifts in the coastal biota of northern California during the 2014–2016 marine heatwaves.” _Scientific Reports_ 9:4216. [https://doi.org/10.1038/s41598-019-40784-3](https://doi.org/10.1038/s41598-019-40784-3).  
   
 
@@ -230,10 +237,10 @@ Sanford, E., et al. 2019. “Widespread shifts in the coastal biota of northern 
 
 Your assignment should:
 
-- [ ] include your name, the title, and the date   
-- [ ] include all code with annotations   
-- [ ] be organized and readable (for example: no messages, warnings, etc., text is formatted correctly with subscripts or mathematical notation where necessary, text and headers are clearly different)     
-- [ ] be uploaded to Canvas as a single PDF or .docx   
+- [ ] include your name, the title, and thes date   
+- [ ] include all code with annotations (see "General formatting components" for details)   
+- [ ] be organized and readable (see "General formatting components" for details)     
+- [ ] be a rendered PDF (_not_ a .docx or .html converted to a PDF) 
 
 Your responses should include:  
 
@@ -268,11 +275,11 @@ You will only receive full marks for readability if:
 
 ### I'm having trouble rendering to PDF. What can I do?
 
-You could either install all the additional things R is asking for you to install, or you can render to a word doc instead (change `pdf` in the top part of the document to `docx`) and save that doc as a PDF. 
+Run `quarto install tinytex` in the Terminal (the tab _next_ to the Console in RStudio).
 
 ### I don't know how to insert an image into a Quarto document. How do I do that?
 
-Here is a [resource for Quarto](https://quarto.org/docs/authoring/figures.html). If you rendered your Quarto file to a word document, you can insert an image into that word document the same way you would with any other word doc.
+Here is a [resource for Quarto](https://quarto.org/docs/authoring/figures.html).  
 
 ### Where is the feedback for problem 4?
 

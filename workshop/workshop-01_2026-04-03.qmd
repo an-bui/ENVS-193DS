@@ -1,27 +1,31 @@
 ---
 title: "Coding workshop: Week 1"
 subtitle: "basics of using RStudio, intro to `tidyverse`"
-categories: [tidyverse, mean, median, read_csv, filter, group_by, mutate, summarize, pipe operators, '|>', ggplot, geom_boxplot, geom_point, geom_line, labs]
+date: 2026-04-03
+categories: [tidyverse, mean, median, read_csv, filter, group_by, ungroup, mutate, summarize, pipe operators, '|>', ggplot, geom_boxplot, geom_point, geom_line, labs]
 ---
 
-[Workshop date: Friday 9 January]{style="color: #79ACBD; font-size: 24px;"}
+[Workshop date: Friday 3 April]{style="color: #79ACBD; font-size: 24px;"}
 
 ## 1. Summary
 
 ### Packages
+
 - `tidyverse`
 
 ### Operations
-- calculations using `mean()` and `median()`  
-- read in data using `read_csv()`  
-- filter data using `filter()`  
-- group data using `group_by()`  
-- create new column using `mutate()`  
-- calculate summary statistics using `summarize()`  
-- chain functions together using ` |> `  
-- visualize data using `ggplot()`  
-- create boxplots using `geom_boxplot()`  
-- create line plots (a type of scatterplot) using `geom_point()` and `geom_line()`  
+
+- calculations using `mean()` and `median()`
+- read in data using `read_csv()`
+- filter data using `filter()`
+- group data using `group_by()`
+- undo grouping using `ungroup()`
+- create new column using `mutate()`
+- calculate summary statistics using `summarize()`
+- chain functions together using ` |> `
+- visualize data using `ggplot()`
+- create boxplots using `geom_boxplot()`
+- create line plots (a type of scatterplot) using `geom_point()` and `geom_line()`
 - label plots using `labs()`
 
 ### Data source
@@ -97,7 +101,7 @@ median(visits)
 
 ### 4. Intro to packages and data
 
-Packages are collections of functions that you can bring into R to use. You've already installed a package (using the `install.packages()` function) if you did the set up steps!  
+Packages are collections of functions that you can use in R. You've already installed a package (using the `install.packages()` function) if you did the set up steps!  
 
 Today (and most days), we'll use the `tidyverse` package. The `tidyverse` is actually a package of packages, and they all have functions that are really useful for us to use in working with data and analyzing it.  
 
@@ -123,15 +127,11 @@ parks_visits <- read_csv("parks_visits.csv")
 
 We've already looked at the data in Excel, but let's make sure it's actually in R.  
 
-First, if you look at the "Environment" tab, you should see an object called `park_visits`. 
+If you look at the "Environment" tab, you should see an object called `park_visits`.  
 
-:::{.callout-tip title="Is my data actually in R?" collapse="true"}
-If you're not sure if your data is in R, the first thing to check is the "Environment". If you've read in everything correctly, you should see an object in there. If not, you know something is wrong!
-:::
+Click on the object name to _view_ the data frame.  
 
-Second, you can use the `View()` function to look at the actual data.  
-
-Type `View(parks_visits)` in the console.
+You can also type `View(parks_visits)` in the **Console** (not your script!).
 
 ```{r viewing-data}
 #| eval: false
@@ -139,11 +139,13 @@ Type `View(parks_visits)` in the console.
 View(parks_visits)
 ```
 
-Note: only use `View()` in the console! 
+:::{.callout-tip title="Is my data actually in R?" collapse="true"}
+If you're not sure if your data is in R, the first thing to check is the "Environment". If you've read in everything correctly, you should see an object in there. If not, you know something is wrong!
+:::
 
 ### 5. cleaning and wranging
 
-Let's say we want to figure out what the average (mean) number of visits is for Joshua Tree is across all years and months.  
+Let's say we want to figure out what the median number of visits is for Joshua Tree is across all years and months.  
 
 First, you can filter by park to only include `jtnp` (or Joshua Tree) using the `filter()` function.
 
@@ -152,11 +154,11 @@ df1 <- filter(parks_visits, # use the parks_visits data frame
               park == "jtnp") # only include rows where `jtnp` is in the `park` column
 ```
 
-Then, you can calculate the mean monthly visits for Joshua Tree across all years using the `summarize()` and `mean()` functions.
+Then, you can calculate the median monthly visits for Joshua Tree across all years using the `summarize()` and `mean()` functions.
 
 ```{r}
 df2 <- summarize(df1, # use the df1 data frame
-                 mean_visits = mean(visits)) # calculate the mean number of visits
+                 median_visits = median(visits)) # calculate the mean number of visits
 ```
 
 This can get tedious if you have a bunch of filtering and summarizing to do! So instead, we can use...
@@ -170,38 +172,40 @@ If you did the set up steps, you should see a pipe operator that looks like this
 
 If you don't, you might see a pipe operator that looks like this: ` %>% `.  
 
-These both do the same thing, though the ` |> ` is from `baseR` (or, a package of pre-loaded R functions and operators) and the ` %>% ` is from the `magrittr` package in the `tidyverse`. 
+These both do the same thing, though the ` |> ` is from `baseR` (or, a package of pre-loaded R functions and operators) and the ` %>% ` is from the `magrittr` package in the `tidyverse`.  
+
+In class examples, you will see the baseR pipe (` |> `).
 :::
 
 When reading your code aloud, you can read the pipe as "and then"  
 
 ```{r jt-example}
 # create a new object called `jtnp`
-mean_jtnp_visits <- parks_visits |> # start with the `parks_visits` data frame
+median_jtnp_visits <- parks_visits |> # start with the `parks_visits` data frame
   filter(park == "jtnp") |> # filter to only include Joshua tree
-  summarize(mean_visits = mean(visits)) # calculate the mean number of visits at Joshua Tree
+  summarize(median_visits = median(visits)) # calculate the mean number of visits at Joshua Tree
 ```
 
 When you run these lines of code, the code shows up in the console but the output does not. If you want to see any object, you can type in the object name and run that.
 
-```{r display-mean}
-mean_jtnp_visits
+```{r display-median}
+median_jtnp_visits
 ```
 
-You should see the mean number of visits to Joshua Tree across all years and all months pop up.  
+You should see the median number of visits to Joshua Tree across all years and all months pop up.  
 
 But what if you want to know the mean number of visits to Joshua Tree in 2024 only? You can add another argument to the `filter()` call with the `&` (read: "and") operator. The `&` operator lets you include multiple arguments in `filter()`.
 
 ```{r mean-jtnp-2024-calc}
-mean_jtnp_visits_2024 <- parks_visits |> # start with parks_visits object
+median_jtnp_visits_2024 <- parks_visits |> # start with parks_visits object
   filter(park == "jtnp" & year == "2024") |> # filter to only include jtnp and 2024
-  summarize(mean_visits = mean(visits)) # calculate mean number of visits
+  summarize(median_visits = median(visits)) # calculate mean number of visits
 ```
 
 What's the mean number of visits to Joshua Tree in 2024 across all months?
 
 ```{r mean-jtnp-2024-display}
-mean_jtnp_visits_2024
+median_jtnp_visits_2024
 ```
 
 ### 7. Visualizing data
@@ -215,7 +219,7 @@ To visualize the data, we'll use `ggplot()` and its associated functions, which 
 The main parts of creating a plot in `ggplot()` are:  
 
 1. the "global call": you have to tell R that you want to use `ggplot()` by actually naming the function  
-2. the "aesthetics": you have the tell R the data frame name (in this case, `parks_visits`) and what the x- and y-axes should be (using the aesthetics function called `aes()`)  
+2. the "mapping" (using the aesthetics function called `aes()`): you have the tell R the data frame name (in this case, `parks_visits`) and what the x- and y-axes should be   
 3. the "geometries": this is the _type_ of plot you are making. In this case, we're using the function `geom_boxplot()` because we want to make a boxplot. Most `geom_()` functions are named after the plot they make.  
 
 ```{r first-boxplot}
@@ -223,12 +227,12 @@ The main parts of creating a plot in `ggplot()` are:
 
 # 1. start with the global call
 ggplot(data = parks_visits, # using the data frame parks_visits
-       aes(x = park, # 2. naming the aesthetics: the x-axis should be the 3 parks
-           y = visits)) + # the y-axis should be monthly visits
+       mapping = aes(x = park, # 2. naming the aesthetics: the x-axis should be the 3 parks
+                     y = visits)) + # the y-axis should be monthly visits
   geom_boxplot() # 3. the plot should be a boxplot
 ```
 
-:::{.callout-tip title="Getting a warning?"}
+:::{.callout-tip title="Getting a warning?" collapse="true"}
 When you run the code to create this figure, you will get a warning message that looks like this:
 `
 Warning message:
@@ -248,10 +252,13 @@ We can check that using math!
 
 In the `parks_visits` data frame, there are 3 parks. We could do everything in section 5 for each park individually, or we could use a function called `group_by()` from the `tidyverse`. When you use `group_by()`, you are basically telling R, "there are groups in this dataset that I want you to pay attention to."  
 
+After running `group_by()` along with whatever functions you want to use on the groups, it is good practice to add `ungroup()` at the end of your cleaning code to undo the groups. This is so that any functions you want to use that _don't_ apply to the groups don't give you unexpected results.
+
 ```{r first-group-example}
 parks_summary <- parks_visits |> # start with the parks_visits data frame
   group_by(park) |> # group by each park
-  summarize(median_visits = median(visits, na.rm = TRUE)) # summarize the median number of visits
+  summarize(median_visits = median(visits, na.rm = TRUE)) |> # summarize the median number of visits
+  ungroup() # ungrouping the data frame
 
 parks_summary # display the final data frame
 ```
@@ -269,6 +276,7 @@ We'll also add in a new function here: `mutate()`. `mutate()` is a function that
 annual_visits <- parks_visits |> # start with the parks_visits data frame
   group_by(park, year) |> # group by park AND year
   summarize(total_visits = sum(visits, na.rm = TRUE)) |> # calculate total visits per year
+  ungroup() |> # ungrouping data frame
   mutate(park_name = case_when( # create a new column called park_name
     park == "cnps" ~ "Channel Islands", # when cnps appears in the park column, fill in Channel Islands
     park == "dvnp" ~ "Death Valley", # when dvnp appears in the park column, fill in Death Valley
@@ -285,9 +293,9 @@ Lastly, we'll add in a new function called `labs()`, which allows us to change t
 
 ```{r annual-visits-plot}
 ggplot(data = annual_visits, # use the annual_visits data frame
-       aes(x = year, # the x-axis should be year
-           y = visits_millions, # the y-axis should be visits in millions
-           color = park_name)) + # color all geometries by park_name
+       mapping = aes(x = year, # the x-axis should be year
+                     y = visits_millions, # the y-axis should be visits in millions
+                     color = park_name)) + # color all geometries by park_name
   geom_point() + # adding points
   geom_line() + # adding lines
   labs(x = "Year", # relabelling the x-axis
@@ -365,8 +373,8 @@ Here's a demonstration of how that works for a boxplot, where the argument in th
 
 ```{r boxplot-without-colors}
 ggplot(data = parks_visits, 
-       aes(x = park, 
-           y = visits)) + 
+       mapping = aes(x = park, 
+                     y = visits)) + 
   geom_boxplot() 
 ```
 :::
@@ -376,9 +384,9 @@ ggplot(data = parks_visits,
 
 ```{r boxplot-with-colors}
 ggplot(data = parks_visits, 
-       aes(x = park, 
-           y = visits,
-           fill = park)) + 
+       mapping = aes(x = park, 
+                     y = visits,
+                     fill = park)) + 
   geom_boxplot() +
   scale_fill_manual(values = c("cnps" = "deeppink3",
                                "jtnp" = "seagreen3",
@@ -400,9 +408,9 @@ Here's a demonstration of how it works with a line plot, where the argument in t
 
 ```{r line-plot-without-colors}
 ggplot(data = annual_visits, 
-       aes(x = year, 
-           y = visits_millions,
-           group = park)) + # this is an extra argument to make sure there is one line per park
+       mapping = aes(x = year, 
+                     y = visits_millions,
+                     group = park)) + # this is an extra argument to make sure there is one line per park
   geom_point() + 
   geom_line() + 
   labs(x = "Year", 
@@ -417,9 +425,9 @@ ggplot(data = annual_visits,
 
 ```{r line-plot-with-colors}
 ggplot(data = annual_visits,
-       aes(x = year, 
-           y = visits_millions, 
-           color = park_name)) + 
+       mapping = aes(x = year, 
+                     y = visits_millions, 
+                     color = park_name)) + 
   geom_point() +
   geom_line() + 
   labs(x = "Year", 
@@ -449,7 +457,7 @@ In contrast, the line plot uses `color = park_name`. The `park_name` column in t
 
 Go down color rabbit holes! Some resources to do that:  
 
-- [Named colors in R](https://sites.stat.columbia.edu/tzheng/files/Rcolor.pdf): R has a bunch of built in color names, like `steelblue3`, `violetred2`, and `darkorchid4`.  
+- [Named colors in R](https://derekogle.com/NCGraphing/resources/colors): R has a bunch of built in color names, like `steelblue3`, `violetred2`, and `darkorchid4`.  
 - [hex codes](https://www.color-hex.com/): more customizable colors come from hex codes, which are 6 digit alphanumeric codes that describe a color. For example, `#FFFFFFF` represents white, while `#000000` represents black, and `#3d85c6` is a nice blue.  
 - [color palettes](https://emilhvitfeldt.github.io/r-color-palettes/discrete.html): if you want to change the colors but you don't want to pick your own, you can use color palettes. These are collections of colors that people have put into packages for you to use in your plots. There are lots of interesting packages of palettes: a `beyonce` package that has a bunch of palettes from music videos/concerts, a `vangogh` package that has palettes from Van Gogh paintings, and much more. A package I developed with my friends is `calecopal`, which is a package of palettes inspired by California ecosystems. 
 

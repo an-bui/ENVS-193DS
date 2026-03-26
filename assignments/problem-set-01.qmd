@@ -1,0 +1,126 @@
+---
+title: "Problem set 1"
+editor: source
+published-title: "Due date"
+date: 2026-04-09
+date-modified: last-modified
+categories: [problem set]
+---
+
+```{r}
+#| echo: false
+#| message: false
+
+library(tidyverse)
+library(lterdatasampler)
+```
+
+# Problems
+
+## 1. Categorizing variables
+
+For each of the following variables, name i) what kind of variable it is and ii) why.  
+
+a. **Date** for a study takes place over 3 days (11 November, 15 December, 13 January) with one observation of frog count per day
+
+b. **Time** for a study that takes place over 24 hours with one measurement of water temperature every 15 minutes (e.g. 04:15, 06:30, 18:45)
+
+c. **Scale of 1-5** in whole numbers where 1 is strongly disagree, 3 is neither agree nor disagree, and 5 is strongly agree
+
+d. **Count** of whale sharks per day along migratory route in Baja California, Mexico (e.g. 4 whale sharks per day, 10 whale sharks per day, 0 whale sharks per day)
+
+e. **Category** of elevation gain on a hike: high, medium, or no elevation gain
+
+f. **Year** for a study that takes place over 32 years, where researchers estimate giant kelp biomass once a year (e.g. 1993, 2001, 2022)
+
+g. **Height** of an oak tree, measured in meters to the nearest whole meter (e.g. 1 m, 4 m, 25 m)
+
+## 2. Central tendency and spread
+
+a. What units would you use for:
+  - Mean
+  - Median
+  - Mode
+  - Standard deviation
+  - Variance
+  - Range
+  
+b. What functions could you use to calculate:
+  - Mean
+  - Median
+  - Mode
+  - Standard deviation
+  - Variance
+  - Range
+  
+## 3. Data visualization
+
+a. What is on the x-axis of a histogram? What is on the y-axis of a histogram?
+
+b. What is on the x-axis of a timeseries? What is on the y-axis of a timeseries?
+
+c. Label each component of this boxplot with what it represents mathematically.
+
+d. If you wanted to compare median vegetation height (cm) across 1) burned grasslands, 2) unburned grasslands, and 3) shrublands, what kind of figure would you create and why?
+
+e. If you wanted to understand the relationship between soil salinity (measured in mS/cm) and nitrogen concentration (measured in parts per million), what kind of figure would you create and why?
+
+f. If you wanted to see how bird species richness (i.e. species number) changed through time, what kind of figure would you create and why?
+
+## 4. Data usage
+
+This is a data set at the Quebrada Sonadora site in the Luqillo Mountains, Puerto Rico measured by researchers at the Luqillo Experimental Forest. The researchers measured stream chemistry parameters every week.
+
+
+```{r}
+#| echo: false
+
+set.seed(666)
+luq_streamchem |> 
+  select(sample_date, temp, na, no3_n, p_h, ca, k, mg) |> 
+  mutate(year = year(sample_date)) |> 
+  relocate(year, .after = sample_date) |> 
+  sample_n(size = 10) 
+``` 
+
+a. What does each column in this data set represent? What does each row represent? Be specific about _time period_ of the observation.
+
+b. There's no metadata (information about the data) available to you, but what is your best guess for what the values in the `na`, `no3_n`, `p_h`, `ca`, `k`, and `mg` columns represent? Be specific regarding the compounds or elements that the researchers may have measured.
+
+c. If you wanted to create a histogram of stream temperature, which column(s) would you use? Which geometry?
+
+d. If you wanted to create a timeseries of calcium concentration through time, which column(s) would you use? Which geometry (name the specific function)?
+
+e. If you wanted to explore the potential relationship between potassium and pH, which column(s) would you use? Which geometry (name the specific function)?
+
+f. If you wanted to create a boxplot comparing magnesium concentration across years, which columns would you use? Which geometry (name the specific function)?
+
+## 5. Metadata
+
+The dataset in the above section on "Data usage" is from the `lterdatasampler` package, but the original dataset is from here:
+
+> McDowell, W. and International Institute of Tropical Forestry(IITF), USDA Forest Service.. 2024. Chemistry of stream water from the Luquillo Mountains ver 4923064. Environmental Data Initiative. https://doi.org/10.6073/pasta/f31349bebdc304f758718f4798d25458 (Accessed 2026-03-26).
+
+All datasets are associated with "metadata", or information about the data.  
+
+Before you start this problem, read [this description of metadata](https://www.ncei.noaa.gov/resources/metadata) to understand what it is.  
+
+Then, click through to the "Introduction to Metadata" page (under "Learn") and read the questions that you should be able to answer with metadata.  
+
+For the stream water chemistry data, answer the following questions based on:
+
+- the data's [metadata](https://doi.org/10.6073/pasta/f31349bebdc304f758718f4798d25458) and 
+- the abstract and introduction of the [paper](/data/effects-of-hurricane-disturbance-on-stream-water-concentrations-and-fluxes-in-eight-tropical-forest-watersheds-of-the-luquillo-experimental-forest-puerto-rico.pdf) associated with the dataset:
+
+a. Who collected the data?
+
+b. What are the data about?
+
+c. What is the purpose or goal of collecting this data?
+
+d. Where are the data located?
+
+e. When were the data processed?
+
+6. How do I access the data?
+

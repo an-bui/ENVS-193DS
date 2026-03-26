@@ -1,33 +1,36 @@
 ---
 title: "Coding workshop: Week 2"
 subtitle: "using Quarto, data wrangling, visualizing uncertainty"
-categories: [tidyverse, janitor, read_csv, pipe operators, '|>', clean_names, mutate, select, pivot_longer, group_by, summarize, sd, qt, deframe, ggplot, geom_histogram, geom_point, geom_errorbar, geom_pointrange, geom_line]
+date: 2026-04-10
+categories: [tidyverse, janitor, read_csv, pipe operators, '|>', clean_names, mutate, select, pivot_longer, group_by, summarize, sd, qt, ggplot, geom_histogram, geom_point, geom_errorbar, geom_pointrange, geom_line]
 ---
 
-[Workshop dates: Friday 16 January]{style="color: #79ACBD; font-size: 24px;"}
+[Workshop date: Friday 10 April]{style="color: #79ACBD; font-size: 24px;"}
 
 ## 1. Summary
 
 ### Packages
-- `tidyverse`  
+
+- `tidyverse`
 - `janitor`  
 
 ### Operations
-- read in data using `read_csv()`  
-- chain functions together using ` |> `  
-- clean column names using `clean_names()`  
-- create new columns using `mutate()`  
-- select columns using `select()`  
-- make data frame longer using `pivot_longer()`  
-- group data using `group_by()`  
-- summarize data using `summarize()`  
-- calculate standard deviation using `sd()`  
-- calculate t-values using `qt()`  
-- expand data frames using `deframe()`    
-- visualize data using `ggplot()`  
-- create histograms using `geom_histogram()`  
-- visualize means and raw data using `geom_point()`  
-- visualize standard deviation, standard error, and confidence intervals using `geom_errorbar()` and `geom_pointrange()`  
+
+- read in data using `read_csv()`
+- chain functions together using ` |> `
+- clean column names using `clean_names()`
+- create new columns using `mutate()`
+- select columns using `select()`
+- make data frame longer using `pivot_longer()`
+- group data using `group_by()`
+- undo grouping using `ungroup()`
+- summarize data using `summarize()`
+- calculate standard deviation using `sd()`
+- calculate t-values using `qt()`
+- visualize data using `ggplot()`
+- create histograms using `geom_histogram()`
+- visualize means and raw data using `geom_point()`
+- visualize standard deviation, standard error, and confidence intervals using `geom_errorbar()` and `geom_pointrange()`
 - visualize trends through time using `geom_point()` and `geom_line()`
 
 ### Data source
@@ -105,9 +108,9 @@ Last week in workshop, we made a boxplot. The boxplot shows useful summary stati
 
 ```{r}
 ggplot(data = production_clean, # start with the production_clean data frame
-       aes(x = type, # x-axis should be type of production
-           y = metric_tons_mil, # y-axis should be metric tons of production (in millions)
-           color = type)) + # coloring by production type
+       mapping = aes(x = type, # x-axis should be type of production
+                     y = metric_tons_mil, # y-axis should be metric tons of production (in millions)
+                     color = type)) + # coloring by production type
   geom_boxplot() + # first layer should be a boxplot
   geom_jitter(width = 0.2, # making the points jitter horizontally
               height = 0) + # making sure points don't jitter vertically
@@ -127,8 +130,8 @@ Within the `geom_histogram()` call, you'll need to tell R what number of bins yo
 
 ```{r creating-histogram}
 ggplot(data = production_clean,
-       aes(x = metric_tons_mil,
-           fill = type)) + # fill the histogram based on the fishery type
+       mapping = aes(x = metric_tons_mil,
+                     fill = type)) + # fill the histogram based on the fishery type
   geom_histogram(bins = 10, # set the number of bins
                  color = "black") # make the border of the columns black
 ```
@@ -153,23 +156,14 @@ production_summary <- production_clean |> # start with the production_clean data
             tval = qt(p = 0.05/2, df = df, lower.tail = FALSE), # find the t value
             margin = tval*se, # calculate the margin of error
             ci_lower = mean - margin, # calculate the lower bound of the confidence interval
-            ci_higher = mean + margin # calculate the upper bound of the confidence interval
-          ) 
+            ci_upper = mean + margin # calculate the upper bound of the confidence interval
+          ) |> 
+  ungroup() # ungrouping the data frame
 
 production_summary
-
-# use a function to calculate the confidence interval
-production_ci <- production_clean |>  
-  group_by(type) |>  
-  summarize(ci = mean_cl_normal(metric_tons_mil)) |>  # calculate the CI using a function
-  deframe() # expand the data frame
-
-production_ci
 ```
 
-When you compare the 95% CI from `production_summary` and `production_ci`, they should be about the same.  
-
-How could you write about this confidence interval?  
+How could you write about these confidence intervals?  
 
 **Mean production in US aquaculture is 0.32 million metric tons [95% CI: 0.29, 0.36], while mean capture production is 4.38 million metric tons [95% CI: 4.07, 4.69].**
 
@@ -187,9 +181,9 @@ First, we'll visualize standard deviation.
 
 ```{r sd-plot}
 ggplot(data = production_summary, # use the summary data frame
-       aes(x = type, # x-axis should be production type
-           y = mean, # y-axis should show the mean production
-           color = type)) + # color the points by fishery type
+       mapping = aes(x = type, # x-axis should be production type
+                     y = mean, # y-axis should show the mean production
+                     color = type)) + # color the points by fishery type
   geom_point(size = 2) + # plot the mean
   geom_errorbar(aes(ymin = mean - sd, # plot the standard deviation
                     ymax = mean + sd),
@@ -205,9 +199,9 @@ Then, we want to visualize standard error.
 
 ```{r se-plot}
 ggplot(data = production_summary, # use the summary data frame
-       aes(x = type, 
-           y = mean, 
-           color = type)) + # color the points by fishery type
+       mapping = aes(x = type, 
+                     y = mean, 
+                     color = type)) + # color the points by fishery type
   geom_point(size = 2) + # plot the mean
   geom_errorbar(aes(ymin = mean - se, # plot the standard error
                     ymax = mean + se),
@@ -223,12 +217,12 @@ Then, we want to visualize the 95% confidence interval.
 
 ```{r ci-95-plot}
 ggplot(data = production_summary, # use the summary data frame
-       aes(x = type, 
-           y = mean, 
-           color = type)) + # color the points by fishery type
+       mapping = aes(x = type, 
+                     y = mean, 
+                     color = type)) + # color the points by fishery type
   geom_point(size = 2) + # plot the mean
-  geom_errorbar(aes(ymin = mean - margin, # plot the margin of error
-                    ymax = mean + margin),
+  geom_errorbar(aes(ymin = ci_lower, # plot range of values defining 95% CI
+                    ymax = ci_upper),
                 width = 0.1) +
   labs(title = "Confidence interval",
        x = "Type",
@@ -241,11 +235,12 @@ We can also visualize means and spread/uncertainty/confidence intervals using th
 
 ```{r ci-95-plot-with-pointrange}
 ggplot(data = production_summary, # use the summary data frame
-       aes(x = type, 
-           y = mean, 
-           color = type)) + # color the points by fishery type
-  geom_pointrange(aes(ymin = mean - margin, 
-                      ymax = mean + margin)) +
+       mapping = aes(x = type, 
+                     y = mean, 
+                     ymin = ci_lower, 
+                     ymax = ci_upper,
+                     color = type)) + # color the points by fishery type
+  geom_pointrange() +
   labs(title = "Confidence interval (using geom_pointrange)",
        x = "Type",
        y = "Mean and 95% CI million metric tons production")
@@ -258,9 +253,9 @@ Lastly, we want to visualize the 95% confidence interval with the underlying dat
 ```{r final-plot}
 # base layer: ggplot
 ggplot(data = production_clean,
-       aes(x = type, 
-           y = metric_tons_mil, 
-           color = type)) +
+       mapping = aes(x = type, 
+                     y = metric_tons_mil, 
+                     color = type)) +
   # first layer: adding data (each point shows an observation)
   geom_jitter(width = 0.1,
               height = 0,
@@ -270,11 +265,11 @@ ggplot(data = production_clean,
   geom_pointrange(data = production_summary,
                   aes(x = type, 
                       y = mean, 
-                      ymin = mean - margin, 
-                      ymax = mean + margin)) +
+                      ymin = ci_lower, 
+                      ymax = ci_higher)) +
   # changing appearance: colors, labels, and theme
-  scale_color_manual(values = c("aquaculture" = "deeppink3",
-                                "capture" = "slateblue4")) +
+  scale_color_manual(values = c("aquaculture" = "deepskyblue3",
+                                "capture" = "orangered1")) +
   labs(x = "Production type",
        y = "Million metric tons of production",
        color = "Production type",
@@ -295,14 +290,14 @@ Then, if we want to visualize production through time:
 
 ```{r time-plot}
 ggplot(data = production_clean,
-       aes(x = year,
-           y = metric_tons_mil,
-           color = type,
-           shape = type)) +
+       mapping = aes(x = year,
+                     y = metric_tons_mil,
+                     color = type,
+                     shape = type)) +
   geom_point() +
   geom_line() +
-  scale_color_manual(values = c("aquaculture" = "deeppink3",
-                                "capture" = "slateblue4")) +
+  scale_color_manual(values = c("aquaculture" = "deepskyblue3",
+                                "capture" = "orangered1")) +
   labs(x = "Year",
        y = "Million metric tons of production",
        color = "Production type",

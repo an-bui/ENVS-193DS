@@ -1,6 +1,7 @@
 ---
 title: "Coding workshop: Week 5"
 subtitle: "Analysis of variance"
+date: 2026-05-01
 categories: [tidyverse, lterdatasampler, rstatix, aov, summary, TukeyHSD, eta_squared, read_csv, pipe operators, '|>', select, rename, ggplot, geom_histogram, geom_qq, geom_qq_line, facet_wrap, group_by, summarize, as_factor, mutate]
 format:
   html:
@@ -8,38 +9,40 @@ format:
     toc-depth: 8
 ---
 
-[Workshop date: Friday 6 February]{style="color: #79ACBD; font-size: 24px;"}
+[Workshop date: Friday 1 May]{style="color: #79ACBD; font-size: 24px;"}
 
 ## 1. Summary
 
 ### Packages
-- `tidyverse`  
-- `lterdatasampler`  
-- `rstatix`  
+
+- `tidyverse`
+- `lterdatasampler`
+- `rstatix`
 
 ### Operations
 
 #### New functions
 
 - make sure a variable is a factor using `as_factor()`
-- do an ANOVA using `aov()`  
-- look for more information from model results using `summary()`  
-- do post-hoc Tukey test using `TukeyHSD()`  
-- calculate effect size for ANOVA using `rstatix::eta_squared()`  
+- do an ANOVA using `aov()`
+- look for more information from model results using `summary()`
+- do post-hoc Tukey test using `TukeyHSD()`
+- calculate effect size for ANOVA using `rstatix::eta_squared()`
 
 #### Review
 
-- read in data using `read_csv()`  
-- chain functions together using ` |> `  
-- modify columns using `mutate()`  
-- select columns using `select()`  
-- rename columns using `rename()`  
-- visualize data using `ggplot()`  
-- create histograms using `geom_histogram()`  
-- visualize QQ plots using `geom_qq()` and `geom_qq_line()`  
-- create multi-panel plots using `facet_wrap()`  
-- group data using `group_by()`  
-- summarize data using `summarize()`  
+- read in data using `read_csv()`
+- chain functions together using ` |> `
+- modify columns using `mutate()`
+- select columns using `select()`
+- rename columns using `rename()`
+- visualize data using `ggplot()`
+- create histograms using `geom_histogram()`
+- visualize QQ plots using `geom_qq()` and `geom_qq_line()`
+- create multi-panel plots using `facet_wrap()`
+- group data using `group_by()`
+- undo grouping using `ungroup()`
+- summarize data using `summarize()`
 
 ### Data sources
 
@@ -121,9 +124,9 @@ Create a jitter plot with the mean crab carapace width for each site.
 
 ```{r crab-explore-viz}
 # base layer: ggplot
-ggplot(pie_crab_clean, # use the clean data set
-       aes(x = site_name, # x-axis
-           y = size)) + # y-axis
+ggplot(data = pie_crab_clean, # use the clean data set
+       mapping = aes(x = site_name, # x-axis
+                     y = size)) + # y-axis
   # first layer: jitter (each point is an individual crab)
   geom_jitter(height = 0, # don't jitter points vertically
               width = 0.15) + # narrower jitter (easier to see)
@@ -149,7 +152,7 @@ Is there a difference in mean crab carapace width between the three sites?
 ```{r crab-histogram}
 # base layer: ggplot
 ggplot(data = pie_crab_clean, 
-       aes(x = size)) + # x-axis
+       mapping = aes(x = size)) + # x-axis
   # first layer: histogram
   geom_histogram(bins = 6, # bins from Rice Rule (approximate)
                  fill = "orange",
@@ -167,7 +170,7 @@ ggplot(data = pie_crab_clean,
 ```{r crab-qq}
 # base layer: ggplot
 ggplot(data = pie_crab_clean, 
-       aes(sample = size)) + # y-axis
+       mapping = aes(sample = size)) + # y-axis
   # first layer: QQ plot reference line
   geom_qq_line() + 
   # second layer: QQ plot points (actual observations)
@@ -200,8 +203,10 @@ What are the outcomes of your variance check?
 
 ```{r crab-anova}
 # creating an object called crab_anova
-crab_anova <- aov(size ~ site_name, # formula
-                  data = pie_crab_clean) # data
+crab_anova <- aov(
+  size ~ site_name, # formula
+  data = pie_crab_clean # data
+)
 
 # test object
 crab_anova
@@ -217,7 +222,7 @@ Summarize results: is there a difference in mean crab carapace width between the
 #### g. Post-hoc: Tukey HSD
 
 ```{r crab-tukey}
-TukeyHSD(crab_anova)
+TukeyHSD(crab_anova) # running Tukey HSD
 ```
 
 Which pairwise comparisons are actually different? Which ones are not different?  
@@ -229,7 +234,7 @@ Which pairwise comparisons are actually different? Which ones are not different?
 Using `eta_squared()` from `rstatix`
 
 ```{r crab-effectsize}
-eta_squared(crab_anova)
+eta_squared(crab_anova) # calculating effect size
 ```
 
 What is the magnitude of the differences between sites in crab size?  
@@ -281,9 +286,9 @@ For example, here is a plot using `stat_summary()` to visualize means and standa
 #| label: mean and SD
 
 # base layer: ggplot
-ggplot(pie_crab_clean, # use the clean data set
-       aes(x = site_name, # x-axis
-           y = size)) + # y-axis
+ggplot(data = pie_crab_clean, # use the clean data set
+       mapping = aes(x = site_name, # x-axis
+                     y = size)) + # y-axis
   # first layer: jitter (each point is an individual crab)
   geom_jitter(height = 0, # don't jitter points vertically
               width = 0.15) + # narrower jitter (easier to see)
@@ -305,9 +310,9 @@ And standard error:
 #| label: mean and SE
 
 # base layer: ggplot
-ggplot(pie_crab_clean, # use the clean data set
-       aes(x = site_name, # x-axis
-           y = size)) + # y-axis
+ggplot(data = pie_crab_clean, # use the clean data set
+       mapping = aes(x = site_name, # x-axis
+                     y = size)) + # y-axis
   # first layer: jitter (each point is an individual crab)
   geom_jitter(height = 0, # don't jitter points vertically
               width = 0.15) + # narrower jitter (easier to see)
@@ -329,9 +334,9 @@ And a 95% confidence interval:
 #| label: mean and confidence interval
 
 # base layer: ggplot
-ggplot(pie_crab_clean, # use the clean data set
-       aes(x = site_name, # x-axis
-           y = size)) + # y-axis
+ggplot(data = pie_crab_clean, # use the clean data set
+       mapping = aes(x = site_name, # x-axis
+                     y = size)) + # y-axis
   # first layer: jitter (each point is an individual crab)
   geom_jitter(height = 0, # don't jitter points vertically
               width = 0.15) + # narrower jitter (easier to see)

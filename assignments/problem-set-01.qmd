@@ -59,7 +59,22 @@ a. What is on the x-axis of a histogram? What is on the y-axis of a histogram?
 
 b. What is on the x-axis of a timeseries? What is on the y-axis of a timeseries?
 
-c. Label each component of this boxplot with what it represents mathematically.
+c. Label each component of this boxplot with what it represents mathematically.  
+
+```{r}
+#| echo: false
+
+and_vertebrates |> 
+  filter(species %in% c("Coastal giant salamander", "Cascade torrent salamander"),
+         unittype == "SC") |> 
+  ggplot(mapping = aes(x = species,
+                       y = length_1_mm)) +
+  geom_boxplot() +
+  labs(x = "Species",
+       y = "Length (mm)") +
+  theme_bw()
+
+```
 
 d. If you wanted to compare median vegetation height (cm) across 1) burned grasslands, 2) unburned grasslands, and 3) shrublands, what kind of figure would you create and why?
 

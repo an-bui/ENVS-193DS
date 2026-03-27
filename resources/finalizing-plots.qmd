@@ -55,9 +55,13 @@ library(tidyverse)
 
 ```{r fig.width = 8, fig.height = 6}
 and_vertebrates |> 
+  # filter for cutthroat trout and cascade/pool/side channel/rapid location
   filter(species == "Cutthroat trout" & unittype %in% c("C", "P", "SC", "R")) |> 
+  # group by location
   group_by(unittype) |> 
+  # count number of observations
   count() |> 
+  # plot bar chart of number of observations by unittype
   ggplot(mapping = aes(x = unittype,
                        y = n)) +
   geom_col() 
@@ -72,10 +76,12 @@ and_vertebrates |>
 
 ```{r fig.width = 8, fig.height = 6, warning = FALSE}
 and_vertebrates |> 
+  # same filtering and summarizing steps as above
   filter(species == "Cutthroat trout" & unittype %in% c("C", "P", "SC", "R")) |> 
   group_by(unittype) |> 
   count() |> 
   ungroup() |> 
+  # mutating unittype column to have full names of locations
   mutate(unittype = recode_values(
     unittype,
     "C" ~ "Cascade",
@@ -83,6 +89,8 @@ and_vertebrates |>
     "SC" ~ "Side channel",
     "R" ~ "Rapid"
   )) |> 
+  # plot bar chart of number of observations by unittype
+  # reorder() in aes() reorders x-axis in order of descending n (count)
   ggplot(mapping = aes(x = reorder(unittype, -n),
                        y = n)) +
   geom_col(fill = "lightblue4", color = "#000000") +
@@ -124,9 +132,12 @@ and_vertebrates |>
 ```{r fig.width = 8, fig.height = 6, warning = FALSE}
 
 knz_bison |> 
+  # calculate age of individual
   mutate(age = rec_year - animal_yob) |> 
+  # plotting weight as a function of age 
   ggplot(mapping = aes(x = age,
                        y = animal_weight)) +
+  # scatterplot
   geom_point()
 
 ```
@@ -141,20 +152,27 @@ knz_bison |>
 
 ```{r fig.width = 8, fig.height = 6, warning = FALSE}
 knz_bison |> 
+  # calculate age of individual
   mutate(age = rec_year - animal_yob) |> 
+  # plotting weight as a function of age 
+  # coloring and shaping points by sex (male or female)
   ggplot(mapping = aes(x = age,
                        y = animal_weight,
                        color = animal_sex, 
                        shape = animal_sex)) +
+  # scatterplot
+  # points are transparent and large
   geom_point(alpha = 0.4,
              size = 2) +
+  # manually setting open shapes and colors
   scale_shape_manual(values = c(21, 24)) +
   scale_color_manual(values = c("darkgreen", "cornflowerblue")) +
+  # relabelling axes and legend title
   labs(x = "Bison age",
        y = "Recorded weight (lbs)",
        color = "Sex",
        shape = "Sex") +
-    # another ggplot built-in theme
+  # another ggplot built-in theme
   theme_classic() +
   theme(# putting legend in plot area
         legend.position = c(0.85, 0.85),
@@ -183,10 +201,14 @@ knz_bison |>
 
 ```{r fig.width = 8, fig.height = 6, warning = FALSE}
 arc_weather |> 
+  # extracting month from date column
   mutate(month = month(date, label = TRUE)) |> 
+  # filtering to only include dates from 2018
   filter(date > as.Date("2017-12-31")) |> 
+  # plotting mean daily air temperature
   ggplot(mapping = aes(x = month,
                        y = mean_airtemp)) +
+  # boxplot (shows median mean daily air temperature)
   geom_boxplot()
 ```
 
@@ -202,8 +224,12 @@ arc_weather |>
 #| fig-height: 6
 
 arc_weather |> 
+  # extracting month from date column
   mutate(month = month(date, label = TRUE)) |> 
+  # filtering to only include dates from 2018
   filter(date > as.Date("2017-12-31")) |> 
+  # plotting mean daily air temperature
+  # coloring and filling by month
   ggplot(mapping = aes(x = month,
                        y = mean_airtemp,
                        fill = month,
@@ -250,7 +276,42 @@ Same points as above for the scatterplot, with some additional points:
 - title position is over the y-axis to provide some visual balance (a long title hanging over the end of the x-axis can be visually imbalanced)
 - legend is taken out (because it's redundant with the x-axis)
 
+:::{.callout-note title="Using custom colors" collapse="true"}
+You can use any kind of custom colors using the `scale_color` or `scale_fill` functions.  
 
+In this example, the colors come from the `NatParksPalettes` package. If you are using palettes from a color palette package, you will need to do some extra work to make sure you use the palette you want and generate new colors from the palette to match the number of levels in your categorical variable.  
+
+For example, there are 12 months so you would need 12 colors. The `Glacier` palette only has 5 colors in it. Thus, the arguments would be:
+
+```{r}
+#| eval: false
+
+NatParksPalettes::natparks.pals(name = "Glacier",     # palette name
+                                n = 12,               # number of colors
+                                type = "continuous")  # naming a continuous palette to force new colors to be generated
+```
+
+Then, you would have 12 additional colors:
+
+```{r}
+#| echo: false
+
+NatParksPalettes::natparks.pals(name = "Glacier",     # palette name
+                                n = 12,               # number of colors
+                                type = "continuous")  # naming a continuous palette to force new colors to be generated
+```
+
+The hex codes for those colors are:
+
+```{r}
+NatParksPalettes::natparks.pals(name = "Glacier",     
+                                n = 12,               
+                                type = "continuous") |> 
+  as.character()
+```
+
+
+:::
 
 
 

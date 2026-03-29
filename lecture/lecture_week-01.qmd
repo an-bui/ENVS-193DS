@@ -255,15 +255,17 @@ ggplot(df, aes(x = diam)) +
 ## 6. jitter plot and box and whisker plot example
 
 ```{r jitterplot}
-set.seed(1)
+set.seed(666)
 
 pretend_diameters <- cbind(
-  Starburst = rnorm(20, mean = 12, sd = 4), 
-  `Giant green` = rnorm(20, mean = 17, sd = 5), 
-  Moonglow = rnorm(20, mean = 8, sd = 2)
+  Starburst = rnorm(40, mean = 12, sd = 4), 
+  `Giant green` = rnorm(40, mean = 17, sd = 5), 
+  Moonglow = rnorm(40, mean = 8, sd = 2)
 ) %>% 
   as_tibble() %>% 
-  pivot_longer(cols = 1:3)
+  pivot_longer(cols = 1:3) |> 
+  sample_n(size = 50, 
+           replace = FALSE)
 
 ggplot(pretend_diameters, aes(x = name, y = value, color = name)) +
   geom_jitter(width = 0.1, height = 0, alpha = 0.8, size = 2) +
@@ -304,7 +306,17 @@ pretend_diameters |>
 ```{r}
 pretend_diameters |> 
   group_by(name) |> 
-  count()
+  count() |> 
+  ggplot(aes(x = name,
+             y = n,
+             fill = name)) +
+  geom_col() +
+  scale_fill_manual(values = c("darkgreen", "cornflowerblue", "orange")) +
+  scale_y_continuous(expand = c(0, 0),
+                     limits = c(0, 21)) +
+  labs(y = "Count") +
+  theme(axis.title.x = element_blank(),
+        legend.position = "none")
 ```
 
 ## 7. Probability mass example

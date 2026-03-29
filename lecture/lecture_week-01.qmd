@@ -252,7 +252,7 @@ ggplot(df, aes(x = diam)) +
 ```
 
 
-## 6. jitter plot and box and whisker plot example
+## 6. jitter plot and box plot example
 
 ```{r jitterplot}
 set.seed(666)
@@ -290,15 +290,48 @@ ggplot(pretend_diameters, aes(x = name, y = value, fill = name)) +
   theme(axis.title.x = element_blank(),
         legend.position = "none")
 
-pretend_diameters |> 
+summary <- pretend_diameters |> 
   group_by(name) |> 
-  summarize(median = median(value),
+  summarize(n = n(),
+            median = median(value),
             q25 = quantile(value, 0.25),
             q75 = quantile(value, 0.75)) |> 
   ungroup() |> 
   mutate(iqr = q75 - q25,
+         iqr_1.5 = 1.5 * iqr,
          upper = q75 + 1.5*iqr,
          lower = q25 - 1.5*iqr)
+
+summary
+
+
+ggplot(pretend_diameters, aes(x = name, y = value)) +
+  geom_jitter(height = 0, width = 0.1, alpha = 0.4, shape = 21) +
+  geom_boxplot(alpha = 0.8, aes(fill = name)) +
+  geom_point(data = summary,
+             aes(x = name,
+                 y = median),
+             color = "blue") +
+  geom_point(data = summary,
+             aes(x = name,
+                 y = q25),
+             color = "red") +
+  geom_point(data = summary,
+             aes(x = name,
+                 y = q75),
+             color = "orange") +
+  geom_point(data = summary,
+             aes(x = name,
+                 y = upper),
+             color = "yellow") +
+  geom_point(data = summary,
+             aes(x = name,
+                 y = lower),
+             color = "pink") +
+  scale_fill_manual(values = c("darkgreen", "cornflowerblue", "orange")) +
+  labs(y = "Diameter (cm)") +
+  theme(axis.title.x = element_blank(),
+        legend.position = "none")
 ```
 
 ## 7. Bar plot

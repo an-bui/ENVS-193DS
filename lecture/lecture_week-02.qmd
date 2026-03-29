@@ -337,11 +337,29 @@ enframe(leaves) %>%
   theme(axis.title.x = element_blank())
 ```
 
-### calculating CI using function
+### calculating CI 
 
 ```{r}
-Hmisc::smean.cl.normal(leaves)
-ggplot2::mean_cl_normal(leaves)
+qt(
+  p = 0.05/2,         # significance level divided by 2
+  df = 19,            # degrees of freedom
+  lower.tail = FALSE  # forces output to be a positive number
+)
+
+mean <- mean(leaves)
+n <- length(leaves)
+df <- n - 1
+sd <- sd(leaves)
+se <- sd/sqrt(n)
+sig_level <- 0.05
+tval <- qt(p = sig_level/2, df = df, lower.tail = FALSE)
+margin <- tval * se
+
+ci_lower <- mean - margin
+ci_upper <- mean + margin
+
+ci_lower
+ci_upper
 ```
 
 

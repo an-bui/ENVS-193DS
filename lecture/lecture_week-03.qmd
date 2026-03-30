@@ -578,6 +578,8 @@ rodent_df |>
   summarize(var = var(tail_length)) |> 
   ungroup()
 
+1542.1/333.61
+
 options("digits" = 7)
 var.test(
   tail_length ~ type,
@@ -588,17 +590,26 @@ var.test(
 ```
 
 ```{r}
+options(width = 70)
 t.test(
   tail_length ~ type,
   data = rodent_df,
   var.equal = TRUE
-)
+) |> 
+  capture.output() |> 
+  strwrap(width = 70, simplify = FALSE) |> 
+  unlist() |> 
+  cat(sep = "\n")
 
 t.test(
   tail_length ~ type,
   data = rodent_df,
   var.equal = FALSE
-)
+) |> 
+  capture.output() |> 
+  strwrap(width = 70, simplify = FALSE) |> 
+  unlist() |> 
+  cat(sep = "\n")
 ```
 
 This is the effect size calculated using `effsize::cohen.d()`:

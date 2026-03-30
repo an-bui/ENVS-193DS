@@ -404,6 +404,181 @@ First, store some numbers:
 acorn_mean <- 2.1
 acorn_sd <- 0.45
 sample_mean <- 2.2
+
+set.seed(1)
+acorn_weights <- rnorm(n = 30, mean = 2.2, sd = 0.4)
+
+mean(acorn_weights)
+sd(acorn_weights)
+
+test_statistic <- (mean(acorn_weights) - 2.1) / (sd(acorn_weights)/sqrt(length(acorn_weights)))
+
+test_statistic
+
+one_tailed_p <- pt(
+  q = test_statistic, 
+  df = 29, 
+  lower.tail = FALSE
+)
+
+one_tailed_p
+
+two_tailed_p <- one_tailed_p * 2
+
+two_tailed_p
+
+t_critical <- qt(p = 0.05/2, df = 29, lower.tail = FALSE)
+
+t_critical
+
+t.test(
+  acorn_weights, 
+  mu = 2.1
+)
+
+min <- acorn_mean-(3*acorn_sd)
+max <- acorn_mean+(3*acorn_sd)
+
+ggplot(data.frame(x = -4:4), 
+       aes(x)) +
+  geom_vline(aes(xintercept = 0),
+             linetype = 2,
+             linewidth = 2) +
+  geom_segment(aes(x = test_statistic,
+                   y = 0,
+                   yend = 0.06),
+               linewidth = 1) +
+  geom_segment(aes(x = -test_statistic,
+                   y = 0,
+                   yend = 0.06),
+               linewidth = 1) +
+  scale_y_continuous(expand = c(0, 0),
+                     limits = c(0, 0.4)) +
+  stat_function(geom = "line", 
+                n = 1000, 
+                fun = dt, 
+                args = list(df = 29), 
+                linewidth = 2, 
+                color = "#856F33") +
+  theme(axis.text.y = element_blank(),
+        axis.line.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank())
+
+ggplot(data.frame(x = -4:4), 
+       aes(x)) +
+  stat_function(geom = "area", 
+                fun = dt, 
+                args = list(df = 29), 
+                xlim = c(test_statistic, 4), 
+                fill = "turquoise3") +
+  stat_function(geom = "area", 
+                fun = dt, 
+                args = list(df = 29), 
+                xlim = c(-4, -test_statistic), 
+                fill = "turquoise3") +
+  geom_vline(aes(xintercept = 0),
+             linetype = 2,
+             linewidth = 2) +
+  geom_segment(aes(x = test_statistic,
+                   y = 0,
+                   yend = 0.06),
+               linewidth = 1) +
+  geom_segment(aes(x = -test_statistic,
+                   y = 0,
+                   yend = 0.06),
+               linewidth = 1) +
+  scale_y_continuous(expand = c(0, 0),
+                     limits = c(0, 0.4)) +
+  stat_function(geom = "line", 
+                n = 1000, 
+                fun = dt, 
+                args = list(df = 29), 
+                linewidth = 2, 
+                color = "#856F33") +
+  theme(axis.text.y = element_blank(),
+        axis.line.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank())
+
+ggplot(data.frame(x = -4:4), 
+       aes(x)) +
+  stat_function(geom = "area", 
+                fun = dt, 
+                args = list(df = 29), 
+                xlim = c(test_statistic, 4), 
+                fill = "turquoise3") +
+  geom_vline(aes(xintercept = 0),
+             linetype = 2,
+             linewidth = 2) +
+  geom_segment(aes(x = test_statistic,
+                   y = 0,
+                   yend = 0.06),
+               linewidth = 1) +
+  scale_y_continuous(expand = c(0, 0),
+                     limits = c(0, 0.4)) +
+  stat_function(geom = "line", 
+                n = 1000, 
+                fun = dt, 
+                args = list(df = 29), 
+                linewidth = 2, 
+                color = "#856F33") +
+  theme(axis.text.y = element_blank(),
+        axis.line.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank())
+
+ggplot(data.frame(x = -4:4), 
+       aes(x)) +
+  stat_function(geom = "area", 
+                fun = dt, 
+                args = list(df = 29), 
+                xlim = c(test_statistic, 4), 
+                fill = "turquoise3") +
+  stat_function(geom = "area", 
+                fun = dt, 
+                args = list(df = 29), 
+                xlim = c(-4, -test_statistic), 
+                fill = "turquoise3") +
+  geom_vline(aes(xintercept = 0),
+             linetype = 2,
+             linewidth = 2) +
+  geom_segment(aes(x = test_statistic,
+                   y = 0,
+                   yend = 0.06),
+               linewidth = 1) +
+  geom_segment(aes(x = -test_statistic,
+                   y = 0,
+                   yend = 0.06),
+               linewidth = 1) +
+    geom_segment(aes(x = t_critical,
+                   y = 0,
+                   yend = 0.05),
+               linewidth = 1,
+               color = "darkorange") +
+  geom_segment(aes(x = -t_critical,
+                   y = 0,
+                   yend = 0.05),
+               linewidth = 1,
+               color = "darkorange") +
+  scale_y_continuous(expand = c(0, 0),
+                     limits = c(0, 0.4)) +
+  stat_function(geom = "line", 
+                n = 1000, 
+                fun = dt, 
+                args = list(df = 29), 
+                linewidth = 2, 
+                color = "#856F33") +
+  theme(axis.text.y = element_blank(),
+        axis.line.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank())
+
+  
 ```
 
 Plotting the acorn population distribution:

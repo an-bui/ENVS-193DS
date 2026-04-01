@@ -25,7 +25,7 @@ categories: [tidyverse, mean, median, read_csv, filter, group_by, ungroup, mutat
 - chain functions together using ` |> `
 - visualize data using `ggplot()`
 - create boxplots using `geom_boxplot()`
-- create line plots (a type of scatterplot) using `geom_point()` and `geom_line()`
+- create timeseries plots using `geom_point()` and `geom_line()`
 - label plots using `labs()`
 
 ### Data source
@@ -79,7 +79,7 @@ visits <- c(31, 15, 20, 50) # saving a list of numbers as an object called visit
 
 R allows you to apply functions to do calculations, from simple to complex structures.  
 
-Let's say we want to find the mean of the numbers in `visits`. We could do the calculation by hand, or we could as R to do it for us.  
+Let's say we want to find the mean of the numbers in `visits`. We could do the calculation by hand, or we could have R do it for us.    
 
 Functions are really powerful tools in R. In this class, we'll get comfortable learning new functions and applying them to different scenarios.  
 
@@ -145,20 +145,28 @@ If you're not sure if your data is in R, the first thing to check is the "Enviro
 
 ### 5. cleaning and wranging
 
-Let's say we want to figure out what the median number of visits is for Joshua Tree is across all years and months.  
+Let's say we want to figure out what the mean number of visits is for Joshua Tree is across all years and months.  
 
 First, you can filter by park to only include `jtnp` (or Joshua Tree) using the `filter()` function.
 
 ```{r filter-state}
-df1 <- filter(parks_visits, # use the parks_visits data frame
-              park == "jtnp") # only include rows where `jtnp` is in the `park` column
+df1 <- filter(
+  # start with the parks_visits data frame
+  parks_visits,
+  # filter to only include rows where jtnp appears in the park column
+  park == "jtnp"
+)
 ```
 
-Then, you can calculate the median monthly visits for Joshua Tree across all years using the `summarize()` and `mean()` functions.
+Then, you can calculate the mean monthly visits for Joshua Tree across all years using the `summarize()` and `mean()` functions.
 
 ```{r}
-df2 <- summarize(df1, # use the df1 data frame
-                 median_visits = median(visits)) # calculate the mean number of visits
+df2 <- summarize(
+  # starting with the df1 data frame
+  df1,
+  # calculate the mean monthly visits across all months and years
+  mean_visits = mean(visits)
+)
 ```
 
 This can get tedious if you have a bunch of filtering and summarizing to do! So instead, we can use...
@@ -180,32 +188,37 @@ In class examples, you will see the baseR pipe (` |> `).
 When reading your code aloud, you can read the pipe as "and then"  
 
 ```{r jt-example}
-# create a new object called `jtnp`
-median_jtnp_visits <- parks_visits |> # start with the `parks_visits` data frame
-  filter(park == "jtnp") |> # filter to only include Joshua tree
-  summarize(median_visits = median(visits)) # calculate the mean number of visits at Joshua Tree
+# creating new object called mean_jtnp_visits from parks_visits
+mean_jtnp_visits <- parks_visits |> 
+  # filter to only include rows from jtnp
+  filter(park == "jtnp") |> 
+  # calculate the mean number of monthly visits
+  summarize(mean_visits = mean(visits))
 ```
 
 When you run these lines of code, the code shows up in the console but the output does not. If you want to see any object, you can type in the object name and run that.
 
 ```{r display-median}
-median_jtnp_visits
+mean_jtnp_visits
 ```
 
-You should see the median number of visits to Joshua Tree across all years and all months pop up.  
+You should see the mean number of visits to Joshua Tree across all years and all months pop up.  
 
 But what if you want to know the mean number of visits to Joshua Tree in 2024 only? You can add another argument to the `filter()` call with the `&` (read: "and") operator. The `&` operator lets you include multiple arguments in `filter()`.
 
 ```{r mean-jtnp-2024-calc}
-median_jtnp_visits_2024 <- parks_visits |> # start with parks_visits object
-  filter(park == "jtnp" & year == "2024") |> # filter to only include jtnp and 2024
-  summarize(median_visits = median(visits)) # calculate mean number of visits
+# creating new object called mean_jtnp_visits from parks_visits
+mean_jtnp_visits <- parks_visits |> 
+  # filter to only include rows from jtnp
+  filter(park == "jtnp") |> 
+  # calculate the mean number of monthly visits
+  summarize(mean_visits = mean(visits))
 ```
 
 What's the mean number of visits to Joshua Tree in 2024 across all months?
 
 ```{r mean-jtnp-2024-display}
-median_jtnp_visits_2024
+mean_jtnp_visits
 ```
 
 ### 7. Visualizing data
@@ -219,17 +232,19 @@ To visualize the data, we'll use `ggplot()` and its associated functions, which 
 The main parts of creating a plot in `ggplot()` are:  
 
 1. the "global call": you have to tell R that you want to use `ggplot()` by actually naming the function  
-2. the "mapping" (using the aesthetics function called `aes()`): you have the tell R the data frame name (in this case, `parks_visits`) and what the x- and y-axes should be   
+2. the data and mapping: you have the tell R the data frame name (in this case, `parks_visits`) and what the x- and y-axes should be using the `aes()` function (which stands for "aesthetics")
 3. the "geometries": this is the _type_ of plot you are making. In this case, we're using the function `geom_boxplot()` because we want to make a boxplot. Most `geom_()` functions are named after the plot they make.  
 
 ```{r first-boxplot}
 #| warning: false
 
-# 1. start with the global call
-ggplot(data = parks_visits, # using the data frame parks_visits
-       mapping = aes(x = park, # 2. naming the aesthetics: the x-axis should be the 3 parks
-                     y = visits)) + # the y-axis should be monthly visits
-  geom_boxplot() # 3. the plot should be a boxplot
+# base layer: ggplot
+ggplot(data = parks_visits,
+       # x-axis should be park, y-axis should be visits
+       mapping = aes(x = park,
+                     y = visits)) +
+  # first layer: boxplot
+  geom_boxplot()
 ```
 
 :::{.callout-tip title="Getting a warning?" collapse="true"}
@@ -255,12 +270,17 @@ In the `parks_visits` data frame, there are 3 parks. We could do everything in s
 After running `group_by()` along with whatever functions you want to use on the groups, it is good practice to add `ungroup()` at the end of your cleaning code to undo the groups. This is so that any functions you want to use that _don't_ apply to the groups don't give you unexpected results.
 
 ```{r first-group-example}
-parks_summary <- parks_visits |> # start with the parks_visits data frame
-  group_by(park) |> # group by each park
-  summarize(median_visits = median(visits, na.rm = TRUE)) |> # summarize the median number of visits
-  ungroup() # ungrouping the data frame
+# create new object called parks_summary
+parks_summary <- parks_visits |> 
+  # group by park
+  group_by(park) |>
+  # calculate median number of visits at each park
+  summarize(median_visits = median(visits, na.rm = TRUE)) |> 
+  # ungroup data frame
+  ungroup()
 
-parks_summary # display the final data frame
+# display the final data frame
+parks_summary
 ```
 
 ### 9. Cleaning, wrangling, and visualizing all together
@@ -273,35 +293,51 @@ We'll also add in a new function here: `mutate()`. `mutate()` is a function that
 2. add a new column called `visits_millions` that calculates the annual number of visits in millions
 
 ```{r annual-visits-summary}
-annual_visits <- parks_visits |> # start with the parks_visits data frame
-  group_by(park, year) |> # group by park AND year
-  summarize(total_visits = sum(visits, na.rm = TRUE)) |> # calculate total visits per year
-  ungroup() |> # ungrouping data frame
-  mutate(park_name = case_when( # create a new column called park_name
-    park == "cnps" ~ "Channel Islands", # when cnps appears in the park column, fill in Channel Islands
-    park == "dvnp" ~ "Death Valley", # when dvnp appears in the park column, fill in Death Valley
-    park == "jtnp" ~ "Joshua Tree" # when jtnp appears in the park column, fill in Joshua Tree
+# creating a new object called annual_visits
+annual_visits <- parks_visits |> 
+  # group by park and year
+  group_by(park, year) |> 
+  # calculating the number of visits per year
+  summarize(total_visits = sum(visits, na.rm = TRUE)) |> 
+  # ungroup the data frame
+  ungroup() |> 
+  # fill in full park names
+  mutate(park_name = case_when(
+    # when cnps appears in park column, fill in full name "Channel Islands"
+    park == "cnps" ~ "Channel Islands",
+    # when jtnp appears in park column, fill in full name "Joshua Tree"
+    park == "jtnp" ~ "Joshua Tree",
+    # when dvnp appears in park column, fill in full name "Death Valley"
+    park == "dvnp" ~ "Death Valley"
   )) |> 
-  mutate(visits_millions = total_visits/1000000) # add a new column called visits_millions, where the total visits are divided by 1000000
+  # calculate total number of visits in millions
+  mutate(visits_millions = total_visits/1000000)
 ```
 
-Now, we can visualize the data in a _line plot_, which is a type of scatter plot except the points are connected with lines. We can do that using `ggplot()` again, but this time with two new "geometries": `geom_point()` and `geom_line()`.  
+Now, we can visualize the data in a _timerseries plot_, where each point is connected with a line. We can do that using `ggplot()` again, but this time with two new "geometries": `geom_point()` and `geom_line()`.  
 
 We'll also add some color to the plot to make it more interesting to look at!   
 
 Lastly, we'll add in a new function called `labs()`, which allows us to change the labels on the axes and legend and add a title to the plot, to make things more clear.  
 
 ```{r annual-visits-plot}
-ggplot(data = annual_visits, # use the annual_visits data frame
-       mapping = aes(x = year, # the x-axis should be year
-                     y = visits_millions, # the y-axis should be visits in millions
-                     color = park_name)) + # color all geometries by park_name
-  geom_point() + # adding points
-  geom_line() + # adding lines
-  labs(x = "Year", # relabelling the x-axis
-       y = "Recreation visits (in millions)", # and the y-axis
-       title = "Joshua Tree receives more visits than Death Valley and Channel Islands", # adding a title
-       color = "Park name") # relabelling the legend
+# base layer: ggplot
+ggplot(data = annual_visits,
+       # year on x-axis, visits in millions on y-axis
+       # coloring by park
+       mapping = aes(x = year,
+                     y = visits_millions,
+                     color = park)) +
+  # first layer: points
+  geom_point() +
+  # second layer: lines
+  geom_line() +
+  # relabelling x- and y-axes and legend
+  # adding title
+  labs(x = "Year",
+       y = "Recreation visits in millions",
+       color = "Park",
+       title = "Joshua Tree receives the most visits")
 ```
 
 **END OF WORKSHOP 1**

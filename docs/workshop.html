@@ -113,7 +113,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
 
     const options = {
-      valueNames: ['listing-title','listing-subtitle',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
+      valueNames: ['listing-title','listing-subtitle','listing-date',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
       
       searchColumns: ["listing-date","listing-title","listing-author"],
     };
@@ -223,7 +223,7 @@ window.Quarto = {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(1)</span></div><div class="category" data-category="filter">filter <span class="quarto-category-count">(1)</span></div><div class="category" data-category="geom_boxplot">geom_boxplot <span class="quarto-category-count">(1)</span></div><div class="category" data-category="geom_line">geom_line <span class="quarto-category-count">(1)</span></div><div class="category" data-category="geom_point">geom_point <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ggplot">ggplot <span class="quarto-category-count">(1)</span></div><div class="category" data-category="group_by">group_by <span class="quarto-category-count">(1)</span></div><div class="category" data-category="labs">labs <span class="quarto-category-count">(1)</span></div><div class="category" data-category="mean">mean <span class="quarto-category-count">(1)</span></div><div class="category" data-category="median">median <span class="quarto-category-count">(1)</span></div><div class="category" data-category="mutate">mutate <span class="quarto-category-count">(1)</span></div><div class="category" data-category="pipe operators">pipe operators <span class="quarto-category-count">(1)</span></div><div class="category" data-category="read_csv">read_csv <span class="quarto-category-count">(1)</span></div><div class="category" data-category="summarize">summarize <span class="quarto-category-count">(1)</span></div><div class="category" data-category="tidyverse">tidyverse <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ungroup">ungroup <span class="quarto-category-count">(1)</span></div><div class="category" data-category="|>">|&gt; <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="clean_names">clean_names <span class="quarto-category-count">(1)</span></div><div class="category" data-category="filter">filter <span class="quarto-category-count">(1)</span></div><div class="category" data-category="geom_boxplot">geom_boxplot <span class="quarto-category-count">(1)</span></div><div class="category" data-category="geom_errorbar">geom_errorbar <span class="quarto-category-count">(1)</span></div><div class="category" data-category="geom_histogram">geom_histogram <span class="quarto-category-count">(1)</span></div><div class="category" data-category="geom_line">geom_line <span class="quarto-category-count">(2)</span></div><div class="category" data-category="geom_point">geom_point <span class="quarto-category-count">(2)</span></div><div class="category" data-category="geom_pointrange">geom_pointrange <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ggplot">ggplot <span class="quarto-category-count">(2)</span></div><div class="category" data-category="group_by">group_by <span class="quarto-category-count">(2)</span></div><div class="category" data-category="janitor">janitor <span class="quarto-category-count">(1)</span></div><div class="category" data-category="labs">labs <span class="quarto-category-count">(1)</span></div><div class="category" data-category="mean">mean <span class="quarto-category-count">(1)</span></div><div class="category" data-category="median">median <span class="quarto-category-count">(1)</span></div><div class="category" data-category="mutate">mutate <span class="quarto-category-count">(2)</span></div><div class="category" data-category="pipe operators">pipe operators <span class="quarto-category-count">(2)</span></div><div class="category" data-category="pivot_longer">pivot_longer <span class="quarto-category-count">(1)</span></div><div class="category" data-category="qt">qt <span class="quarto-category-count">(1)</span></div><div class="category" data-category="read_csv">read_csv <span class="quarto-category-count">(2)</span></div><div class="category" data-category="sd">sd <span class="quarto-category-count">(1)</span></div><div class="category" data-category="select">select <span class="quarto-category-count">(1)</span></div><div class="category" data-category="summarize">summarize <span class="quarto-category-count">(2)</span></div><div class="category" data-category="tidyverse">tidyverse <span class="quarto-category-count">(2)</span></div><div class="category" data-category="ungroup">ungroup <span class="quarto-category-count">(1)</span></div><div class="category" data-category="|>">|&gt; <span class="quarto-category-count">(2)</span></div></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -259,6 +259,12 @@ window.Quarto = {
      <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
        <option value="" disabled="" selected="" hidden="">Order By</option>
        <option value="index" data-direction="asc">Default</option>
+         <option value="listing-date-sort" data-direction="asc">
+          Date - Oldest
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Date - Newest
+        </option>
          <option value="listing-title-sort" data-direction="asc">
           Title
         </option>
@@ -278,6 +284,9 @@ window.Quarto = {
 <th>
 Description
 </th>
+<th>
+<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Date</a>
+</th>
 </tr>
 </thead>
 <tbody class="list">
@@ -287,6 +296,20 @@ Description
 </td>
 <td>
 <span class="listing-subtitle">basics of using RStudio, intro to <code>tidyverse</code></span>
+</td>
+<td>
+<span class="listing-date">Apr 3, 2026</span>
+</td>
+</tr>
+<tr data-index="1" data-categories="tidyverse,janitor,read_csv,pipe operators,|>,clean_names,mutate,select,pivot_longer,group_by,summarize,sd,qt,ggplot,geom_histogram,geom_point,geom_errorbar,geom_pointrange,geom_line" data-listing-date-sort="1775804400000" data-listing-file-modified-sort="1775540664255" data-listing-date-modified-sort="1775540664000" data-listing-reading-time-sort="20" data-listing-word-count-sort="3822" data-listing-title-sort="Coding workshop: Week 2" data-listing-filename-sort="workshop-02_2026-04-10.qmd">
+<td>
+<a href="./workshop/workshop-02_2026-04-10.html" class="title listing-title">Coding workshop: Week 2</a>
+</td>
+<td>
+<span class="listing-subtitle">using Quarto, data wrangling, visualizing uncertainty</span>
+</td>
+<td>
+<span class="listing-date">Apr 10, 2026</span>
 </td>
 </tr>
 </tbody>
@@ -769,8 +792,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="an">listing:</span><span class="co"> </span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">  contents: workshop # all Quarto docs in the `workshop` directory will be included on your listing page</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">  type: table # or `default` or `table`; each type has its own set of yaml options to include</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">  fields: [title, subtitle]</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">  sort: "title desc" # can also sort on more than one field</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">  fields: [title, subtitle, date]</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">  sort: "date" # can also sort on more than one field</span></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">  categories: true # allows you to sort posts by assigned categories </span></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">  field-display-names: </span></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">    subtitle: "Description"</span></span>

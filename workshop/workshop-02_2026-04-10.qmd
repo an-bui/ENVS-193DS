@@ -88,34 +88,57 @@ In this chunk of code, we'll:
 6. use `mutate()` to create a new column called `metric_tons_mil`
 
 ```{r creating-clean-dataframe}
-production_clean <- production |> # use the production data frame
-  clean_names() |> # clean up column names
-  filter(entity == "United States") |> # filter to only include observations from the US
-  select(year, aquaculture_production_metric_tons, capture_fisheries_production_metric_tons) |> # select columns of interest 
-  pivot_longer(cols = aquaculture_production_metric_tons:capture_fisheries_production_metric_tons, # choose columns to pivot
-               names_to = "type", # name the column name with fishery type "type"
-               values_to = "catch_metric_tons") |> # name the column name with the catch amount "catch_metric_tons"
-  mutate(type = case_when( # mutate the existing type column
-    type == "aquaculture_production_metric_tons" ~ "aquaculture", # when "aquaculture_production_metric_tons" appears in the "type" column, fill in "aquaculture"
-    type == "capture_fisheries_production_metric_tons" ~ "capture" # when "capture_fisheries_production_metric_tons" appears in the "type" column, fill in "capture"
+# creating new object from production 
+production_clean <- production |> 
+  # clean column names
+  clean_names() |> 
+  # filter to only include observations from the US
+  filter(entity == "United States") |>
+  # select columns of interest 
+  select(year, 
+         aquaculture_production_metric_tons, 
+         capture_fisheries_production_metric_tons) |>
+  # choose columns to pivot
+  pivot_longer(cols = aquaculture_production_metric_tons:
+                 capture_fisheries_production_metric_tons, 
+               # column with fishery type should be named "type"
+               names_to = "type", 
+               # column with catch amount should be named "catch_metric_tons"
+               values_to = "catch_metric_tons") |> 
+  # mutate the existing type column
+  mutate(type = case_when( 
+    # fill in aquaculture to replace aquaculture_production_metric_tons
+    type == "aquaculture_production_metric_tons" ~ "aquaculture", 
+    # fill in capture to replace capture_fisheries_production_metric_tons
+    type == "capture_fisheries_production_metric_tons" ~ "capture" 
   )) |> 
-  mutate(metric_tons_mil = catch_metric_tons/1000000) # convert catch in metric tons to millions
+  # convert catch in metric tons to millions
+  mutate(metric_tons_mil = catch_metric_tons/1000000) 
 ```
 
 ### 3. Making a boxplot/jitter plot
 
 Last week in workshop, we made a boxplot. The boxplot shows useful summary statistics (displays the central tendency and spread), while the jitter plot shows the actual observations (in this case, each point is the catch for a fishery in a given year). One way to display the underlying data is to combine a boxplot with a jitter plot. 
 
-```{r}
-ggplot(data = production_clean, # start with the production_clean data frame
-       mapping = aes(x = type, # x-axis should be type of production
-                     y = metric_tons_mil, # y-axis should be metric tons of production (in millions)
-                     color = type)) + # coloring by production type
-  geom_boxplot() + # first layer should be a boxplot
+```{r} 
+#| label: boxplot-and-jitter
+
+# start with the production_clean data frame
+ggplot(data = production_clean, 
+       # x-axis should be type of production
+       # y-axis should be metric tons of production (in millions)
+       # coloring by production type
+       mapping = aes(x = type, 
+                     y = metric_tons_mil, 
+                     color = type)) + 
+  # first layer: boxplot
+  geom_boxplot() + 
+  # second layer: jitter
   geom_jitter(width = 0.2, # making the points jitter horizontally
               height = 0) + # making sure points don't jitter vertically
-  labs(x = "Type", # labelling the x-axis
-       y = "Metric tons of production (in millions)") # labelling the y-axis
+  # relabelling x- and y-axes
+  labs(x = "Type", 
+       y = "Metric tons of production (in millions)") 
 ```
 
 On average, a) which type of production produces more fish, and b) what components of the plot are you using to come up with your answer?  
@@ -129,10 +152,14 @@ This chunk of code creates a histogram. Note that for a histogram, you only need
 Within the `geom_histogram()` call, you'll need to tell R what number of bins you want using the `bins` argument. In this case (using the Rice Rule to determine the appropriate number of bins), we'll use 10 bins.  
 
 ```{r creating-histogram}
+# base layer: ggplot
 ggplot(data = production_clean,
+       # x-axis should be metric_tons_mil
+       # fill by production type (aquaculture or capture)
        mapping = aes(x = metric_tons_mil,
-                     fill = type)) + # fill the histogram based on the fishery type
-  geom_histogram(bins = 10, # set the number of bins
+                     fill = type)) + 
+  # first layer: histogram
+  geom_histogram(bins = 10, # set the number of bins based on Rice Rule
                  color = "black") # make the border of the columns black
 ```
 
@@ -145,21 +172,24 @@ Can you tell from looking at the histogram which production type tends to produc
 #### a. Calculations
 
 ```{r calculations}
-# calculate the confidence interval "by hand"
-production_summary <- production_clean |> # start with the production_clean data frame
-  group_by(type) |> # group by production type
-  summarize(mean = mean(metric_tons_mil), # calculate the mean
-            n = length(metric_tons_mil), # count the number of observations
-            df = n - 1, # calculate the degrees of freedom
-            sd = sd(metric_tons_mil), # calculate the standard deviation
-            se = sd/sqrt(n), # calculate the standard error
-            tval = qt(p = 0.05/2, df = df, lower.tail = FALSE), # find the t value
-            margin = tval*se, # calculate the margin of error
-            ci_lower = mean - margin, # calculate the lower bound of the confidence interval
-            ci_upper = mean + margin # calculate the upper bound of the confidence interval
-          ) |> 
-  ungroup() # ungrouping the data frame
+# create a new object from clean data frame
+production_summary <- production_clean |> 
+  # group by production type
+  group_by(type) |> 
+  # calculate values for each production type
+  summarize(
+    mean = mean(metric_tons_mil), # mean
+    n = length(metric_tons_mil), # number of observations (n)
+    df = n - 1, # degrees of freedom
+    sd = sd(metric_tons_mil), # standard deviation
+    se = sd/sqrt(n), # standard error
+    tval = qt(p = 0.05/2, df = df, lower.tail = FALSE), # t value
+    margin = tval*se, # margin of error
+    ci_lower = mean - margin, # lower bound of the confidence interval
+    ci_higher = mean + margin # upper bound of the confidence interval
+  ) 
 
+# display object
 production_summary
 ```
 
@@ -180,14 +210,21 @@ To visualize the spread/uncertainty/confidence, we'll use `geom_errorbar()`. Thi
 First, we'll visualize standard deviation.
 
 ```{r sd-plot}
-ggplot(data = production_summary, # use the summary data frame
-       mapping = aes(x = type, # x-axis should be production type
-                     y = mean, # y-axis should show the mean production
-                     color = type)) + # color the points by fishery type
-  geom_point(size = 2) + # plot the mean
-  geom_errorbar(aes(ymin = mean - sd, # plot the standard deviation
-                    ymax = mean + sd),
+# base layer: ggplot
+ggplot(data = production_summary, 
+       # x-axis should be production type
+       # y-axis is mean production
+       # color by production type
+       mapping = aes(x = type, 
+                     y = mean, 
+                     color = type)) + 
+  # first layer: points to represent mean
+  geom_point(size = 2) + 
+  # second layer: bars to represent standard deviation
+  geom_errorbar(mapping = aes(ymin = mean - sd, 
+                              ymax = mean + sd),
                 width = 0.1) + # make the bars narrower
+  # relabelling x- and y-axes, adding title
   labs(title = "Standard deviation",
        x = "Type",
        y = "Mean and SD million metric tons production")
@@ -198,14 +235,21 @@ ggplot(data = production_summary, # use the summary data frame
 Then, we want to visualize standard error.
 
 ```{r se-plot}
-ggplot(data = production_summary, # use the summary data frame
+# base layer: ggplot
+ggplot(data = production_summary, 
+       # x-axis should be production type
+       # y-axis is mean production
+       # color by production type
        mapping = aes(x = type, 
                      y = mean, 
-                     color = type)) + # color the points by fishery type
-  geom_point(size = 2) + # plot the mean
-  geom_errorbar(aes(ymin = mean - se, # plot the standard error
-                    ymax = mean + se),
-                width = 0.1) +
+                     color = type)) + 
+  # first layer: points to represent mean
+  geom_point(size = 2) + 
+  # second layer: bars to represent standard error
+  geom_errorbar(mapping = aes(ymin = mean - se, 
+                              ymax = mean + se),
+                width = 0.1) + # make the bars narrower
+  # relabelling x- and y-axes, adding title
   labs(title = "Standard error",
        x = "Type",
        y = "Mean and SE million metric tons production")
@@ -216,15 +260,23 @@ ggplot(data = production_summary, # use the summary data frame
 Then, we want to visualize the 95% confidence interval.
 
 ```{r ci-95-plot}
-ggplot(data = production_summary, # use the summary data frame
+# base layer: ggplot
+ggplot(data = production_summary, 
+       # x-axis should be production type
+       # y-axis is mean production
+       # color by production type
        mapping = aes(x = type, 
                      y = mean, 
-                     color = type)) + # color the points by fishery type
-  geom_point(size = 2) + # plot the mean
-  geom_errorbar(aes(ymin = ci_lower, # plot range of values defining 95% CI
-                    ymax = ci_upper),
-                width = 0.1) +
-  labs(title = "Confidence interval",
+                     color = type)) + 
+  # first layer: points to represent mean
+  geom_point(size = 2) + 
+  # second layer: bars to represent 95% CI
+  geom_errorbar(mapping = aes(ymin = ci_lower, 
+                              ymax = ci_higher),
+                # make the bars narrower
+                width = 0.1) + 
+  # relabelling x- and y-axes, adding title
+  labs(title = "Confidence interval using geom_point and geom_errorbar",
        x = "Type",
        y = "Mean and 95% CI million metric tons production")
 ```
@@ -234,13 +286,18 @@ ggplot(data = production_summary, # use the summary data frame
 We can also visualize means and spread/uncertainty/confidence intervals using the `geom_pointrange()` function.
 
 ```{r ci-95-plot-with-pointrange}
-ggplot(data = production_summary, # use the summary data frame
+# base layer: ggplot
+ggplot(data = production_summary, 
+       # x-axis should be production type
+       # y-axis is mean production
+       # color by production type
        mapping = aes(x = type, 
                      y = mean, 
-                     ymin = ci_lower, 
-                     ymax = ci_upper,
-                     color = type)) + # color the points by fishery type
-  geom_pointrange() +
+                     color = type)) +
+  # first layer: points representing mean,
+  geom_pointrange(mapping = aes(ymin = ci_lower, 
+                                ymax = ci_higher)) +
+  # relabelling x- and y-axes, adding title
   labs(title = "Confidence interval (using geom_pointrange)",
        x = "Type",
        y = "Mean and 95% CI million metric tons production")
@@ -263,18 +320,21 @@ ggplot(data = production_clean,
               shape = 21) +
   # second layer: means and 95% CI
   geom_pointrange(data = production_summary,
-                  aes(x = type, 
-                      y = mean, 
-                      ymin = ci_lower, 
-                      ymax = ci_higher)) +
-  # changing appearance: colors, labels, and theme
-  scale_color_manual(values = c("aquaculture" = "deepskyblue3",
-                                "capture" = "orangered1")) +
+                  mapping = aes(x = type, 
+                                y = mean, 
+                                ymin = ci_lower, 
+                                ymax = ci_higher)) +
+  # custom colors
+  scale_color_manual(values = c("aquaculture" = "deepskyblue",
+                                "capture" = "orangered")) +
+  # relabelling x- and y-axes, adding title
   labs(x = "Production type",
        y = "Million metric tons of production",
-       color = "Production type",
        title = "Capture produces more than aquaculture") +
-  theme_light()
+  # custom theme
+  theme_light() +
+  # taking out legend
+  theme(legend.position = "none")
 ```
 
 :::{.callout-note title="ggplot themes" collapse="true"}
@@ -289,19 +349,27 @@ A list of built-in themes and their `theme_()` function calls is [here](https://
 Then, if we want to visualize production through time:
 
 ```{r time-plot}
+# base layer: ggplot
 ggplot(data = production_clean,
+       # x-axis should be year, y-axis should be metric tons in millions
+       # color and shape by production type
        mapping = aes(x = year,
                      y = metric_tons_mil,
                      color = type,
                      shape = type)) +
+  # first layer: points
   geom_point() +
+  # second layer: lines
   geom_line() +
-  scale_color_manual(values = c("aquaculture" = "deepskyblue3",
-                                "capture" = "orangered1")) +
+  # manually set colors
+  scale_color_manual(values = c("aquaculture" = "deepskyblue",
+                                "capture" = "orangered")) +
+  # relabel x- and y-axes, legend title
   labs(x = "Year",
        y = "Million metric tons of production",
        color = "Production type",
        shape = "Production type") +
+  # custom theme
   theme_minimal()
 ```
 

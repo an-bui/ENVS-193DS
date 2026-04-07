@@ -238,7 +238,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">March 29, 2026</p>
+        <p class="date-modified">April 6, 2026</p>
       </div>
     </div>
       
@@ -962,8 +962,12 @@ bins = 2n^{1/3}
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the z-score</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>chiton_z <span class="ot">&lt;-</span> (<span class="dv">6</span> <span class="sc">-</span> <span class="dv">12</span>)<span class="sc">/</span><span class="dv">3</span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the probability under the curve</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(chiton_z, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the area under the curve</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  chiton_z, </span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean =</span> <span class="dv">0</span>, </span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">sd =</span> <span class="dv">1</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.02275013</code></pre>
@@ -2064,129 +2068,133 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb41-461"><a href="#cb41-461" aria-hidden="true" tabindex="-1"></a><span class="in"># calculate the z-score</span></span>
 <span id="cb41-462"><a href="#cb41-462" aria-hidden="true" tabindex="-1"></a><span class="in">chiton_z &lt;- (6 - 12)/3</span></span>
 <span id="cb41-463"><a href="#cb41-463" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
-<span id="cb41-464"><a href="#cb41-464" aria-hidden="true" tabindex="-1"></a><span class="in"># calculate the probability under the curve</span></span>
-<span id="cb41-465"><a href="#cb41-465" aria-hidden="true" tabindex="-1"></a><span class="in">pnorm(chiton_z, mean = 0, sd = 1)</span></span>
-<span id="cb41-466"><a href="#cb41-466" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-467"><a href="#cb41-467" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-468"><a href="#cb41-468" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-469"><a href="#cb41-469" aria-hidden="true" tabindex="-1"></a><span class="fu">## 13. 68-95-99.7 rule</span></span>
-<span id="cb41-470"><a href="#cb41-470" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-471"><a href="#cb41-471" aria-hidden="true" tabindex="-1"></a>In a normal distribution, **68%** of values lie within 1 standard deviation of the mean, **95%** within 2 standard deviations, and **99.7%** within 3 standard deviations.  </span>
+<span id="cb41-464"><a href="#cb41-464" aria-hidden="true" tabindex="-1"></a><span class="in"># calculate the area under the curve</span></span>
+<span id="cb41-465"><a href="#cb41-465" aria-hidden="true" tabindex="-1"></a><span class="in">pnorm(</span></span>
+<span id="cb41-466"><a href="#cb41-466" aria-hidden="true" tabindex="-1"></a><span class="in">  chiton_z, </span></span>
+<span id="cb41-467"><a href="#cb41-467" aria-hidden="true" tabindex="-1"></a><span class="in">  mean = 0, </span></span>
+<span id="cb41-468"><a href="#cb41-468" aria-hidden="true" tabindex="-1"></a><span class="in">  sd = 1</span></span>
+<span id="cb41-469"><a href="#cb41-469" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb41-470"><a href="#cb41-470" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-471"><a href="#cb41-471" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-472"><a href="#cb41-472" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-473"><a href="#cb41-473" aria-hidden="true" tabindex="-1"></a><span class="in">```{r rule-68-95-99.7}</span></span>
-<span id="cb41-474"><a href="#cb41-474" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 16</span></span>
-<span id="cb41-475"><a href="#cb41-475" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 8</span></span>
+<span id="cb41-473"><a href="#cb41-473" aria-hidden="true" tabindex="-1"></a><span class="fu">## 13. 68-95-99.7 rule</span></span>
+<span id="cb41-474"><a href="#cb41-474" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-475"><a href="#cb41-475" aria-hidden="true" tabindex="-1"></a>In a normal distribution, **68%** of values lie within 1 standard deviation of the mean, **95%** within 2 standard deviations, and **99.7%** within 3 standard deviations.  </span>
 <span id="cb41-476"><a href="#cb41-476" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-477"><a href="#cb41-477" aria-hidden="true" tabindex="-1"></a><span class="in">labels &lt;- c(</span></span>
-<span id="cb41-478"><a href="#cb41-478" aria-hidden="true" tabindex="-1"></a><span class="in">  "", "\U03BC - 3\U03C3", "\U03BC - 2\U03C3", "\U03BC - \U03C3", "\U03BC", "\U03BC + \U03C3", "\U03BC + 2\U03C3", "\U03BC + 3\U03C3", ""</span></span>
-<span id="cb41-479"><a href="#cb41-479" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb41-477"><a href="#cb41-477" aria-hidden="true" tabindex="-1"></a><span class="in">```{r rule-68-95-99.7}</span></span>
+<span id="cb41-478"><a href="#cb41-478" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 16</span></span>
+<span id="cb41-479"><a href="#cb41-479" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 8</span></span>
 <span id="cb41-480"><a href="#cb41-480" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-481"><a href="#cb41-481" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data.frame(x = -4:4), aes(x)) +</span></span>
-<span id="cb41-482"><a href="#cb41-482" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_linerange(x = 1, ymin = 0, ymax = 0.24) +</span></span>
-<span id="cb41-483"><a href="#cb41-483" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_linerange(x = -1, ymin = 0, ymax = 0.24) +</span></span>
-<span id="cb41-484"><a href="#cb41-484" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_linerange(x = 2, ymin = 0, ymax = 0.055) +</span></span>
-<span id="cb41-485"><a href="#cb41-485" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_linerange(x = -2, ymin = 0, ymax = 0.055) +</span></span>
-<span id="cb41-486"><a href="#cb41-486" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_linerange(x = 3, ymin = 0, ymax = 0.005) +</span></span>
-<span id="cb41-487"><a href="#cb41-487" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_linerange(x = -3, ymin = 0, ymax = 0.005) +</span></span>
-<span id="cb41-488"><a href="#cb41-488" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_linerange(x = 0, ymin = 0, ymax = 0.399) +</span></span>
-<span id="cb41-489"><a href="#cb41-489" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 1000, fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1.5, color = "darkorange") +</span></span>
-<span id="cb41-490"><a href="#cb41-490" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_x_continuous(labels = labels, breaks = seq(-4, 4, by = 1)) +</span></span>
-<span id="cb41-491"><a href="#cb41-491" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.41)) +</span></span>
-<span id="cb41-492"><a href="#cb41-492" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "") +</span></span>
-<span id="cb41-493"><a href="#cb41-493" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_classic() +</span></span>
-<span id="cb41-494"><a href="#cb41-494" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(panel.grid = element_blank(),</span></span>
-<span id="cb41-495"><a href="#cb41-495" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.text = element_text(size = 24),</span></span>
-<span id="cb41-496"><a href="#cb41-496" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.line.y = element_blank(),</span></span>
-<span id="cb41-497"><a href="#cb41-497" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.title.y = element_blank(),</span></span>
-<span id="cb41-498"><a href="#cb41-498" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.text.y = element_blank(),</span></span>
-<span id="cb41-499"><a href="#cb41-499" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.ticks = element_blank()) </span></span>
-<span id="cb41-500"><a href="#cb41-500" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-501"><a href="#cb41-501" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-502"><a href="#cb41-502" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-503"><a href="#cb41-503" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-504"><a href="#cb41-504" aria-hidden="true" tabindex="-1"></a><span class="fu">## 14. Student's t distribution</span></span>
+<span id="cb41-481"><a href="#cb41-481" aria-hidden="true" tabindex="-1"></a><span class="in">labels &lt;- c(</span></span>
+<span id="cb41-482"><a href="#cb41-482" aria-hidden="true" tabindex="-1"></a><span class="in">  "", "\U03BC - 3\U03C3", "\U03BC - 2\U03C3", "\U03BC - \U03C3", "\U03BC", "\U03BC + \U03C3", "\U03BC + 2\U03C3", "\U03BC + 3\U03C3", ""</span></span>
+<span id="cb41-483"><a href="#cb41-483" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb41-484"><a href="#cb41-484" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-485"><a href="#cb41-485" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data.frame(x = -4:4), aes(x)) +</span></span>
+<span id="cb41-486"><a href="#cb41-486" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_linerange(x = 1, ymin = 0, ymax = 0.24) +</span></span>
+<span id="cb41-487"><a href="#cb41-487" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_linerange(x = -1, ymin = 0, ymax = 0.24) +</span></span>
+<span id="cb41-488"><a href="#cb41-488" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_linerange(x = 2, ymin = 0, ymax = 0.055) +</span></span>
+<span id="cb41-489"><a href="#cb41-489" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_linerange(x = -2, ymin = 0, ymax = 0.055) +</span></span>
+<span id="cb41-490"><a href="#cb41-490" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_linerange(x = 3, ymin = 0, ymax = 0.005) +</span></span>
+<span id="cb41-491"><a href="#cb41-491" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_linerange(x = -3, ymin = 0, ymax = 0.005) +</span></span>
+<span id="cb41-492"><a href="#cb41-492" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_linerange(x = 0, ymin = 0, ymax = 0.399) +</span></span>
+<span id="cb41-493"><a href="#cb41-493" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 1000, fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1.5, color = "darkorange") +</span></span>
+<span id="cb41-494"><a href="#cb41-494" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_x_continuous(labels = labels, breaks = seq(-4, 4, by = 1)) +</span></span>
+<span id="cb41-495"><a href="#cb41-495" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.41)) +</span></span>
+<span id="cb41-496"><a href="#cb41-496" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "") +</span></span>
+<span id="cb41-497"><a href="#cb41-497" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_classic() +</span></span>
+<span id="cb41-498"><a href="#cb41-498" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(panel.grid = element_blank(),</span></span>
+<span id="cb41-499"><a href="#cb41-499" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.text = element_text(size = 24),</span></span>
+<span id="cb41-500"><a href="#cb41-500" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.line.y = element_blank(),</span></span>
+<span id="cb41-501"><a href="#cb41-501" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.title.y = element_blank(),</span></span>
+<span id="cb41-502"><a href="#cb41-502" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.text.y = element_blank(),</span></span>
+<span id="cb41-503"><a href="#cb41-503" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.ticks = element_blank()) </span></span>
+<span id="cb41-504"><a href="#cb41-504" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb41-505"><a href="#cb41-505" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-506"><a href="#cb41-506" aria-hidden="true" tabindex="-1"></a><span class="in">```{r t-dist}</span></span>
-<span id="cb41-507"><a href="#cb41-507" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data.frame(x = -10:10), aes(x)) +</span></span>
-<span id="cb41-508"><a href="#cb41-508" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 1), linewidth = 1, color = "#856F33") +</span></span>
-<span id="cb41-509"><a href="#cb41-509" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 3.5, y = 0.3, label = "\U03BD = 1", color = "#856F33", size = 6) +</span></span>
-<span id="cb41-510"><a href="#cb41-510" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 3), linewidth = 1, color = "#E6821C") + </span></span>
-<span id="cb41-511"><a href="#cb41-511" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 3.5, y = 0.35, label = "\U03BD = 3", color = "#E6821C", size = 6) +</span></span>
-<span id="cb41-512"><a href="#cb41-512" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 5), linewidth = 1, color = "#56E9E7") +</span></span>
-<span id="cb41-513"><a href="#cb41-513" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 3.5, y = 0.37, label = "\U03BD = 5", color = "#56E9E7", size = 6) +</span></span>
-<span id="cb41-514"><a href="#cb41-514" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 100), linewidth = 1, color = "#04B37F") +</span></span>
-<span id="cb41-515"><a href="#cb41-515" aria-hidden="true" tabindex="-1"></a><span class="in">    annotate("text", x = 3.5, y = 0.4, label = "\U03BD = 100", color = "#04B37F", size = 6) +</span></span>
-<span id="cb41-516"><a href="#cb41-516" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.42)) +</span></span>
-<span id="cb41-517"><a href="#cb41-517" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Continuous value", y = "Density") +</span></span>
-<span id="cb41-518"><a href="#cb41-518" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_bw() +</span></span>
-<span id="cb41-519"><a href="#cb41-519" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(panel.grid = element_blank(),</span></span>
-<span id="cb41-520"><a href="#cb41-520" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.text = element_text(size = 18),</span></span>
-<span id="cb41-521"><a href="#cb41-521" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.title = element_text(size = 18),</span></span>
-<span id="cb41-522"><a href="#cb41-522" aria-hidden="true" tabindex="-1"></a><span class="in">        text = element_text(family = "Lato")) </span></span>
-<span id="cb41-523"><a href="#cb41-523" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-524"><a href="#cb41-524" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-525"><a href="#cb41-525" aria-hidden="true" tabindex="-1"></a><span class="fu">## 15. Uniform distribution</span></span>
-<span id="cb41-526"><a href="#cb41-526" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-527"><a href="#cb41-527" aria-hidden="true" tabindex="-1"></a><span class="in">```{r uniform-dist}</span></span>
-<span id="cb41-528"><a href="#cb41-528" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data.frame(x = 0:10), aes(x)) +</span></span>
-<span id="cb41-529"><a href="#cb41-529" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 1000, fun = dunif, args = list(min = 2, max = 8), linewidth = 1, color = "firebrick4") +</span></span>
-<span id="cb41-530"><a href="#cb41-530" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 2, y = 0.172, label = "a = 2", color = "firebrick4", size = 6) + </span></span>
-<span id="cb41-531"><a href="#cb41-531" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 8, y = 0.172, label = "b = 8", color = "firebrick4", size = 6) + </span></span>
-<span id="cb41-532"><a href="#cb41-532" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_x_continuous(breaks = seq(0, 10, 2)) +</span></span>
-<span id="cb41-533"><a href="#cb41-533" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_y_continuous(expand = c(0, 0), limits = c(-0.001, 0.18)) +</span></span>
-<span id="cb41-534"><a href="#cb41-534" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Continuous value", y = "Density") +</span></span>
-<span id="cb41-535"><a href="#cb41-535" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_bw() +</span></span>
-<span id="cb41-536"><a href="#cb41-536" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(panel.grid = element_blank(),</span></span>
-<span id="cb41-537"><a href="#cb41-537" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.text = element_text(size = 18),</span></span>
-<span id="cb41-538"><a href="#cb41-538" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.title = element_text(size = 18),</span></span>
-<span id="cb41-539"><a href="#cb41-539" aria-hidden="true" tabindex="-1"></a><span class="in">        text = element_text(family = "Lato")) </span></span>
-<span id="cb41-540"><a href="#cb41-540" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-541"><a href="#cb41-541" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-542"><a href="#cb41-542" aria-hidden="true" tabindex="-1"></a><span class="fu">## 16. Binomial distribution</span></span>
-<span id="cb41-543"><a href="#cb41-543" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-544"><a href="#cb41-544" aria-hidden="true" tabindex="-1"></a><span class="in">```{r binomial-dist}</span></span>
-<span id="cb41-545"><a href="#cb41-545" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data.frame(x = 1:20), aes(x)) +</span></span>
-<span id="cb41-546"><a href="#cb41-546" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 20, fun = dbinom, args = list(size = 20, p = 0.1), color = "black") +</span></span>
-<span id="cb41-547"><a href="#cb41-547" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "point", n = 20, fun = dbinom, args = list(size = 20, p = 0.1), color = "#6D9929", size = 3) +</span></span>
-<span id="cb41-548"><a href="#cb41-548" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 5.5, y = 0.29, label = "n = 20, p = 0.1", color = "#6D9929", size = 6) +</span></span>
-<span id="cb41-549"><a href="#cb41-549" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 20, fun = dbinom, args = list(size = 20, p = 0.4), color = "black") +</span></span>
-<span id="cb41-550"><a href="#cb41-550" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "point", n = 20, fun = dbinom, args = list(size = 20, p = 0.4), color = "#4A76E5", size = 3) +</span></span>
-<span id="cb41-551"><a href="#cb41-551" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 8, y = 0.2, label = "n = 20, p = 0.4", color = "#4A76E5", size = 6) +</span></span>
-<span id="cb41-552"><a href="#cb41-552" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 20, fun = dbinom, args = list(size = 20, p = 0.7), color = "black") +</span></span>
-<span id="cb41-553"><a href="#cb41-553" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "point", n = 20, fun = dbinom, args = list(size = 20, p = 0.7), color = "#E67960", size = 3) +</span></span>
-<span id="cb41-554"><a href="#cb41-554" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 15, y = 0.21, label = "n = 20, p = 0.7", color = "#E67960", size = 6) +</span></span>
-<span id="cb41-555"><a href="#cb41-555" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.32)) +</span></span>
-<span id="cb41-556"><a href="#cb41-556" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Number of successes", y = "Mass") +</span></span>
-<span id="cb41-557"><a href="#cb41-557" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_bw() +</span></span>
-<span id="cb41-558"><a href="#cb41-558" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(panel.grid = element_blank(),</span></span>
-<span id="cb41-559"><a href="#cb41-559" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.text = element_text(size = 18),</span></span>
-<span id="cb41-560"><a href="#cb41-560" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.title = element_text(size = 18),</span></span>
-<span id="cb41-561"><a href="#cb41-561" aria-hidden="true" tabindex="-1"></a><span class="in">        text = element_text(family = "Lato")) </span></span>
-<span id="cb41-562"><a href="#cb41-562" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-563"><a href="#cb41-563" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-564"><a href="#cb41-564" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-565"><a href="#cb41-565" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-566"><a href="#cb41-566" aria-hidden="true" tabindex="-1"></a><span class="fu">## 16. Poisson distribution</span></span>
+<span id="cb41-506"><a href="#cb41-506" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-507"><a href="#cb41-507" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-508"><a href="#cb41-508" aria-hidden="true" tabindex="-1"></a><span class="fu">## 14. Student's t distribution</span></span>
+<span id="cb41-509"><a href="#cb41-509" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-510"><a href="#cb41-510" aria-hidden="true" tabindex="-1"></a><span class="in">```{r t-dist}</span></span>
+<span id="cb41-511"><a href="#cb41-511" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data.frame(x = -10:10), aes(x)) +</span></span>
+<span id="cb41-512"><a href="#cb41-512" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 1), linewidth = 1, color = "#856F33") +</span></span>
+<span id="cb41-513"><a href="#cb41-513" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 3.5, y = 0.3, label = "\U03BD = 1", color = "#856F33", size = 6) +</span></span>
+<span id="cb41-514"><a href="#cb41-514" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 3), linewidth = 1, color = "#E6821C") + </span></span>
+<span id="cb41-515"><a href="#cb41-515" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 3.5, y = 0.35, label = "\U03BD = 3", color = "#E6821C", size = 6) +</span></span>
+<span id="cb41-516"><a href="#cb41-516" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 5), linewidth = 1, color = "#56E9E7") +</span></span>
+<span id="cb41-517"><a href="#cb41-517" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 3.5, y = 0.37, label = "\U03BD = 5", color = "#56E9E7", size = 6) +</span></span>
+<span id="cb41-518"><a href="#cb41-518" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 1000, fun = dt, args = list(df = 100), linewidth = 1, color = "#04B37F") +</span></span>
+<span id="cb41-519"><a href="#cb41-519" aria-hidden="true" tabindex="-1"></a><span class="in">    annotate("text", x = 3.5, y = 0.4, label = "\U03BD = 100", color = "#04B37F", size = 6) +</span></span>
+<span id="cb41-520"><a href="#cb41-520" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.42)) +</span></span>
+<span id="cb41-521"><a href="#cb41-521" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Continuous value", y = "Density") +</span></span>
+<span id="cb41-522"><a href="#cb41-522" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_bw() +</span></span>
+<span id="cb41-523"><a href="#cb41-523" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(panel.grid = element_blank(),</span></span>
+<span id="cb41-524"><a href="#cb41-524" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.text = element_text(size = 18),</span></span>
+<span id="cb41-525"><a href="#cb41-525" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.title = element_text(size = 18),</span></span>
+<span id="cb41-526"><a href="#cb41-526" aria-hidden="true" tabindex="-1"></a><span class="in">        text = element_text(family = "Lato")) </span></span>
+<span id="cb41-527"><a href="#cb41-527" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-528"><a href="#cb41-528" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-529"><a href="#cb41-529" aria-hidden="true" tabindex="-1"></a><span class="fu">## 15. Uniform distribution</span></span>
+<span id="cb41-530"><a href="#cb41-530" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-531"><a href="#cb41-531" aria-hidden="true" tabindex="-1"></a><span class="in">```{r uniform-dist}</span></span>
+<span id="cb41-532"><a href="#cb41-532" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data.frame(x = 0:10), aes(x)) +</span></span>
+<span id="cb41-533"><a href="#cb41-533" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 1000, fun = dunif, args = list(min = 2, max = 8), linewidth = 1, color = "firebrick4") +</span></span>
+<span id="cb41-534"><a href="#cb41-534" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 2, y = 0.172, label = "a = 2", color = "firebrick4", size = 6) + </span></span>
+<span id="cb41-535"><a href="#cb41-535" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 8, y = 0.172, label = "b = 8", color = "firebrick4", size = 6) + </span></span>
+<span id="cb41-536"><a href="#cb41-536" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_x_continuous(breaks = seq(0, 10, 2)) +</span></span>
+<span id="cb41-537"><a href="#cb41-537" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_y_continuous(expand = c(0, 0), limits = c(-0.001, 0.18)) +</span></span>
+<span id="cb41-538"><a href="#cb41-538" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Continuous value", y = "Density") +</span></span>
+<span id="cb41-539"><a href="#cb41-539" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_bw() +</span></span>
+<span id="cb41-540"><a href="#cb41-540" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(panel.grid = element_blank(),</span></span>
+<span id="cb41-541"><a href="#cb41-541" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.text = element_text(size = 18),</span></span>
+<span id="cb41-542"><a href="#cb41-542" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.title = element_text(size = 18),</span></span>
+<span id="cb41-543"><a href="#cb41-543" aria-hidden="true" tabindex="-1"></a><span class="in">        text = element_text(family = "Lato")) </span></span>
+<span id="cb41-544"><a href="#cb41-544" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-545"><a href="#cb41-545" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-546"><a href="#cb41-546" aria-hidden="true" tabindex="-1"></a><span class="fu">## 16. Binomial distribution</span></span>
+<span id="cb41-547"><a href="#cb41-547" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-548"><a href="#cb41-548" aria-hidden="true" tabindex="-1"></a><span class="in">```{r binomial-dist}</span></span>
+<span id="cb41-549"><a href="#cb41-549" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data.frame(x = 1:20), aes(x)) +</span></span>
+<span id="cb41-550"><a href="#cb41-550" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 20, fun = dbinom, args = list(size = 20, p = 0.1), color = "black") +</span></span>
+<span id="cb41-551"><a href="#cb41-551" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "point", n = 20, fun = dbinom, args = list(size = 20, p = 0.1), color = "#6D9929", size = 3) +</span></span>
+<span id="cb41-552"><a href="#cb41-552" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 5.5, y = 0.29, label = "n = 20, p = 0.1", color = "#6D9929", size = 6) +</span></span>
+<span id="cb41-553"><a href="#cb41-553" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 20, fun = dbinom, args = list(size = 20, p = 0.4), color = "black") +</span></span>
+<span id="cb41-554"><a href="#cb41-554" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "point", n = 20, fun = dbinom, args = list(size = 20, p = 0.4), color = "#4A76E5", size = 3) +</span></span>
+<span id="cb41-555"><a href="#cb41-555" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 8, y = 0.2, label = "n = 20, p = 0.4", color = "#4A76E5", size = 6) +</span></span>
+<span id="cb41-556"><a href="#cb41-556" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 20, fun = dbinom, args = list(size = 20, p = 0.7), color = "black") +</span></span>
+<span id="cb41-557"><a href="#cb41-557" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "point", n = 20, fun = dbinom, args = list(size = 20, p = 0.7), color = "#E67960", size = 3) +</span></span>
+<span id="cb41-558"><a href="#cb41-558" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 15, y = 0.21, label = "n = 20, p = 0.7", color = "#E67960", size = 6) +</span></span>
+<span id="cb41-559"><a href="#cb41-559" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.32)) +</span></span>
+<span id="cb41-560"><a href="#cb41-560" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Number of successes", y = "Mass") +</span></span>
+<span id="cb41-561"><a href="#cb41-561" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_bw() +</span></span>
+<span id="cb41-562"><a href="#cb41-562" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(panel.grid = element_blank(),</span></span>
+<span id="cb41-563"><a href="#cb41-563" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.text = element_text(size = 18),</span></span>
+<span id="cb41-564"><a href="#cb41-564" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.title = element_text(size = 18),</span></span>
+<span id="cb41-565"><a href="#cb41-565" aria-hidden="true" tabindex="-1"></a><span class="in">        text = element_text(family = "Lato")) </span></span>
+<span id="cb41-566"><a href="#cb41-566" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb41-567"><a href="#cb41-567" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-568"><a href="#cb41-568" aria-hidden="true" tabindex="-1"></a><span class="in">```{r poisson-dist}</span></span>
-<span id="cb41-569"><a href="#cb41-569" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data.frame(x = 1:20), aes(x)) +</span></span>
-<span id="cb41-570"><a href="#cb41-570" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 20, fun = dpois, args = list(lambda = 1), color = "black") +</span></span>
-<span id="cb41-571"><a href="#cb41-571" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "point", n = 20, fun = dpois, args = list(lambda = 1), color = "coral", size = 4) +</span></span>
-<span id="cb41-572"><a href="#cb41-572" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 3, y = 0.37, label = "\U03BB = 1", color = "coral", size = 6) +</span></span>
-<span id="cb41-573"><a href="#cb41-573" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 20, fun = dpois, args = list(lambda = 4), color = "black") +</span></span>
-<span id="cb41-574"><a href="#cb41-574" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "point", n = 20, fun = dpois, args = list(lambda = 4), color = "darkgreen", size = 4) +</span></span>
-<span id="cb41-575"><a href="#cb41-575" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 6, y = 0.2, label = "\U03BB = 4", color = "darkgreen", size = 6) +</span></span>
-<span id="cb41-576"><a href="#cb41-576" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 20, fun = dpois, args = list(lambda = 10), color = "black") +</span></span>
-<span id="cb41-577"><a href="#cb41-577" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "point", n = 20, fun = dpois, args = list(lambda = 10), color = "turquoise", size = 4) +</span></span>
-<span id="cb41-578"><a href="#cb41-578" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 14, y = 0.12, label = "\U03BB = 10", color = "turquoise", size = 6) +</span></span>
-<span id="cb41-579"><a href="#cb41-579" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.42)) +</span></span>
-<span id="cb41-580"><a href="#cb41-580" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Discrete value", y = "Mass") </span></span>
-<span id="cb41-581"><a href="#cb41-581" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-582"><a href="#cb41-582" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-568"><a href="#cb41-568" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-569"><a href="#cb41-569" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-570"><a href="#cb41-570" aria-hidden="true" tabindex="-1"></a><span class="fu">## 16. Poisson distribution</span></span>
+<span id="cb41-571"><a href="#cb41-571" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-572"><a href="#cb41-572" aria-hidden="true" tabindex="-1"></a><span class="in">```{r poisson-dist}</span></span>
+<span id="cb41-573"><a href="#cb41-573" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(data.frame(x = 1:20), aes(x)) +</span></span>
+<span id="cb41-574"><a href="#cb41-574" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 20, fun = dpois, args = list(lambda = 1), color = "black") +</span></span>
+<span id="cb41-575"><a href="#cb41-575" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "point", n = 20, fun = dpois, args = list(lambda = 1), color = "coral", size = 4) +</span></span>
+<span id="cb41-576"><a href="#cb41-576" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 3, y = 0.37, label = "\U03BB = 1", color = "coral", size = 6) +</span></span>
+<span id="cb41-577"><a href="#cb41-577" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 20, fun = dpois, args = list(lambda = 4), color = "black") +</span></span>
+<span id="cb41-578"><a href="#cb41-578" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "point", n = 20, fun = dpois, args = list(lambda = 4), color = "darkgreen", size = 4) +</span></span>
+<span id="cb41-579"><a href="#cb41-579" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 6, y = 0.2, label = "\U03BB = 4", color = "darkgreen", size = 6) +</span></span>
+<span id="cb41-580"><a href="#cb41-580" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "line", n = 20, fun = dpois, args = list(lambda = 10), color = "black") +</span></span>
+<span id="cb41-581"><a href="#cb41-581" aria-hidden="true" tabindex="-1"></a><span class="in">  stat_function(geom = "point", n = 20, fun = dpois, args = list(lambda = 10), color = "turquoise", size = 4) +</span></span>
+<span id="cb41-582"><a href="#cb41-582" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = 14, y = 0.12, label = "\U03BB = 10", color = "turquoise", size = 6) +</span></span>
+<span id="cb41-583"><a href="#cb41-583" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.42)) +</span></span>
+<span id="cb41-584"><a href="#cb41-584" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Discrete value", y = "Mass") </span></span>
+<span id="cb41-585"><a href="#cb41-585" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-586"><a href="#cb41-586" aria-hidden="true" tabindex="-1"></a></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","loop":false,"descPosition":"bottom","closeEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"descPosition":"bottom","selector":".lightbox","openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

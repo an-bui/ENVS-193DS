@@ -1,6 +1,6 @@
 ---
 title: "Week 3 figures - Lectures 5 and 6"
-date: 2026-01-19
+date: 2026-04-14
 categories: [t-test, cohen's d, confidence intervals]
 citation:
   url: https://spring-2025.envs-193ds.com/lecture/lecture_week-03.html
@@ -431,7 +431,41 @@ ggplot(data.frame(x = -5:5), aes(x)) +
         plot.margin = unit(c(1, 0, 0, 0), "cm"))
 ```
 
-## 7. two-sample t-test
+## 7. pig example
+
+```{r}
+set.seed(666)
+
+pig_weights <- rnorm(n = 40, mean = 47, sd = 4)
+
+tval <- (mean(pig_weights) - 45) / (sd(pig_weights)/sqrt(length(pig_weights)))
+
+tval
+
+tcritical <- qt(
+  p = 0.05/2,         # significance split in two tails
+  df = 39,            # degrees of freedom
+  lower.tail = FALSE  # forces output to be positive number
+)
+
+tcritical
+
+pvalue <- pt(
+  q = tval,           # t-value
+  df = 39,            # degrees of freedom
+  lower.tail = FALSE  # area to the right of the t-value
+)
+
+pvalue
+
+t.test(
+  pig_weights,  # list of numbers
+  mu = 45       # claim
+)
+```
+
+
+## 8. two-sample t-test
 
 ```{r two-sample-example-1}
 ex1 <- ggplot(data.frame(x = -8:8), aes(x)) +

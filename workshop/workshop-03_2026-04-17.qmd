@@ -86,9 +86,12 @@ Insert a code chunk to:
 Name the code chunk `data cleaning`.
 
 ```{r data-cleaning}
-maples_2003 <- hbr_maples |> # start with hbr_maples data frame
-  filter(year == "2003") |> # filter to only include observations from 2003
-  mutate(watershed = case_when( # rename watersheds
+# start with hbr_maples data frame
+maples_2003 <- hbr_maples |> 
+   # filter to only include observations from 2003
+  filter(year == "2003") |>
+  # rename watersheds
+  mutate(watershed = case_when( 
     watershed == "Reference" ~ "Reference",
     watershed == "W1" ~ "Calcium-treated"
   ))
@@ -101,9 +104,11 @@ Insert a code chunk to make a boxplot + jitter plot comparing stem lengths betwe
 1. color by watershed  
 2. control the jitter so that the points don't move up and down the y-axis  
 
-Name the code chunk `boxplot with jitter`.
+Name the code chunk `boxplot-with-jitter`.
 
-```{r boxplot-and-jitter}
+```{r}
+#| label: boxplot-with-jitter
+
 # base layer: ggplot
 ggplot(data = maples_2003, # starting data frame
        mapping = aes(x = watershed, # x-axis
@@ -118,50 +123,78 @@ ggplot(data = maples_2003, # starting data frame
 
 ### 4. Checks for t-test assumptions
 
+#### a. Normally distributed response variable
+
+##### Histogram
+
 Insert a code chunk to create a histogram. Name the code chunk `histogram`.  
 
 Use `facet_wrap()` to create separate panels for each watershed. 
 
-```{r histogram}
-ggplot(data = maples_2003, # starting data frame
-       mapping = aes(x = stem_length)) + # x-axis (no y-axis for histogram)
-  geom_histogram(bins = 6) + # number of bins from Rice Rule
-  facet_wrap(~watershed) # creating two panels to show watersheds separately
+```{r}
+#| label: histogram
+
+# starting data frame
+ggplot(data = maples_2003, 
+       # x-axis (no y-axis for histogram)
+       mapping = aes(x = stem_length)) + 
+  # number of bins from Rice Rule
+  geom_histogram(bins = 6) + 
+  # creating two panels to show watersheds separately
+  facet_wrap(~watershed) 
 ```
 
-Insert a code chunk to create a QQ plot. Name the code chunk `QQ plot`.  
+##### QQ plot
+
+Insert a code chunk to create a QQ plot. Name the code chunk `qq-plot`.  
 
 Use `facet_wrap()` to create separate panels for each watershed.
 
-```{r qq-plot}
+```{r}
+#| label: qq-plot
+
 # base layer: ggplot call
-ggplot(data = maples_2003, # starting data frame
-       mapping = aes(sample = stem_length)) + # y-axis for QQ plot (no x-axis for QQ plot)
-  # first layer: QQ reference line 
-  geom_qq_line(color = "blue") + # showing this in blue so it's easier to see
+ggplot(data = maples_2003,
+       # y-axis for QQ plot (no x-axis for QQ plot)
+       mapping = aes(sample = stem_length)) + 
+  # first layer: QQ reference line in blue
+  geom_qq_line(color = "blue") +
   # second layer: QQ plot
   geom_qq() + 
   # creating "facets"
-  facet_wrap(~watershed) # show watersheds separately
+  facet_wrap(~ watershed) # show watersheds separately
 ```
 
 **Check in:** using histograms and QQ plots, does stem length seem to be normally distributed?  
 
 **Yes, because the histogram looks symmetrical, and the QQ plot points follow a straight line.**  
 
-Next, we'll check our variances. We can make sure we know where the F test results are coming from by calculating the variance ratios ourselves. 
+#### b. Equal variances
 
-```{r variance-ratio-calculation}
-# calculate variances
-stem_length_var <- maples_2003 |> # starting data frame
-  group_by(watershed) |> # group by watershed
-  summarize(variance = var(stem_length)) |> # calculate variances
+Next, we'll check our variances. 
+
+##### Variance ratio by hand
+
+We can make sure we know where the F test results are coming from by calculating the variance ratios ourselves. 
+
+```{r}
+#| label: variance-ratio-calculation
+
+# create new object from maples_2003
+stem_length_var <- maples_2003 |>
+  # group by watershed
+  group_by(watershed) |> 
+  # calculate variances
+  summarize(variance = var(stem_length)) |> 
+  # ungroup data frame
   ungroup()
 
-# calculate variance ratio (use this number to double check against results of var.test)
+# calculate variance ratio
+# double check against results of var.test()
 205.7026/194.3021
 ```
 
+##### F-test of equal variances
 
 Insert a code chunk to check the variances using `var.test()`. Name the code chunk `F-test`.  
 
@@ -170,11 +203,15 @@ In the function `var.test()`, enter the arguments for:
 1. the formula  
 2. the data  
 
-```{r F-test}
+```{r}
+#| label: F-test
+
 # doing F test of equal variances
 var.test(
-  stem_length ~ watershed, # formula: response variable ~ grouping variable
-  data = maples_2003 # data: maples_2003 data frame
+  # formula: response variable ~ grouping variable
+  stem_length ~ watershed, 
+  # data: maples_2003 data frame
+  data = maples_2003 
 )
 ```
 
@@ -188,7 +225,7 @@ We determined that group variances were (equal or not equal) (F-test of equal va
 
 Fill in the blank here:  
 
-**We determined that group variances were equal (F-test of equal variances, F(119, 119) = 1.06, p = 0.76).**    
+**We determined that group variances were equal (F-test of equal variances, F(119, 119) = 1.06, p = 0.76, $\alpha = 0.05$).**    
 
 ### 5. Doing a t-test
 
@@ -200,11 +237,16 @@ In the function `t.test()`, enter the arguments for:
 2. the variances in `var.equal = `  
 3. and the dataframe in `data = `  
 
-```{r t-test}
+```{r}
+#| label: t-test
+
 t.test(
-  stem_length ~ watershed, # formula: response variable ~ grouping variable
-  data = maples_2003, # data: maples_2003 data frame
-  var.equal = TRUE # argument for equal/unequal variances (variances should be equal)
+  # formula: response variable ~ grouping variable
+  stem_length ~ watershed, 
+  # data: maples_2003 data frame
+  data = maples_2003, 
+  # variances are equal (checked using F-test)
+  var.equal = TRUE 
 )
 ```
 
@@ -218,27 +260,35 @@ In this example, we will show 95% confidence intervals.
 
 In this code chunk, we are calculating the means and 95% confidence intervals. Name the code chunk `ci-calculation`.
 
-```{r ci-calculation}
-maples_ci <- maples_2003 |> # start with the maples_2003 data frame
-  group_by(watershed) |> # group by production type
-  summarize(mean = mean(stem_length), # calculate the mean
-            n = length(stem_length), # count the number of observations
-            df = n - 1, # calculate the degrees of freedom
-            sd = sd(stem_length), # calculate the standard deviation
-            se = sd/sqrt(n), # calculate the standard error
-            tval = qt(p = 0.05/2, df = df, lower.tail = FALSE), # find the t value
-            margin = tval*se, # calculate the margin of error
-            ci_lower = mean - margin, # calculate the lower bound of the confidence interval
-            ci_upper = mean + margin # calculate the upper bound of the confidence interval
+```{r}
+#| label: ci-calculation
+
+# creating new object from maples_2003
+maples_ci <- maples_2003 |> 
+  # group by watershed
+  group_by(watershed) |> 
+  # calculations
+  summarize(mean = mean(stem_length), # mean
+            n = length(stem_length), # number of observations
+            df = n - 1, # degrees of freedom
+            sd = sd(stem_length), # standard deviation
+            se = sd/sqrt(n), # standard error
+            tval = qt(p = 0.05/2, df = df, lower.tail = FALSE), # t-value
+            margin = tval*se, # margin of error
+            ci_lower = mean - margin, # lower bound of the confidence interval
+            ci_upper = mean + margin # upper bound of the confidence interval
           ) |> 
-  ungroup() # ungrouping the data frame
+  # ungrouping the data frame
+  ungroup()
 ```
 
 Before moving on, look at the `maples_ci` object to make sure you know what it contains.  
 
 Note that this visualization uses two data frames. We use `maples_2003` to show the underlying data using `geom_jitter()`, and `maples_ci` to show the mean and 95% CI.
 
-```{r ci-visualization}
+```{r}
+#| label: ci-visualization
+
 # base layer: ggplot with the x- and y-axes
 ggplot(data = maples_2003, # using the maples_2003 data frame
        mapping = aes(x = watershed, # x-axis
@@ -250,52 +300,60 @@ ggplot(data = maples_2003, # using the maples_2003 data frame
               alpha = 0.4, # make the points more transparent
               shape = 21) + # make the points open circles
   # second layer: showing the summary (mean and 95% CI)
-  geom_pointrange(data = maples_ci, # using the maples_ci data frame
-                  aes(x = watershed, # x-axis
-                      y = y, # y-axis
-                      ymax = ci_lower, # upper bound of confidence interval
-                      ymin = ci_upper)) + # lower bound of confidence interval
-  labs(x = "Watershed", # labeling the axes
+  # using maples_ci data frame
+  geom_pointrange(data = maples_ci, 
+                  aes(x = watershed, 
+                      y = mean, 
+                      ymax = ci_lower, 
+                      ymin = ci_upper)) + 
+  # relabelling x- and y-axes
+  labs(x = "Watershed", 
        y = "Stem length (cm)") +
-  # figure customization
+  # figure customization to change point colors
   # Note: this is optional (but nice to do!)
   scale_color_manual(values = c("Calcium-treated" = "darkorchid3",
-                                "Reference" = "tomato3")) + # changing the point colors
-  theme_bw() + # using a theme
-  theme(legend.position = "none") # getting rid of the legend
+                                "Reference" = "tomato3")) + 
+  # using a theme
+  theme_bw() + 
+  # getting rid of the legend
+  theme(legend.position = "none") 
 ```
 
 #### b. Writing
 
 Summarize the results of the t-test in one sentence. Before you do, make sure you know the:  
 
-1. type of test  
+##### type of test  
 
-**Student's t (note: this is because variances are equal)**
+Student's t (note: this is because variances are equal)
 
-2. Sample size  
+##### Sample size  
 
-**n = 120 for calcium-treated, n = 120 for reference (240 total)**  
+n = 120 for calcium-treated, n = 120 for reference (240 total)  
 
-3. significance level ($\alpha$)  
+##### Sample means
 
-**$\alpha$ = 0.05**  
+87.9 cm for calcium-treated, 81.0 cm for reference
 
-4. degrees of freedom  
+##### significance level ($\alpha$)  
 
-**238 (note: 240 - 2 = 238)**  
+$\alpha$ = 0.05 
 
-3. t-value (aka t-statistic)  
+##### degrees of freedom  
 
-**3.8**  
+238 (note: 240 - 2 = 238)  
 
-4. p-value  
+##### t-value (aka t-statistic)  
 
-**p < 0.001 (don't need to give exact number for anything below 0.001)**  
+3.8
 
-Results summary:  
+##### p-value  
 
-**We found a significant difference in sugar maple stem lengths between calcium-treated (n = 120) and reference (n = 120) watersheds (Student's t-test, t(238) = 3.8, p < 0.001, $\alpha$ = 0.05).**      
+p < 0.001 (don't need to give exact number for anything below 0.001)  
+
+##### Results summary
+
+We found a significant difference in sugar maple stem lengths between calcium-treated (n = 120, mean = 87.9 cm) and reference (n = 120, mean = 81.0 cm) watersheds (Student's t-test, t(238) = 3.8, p < 0.001, $\alpha$ = 0.05).      
 
 **END OF WORKSHOP 3**
 

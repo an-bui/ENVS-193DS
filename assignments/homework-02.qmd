@@ -2,11 +2,11 @@
 title: "Homework 2"
 editor: source
 published-title: "Due date"
-date: 2026-01-29
+date: 2026-04-30
 date-modified: last-modified
 ---
 
-[Due on Thursday 29 January (Week 4) at 11:59 PM]{style="color: #79ACBD; font-size: 24px;"}
+[Due on Thursday 30 April (week 5) at 11:59 PM]{style="color: #79ACBD; font-size: 24px;"}
 
 Read the instructions carefully and double check that you have everything on the checklist.
 
@@ -24,7 +24,7 @@ Within your `ENVS-193DS` folder, create a _new_ folder for Homework 2. Name it w
 
 Download the homework files from Canvas into your homework folder. This includes:  
 
-- `lobster-catch-data.csv`  
+- `urchin-experiment-data.csv`  
 
 #### c. Create an Rproject for this homework assignment
 
@@ -34,7 +34,7 @@ Create an Rproj file within your `homework-02` folder. If you need help with thi
 
 You will probably need to use the `tidyverse`, and potentially `janitor`. 
 
-#### e. Store the data as an object called `lobsters`.
+#### e. Store the data as an object called `urchins`.
 
 Refer to workshop code if you are lost.
 
@@ -62,35 +62,31 @@ Include the code to to this at the top of the template. You will want to do this
 
 ## Part 2. Problems
 
-### Problem 1. Native bunchgrasses
+### Problem 1. Raptors at the bird refuge
 
-Managers are interested in the recovery of a native bunchgrass species, California fescue (_Festuca californica_) in a local oak woodland. You are conducting surveys in different sites within the oak woodland, and count the following numbers of individuals in 13 different sites:
+You're working to monitor bird species at the local bird refuge to understand how different species use the habitat. You conduct monthly surveys at the refuge to count Red-tailed Hawks and collect this data:
 
 $$
-4, 6, 4, 5, 5, 4, 2, 3, 6, 4, 2, 0, 1
+1, 3, 2, 0, 1, 1, 3, 2, 0, 0, 1, 1
 $$
 
 a. What kind of data did you collect, and why? Explain in 1-2 sentences.    
-b. What is a better description of the variability in bunchgrass count: standard deviation or standard error? Explain why in 1 sentence. Calculate the metric of your choice, showing your work. Round your final answer to 1 decimal point, and include the correct units.    
-c. What is a better description of the uncertainty in bunchgrass count: standard deviation or standard error? Explain why in 1 sentence. Calculate the metric of your choice, showing your work. Round your final answer to 1 decimal point, and include the correct units.    
 
-### Problem 2. Lobster weights
+b. What is a better description of the spread in Red-tailed Hawk count: standard deviation or standard error? Explain why in 1 sentence. Calculate the metric of your choice, showing your annotated code and its output. Round your final answer to 1 decimal point, and include the correct units.    
 
-Marine protected areas (MPAs) off the coast of California designate regions of the ocean in which fishing is not allowed. As a result, many fished species have a spatial refuge to grow and reproduce.  
+c. What is a better description of the precision in Red-tailed Hawk count: standard deviation or standard error? Explain why in 1 sentence. Calculate the metric of your choice, showing your annotated code and its output. Round your final answer to 1 decimal point, and include the correct units.    
 
-The California spiny lobster (_Panulirus interruptus_) is a major part of the state's fisheries. In the commercial fishery, lobsters are caught in traps (example [here](https://www.nationalfisherman.com/west-coast-pacific/calif-commercial-fisherman-convicted-for-abandoning-traps)) that can contain multiple individual lobsters.  
+### Problem 2. Urchin gonad weights
 
-In this problem, you will visualize and analyze data to answer the question: **is there a difference in mean trapped lobster weight (_Panulirus interruptus_) between an MPA and a non-MPA site?** 
+The red sea urchin (_Mesocentrotus franciscanus_) fishery is a major part of California's fishing economy. Red sea urchins are prized for their gonads, which are a delicacy. However, there is variation amongst individuals based on, amongst many variables, their diet.
 
-:::{.callout-note title="Data format" collapse=true}
-In the form that the data is presented to you (prior to any cleaning and wrangling), each row represents the total weight of lobsters in a single trap.  
-:::  
+In this problem, you will visualize and analyze data to answer the question: **does consumption of nutrient-enriched seaweed lead to increases in urchin gonad weight?** 
 
-a. Create a new object called `lobsters_clean` to clean and wrangle the data. In no particular order:    
+a. Create a new object called `urchins_clean` to clean and wrangle the data. In no particular order:    
 
-- clean the column names so that only lower case letters and underscores are used  
-- change the MPA/non-MPA designations to be full words (i.e. change MPA to "Marine Protected Area and "non-MPA" to be "not protected")  
-- select columns such that the only columns present in the data frame are 1) a column with the MPA designation and 2) the weight of lobsters in the trap in pounds  
+    - clean the column names so that only lower case letters and underscores are used  
+    - change the `c` and `n` designations to be full words (`c` should be `Control` and `n` should be `Nutrient-enriched`)
+    - select columns such that the only columns present in the data frame are 1) a column with the experimental treatment and 2) the weight of urchin gonads in grams 
 
 Once you are done with your cleaning and wrangling, display 10 random rows from the data frame using `slice_sample()`.  
 
@@ -103,32 +99,29 @@ If you are piping `slice_sample()` into your cleaning and wrangling code, you ar
 
 **DO NOT DO THIS.**  
 
-Use `slice_sample()` to _display_ rows, as in: show 10 random rows from `lobsters_clean`, but use the entire `lobsters_clean` data frame for downstream visualization and analyses.
+Use `slice_sample()` to _display_ rows, as in: show 10 random rows from `urchins_clean`, but use the entire `urchins_clean` data frame for downstream visualization and analyses.
 :::  
 
-b. Create a new object called `lobster_summary` to calculate the mean trapped lobster weight, the number of observations, and the standard deviation.  
+b. Create a new object called `urchins_summary` to calculate the following values for both experimental treatments: mean gonad weight, the number of observations, and the standard deviation.  
 
-Display the `lobster_summary` data frame.  
+Display the `urchins_summary` data frame.  
 
-c. Create a plot showing mean trapped lobster weight and standard deviation, along with the underlying data (i.e. the raw observations) jittered horizontally. Use an approach from class. Additionally:  
+c. Create a plot showing mean urchin gonad weight and standard deviation, along with the underlying data (i.e. the raw observations) jittered horizontally (not vertically). Use an approach from class. Additionally:  
 
-   - color by site and change the colors from the default   
-   - make sure each site has a different shape  
-   - use a ggplot theme that is not the default  
-   - make sure the legend is not showing  
-   - label the x- and y-axes  
+    - color by site and change the colors from the default
+    - use a ggplot theme that is not the default
+    - make sure the legend is not showing
+    - label the x- and y-axes with units as appropriate
 
-d. In one sentence, write your hypotheses to answer the question: **is there a difference in mean trapped weight of California spiny lobster between an MPA and a non-MPA site** in _statistical terms_. Make sure you have a _null_ and _alternative_ hypothesis.  
+d. In one sentence, write your hypotheses to answer the question: **does consumption of nutrient-enriched seaweed lead to increases in urchin gonad weight?** in _statistical terms_. Make sure you have a _null_ and _alternative_ hypothesis.  
 
-e. Using the `lobsters_clean` object, make a QQ plot. Make sure there are two panels for each location. You do not need to label the x and y-axes.  
+e. Using the `urchins_clean` object, make a QQ plot. Make sure there are two panels for each treatment. You do not need to label the x and y-axes.  
 
 f. In one sentence, describe whether the variable of interest is normally distributed or not. Use visual components (e.g. shape) of the QQ plot you made to justify your characterization of the variable.  
 
-g. Check your variances using `var.test()`. Show the code and output.  
+g. Check your variances with both a "gut check" and a statistical check. Show your annotated code and output.  
 
-In one sentence, describe whether the groups have equal variances or not.  
-
-h. Do a t-test using `t.test()`. Show the code and output.     
+h. Do a t-test using `t.test()`. Show your annotated code and output.     
 
 :::{.callout-tip title="t-test arguments" collapse=true}
 Double check your arguments to make sure you’re running the right test.
@@ -137,21 +130,22 @@ Double check your arguments to make sure you’re running the right test.
 i. In one sentence each, describe:  
 
     - Why a t-test would have been appropriate for testing your hypothesis in part d   
-    - How you evaluated normality and homogeneity of variance  
+    - How you evaluated normality and homogeneity of variance
+    - What t-test you decided to do based on your assessment of variance
     
-j. Describe the results in 1-2 full sentences _in your own words_. Make sure to include the:  
+j. Calculate an appropriate effect size. Show your annotated code and output.
+    
+k. Describe the results in 1-2 full sentences _in your own words_. In your statistical summary, make sure to information about:  
 
-    - Test you ran   
-    - Number of observations for each location
-    - Significance level
-    - Degrees of freedom
-    - Test statistic
-    - p-value  
+    - the sample size and sample means
+    - how you did your analysis
+    - all that went into making your decision about your hypothesis
+    - the effect size
     
 Round any numbers with decimals to two decimal points. 
     
 :::{.callout-tip title="Do _not_ simply list each component!" collapse=true}
-You will be graded on how you synthesize information. See lecture notes for an example of how to summarize the results of a statistical test.
+You will be graded on how you synthesize information and the logic with which you integrate statistical components with interpretation. See lecture notes for an example of how to summarize the results of a statistical test.
 :::
     
 ### Problem 3. Personal data
@@ -160,19 +154,21 @@ By now, you have some observations on your data sheet for your personal data. Ev
 
 a. Create a visualization with a _categorical_ predictor variable on the x-axis and your response variable on the y-axis. In your visualization, be sure to:  
 
-  - label your x- and y-axes  
-  - include a title summarizing the main message of your figure  
-  - use different colors from the `ggplot()` defaults  
-  - use a different theme from the `ggplot()` default  
+    - label your x- and y-axes with units as appropriate
+    - include a title summarizing the main message of your figure  
+    - use different colors from the `ggplot()` defaults  
+    - use a different theme from the `ggplot()` default  
 
 b. Create a visualization with a _continuous_ or _discrete_ predictor variable on the x-axis and your response variable on the y-axis. In your visualization, be sure to:  
 
-  - label your x- and y-axes  
-  - include a title summarizing the main message of your figure  
-  - use different colors from the `ggplot()` defaults  
-  - use a different theme from the `ggplot()` default  
+    - label your x- and y-axes with units as appropriate  
+    - include a title summarizing the main message of your figure  
+    - use different colors from the `ggplot()` defaults  
+    - use a different theme from the `ggplot()` default  
 
-c. In 2-5 sentences, describe what insights you can gain about your data from visualizations like these. Use specific components of the figure in your description of your insights. Once you collect more data and update these figures, would these insights change? Again, use specific components of the figure that would change.  
+c. In 2-5 sentences, describe what insights - if any - you gained from your visualizations in parts a and b. Use specific components of the figures in your description of your insights. 
+
+    Once you collect more data and update these figures, would these insights change? Again, use specific components of the figure that would change.  
 
 d. In 2-5 sentences, describe the process of getting your data from your spreadsheet into R. Did you encounter any challenges? If so, why do you think those challenges arose, and how did you fix them? If not, why do you think your system for collecting your data worked?    
 
@@ -182,7 +178,7 @@ If you found that entering your data from your spreadsheet and getting it into t
 
 ### Problem 4. Statistical critique
 
-Check the [Google sheet](https://docs.google.com/spreadsheets/d/1yW_hyhHrlwsb9u5Ul3_EfLYoOSS3nGv1IuSyFlbX78k/edit?usp=sharing) and choose a paper to use for your critique based on An’s recommendations. Answer the following questions about the paper in 1-2 sentences each:  
+Check the [Google sheet](https://docs.google.com/spreadsheets/d/1-4Ah0VnZSdiS-f0Gkt-t5u-8TFGXM_PyXNaCbJdl7UE/edit?usp=sharing) and choose a paper to use for your critique based on An’s recommendations. Answer the following questions about the paper in 1-2 sentences each:  
 
 a. Why were you interested in this paper?  
 
@@ -190,11 +186,11 @@ b. What questions/hypotheses are the authors addressing?
 
 c. Choose _one_ test listed in Problem 4 from Homework 1 that is used in the paper. The statistical critique feedback comments will have a suggestion for the test you should focus on, if there are multiple.  
 
-For the test you select, what is it called?  
+What is the name of the test you have selected? 
 
 What is the response variable? What is the predictor variable?  
 
-d. How does this test address the main question(s) presented by the authors? For example, how would the authors interpret a "significant" result?   
+d. How does this test address the main question(s) presented by the authors? For example, how would the authors interpret a "significant" result (p < 0.05)?   
 
 e. Find the figure(s) and/or table(s) in the paper that are associated with the statistical tests from question (c). If there are multiple figures and tables relating to the statistical test, find the best one that demonstrates the relationship between the predictor and the response. Take a screenshot, and insert it into your document.  
 
@@ -216,21 +212,47 @@ If you have text: what is your _own_ interpretation of the summarized results te
 
 Your assignment should:
 
-- [ ] include your name, the title, and the date  
-- [ ] include all code with annotations  
-- [ ] be organized and readable (for example: no messages, warnings, etc., text is formatted correctly with subscripts or mathematical notation where necessary, text and headers are clearly different)  
-- [ ] be uploaded to Canvas as a single docx or PDF  
+- [ ] include your name, the title, and the date
+- [ ] include all code with annotations
+- [ ] be organized and readable (for example: no messages, warnings, etc., text is formatted correctly with subscripts or mathematical notation where necessary, text and headers are clearly different)
+- [ ] be uploaded to Canvas as a single PDF rendered directly from .qmd
 
 Your responses should include:  
 
-- [ ] work and written responses for Problem 1  
-- [ ] written responses, annotated code, and figure outputs for Problem 2    
-- [ ] annotated code, figure output, and written responses for Problem 3  
-- [ ] written responses and screenshot for Problem 4  
+for problem 1: 
+
+- [ ] written response for part a
+- [ ] annotated code, output, and written response for part b
+- [ ] annotated code, output, and written response for part c
+
+for problem 2:
+
+- [ ] annotated code and output for part a
+- [ ] annotated code and output for part b
+- [ ] annotated code and output for part c
+- [ ] written response for part d
+- [ ] annotated code and output for part e
+- [ ] written response for part f
+- [ ] annotated code and output for part g
+- [ ] annotated code and output for part h
+- [ ] written response for part i
+- [ ] annotated code and output for part j
+- [ ] written response for part k
+
+for problem 3:  
+
+- [ ] annotated code and output for part a
+- [ ] annotated code and output for part b
+- [ ] written response for part c
+- [ ] written response for part d
+
+for problem 4:
+
+- [ ] written responses for parts a - f
 
 Additionally, you should have:  
 
-- [ ] submitted your [Generative AI Statement of Use](https://docs.google.com/forms/d/e/1FAIpQLScQOUQERT9c_HI8PQ3hMDw5WpaQmtTnUF82mXdZJMUoewGY6A/viewform) **by Thursday 29 January at 11:59 PM**  
+- [ ] submitted your [Generative AI Statement of Use](https://docs.google.com/forms/d/e/1FAIpQLScjIbqlNTatolSD_icPkfu35USGux-IpzWq-bMzCebg2L7PZg/viewform?usp=dialog) **by Thursday 30 April at 11:59 PM**  
 
 Lastly, check out the **rubric on Canvas** to see the point breakdown in more detail.  
 

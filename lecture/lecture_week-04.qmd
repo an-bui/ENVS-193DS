@@ -1,9 +1,9 @@
 ---
 title: "Week 4 figures - Lectures 7 and 8"
-date: 2026-01-26
+date: 2026-04-21
 categories: [effect size, power analysis, confidence intervals]
 citation:
-  url: https://winter-2026.envs-193ds.com/lecture/lecture_week-04.html
+  url: https://spring-2026.envs-193ds.com/lecture/lecture_week-04.html
 ---
 
 
@@ -69,25 +69,25 @@ $$
 
 ## 2. Interpret this output
 
-You have two raised beds in which you're growing tomatoes. One bed is in the sun, but the other is in shade. You want to know if the weight of the tomatoes is different between beds. You measure 33 tomatoes from each bed.
+You have a raised bed in which you are growing tomato plants. You're interested in the potential effects of nitrogen addition on the weight of tomatoes produced by your plants. You measure 33 tomatoes (one from each individual) prior to adding fertilizer to the soil. A few weeks later, you collect another 33 tomatoes (once again, one from each individual).
 
 ```{r tomatoes}
-tomatoes <- cbind(sunny = rnorm(n = 33, mean = 150, sd = 20),
-                  shaded = rnorm(n = 33, mean = 130, sd = 10)) %>% 
-  as_tibble() %>% 
-  pivot_longer(cols = 1:2, names_to = "sun_level", values_to = "weight_g")
+#| label: tomatoes
 
-ggplot(data = tomatoes,
-       aes(x = sun_level,
-           y = weight_g)) +
+tomatoes <- cbind(after = rnorm(n = 33, mean = 150, sd = 20),
+                  before = rnorm(n = 33, mean = 130, sd = 10)) %>% 
+  as_tibble()
+  
+tomatoes |> 
+  pivot_longer(cols = 1:2, names_to = "sampling", values_to = "weight_g") |> 
+  mutate(sampling = fct_relevel(sampling, 
+                                "before", "after")) |> 
+  ggplot(aes(x = sampling,
+             y = weight_g)) +
   geom_jitter(width = 0.1)
 
-var.test(weight_g ~ sun_level,
-         data = tomatoes)
-
-t.test(weight_g ~ sun_level,
-       data = tomatoes,
-       var.equal = FALSE)
+t.test(tomatoes$before, tomatoes$after,
+       paired = TRUE)
 ```
 
 

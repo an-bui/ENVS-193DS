@@ -266,8 +266,8 @@ This plot depicts the total number of shark incidents in New South Wales and Que
               # base layer: ggplot
 shark_plot <- ggplot(data = sharks_clean,
                      # aesthetics: x-axis, y-axis
-                     aes(x = n,
-                         y = shark_common_name)) +
+                     mapping = aes(x = n,
+                                   y = shark_common_name)) +
   # first layer: columns to represent counts
   geom_col() +
   # faceting by state
@@ -288,8 +288,8 @@ monster_ratings <- ggplot(data = dnd,
                           # aesthetics: monsters on the y-axis, challenge rating
                           # on the x-axis
                           # y-axis (type) ordered by median challenge rating (cr)
-                          aes(y = fct_reorder(type, cr, .fun = median),
-                              x = cr)) +
+                          mapping = aes(y = fct_reorder(type, cr, .fun = median),
+                                        x = cr)) +
   # first player: boxplot
   geom_boxplot(outliers = FALSE) +
   # second layer: jitter to represent individual mosters
@@ -307,12 +307,12 @@ monster_ratings
 
 ```{r}
                 # base layer: ggplot
-palm_heights <- ggplot(palmtrees,
+palm_heights <- ggplot(data = palmtrees,
                        # aesthetics: palm subfamily on x-axis, stem height on
                        # y-axis, color by subfamily
-                       aes(x = palm_subfamily,
-                           y = max_stem_height_m,
-                           color = palm_subfamily)) +
+                       mapping = aes(x = palm_subfamily,
+                                     y = max_stem_height_m,
+                                     color = palm_subfamily)) +
   # first layer: points to represent each species of palm
   geom_point() +
   # second layer: quick way of showing means in the middle of each set of points
@@ -330,12 +330,12 @@ palm_heights
 This plot depicts daily counts of salmon through Bonneville Dam in Columbia River Basin, Oregon in 2024. 
 
 ```{r salmon-timeseries}
-               # base layer: ggplot
+# base layer: ggplot
 salmon_plot <- ggplot(data = salmon_clean,
                       # aesthetics: x-axis, y-axis, and color
-                      aes(x = Date,
-                          y = daily_count,
-                          color = species)) +
+                      mapping = aes(x = Date,
+                                    y = daily_count,
+                                    color = species)) +
   # first layer: points
   geom_point() +
   # second layer: line
@@ -351,14 +351,14 @@ salmon_plot
 #### e. Pokémon
 
 ```{r}
-              # base layer
+# base layer
 pokemon_hp <- ggplot(data = pokemon,
                      # aesthetics: hit points (hp) on x-axis,
                      # pokemon type ordered by median hit points on y-axis
                      # color points by type and reorder legend by median
-                     aes(y = fct_reorder(type_1, hp, .fun = median),
-                         x = hp,
-                         color = fct_reorder(type_1, -hp, .fun = median))) +
+                     mapping = aes(y = fct_reorder(type_1, hp, .fun = median),
+                                   x = hp,
+                                   color = fct_reorder(type_1, -hp, .fun = median))) +
   # first layer: display points representing each individual pokemon
   geom_point() +
   # second layer: quick way of displaying medians
@@ -380,7 +380,7 @@ This figure depicts total property loss (in dollars) due to tornados in US from 
 
 ```{r tornado-property-loss}
 tornados_by_state_plot <- ggplot(data = tornados_states,
-                                 aes(x = number_tornados,
+                                 mapping = aes(x = number_tornados,
                                      y = total_property_loss_bil,
                                      color = st)) +
   geom_point()
@@ -396,9 +396,9 @@ tornados_by_state_plot
 vesuvius_plot <- ggplot(data = vesuvius_clean,
                         # aesthetics: x-axis is time, y-axis is duration magnitude,
                         # color points by year
-                        aes(x = time,
-                            y = duration_magnitude_md,
-                            color = year)) +
+                        mapping = aes(x = time,
+                                      y = duration_magnitude_md,
+                                      color = year)) +
   # first layer: points representing duration magnitude of a seismic event
   geom_point() +
   # second layer: lines to connect points

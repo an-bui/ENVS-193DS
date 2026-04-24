@@ -157,13 +157,13 @@ palmtrees <- read_csv("palmtrees.csv")
 # mt. vesuvius data (group 4)
 vesuvius <- read_csv("vesuvius.csv")
 
-# pokemon data (group 5)
+# pokemon data (group 5 or 7.2)
 pokemon <- read_csv("pokemon.csv")
 
 # tornado data (group 6)
 tornados <- read_csv("tornados.csv")
 
-# salmon data (group 7)
+# salmon data (group 7 or 7.1)
 salmon <- read_csv("salmon.csv")
 
 ```
@@ -225,7 +225,7 @@ tornados_states <- tornados |>
   filter(st %in% c("OK", "TX", "LA", "KS"))
 ```
 
-#### Salmon (group 7)
+#### Salmon (group 7 or 7.2)
 
 ```{r salmon-data-and-wrangling}
 # create new clean object from salmon
@@ -264,7 +264,7 @@ Copy paste the code for your plot into your .qmd file to start working with it.
 This plot depicts the total number of shark incidents in New South Wales and Queensland from 1791-2022
 
 ```{r shark-incident-plot}
-              # base layer: ggplot
+# base layer: ggplot
 shark_plot <- ggplot(data = sharks_clean,
                      # aesthetics: x-axis, y-axis
                      mapping = aes(x = n,
@@ -284,7 +284,7 @@ shark_plot
 #### b. Dungeons and Dragons
 
 ```{r}
-                   # base layer: ggplot
+# base layer: ggplot
 monster_ratings <- ggplot(data = dnd,
                           # aesthetics: monsters on the y-axis, challenge rating
                           # on the x-axis
@@ -307,7 +307,7 @@ monster_ratings
 #### c. Palm trees
 
 ```{r}
-                # base layer: ggplot
+# base layer: ggplot
 palm_heights <- ggplot(data = palmtrees,
                        # aesthetics: palm subfamily on x-axis, stem height on
                        # y-axis, color by subfamily
@@ -380,10 +380,15 @@ pokemon_hp
 This figure depicts total property loss (in dollars) due to tornados in US from 1950-2022
 
 ```{r tornado-property-loss}
+# base layer
 tornados_by_state_plot <- ggplot(data = tornados_states,
+                                 # x-axis: number of tornados
+                                 # y-axis: property loss
+                                 # color by state
                                  mapping = aes(x = number_tornados,
-                                     y = total_property_loss_bil,
-                                     color = st)) +
+                                               y = total_property_loss_bil,
+                                               color = st)) +
+  # points to represent property loss
   geom_point()
 
 
@@ -393,7 +398,7 @@ tornados_by_state_plot
 #### g. Mt. Vesuvius
 
 ```{r}
-                 # base layer
+# base layer
 vesuvius_plot <- ggplot(data = vesuvius_clean,
                         # aesthetics: x-axis is time, y-axis is duration magnitude,
                         # color points by year
@@ -418,51 +423,57 @@ vesuvius_plot
 #### a. Group 1: `strip` in `theme()`
 
 Demonstrate how to:  
-- change the background  
-- change the border  
-- change the placement  
-- change the text size and font  
+
+- change the background
+- change the border
+- change the placement
+- change the text size and font
 
 #### b. Group 2: `plot` in `theme()`
 
 Demonstrate how to:  
-- change the plot margin  
-- change the plot background  
+
+- change the plot margin
+- change the plot background
 - change the plot title, subtitle, and caption text position and color  
 
 #### c. Group 3: `panel` in `theme()`
 
 Demonstrate how to:  
-- change the panel border  
-- change the panel major grid lines (vertically and horizontally, in separate arguments)  
-- change the panel minor grid lines (vertically and horizontally, in separate arguments)  
-- change the panel background  
+
+- change the panel border
+- change the panel major grid lines (vertically and horizontally, in separate arguments)
+- change the panel minor grid lines (vertically and horizontally, in separate arguments)
+- change the panel background
 
 #### d. Group 4: `legend` in `theme()`
 
 Demonstrate how to:  
-- change the legend frame  
-- change the legend key size  
-- change the legend text size  
-- change the legend position  
-- change the legend row numbers  
+
+- change the legend frame
+- change the legend key size
+- change the legend text size
+- change the legend position
+- change the legend row numbers
 
 #### e. Group 5: `axis` in `theme()`
 
 Demonstrate how to:  
-- change the axis text color and font  
-- change the axis tick length (major and minor ticks)  
-- change the axis line colors and line types  
+
+- change the axis text color and font
+- change the axis tick length (major and minor ticks)
+- change the axis line colors and line types
 
 #### f. Group 6: `scale_color` or `scale_fill` functions
 
 Demonstrate how to:  
-- use a color palette package  
-- apply it to a color scale  
+
+- use a color palette package
+- apply it to a color scale
 
 #### g. Group 7: built in themes (`theme_`) with your own customization using `theme()`
 
 Demonstrate how to:  
 
-- use a built in theme and  
+- use a built in theme and
 - change additional components using the `theme()` elements of your choice (one of each element from a - e)

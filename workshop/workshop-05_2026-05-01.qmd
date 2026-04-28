@@ -50,69 +50,81 @@ The Plum Island Ecosystem fiddler crab data is from `lterdatasampler` (data info
 
 ## 2. Code
 
-### 1. Packages
+### 1. Set up
 
-```{r read-packages}
-#| eval: false
+#### Packages
 
-library(tidyverse) # general use
-library(lterdatasampler) # data package
-library(rstatix) # effect size calculations
+```{r}
+#| label: packages
+#| message: false
 
-data(pie_crab) # displaying data in Environment
+library(tidyverse)
+library(lterdatasampler)
+library(effectsize)
+library(rstatix)
 ```
 
-```{r data-for-website}
+#### Data 
+```{r}
+#| label: data-for-website
+#| eval: false
+
+# for parametric tests
+data(pie_crab)
+
+# for non-parametric tests
+ramen_ratings <- read_csv("ramen_ratings.csv")
+```
+
+```{r}
+#| label: data
 #| echo: false
 #| message: false
 
-library(tidyverse) # general use
-library(lterdatasampler) # data package
-library(rstatix) # effect size calculations
-
-# dataset from lterdatasampler package
+# for parametric tests
 data(pie_crab)
-```
 
+# for non-parametric tests
+ramen_ratings <- read_csv(here::here("workshop", "data", "ramen_ratings.csv"))
+```
 
 ### 2. Parametric tests
 
 #### a. Cleaning and wrangling
 
-- Create a new object called `pie_crab_clean`.
-- Filter to only include the following sites: Cape Cod, Virginia Coastal Reserve LTER, and Zeke's Island NERR.
-- Make sure `site` and `name` are set as factors.
-- Select the columns of interest: `site`, `name`, and `code`.
-- Rename the column `name` to `site_name` and `code` to `site_code`. 
+Create a new object called `pie_crab_clean`. Filter to only include the following sites: Cape Cod, Virginial Coastal Reserve LTER, and Zeke's Island NERR. Select the columns of interest: `site`, `name`, and `code`. Rename the column `name` to `site_name` and `code` to `site_code`. 
 
-```{r crab-cleaning}
-pie_crab_clean <- pie_crab |> # start with the pie_crab dataset
-  filter(site %in% c("CC", "ZI", "VCR")) |> # filter for Cape Cod, Zeke's Island, Virginia Coastal
-  mutate(name = as_factor(name), # make sure site name is being read in as a factor
-         site = as_factor(site)) |> 
-  select(site, name, size) |> # select columns of interest
-  rename(site_code = site, # rename site to be site_code
-         site_name = name) # rename name to be site_name
+```{r}
+#| label: crab-cleaning
 
-# display some rows from the data frame
-# useful for showing a small part of the data frame
-slice_sample(pie_crab_clean, # data frame
-             n = 10) # number of rows to show
+# start with the pie_crab dataset
+pie_crab_clean <- pie_crab |> 
+  # filter for Cape Cod, Zeke's Island, Virginia Coastal
+  filter(site %in% c("CC", "ZI", "VCR")) |> 
+  # select columns of interest
+  select(site, name, size) |> 
+  # rename columns
+  rename(site_code = site, 
+         site_name = name) 
 ```
 
 #### b. Quick summary
 
-- Create a new object called `pie_crab_summary`.
-- Calculate the mean, variance, and sample size. Display the object.
+Create a new object called `pie_crab_summary`. Calculate the mean, variance, and sample size. Display the object.
 
-```{r crab-summary}
+```{r}
+#| label: crab-summary
+
 # creating a new object called pie_crab_summary
-pie_crab_summary <- pie_crab_clean |> # starting with clean data frame
-  group_by(site_name) |> # group by site
-  summarize(mean = mean(size), # calculate mean size
-            var = var(size), # calculate variance of size
-            n = length(size)) |> # calculate number of observations per site (sample size)
-  ungroup() # ungrouping
+pie_crab_summary <- pie_crab_clean |> 
+  # group by site
+  group_by(site_name) |> 
+  # calculate mean, variance, sample size
+  summarize(mean = mean(size), 
+            var = var(size), 
+            n = length(size)) |> 
+  # ungroup data frame
+  ungroup()
 
 # display pie_crab_summary
 pie_crab_summary
@@ -120,132 +132,342 @@ pie_crab_summary
 
 #### c. Exploring the data
 
-Create a jitter plot with the mean crab carapace width for each site.
+Create a jitter plot with the mean crab size for each site.
 
-```{r crab-explore-viz}
+```{r}
+#| label: exploratory visualization
+
 # base layer: ggplot
-ggplot(data = pie_crab_clean, # use the clean data set
-       mapping = aes(x = site_name, # x-axis
-                     y = size)) + # y-axis
+ggplot(data = pie_crab_clean, 
+       # x-axis: full site name
+       # y-axis: crab size
+       mapping = aes(x = site_name, 
+                     y = size)) + 
   # first layer: jitter (each point is an individual crab)
   geom_jitter(height = 0, # don't jitter points vertically
-              width = 0.15) + # narrower jitter (easier to see)
+              width = 0.1) + 
   # second layer: point representing mean
   stat_summary(geom = "point", # geometry being plotted
                fun = mean, # function (calculating the mean)
                color = "red", # color to make it easier to see
                size = 5) + # larger point size
-  theme_minimal() + # cleaner plot theme
-  labs(x = "Site name",
-       y = "Carapace width (mm)")
+  # cleaner plot theme
+  theme_minimal() 
 ```
 
-Is there a difference in mean crab carapace width between the three sites?  
+Is there a difference in mean crab carapace width (mm) between the three sites? What visual components of the plot are you using to make that guess? 
 
-**Yes, and Zeke's Island NERR crabs tend to be smaller than those from Cape Cod or Virginia Coastal Reserve LTER.**
+**insert response here**
 
 #### d. Check 1: normally distributed variable
 
-- Create a histogram of crab size.
-- Facet your histogram so that you have 3 panels, with one panel for each site.
+Create a histogram of crab size. Facet your histogram so that you have 3 panels, with one panel for each site.
 
-```{r crab-histogram}
+```{r}
+#| label: crab-histogram
+
 # base layer: ggplot
 ggplot(data = pie_crab_clean, 
-       mapping = aes(x = size)) + # x-axis
+       aes(x = size)) + # x-axis
   # first layer: histogram
-  geom_histogram(bins = 6, # bins from Rice Rule (approximate)
-                 fill = "orange",
-                 color = "black") + 
+  geom_histogram(bins = 9) + # number of bins from Rice Rule
   # faceting by site_name: creating 3 different panels
-  facet_wrap(~ site_name) +
-  theme_minimal() +
-  labs(x = "Crab carapace width (mm)",
-       y = "Frequency")
+  facet_wrap(~ site_name) 
 ```
 
-- Create a QQ plot of crab size. 
-- Facet your QQ plot so that you have 3 panels, with one panel for each site.
+Create a QQ plot of crab size. Facet your QQ plot so that you have 3 panels, with one panel for each site.
 
-```{r crab-qq}
+```{r}
+#| label: crab-qq
+
 # base layer: ggplot
 ggplot(data = pie_crab_clean, 
-       mapping = aes(sample = size)) + # y-axis
+       aes(sample = size)) + # y-axis
   # first layer: QQ plot reference line
-  geom_qq_line() + 
+  geom_qq_line(color = "orange") + 
   # second layer: QQ plot points (actual observations)
-  geom_qq(color = "orange") + 
+  geom_qq() + 
   # faceting by site_name
   facet_wrap(~ site_name, 
-             scales = "free") + # let axes vary between panels
-  theme_minimal() +
-  labs(x = "Theoretical (standard normal) quantiles",
-       y = "Sample quantiles")
+             scales = "free") # let axes vary between panels
 ```
 
 What are the outcomes of your visual checks?  
 
-**Not perfect (crab carapace width from VCR LTER seems not normally distributed) but with large sample sizes for each group, this might not matter too much.**  
+**summarize outcomes here**  
 
 #### e. Check 2: equal variances
 
 Do a gut check: is the ratio of the largest variance to the smallest variance less than 3?
 
-```{r crab-variances}
+```{r}
+#| label: crab-variance
+
 8.63/4.04
 ```
 
-What are the outcomes of your variance check?  
-
-**By the rule of thumb (ratio of largest variance to smallest variance < 3), the variances are close enough; the largest variance is about 2.1 times larger than the smallest variance.**
-
 #### f. ANOVA
 
-```{r crab-anova}
+```{r}
+#| label: crab-anova
+
 # creating an object called crab_anova
 crab_anova <- aov(
-  size ~ site_name, # formula
-  data = pie_crab_clean # data
-)
+  # size as a function of site
+  size ~ site_name, 
+  # using clean data frame
+  data = pie_crab_clean
+) 
 
-# test object
+# object
 crab_anova
 
 # gives more information
 summary(crab_anova)
 ```
 
-Summarize results: is there a difference in mean crab carapace width between the three sites?  
+Summarize results: is there a difference in mean crab size (measured as carapace width in mm) between the three sites?  
 
 **There is a difference in mean crab carapace width between Cape Cod, Virginia Coastal Reserve LTER, and Zeke's Island NERR (one-way ANOVA, F(2, 89) = 39.6, p < 0.001, $\alpha$ = 0.05).**
 
 #### g. Post-hoc: Tukey HSD
 
-```{r crab-tukey}
-TukeyHSD(crab_anova) # running Tukey HSD
+```{r}
+#| label: crab-tukey
+
+TukeyHSD(crab_anova)
 ```
 
 Which pairwise comparisons are actually different? Which ones are not different?  
 
-**Zeke's Island NERR and Cape Cod crabs are different, and Zeke's Island NERR and Virginia Coastal Reserve LTER crabs are different. Virginial Coastal Reserve LTER and Cape Cod crabs are not different.**
+**Zeke's Island NERR and Cape Cod crabs are different, and Zeke's Island NERR and Virginia Coastal Reserve LTER crabs are different. Virginia Coastal Reserve LTER and Cape Cod crabs are not different.**
 
 #### h. effect size
 
 Using `eta_squared()` from `rstatix`
 
-```{r crab-effectsize}
-eta_squared(crab_anova) # calculating effect size
+```{r}
+#| label: crab-effectsize
+
+rstatix::eta_squared(crab_anova)
 ```
 
 What is the magnitude of the differences between sites in crab size?  
 
-**There is a large difference in crab size between sites.**
+**There is a large difference in crab size between sites.**  
+
+Another way of saying this: there is a **large** effect of site on crab size. There is a **large** difference between sites in crab size.
 
 #### i. Putting everything together
 
-We found a large ($\eta^2$ = 0.47) difference between sites in mean crab carapace width (one-way ANOVA, F(2, 89) = 39.6, p < 0.001, $\alpha$ = 0.05). The smallest crabs were from Zeke's Island NERR, which were on average 12.1 mm. Zeke's Island crabs were 4.8 mm (95% CI: [3.3, 6.2] mm) smaller than crabs from Cape Cod (Tukey's HSD: p < 0.001) and 4.3 mm (95% CI: [2.9, 5.7] mm) smaller than crabs from Virginia Coastal Reserve LTER (Tukey's HSD: p < 0.001).  
+**means**
 
-### 3. Captions
+Zeke's Island NERR: 12.1 mm
+Cape Cod: 16.8 mm
+Virginia Coastal Reserve LTER: 16.3 mm
+
+**test type**
+
+one-way ANOVA
+
+**test distribution**
+
+F
+
+**distribution parameters**
+
+numerator and denominator degrees of freedom: 2, 89
+
+**test statistic**
+
+F-statistic: 39.6
+
+**p-value**
+
+5.1e-13, expressed as p < 0.001
+
+**significance level**
+
+$\alpha$ = 0.05
+
+**post-hoc tests**
+
+used Tukey HSD (Honestly Significant Difference)
+Zeke's Island different from Cape Cod and VCR, Cape Cod and VCR are not different
+
+**effect size**
+
+$\eta^2$ = 0.47
+
+**Writing:**
+
+We found a large ($\eta^2$ = 0.47) difference between sites in mean crab carapace width (one-way ANOVA, F(2, 89) = 39.6, p < 0.001, $\alpha$ = 0.05). The smallest crabs were from Zeke's Island NERR, which had an average width of 12.1 mm. Zeke's Island crabs were 4.8 mm (95% CI: [3.3, 6.2] mm) smaller than crabs from Cape Cod (Tukey's HSD: p < 0.001) and 4.3 mm (95% CI: [2.9, 5.7] mm) smaller than crabs from Virginia Coastal Reserve LTER (Tukey's HSD: p < 0.001).  
+
+### 3. Non-parametric tests
+
+#### a. Clean and wrangle the data
+
+```{r}
+#| label: ramen-wrangle
+
+# create new object from ramen ratings
+ramen_ratings_clean <- ramen_ratings |> 
+  # filter to only include Maruchan ramen
+  filter(brand == "Maruchan") |> 
+  # reorder style factor
+  mutate(style = fct_relevel(style, "Bowl", "Pack", "Tray", "Cup")) 
+
+# look at the structure
+str(ramen_ratings_clean)
+```
+
+#### b. Quick summary
+
+```{r}
+#| label: ramen-summary
+
+# create a new object from clean data frame
+ramen_ratings_summary <- ramen_ratings_clean |> 
+  # group by style
+  group_by(style) |> 
+  # calculate the median
+  summarize(median = median(stars)) |> 
+  # ungroup data frame
+  ungroup()
+
+# display the object
+ramen_ratings_summary 
+```
+
+
+#### c. Make a boxplot to compare star ratings across ramen styles
+
+```{r}
+#| label: ramen-exploratory-visualization
+
+# base layer: ggplot
+ggplot(data = ramen_ratings_clean, 
+       # x-axis: ramen style
+       # y-axis: star rating
+       # color by style
+       mapping = aes(x = style, 
+                     y = stars, 
+                     color = style)) + 
+  # first layer: boxplot
+  geom_boxplot(color = "darkgrey", 
+               # removing outliers because they're shown in jitter
+               outliers = FALSE) + 
+  # second layer: jitter to represent individual ramen styles
+  geom_jitter(height = 0,
+              width = 0.1,
+              size = 2,
+              alpha = 0.6) +
+  # set custom colors
+  scale_color_manual(values = c("firebrick4", "orange", "gold", "darkgreen")) + 
+  # minimal theme
+  theme_minimal() + 
+  # take out the legend
+  theme(legend.position = "none") 
+```
+
+#### d. Do the Kruskal-Wallis test
+
+```{r}
+#| label: ramen-kw
+
+kruskal.test(
+  # formula: star ratings as a function of ramen style
+  stars ~ style, 
+  # data frame
+  data = ramen_ratings_clean 
+)
+```
+
+Is there a difference in ratings between ramen styles?  
+
+**Ramen styles differ in ratings (Kruskal-Wallis rank sum test, $\chi^2$(3) = 15.7, p = 0.0013).**
+
+#### e. Do a Dunn's post-hoc test
+
+Using `dunn_test()` from `rstatix`
+
+```{r}
+#| label: ramen-post-hoc
+
+dunn_test(
+  # formula: star ratings as a function of ramen style
+  stars ~ style, 
+  # data frame
+  data = ramen_ratings_clean 
+)
+```
+
+Which pairwise comparisons of ramen styles are different from each other?  
+
+**Bowls and packs are different, bowls and trays are different, bowls and cups are different. Packs are not different from trays or cups, and trays are not different from cups.**
+
+#### f. Calculate an effect size
+
+Using `kruskal_effsize()` from `rstatix`
+
+```{r}
+#| label: ramen-effectsize
+
+kruskal_effsize(
+  # formula: star ratings as a function of ramen style
+  stars ~ style, 
+  # data frame
+  data = ramen_ratings_clean 
+)
+```
+
+What is the magnitude of the effect of ramen style on ratings?  
+
+**There is a moderate ($\eta^2$ = 0.12) effect of ramen style on ratings.**
+
+#### g. Putting everything together
+
+**medians**
+
+Bowl: 4.25 stars
+Pack: 3.75 stars
+Tray: 3.75 stars
+Cup: 3.5 stars
+
+**test**
+
+Kruskal-Wallis rank sum
+
+**test "distribution"**
+
+$\chi^2$
+
+**distribution parameters**
+
+degrees of freedom (3)
+
+**test statistic**
+
+15.7
+
+**p-value**
+
+0.0013
+
+**significance level**
+
+$\alpha$ = 0.05
+
+**post-hoc test**
+
+Dunn's post-hoc test with Holm p-value adjustment
+Bowls are different from packs, trays, and cups
+
+We found a moderate ($\eta^2$ = 0.12) difference in ratings between ramen styles (Kruskal-Wallis rank sum test, $\chi^2$(3) = 15.7, p = 0.0013, $\alpha$ = 0.05). Bowl-style ramen had a median rating of 4.25 stars, which tended to be more highly rated than pack (Dunn's post-hoc test: Holm adjusted p = 0.04, median rating = 3.75 stars), tray (Dunn's post-hoc test: Holm adjusted p = 0.04, median rating = 3.75 stars), or cup style ramen (Dunn's post-hoc test: Holm adjusted p = 0.0013, median rating = 3.5 stars).
+
+
+
+### 4. Captions
 
 #### Figure 1.
 
@@ -267,6 +489,9 @@ Alternative option if you have a figure made using the same dataset as a previou
 
 **Figure 3. Quantile-quantile (QQ) plots of crab carapace widths.** Points represent individual crab carapace width measurements. Lines represent reference quantiles of sample (y-axis) and standard normal theoretical (x-axis) distributions. Panels, data source, and access as in Figure 2.
 
+#### Figure 4. 
+
+**Figure 4. Median star ratings for Maruchan Ramen styles.** Points represent individual ratings for ramen types in each style (red: bowl, orange: pack, yellow: tray, green: cup). Boxplots represent median star ratings in each style.
 
 **END OF WORKSHOP 5**
 

@@ -1,9 +1,9 @@
 ---
 title: "Week 5 figures - Lectures 9 and 10"
-date: 2026-02-03
+date: 2026-04-28
 categories: [analysis of variance, eta squared, shapiro-wilk, levene, mann-whitney U, wilcoxon signed-rank, kruskal-wallis, cliffs delta]
 citation:
-  url: https://winter-2026.envs-193ds.com/lecture/lecture_week-05.html
+  url: https://spring-2026.envs-193ds.com/lecture/lecture_week-05.html
 engine: knitr
 knitr:
   opts_chunk: 
@@ -32,8 +32,8 @@ library(palmerpenguins)
 
 # analysis
 library(car)
-library(effectsize)
 library(rstatix)
+library(effectsize)
 library(dunn.test)
 ```
 
@@ -216,10 +216,9 @@ leveneTest(bill_length_mm ~ species,
 
 ```{r penguins-var-calc}
 penguins |> 
-  drop_na(bill_length_mm) |> 
   group_by(species) |> 
-  summarize(variance = var(bill_length_mm, na.rm = TRUE),
-            n = length(bill_length_mm)) 
+  summarize(variance = var(bill_length_mm, na.rm = TRUE)) |> 
+  ungroup()
 ```
 
 
@@ -228,8 +227,10 @@ penguins |>
 ```{r penguins-anova}
 # do the actual test
 # model object stored as `penguins_anova`
-penguins_anova <- aov(bill_length_mm ~ species,
-                      data = penguins)
+penguins_anova <- aov(
+  bill_length_mm ~ species,
+  data = penguins
+)
 
 # output of the test
 penguins_anova
@@ -249,7 +250,7 @@ TukeyHSD(penguins_anova)
 ### g. effect size
 
 ```{r penguins-eta-squared}
-eta_squared(penguins_anova)
+rstatix::eta_squared(penguins_anova)
 ```
 
 ### h. example of writing
@@ -262,9 +263,9 @@ With the stats: Our results suggest a difference in bill length between species,
 
 ```{r penguins-final-fig}
 ggplot(data = penguins,
-       aes(x = species,
-           y = bill_length_mm,
-           color = species)) +
+       mapping = aes(x = species,
+                     y = bill_length_mm,
+                     color = species)) +
   geom_jitter(width = 0.2,
               height = 0,
               shape = 21,

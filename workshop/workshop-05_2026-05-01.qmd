@@ -60,7 +60,6 @@ The Plum Island Ecosystem fiddler crab data is from `lterdatasampler` (data info
 
 library(tidyverse)
 library(lterdatasampler)
-library(effectsize)
 library(rstatix)
 ```
 
@@ -92,7 +91,10 @@ ramen_ratings <- read_csv(here::here("workshop", "data", "ramen_ratings.csv"))
 
 #### a. Cleaning and wrangling
 
-Create a new object called `pie_crab_clean`. Filter to only include the following sites: Cape Cod, Virginial Coastal Reserve LTER, and Zeke's Island NERR. Select the columns of interest: `site`, `name`, and `code`. Rename the column `name` to `site_name` and `code` to `site_code`. 
+- clean data frame from `pie_crab`
+- filter to only include: Cape Code, Zeke's Island, and Virginia Coastal LTER
+- select columns we need: `site`, `name`, and `size`
+- rename columns to reflect values in the columns 
 
 ```{r}
 #| label: crab-cleaning
@@ -110,7 +112,8 @@ pie_crab_clean <- pie_crab |>
 
 #### b. Quick summary
 
-Create a new object called `pie_crab_summary`. Calculate the mean, variance, and sample size. Display the object.
+- create a new object to store summary
+- calculate summary values: mean, variance, and sample size
 
 ```{r}
 #| label: crab-summary
@@ -138,26 +141,30 @@ Create a jitter plot with the mean crab size for each site.
 #| label: exploratory visualization
 
 # base layer: ggplot
-ggplot(data = pie_crab_clean, 
-       # x-axis: full site name
+ggplot(data = pie_crab_clean,
+       # x-axis: site
        # y-axis: crab size
-       mapping = aes(x = site_name, 
-                     y = size)) + 
-  # first layer: jitter (each point is an individual crab)
-  geom_jitter(height = 0, # don't jitter points vertically
-              width = 0.1) + 
-  # second layer: point representing mean
-  stat_summary(geom = "point", # geometry being plotted
-               fun = mean, # function (calculating the mean)
-               color = "red", # color to make it easier to see
-               size = 5) + # larger point size
-  # cleaner plot theme
-  theme_minimal() 
+       mapping = aes(x = site_name,
+                     y = size)) +
+  # first layer: jitter to represent individual crabs
+  geom_jitter(height = 0,
+              width = 0.2,
+              shape = 21) +
+  # second layer: points to represent site means
+  stat_summary(geom = "point",
+               fun = mean,
+               color = "red",
+               size = 3) +
+  # using a different theme from the default
+  theme_minimal() +
+  # relabelling the x- and y-axes
+  labs(x = "Site",
+       y = "Crab carapace width (mm)")
 ```
 
 Is there a difference in mean crab carapace width (mm) between the three sites? What visual components of the plot are you using to make that guess? 
 
-**insert response here**
+**There seems to be a difference in mean crab carapace widths between sites. Cape Cod and Virginia Coastal Reserve crabs seem to be similar, and Zeke's Island crabs are smaller than the other two.**
 
 #### d. Check 1: normally distributed variable
 
@@ -167,12 +174,19 @@ Create a histogram of crab size. Facet your histogram so that you have 3 panels,
 #| label: crab-histogram
 
 # base layer: ggplot
-ggplot(data = pie_crab_clean, 
-       aes(x = size)) + # x-axis
-  # first layer: histogram
-  geom_histogram(bins = 9) + # number of bins from Rice Rule
-  # faceting by site_name: creating 3 different panels
-  facet_wrap(~ site_name) 
+ggplot(data = pie_crab_clean,
+       # x-axis: crab carapace width
+       mapping = aes(x = size)) +
+  # histogram
+  geom_histogram(bins = 9,
+                 fill = "tomato4",
+                 color = "black") +
+  # using a different theme
+  theme_minimal() +
+  # creating different panels for each site
+  facet_wrap(~ site_name) +
+  # theme options
+  theme(text = element_text(size = 14))
 ```
 
 Create a QQ plot of crab size. Facet your QQ plot so that you have 3 panels, with one panel for each site.
@@ -181,20 +195,24 @@ Create a QQ plot of crab size. Facet your QQ plot so that you have 3 panels, wit
 #| label: crab-qq
 
 # base layer: ggplot
-ggplot(data = pie_crab_clean, 
-       aes(sample = size)) + # y-axis
-  # first layer: QQ plot reference line
-  geom_qq_line(color = "orange") + 
-  # second layer: QQ plot points (actual observations)
-  geom_qq() + 
-  # faceting by site_name
-  facet_wrap(~ site_name, 
-             scales = "free") # let axes vary between panels
+ggplot(data = pie_crab_clean,
+       # y-axis: crab carapace size
+       mapping = aes(sample = size)) +
+  # reference line for the QQ
+  geom_qq_line(alpha = 0.5) +
+  # points representing sample vs theoretical
+  geom_qq(color = "tomato4") +
+  # different theme
+  theme_minimal() +
+  # creating different panels for each site
+  facet_wrap(~ site_name) +
+  # theme options
+  theme(text = element_text(size = 14))
 ```
 
-What are the outcomes of your visual checks?  
+**Note**: Crab carapace width seems to be normally distributed based on visual checks using histograms and QQ plots.
 
-**summarize outcomes here**  
+**Writing**: We evaluated normality of carapace width using histograms and QQ plots.
 
 #### e. Check 2: equal variances
 
@@ -205,6 +223,8 @@ Do a gut check: is the ratio of the largest variance to the smallest variance le
 
 8.63/4.04
 ```
+
+**Note**: the variances are _equal enough_ for the purposes of ANOVA based on the rule of thumb: the ratio of the largest to the smallest variance should be less than 3.
 
 #### f. ANOVA
 
@@ -226,15 +246,14 @@ crab_anova
 summary(crab_anova)
 ```
 
-Summarize results: is there a difference in mean crab size (measured as carapace width in mm) between the three sites?  
-
-**There is a difference in mean crab carapace width between Cape Cod, Virginia Coastal Reserve LTER, and Zeke's Island NERR (one-way ANOVA, F(2, 89) = 39.6, p < 0.001, $\alpha$ = 0.05).**
+**Note**: There is a difference in mean crab carapace width between Cape Cod, Zeke's Island, and Virginia Coastal Reserve.
 
 #### g. Post-hoc: Tukey HSD
 
 ```{r}
 #| label: crab-tukey
 
+# post-hoc for ANOVA
 TukeyHSD(crab_anova)
 ```
 
@@ -254,17 +273,19 @@ rstatix::eta_squared(crab_anova)
 
 What is the magnitude of the differences between sites in crab size?  
 
-**There is a large difference in crab size between sites.**  
+**There is a large difference in mean crab carapace width between sites.**  
 
-Another way of saying this: there is a **large** effect of site on crab size. There is a **large** difference between sites in crab size.
+Another way of saying this: there is a **large** effect of site on crab carapace width. There is a **large** difference between sites in crab carapace width.
 
 #### i. Putting everything together
 
 **means**
 
-Zeke's Island NERR: 12.1 mm
-Cape Cod: 16.8 mm
-Virginia Coastal Reserve LTER: 16.3 mm
+CC: 16.8 mm, VCR: 16.3 mm, ZI: 12.1 mm
+
+**sample size:**
+
+CC: 27; VCR: 30, ZI: 35
 
 **test type**
 
@@ -272,36 +293,35 @@ one-way ANOVA
 
 **test distribution**
 
-F
+F distribution
 
 **distribution parameters**
 
-numerator and denominator degrees of freedom: 2, 89
+numerator df: 2; denominator df: 89
 
 **test statistic**
 
-F-statistic: 39.6
+39.6
 
 **p-value**
 
-5.1e-13, expressed as p < 0.001
+5.1e-13 (expressed as p < 0.001)
 
 **significance level**
 
 $\alpha$ = 0.05
 
-**post-hoc tests**
+**post-hoc results**
 
-used Tukey HSD (Honestly Significant Difference)
-Zeke's Island different from Cape Cod and VCR, Cape Cod and VCR are not different
+VCR and CC are not different, but Zeke's Island and Cape Cod are different and Zeke's Island and VCR are different.
 
 **effect size**
 
 $\eta^2$ = 0.47
 
-**Writing:**
+**Writing**
 
-We found a large ($\eta^2$ = 0.47) difference between sites in mean crab carapace width (one-way ANOVA, F(2, 89) = 39.6, p < 0.001, $\alpha$ = 0.05). The smallest crabs were from Zeke's Island NERR, which had an average width of 12.1 mm. Zeke's Island crabs were 4.8 mm (95% CI: [3.3, 6.2] mm) smaller than crabs from Cape Cod (Tukey's HSD: p < 0.001) and 4.3 mm (95% CI: [2.9, 5.7] mm) smaller than crabs from Virginia Coastal Reserve LTER (Tukey's HSD: p < 0.001).  
+We found a large difference ($\eta^2$ = 0.47) in mean crab carapace widths between sites (one-way ANOVA, F(2, 89) = 39.6, p < 0.001, $\alpha$ = 0.05). The smallest crabs were from Zeke's Island NERR, which had an average width of 12.1 mm (n = 35). Zeke's Island crabs were 4.3 mm smaller than crabs from Virginia Coastal Reserve (VCR n = 30, 95% CI: [3.3, 6.2] mm difference) and 4.8 mm smaller than crabs from Cape Cod (CC n = 27, 95% CI: [2.9, 5.7] mm difference).
 
 ### 3. Non-parametric tests
 
@@ -310,14 +330,15 @@ We found a large ($\eta^2$ = 0.47) difference between sites in mean crab carapac
 ```{r}
 #| label: ramen-wrangle
 
-# create new object from ramen ratings
+# creating new object from ramen_ratings
 ramen_ratings_clean <- ramen_ratings |> 
-  # filter to only include Maruchan ramen
+  # filtering to only include Maruchan brand
   filter(brand == "Maruchan") |> 
-  # reorder style factor
-  mutate(style = fct_relevel(style, "Bowl", "Pack", "Tray", "Cup")) 
+  # changing level orders in style
+  mutate(style = fct_relevel(style,
+                             "Cup", "Pack", "Tray", "Bowl"))
 
-# look at the structure
+# display structure of data frame
 str(ramen_ratings_clean)
 ```
 
@@ -326,17 +347,18 @@ str(ramen_ratings_clean)
 ```{r}
 #| label: ramen-summary
 
-# create a new object from clean data frame
+# creating new object from ramen_ratings_clean
 ramen_ratings_summary <- ramen_ratings_clean |> 
-  # group by style
+  # grouping by style
   group_by(style) |> 
-  # calculate the median
-  summarize(median = median(stars)) |> 
-  # ungroup data frame
+  # calculating the median and sample size
+  summarize(median = median(stars),
+            n = length(stars)) |> 
+  # ungrouping data frame
   ungroup()
 
 # display the object
-ramen_ratings_summary 
+ramen_ratings_summary
 ```
 
 
@@ -346,28 +368,29 @@ ramen_ratings_summary
 #| label: ramen-exploratory-visualization
 
 # base layer: ggplot
-ggplot(data = ramen_ratings_clean, 
-       # x-axis: ramen style
-       # y-axis: star rating
-       # color by style
-       mapping = aes(x = style, 
-                     y = stars, 
-                     color = style)) + 
-  # first layer: boxplot
-  geom_boxplot(color = "darkgrey", 
-               # removing outliers because they're shown in jitter
-               outliers = FALSE) + 
-  # second layer: jitter to represent individual ramen styles
+ggplot(data = ramen_ratings_clean,
+       # x-axis: style,
+       # y-axis: star ratings
+       # color geometries by style
+       mapping = aes(x = style,
+                     y = stars,
+                     color = style)) +
+  # first layer: boxplot representing medians
+  geom_boxplot(outliers = FALSE) +
+  # second layer: jitter representing individual ramen types
   geom_jitter(height = 0,
-              width = 0.1,
-              size = 2,
-              alpha = 0.6) +
-  # set custom colors
-  scale_color_manual(values = c("firebrick4", "orange", "gold", "darkgreen")) + 
-  # minimal theme
-  theme_minimal() + 
-  # take out the legend
-  theme(legend.position = "none") 
+              width = 0.2) +
+  # using custom colors
+  scale_color_manual(values = c(
+    "Cup" = "firebrick4",
+    "Pack" = "orange",
+    "Tray" = "goldenrod",
+    "Bowl" = "darkgreen"
+  )) +
+  # using a theme that's different from default
+  theme_minimal() +
+  # taking out the legend
+  theme(legend.position = "none")
 ```
 
 #### d. Do the Kruskal-Wallis test
@@ -376,16 +399,16 @@ ggplot(data = ramen_ratings_clean,
 #| label: ramen-kw
 
 kruskal.test(
-  # formula: star ratings as a function of ramen style
-  stars ~ style, 
-  # data frame
-  data = ramen_ratings_clean 
+  # formula: star ratings as a function of style
+  stars ~ style,
+  # data: clean ramen ratings data frame
+  data = ramen_ratings_clean
 )
 ```
 
 Is there a difference in ratings between ramen styles?  
 
-**Ramen styles differ in ratings (Kruskal-Wallis rank sum test, $\chi^2$(3) = 15.7, p = 0.0013).**
+**Ramen styles differ in median ratings.**
 
 #### e. Do a Dunn's post-hoc test
 
@@ -395,16 +418,16 @@ Using `dunn_test()` from `rstatix`
 #| label: ramen-post-hoc
 
 dunn_test(
-  # formula: star ratings as a function of ramen style
-  stars ~ style, 
-  # data frame
-  data = ramen_ratings_clean 
+  # formula: star ratings as a function of style
+  stars ~ style,
+  # data: clean ramen ratings data frame
+  data = ramen_ratings_clean
 )
 ```
 
 Which pairwise comparisons of ramen styles are different from each other?  
 
-**Bowls and packs are different, bowls and trays are different, bowls and cups are different. Packs are not different from trays or cups, and trays are not different from cups.**
+**Cups and bowls are different, packs and bowls are different, and tray and bowls are different.**
 
 #### f. Calculate an effect size
 
@@ -423,20 +446,21 @@ kruskal_effsize(
 
 What is the magnitude of the effect of ramen style on ratings?  
 
-**There is a moderate ($\eta^2$ = 0.12) effect of ramen style on ratings.**
+**There is a moderate difference in median star ratings between ramen styles.**
 
 #### g. Putting everything together
 
 **medians**
 
-Bowl: 4.25 stars
-Pack: 3.75 stars
-Tray: 3.75 stars
-Cup: 3.5 stars
+cup: 3.5 stars, pack and tray: 3.75 stars, bowl: 4.25 stars
+
+**sample sizes**
+
+cup: 26, pack: 30, tray: 17, bowl: 33
 
 **test**
 
-Kruskal-Wallis rank sum
+Kruskal-Wallis
 
 **test "distribution"**
 
@@ -444,7 +468,7 @@ $\chi^2$
 
 **distribution parameters**
 
-degrees of freedom (3)
+degrees of freedom: 3
 
 **test statistic**
 
@@ -452,18 +476,19 @@ degrees of freedom (3)
 
 **p-value**
 
-0.0013
+0.001
 
-**significance level**
+**Dunn's test**
 
-$\alpha$ = 0.05
+cups and bowls are different, packs and bowls are different, and tray and bowls are different
 
-**post-hoc test**
+**effect size**
 
-Dunn's post-hoc test with Holm p-value adjustment
-Bowls are different from packs, trays, and cups
+$\eta^2$ = 0.12
 
-We found a moderate ($\eta^2$ = 0.12) difference in ratings between ramen styles (Kruskal-Wallis rank sum test, $\chi^2$(3) = 15.7, p = 0.0013, $\alpha$ = 0.05). Bowl-style ramen had a median rating of 4.25 stars, which tended to be more highly rated than pack (Dunn's post-hoc test: Holm adjusted p = 0.04, median rating = 3.75 stars), tray (Dunn's post-hoc test: Holm adjusted p = 0.04, median rating = 3.75 stars), or cup style ramen (Dunn's post-hoc test: Holm adjusted p = 0.0013, median rating = 3.5 stars).
+**Writing**
+
+We found a moderate difference ($\eta^2$ = 0.12) between ramen styles in median star rating (Kruskal-Wallis, $\chi^2$ = 15.7, p = 0.001, $\alpha$ = 0.05). Bowl style ramen tended to be rated highest, with a median star rating of 4.25 stars (n = 33). Bowls tended to be rated higher than packs (pack median: 3.75 stars, n = 30, Holm adjusted p-value = 0.04), trays (tray median: 3.75 stars, n = 17, Holm adjusted p-value = 0.04), and cups (cup median: 3.5 stars, n = 26, Holm adjusted p-value = 0.001).
 
 
 

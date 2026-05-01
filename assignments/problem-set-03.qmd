@@ -5,9 +5,18 @@ published-title: "Due date"
 date: 2026-05-07
 date-modified: last-modified
 categories: [problem set]
+execute:
+  message: false
+  warning: false
 ---
 
 ## Set up
+
+```{r}
+library(tidyverse)
+library(lterdatasampler)
+```
+
 
 You may turn in your problem set in .pdf or .docx format. This can be generated using code in a .qmd or .Rmd file, or a regular Word or Google Docs document.    
 
@@ -51,10 +60,92 @@ d. How would you check them (i.e. using what tools)?
 e. What other values could you calculate? Be specific with a name and what it would tell you.
 f. What other test(s) could you run after the test(s) you listed in part b? Be specific with a name and what it would tell you.
 
+## Problem 3. Figure comparing groups
+
+Write a caption for this figure using data from `ntl_icecover` in the `lterdatasampler` package.
+
+```{r}
+# base layer: ggplot
+ggplot(data = ntl_icecover,
+       # x-axis: lake
+       # y-axis: ice duration
+       # color geometries by lake
+       mapping = aes(x = lakeid,
+                     y = ice_duration,
+                     color = lakeid)) +
+  # boxplot to represent medians
+  geom_boxplot(outliers = FALSE) +
+  # jitter to represent ice duration in a single year
+  geom_jitter(height = 0,
+              width = 0.2,
+              shape = 21) +
+  # relabelling axes
+  labs(y = "Duration of ice cover (days per year)") +
+  # custom colors
+  scale_color_manual(values = c("orange2", "turquoise")) +
+  # plot appearance changes
+  theme(legend.position = "none",
+        text = element_text(size = 16),
+        axis.ticks = element_line(linewidth = 1),
+        axis.title.x = element_blank(),
+        panel.background = element_rect(fill = "white",
+                                        color = "black",
+                                        linewidth = 1),
+        panel.grid = element_blank(),
+        legend.key = element_rect(fill = "white",
+                                  color = "white"))
+```
+
+You may find it useful to look at some rows in the data frame:
+
+```{r}
+slice_sample(ntl_icecover, n = 10)
+```
 
 
+## Problem 4. Timeseries figure
 
+Write a caption for this figure using data from `ntl_airtemp` in the `lterdatasampler` package.
 
+```{r}
+#| fig-width: 10
+#| fig-height: 6
+
+# start with air temperature data set
+ntl_airtemp |> 
+  # group by year
+  group_by(year) |>
+  # calculate mean annual temperature in celcius
+  summarize(ave = mean(ave_air_temp_adjusted)) |> 
+  # ungroup data frame
+  ungroup() |> 
+  # pipe into ggplot
+  # x-axis: year
+  # y-axis: mean annual temperature
+  ggplot(mapping = aes(x = year,
+                       y = ave)) +
+  # points to represent temperatures
+  geom_point(color = "darkblue") +
+  # lines to connect points
+  geom_line(color = "darkblue") +
+  labs(x = "Year",
+       y = "Mean annual temperature (\U00B0 C)") +
+  # plot appearance changes
+  theme(text = element_text(size = 16),
+        axis.ticks = element_line(linewidth = 1),
+        panel.background = element_rect(fill = "white",
+                                        color = "black",
+                                        linewidth = 1),
+        panel.grid = element_blank(),
+        legend.key = element_rect(fill = "white",
+                                  color = "white"))
+```
+
+You may find it useful to look at some rows in the data frame:
+
+```{r}
+slice_sample(ntl_airtemp, n = 10)
+```
 
 
 

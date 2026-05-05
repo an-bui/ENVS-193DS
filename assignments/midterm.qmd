@@ -1,0 +1,306 @@
+---
+title: "Midterm"
+editor: source
+published-title: "Due date"
+date: 2026-05-14
+date-modified: last-modified
+format:
+  html: 
+    toc: true
+    toc-depth: 5
+---
+
+[Due on Thursday the 14th (Week 7) at 11:59 PM]{style="color: #79ACBD; font-size: 24px;"}
+
+# Description
+
+In this midterm, you will demonstrate your ability to synthesize lecture concepts and technical skills from workshop. At this point, you have the _conceptual_ ideas you need (for example, what is the appropriate test to use if you want to compare groups?) and the _technical_ skills you need (for example, summarizing data, visualizing data). You also have the _investigative_ skills you need (for example, reading for tasks, googling!). You will use all these components to complete the midterm.  
+
+This midterm is open note, open internet, open everything; feel free to also talk with classmates and friends. 
+
+# Set up tasks
+
+As usual, create a new folder in your `ENVS-193DS` folder for midterm materials (a logical folder name would be `midterm`). Create an Rproject. Download all materials from Canvas into your `midterm` folder.  
+
+Start a new Quarto document for your midterm. Make sure you read in your packages and data _only at the top of the document_.  
+
+Read in and store the data for problems 1 and 2 as an object called `halibut`.
+
+Read in and store the data for problem 2 as an object called `pathogens`.
+ 
+# Problems
+
+## Problem 1. Understanding, critiquing, and adding to written communication
+
+### Skills you will demonstrate
+
+In this problem, you will be responsible for using your deductive reasoning to figure out what kinds of analyses were done to answer a question.   
+
+You will then create figures to reflect your understanding of those analyses and how you might communicate about them visually.
+
+### Description 
+
+The California halibut (_Paralichthys californicus_) fishery in California ranges from Northern California (e.g. Bodega Bay) to Southern California (e.g. San Diego).
+
+You are a resource manager interested in the potential differences between Northern and Southern California in commercial halibut landings (measured in lbs).
+
+You find a report in which you read:
+
+> Across years (1969-2019), there is no difference in commercial halibut landings between Northern and Southern California (p = 0.3).
+
+:::{.callout-note title="A real report" collapse="true"}
+The ideas behind this problem are drawn from the CDFW report on the halibut fishery by Kristine Lesyna and Paul Reilly.
+
+You can find their work [here](https://marinespecies.wildlife.ca.gov/california-halibut/the-fishery/).
+:::
+
+### Components
+
+#### a. Test type
+
+Whoever wrote this report ran an analysis, but never states what.
+
+Name two options that the test _could_ have been, and: 
+
+- why those tests would have made sense for the dataset,
+- how they are similar, and
+- how they are different
+
+#### b. Writing new statements
+
+For each of the tests you listed in part a, write a _new_ statement of the results that includes the test summary (i.e. the mechanics of the test, the components of the test that would lead to a decision about hypotheses) _and_ the metric of central tendency being compared for that test.
+
+For each component you _don't_ know, include the generic term (e.g. "degrees of freedom" where the degrees of freedom would be in a complete statement).
+
+#### c. New figures
+
+The report didn't include any figures.
+
+For each of the tests you listed in part a, make a _new_ figure reflecting the metric of central tendency that test compares between groups.
+
+Additionally, your plots should include the underlying data _in addition to_ the metric of central tendency and the appropriate metric of spread or precision or confidence relating to the test.
+
+Make sure both of your plots show the underlying data in a _distinct way_ from the metric of central tendency and spread/precision/confidence (for example, using different opacities, sizes, shapes, colors, etc.). 
+
+Lastly, make sure both of your plots are customized using:
+
+- different colors from the `ggplot()` defaults
+- clean x- and y-axes with units where necessary
+- a white panel background with _no_ grid lines
+- a serif font that is different from the default _and_ is consistent across all text in both figures
+
+#### d. Caption writing
+
+For each of the figures you made in part c, write a complete caption. The data citation is as follows:
+
+> California Department of Fish and Wildlife. 2022. California halibut, Paralichthys californicus, Enhanced Status Report. Data accessed 2026-05-04.
+
+:::{.callout-note title="Write your caption in text!"}
+Write your caption as though it is normal text in your .qmd.
+
+_Do not_ insert a caption via the code chunk options, in the figure itself or anywhere else _other than the space in which you are writing your response to this component.
+:::
+
+## Problem 2. Data visualization
+
+### Skills you will demonstrate
+
+In this problem, you will demonstrate your ability to recreate a figure given a dataset.
+
+You will work with the `halibut` dataframe again.
+
+### Description
+
+In the [California Halibut Enhanced Status Report](https://marinespecies.wildlife.ca.gov/california-halibut/the-fishery/), there is a figure depicting the commercial halibut landings over time.
+
+You will recreate that figure and add customization to demonstrate your ability to use figure customization options in `ggplot()`.
+
+### Components
+
+#### a. Plan your figure
+
+Fill in the following list with the components you will need to recreate the figure:
+
+- x-axis (name the specific column):
+- y-axis (name the specific column):
+- geometry function (hint: there is only one):
+- colors and linetypes (name the specific column):
+- relabelling the x- and y-axes (name the specific function):
+- using custom colors (name the specific function):
+- theme arguments and the `element_` for:
+  - positioning the x-axis text at a 45° angle:
+  - putting the legend in the top right of the plot:
+  - removing the panel background:
+  - removing the panel grid:
+  - removing the axis ticks:
+  - removing the legend title:
+  
+#### b. Code your figure
+
+Code the figure you planned out in part a.
+
+Additionally, include your name as the subtitle.
+
+#### c. Write a caption
+
+For each of the figure you made in part b, write a complete caption.
+
+## Problem 3. Reproducing an analysis  
+
+### Skills you will demonstrate
+
+In environmental studies, open research means that researchers make their data and/or their code available for anyone to see. This means that anyone should be able to reproduce the analysis, even if they are not on the research team. In this problem, you will demonstrate your ability to read a paper to understand the context for a research study and its statistical analysis. You will then demonstrate your ability to take a data set and analyze it, using the researchers’ original analysis as a guide.
+
+### Description
+
+You will reproduce the analysis in: Gratton, E. M. et al. 2022. “Local habitat type influences bumble bee pathogen loads and bee species distributions.” _Environmental Entomology_ 52:3. [https://doi.org/10.1093/ee/nvad027](https://doi.org/10.1093/ee/nvad027).  
+
+Specifically, you will recreate the analysis that allowed the researchers to make this statement:  
+
+> There was a significant effect of habitat type on BQCV loads (Fig. 2a; χ2 = 9.82, df = 2, P = 0.007) with significant differences between valley (x̄ = 7.48) and forest (x̄ = 4.59; χ2 = 9.82, z = −3.13, P-adj = 0.003), but edge was not different from either habitat type.
+
+**Read all parts of the paper before starting this problem.**  
+
+### Components
+
+#### a. Variables  
+
+In 1-2 sentences each, describe:  
+
+- the response variable with the _full name_ (not just the acronym) and what kind of variable it is  
+- the predictor variable (include each group)  
+- how the researchers measured the response variable  
+
+For "how the researchers measured the response variable", cite the specific section of the paper in which you found their description of their process (e.g. the methods section in paragraph 2).  
+
+#### b. Test type
+
+Name the test that the researchers used to make the quoted statement.
+
+Cite the specific section of the paper in which you found their description of the analysis (e.g. the statistical analysis section in paragraph 5).
+
+#### c. Hypotheses
+
+In one sentence _each_, write the null ($H_0$) and alternative ($H_A$) hypotheses in _statistical terms only_.
+
+#### d. Cleaning and organizing data
+
+Create an object called `pathogens_clean`. In no particular order, clean the data (you should have stored this as `pathogens`) by:  
+
+- cleaning the column names  
+- selecting only the columns representing site and BQCV
+- renaming the site column to be `habitat`
+
+Use the pipe operator to string functions together. Remember to annotate every new function with a description of what _you specifically_ are doing in that line of code.  
+
+Once you are done, display 10 rows from `pathogens_clean` using the `slice_sample()` function.
+
+#### e. Summarizing and table displays
+
+Create an object called `pathogens_summary` using the `pathogens_clean` data frame to calculate the medians and sample sizes for BQCV load within each habitat type.  
+
+Round all numbers to 1 decimal point.  
+
+Display the medians and sample sizes in a **table** using one of the following packages:  
+
+- `gt`  
+- `flextable`  
+
+Make sure the column names of the table are **polished** (no underscores and capitalized in sentence case).  
+
+Show your annotated code for your calculations and making/polishing the table. **The only output displayed from this section should be your final table.**  
+
+:::{.callout-note title="Double check your table!" collapse="true"}
+Render your document to make sure your table looks right. **Do not assume that just because your code works, your table will render correctly.**
+:::
+
+#### f. Do a test
+
+Show your annotated code and output for the test type you named in part b.
+
+#### g. Do a post-hoc test.
+
+Show your annotated code and output for the appropriate post-hoc test that matches with the test type you named in part b.
+
+#### h. Calculate an effect size.
+
+Show your annotated code and output for the appropriate effect size using a function from the `rstatix` package that matches with the test type you named in part b.  
+
+#### i. Written communication
+
+Again, the authors expressed their results as follows:  
+
+> There was a significant effect of habitat type on BQCV loads (Fig. 2a; χ2 = 9.82, df = 2, P = 0.007) with significant differences between valley (x̄ = 7.48) and forest (x̄ = 4.59; χ2 = 9.82, z = −3.13, P-adj = 0.003), but edge was not different from either habitat type.
+
+In 1-2 sentences _only_, update and edit this interpretation with your interpretation, the post-hoc test, effect size, sample medians, and sample sizes.
+
+For any component that you change or add, make that text **bold**.
+
+Be sure to include all components of the test summary that are important for understanding the mechanics of the test and decision making process.
+
+# Checklist
+
+Your submission should:
+
+- [ ] include your name, the title, and the date
+- [ ] include all code with annotations
+- [ ] be uploaded to Canvas as a single PDF
+- [ ] be organized and readable (for example: no messages, warnings, etc., text is formatted correctly with subscripts where necessary, text and headers are clearly different, code annotations should not run off page)
+
+Additionally, your submission should only include the components listed below:    
+
+- [ ] a set up chunk at the top of the document, where you have read in your packages and your data  
+
+for Problem 1:  
+
+- [ ] written response for 1a
+- [ ] written response for 1b
+- [ ] annotated code and output for 1c
+- [ ] written response for 1d
+
+for Problem 2:  
+
+- [ ] written response for 2a
+- [ ] annotated code and output for 2b
+- [ ] written response for 2c
+
+for Problem 3:  
+
+- [ ] written response for 3a
+- [ ] written response for 3b
+- [ ] written response for 3c
+- [ ] annotated code and output for 3d
+- [ ] annotated code and output for 3e
+- [ ] annotated code and output for 3f
+- [ ] annotated code and output for 3g
+- [ ] annotated code and output for 3h
+- [ ] written response for 3i
+
+Additionally, you should have:  
+
+- [ ] submitted your [Generative AI Statement of Use](https://docs.google.com/forms/d/e/1FAIpQLScjIbqlNTatolSD_icPkfu35USGux-IpzWq-bMzCebg2L7PZg/viewform) **by Thursday 14 May at 11:59 PM**  
+
+Lastly, check out the **rubric on Canvas** to see the point breakdown in more detail.  
+
+## General formatting components
+
+For annotations, you should have meaningful comments for:  
+
+- each line of visualization code and/or ggplot geom/theme call (not needed for each argument, though good to have)  
+- each function in any piping operations  
+- set up code to denote where packages and/or data are read in  
+- each argument of a test call (e.g. `var.test()`, `t.test()`)  
+
+For readability, you should make sure that:    
+
+- all messages/warnings are hidden  
+- all code is contained in code chunks (double check line breaks in comments once you render your document)  
+- all text is where it’s supposed to be (all components like headers, main text, superscripts/subscripts, etc. show up correctly)  
+- code includes carriage returns, spaces, etc. to make pipe operations and arguments clear  
+- code includes consistent spacing and indents
+
+
+
+
+
+

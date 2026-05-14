@@ -215,6 +215,27 @@ Create an object called `bee_pathogens_summary` using the `bee_pathogens_clean` 
 edited 2026-05-07: edited object names
 :::
 
+:::{.callout-note title="Making your `gt` table appear in the right place" collapse="true"}
+
+When Quarto renders `gt` tables, the default is to put the table at the top of the page.
+
+One way to fix this is to add the following code with a pipe:
+
+```r
+  # ~~~ insert your original gt code here~~~ |> 
+  # new function
+  tab_options(latex.tbl.pos = "h",         # h for render the table "here"
+              latex.use_longtable = TRUE,  # setting PDF rendering option
+              table.width = px(500))       # making the table wider
+```
+
+
+Which would then lead to a rendered PDF with the table in the right position:
+
+![](/assignments/images/midterm/gttable.png)
+
+:::
+
 Round all numbers to 1 decimal point.  
 
 Display the medians and sample sizes in a **table** using one of the following packages:  

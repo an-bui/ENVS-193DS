@@ -121,7 +121,19 @@ c. Based on these diagnostics, do you think that a linear model was the appropri
 
 ### Problem 5. Relationships
 
-You decide to test for a correlation between conductivity and water elevation after making the plot you saw in Problem 1.
+You're interested in the relationship between water elevation and conductivity in a stream ecosystem. You make a plot that looks like this:
+
+```{r}
+#| echo: false
+
+ggplot(data = luq_streamchem,
+       mapping = aes(x = gage_ht,
+                     y = cond)) +
+  geom_point() +
+  labs(x = "Water elevation (m)",
+       y = expression("Conductivity (\U03BC S/cm)"))
+```
+
 
 You're not sure which test to run, so you try both.
 

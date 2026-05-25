@@ -1,9 +1,9 @@
 ---
 title: "Week 9 figures - Lecture 16"
-date: 2026-03-02
+date: 2026-05-26
 categories: [multiple linear regression, AIC]
 citation:
-  url: https://spring-2025.envs-193ds.com/lecture/lecture_week-09.html
+  url: https://spring-2026.envs-193ds.com/lecture/lecture_week-09.html
 ---
 
 ```{r libraries}
@@ -76,6 +76,16 @@ $$
 where $R^2_J$ is the $R^2$ value obtained by a model with the $j^{th}$ predictor as a response and the rest of the predictors as predictors.
 
 ```{r}
+ggplot(data = drought_exp_clean,
+       mapping = aes(x = leaf_dry_weight_g,
+                     y = sla)) +
+  geom_point()
+
+ggplot(data = drought_exp_clean,
+       mapping = aes(x = sla,
+                     y = shoot_g)) +
+  geom_point()
+
 ggpairs(drought_exp_clean, # data frame
         columns = c("leaf_dry_weight_g", # columns to visualize
                     "sla", 
@@ -106,7 +116,7 @@ model1 <- lm(total_g ~ sla + water_treatment + species,
 vif(model1)
 ```
 
-# interaction terms
+# frog toxicity interaction terms
 
 using a modified version of the frog toxicity model
 

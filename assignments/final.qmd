@@ -1,0 +1,331 @@
+---
+title: "Final"
+editor: source
+published-title: "Due date"
+date: 2026-06-09
+date-modified: last-modified
+format:
+  html:
+    message: false
+    warning: false
+    toc: true
+    toc-depth: 5
+---
+
+[Due on Tuesday 9 June at 11:59 PM]{style="color: #79ACBD; font-size: 24px;"}
+
+## Getting help from the instructional team
+
+As usual, you are welcome to come to drop-in hours, email for meetings, etc.  
+
+If you are working with classmates (which we encourage you to do!), you are welcome to try to make a group meeting (i.e. you and some friends get help together). You and your peers can email to set up a meeting time (that works for all of you) to answer questions outside of drop-ins.
+
+Additionally, An will be holding extra drop in hours on:
+
+- Monday the 8th from 1-5 PM (location TBD)
+- Tuesday the 9th from 9 - 11 AM in Library room 2328. 
+
+## Set up
+
+### a. GitHub steps
+
+- Name the repo `ENVS-193DS_spring-2026_final`, write a description, initialize with a README.  
+
+### b. RStudio steps
+
+- Clone the repository to your computer.  
+- Create a `code` and a `data` folder.
+- Start a new Quarto document in the `code` folder.
+- Download any data you need into your `data` folder.
+- Insert a link to your GitHub repo at the top of your document.
+- In your new Quarto document, create a code chunk at the top to read in any packages or data.
+- Throughout the course of completing this portion of the final, commit and push changes at least 10 times.  
+- Outline a README with a "General information" section, "Data and file overview" section, and a "Rendered output" section.
+- Link to the rendered .pdf in your "Rendered output" section.
+- (once you are done with your final) fill in the rest of the README.
+
+## Problem 1. Research writing
+
+### Skills you will demonstrate
+
+In this problem, you will demonstrate your ability to identify gaps in statistical communication and justify _why_ those gaps should be filled.  
+
+Additionally, you will demonstrate your ability to write about statistics without a complete analysis or the information you would need.
+
+### Problem
+
+You're working on a research team trying to understand how restoration of native plant cover (measured in percent cover) influences probability of American Avocet (_insert scientific name here_) and other shorebird habitat use in the San Francisco Bay. Your co-worker runs some analyses and writes up a report, giving it to you to review. In part 1 of the results section of the report, your co-worker has written:
+
+> We rejected the null hypothesis that distance to water edge does not predict probability of American Avocet microhabitat use (p = 0.03).
+
+In part 2 of the results section of the report, your co-worker has written:
+
+> We rejected the null hypothesis that there is no relationship between bird species (American Avocet, Forster's Tern, Black-necked Stilt) and habitat (managed pond, non-tidal marsh, salt pond, tidal marsh, or tidal mudflat) (p < 0.001).
+
+It's great that this report is coming together, but you think they can improve on what they've written and make it more understandable to a non-statistical audience.  
+
+#### a. Transparent statistical methods
+
+What statistical tests did your co-worker use?  
+
+Clearly connect the test to the part that you are addressing (e.g. "In part 1, they used _______. In part 2, they used _______.").
+
+#### b. Suggestions for rewriting
+
+In 1-3 sentences, _write new statements with interpretation only_ for the statements in part a and b.
+
+Be sure your interpretation makes sense without any statistical summary (which, again, you should _not_ include). 
+
+#### c. Further analysis
+
+In 1-2 sentences, outline:  
+
+- _one_ additional variable that could influence the probability of American Avocet microhabitat use,
+- what _type_ of variable it is (with units and/or levels, if applicable), and
+- _why_ that variable might influence American Avocet habitat use.
+
+Be specific with units, data collection method, etc. as needed.
+
+:::{.callout-note title="Biological context!" collapse="true"}
+The information in this problem is drawn from this paper:  
+
+Schacter, Carley R. et al. 2023. "Habitat Use by Breeding Waterbirds in Relation to Tidal Marsh Restoration in the San Francisco Bay Estuary." _San Francisco Estuary and Watershed Science_ 21:2. doi: [10.15447/sfews.2023v21iss2art2](https://doi.org/10.15447/sfews.2023v21iss2art2).  
+:::
+
+## Problem 2. Data analysis
+
+### Skills you will demonstrate
+
+In this problem, you will demonstrate your ability to **understand a data set that someone else collected** and **identify and execute the appropriate statistical method, with all assumption checks**. Additionally, you will demonstrate your ability to **visualize and communicate about the results of your statistical test**.  
+
+You will be working with the nest box occupancy dataset from Lujan, Ema et al. 2023. "Symbiotic acacia ants drive nesting behavior by birds in an African savanna." _Biotropica_ 55:6. doi: [10.1111/btp.13276](https://doi.org/10.1111/btp.13276).
+
+
+The data citation is: Lujan, E., Nielsen, R., Short, Z., Wicks, S., Nderitu Watetu, W., Malingati Khasoha, L., Palmer, T. M., Goheen, J. R., & Alston, J. M. (2023). Data, code, and metadata for: Symbiotic acacia ants drive nesting behavior by birds in an African savanna [Data set]. Zenodo. [https://doi.org/10.5281/zenodo.8373322](https://doi.org/10.5281/zenodo.8373322)
+
+You will answer the following research questions:  
+
+1. How do tree height and acacia ant species influence the probability of bird nest occurrence (of any species of birds)?
+2. Does acacia ant species identity influence the effect of tree height on probability of nest occurrence _differ_ depending on acacia ant species?
+
+**READ THE INTRODUCTION AND METHODS BEFORE YOU START.**
+
+### Problem
+
+:::{.callout-tip title="Before doing the following parts..." collapse="true"}
+
+Read the metadata file to understand the structure of the data set and its variables.
+
+Read in your data in the set up chunk, storing it as a new object called `nests`.  
+
+Do any exploring you need to do (exploratory visualizations, etc.) but **DO NOT include any code or output from your data exploration.**  
+
+Not sure how to write code but hide it and/or its output from the final rendered document? Check [here](https://quarto.org/docs/computations/execution-options.html) for options.
+
+:::
+
+#### a. Clean and wrangle
+
+:::{.callout-note title="Again, before you start this problem..." collapse="true"}
+Read the metadata!!!!!
+:::
+
+Create a new object called `nests_clean`. In no particular order:
+
+- select the columns of interest (hint: you should have 3 columns)
+- reorder the levels of ant species to be in the following order: 1) _C. sjostedti_, 2) _C. mimosae_, 3) _C. nigriceps_
+- filter to only include the ant species _C. mimosae_, _C. sjostedti_, and _C. nigriceps_
+- create a new column to store the full scientific name for each ant species
+
+At the end of your code chunk, display the structure of `nests_clean` _and_ 10 random rows from the data frame.
+
+#### b. Response variable 
+
+In 1-2 sentences, explain what the 1s and 0s mean in this data set biologically.
+
+#### c. Purpose of study 
+
+In this problem, you will be examining the potential effects of _tree height_ and _acacia ant species_ on the probability of nest occurrence.  
+
+In 2-3 sentences for each predictor, describe:  
+
+- what kind of variable it is (i.e. continuous, discrete, categorical, etc.),
+- how it could possibly influence the probability of nest occurrence (i.e. as tree height increases, the probability of probability of nest occurrence would ______________ because...), and
+- where in the paper you found this information (the specific section, subsection, and paragraph)
+
+#### d. Table of models 
+
+Make a table of all the models you will need to run. You will run 2 models: one model with an interaction term, and one model without.
+
+Stuck on how to create a table? See workshop 8 for an example.  
+
+Your table should have 4 columns: (1) model number and (2) model description (what predictors are present in the model and whether or not it has an interaction term).
+
+#### e. Run the models
+
+Write your code to run all your models. Do not display any output.
+
+#### f. Select the best model
+
+Using Akaike's Information Criterion (AIC), choose the best model.  
+
+In text, write what the best model was (i.e. "The best model as determined by Akaike's Information Criterion (AIC)...").  
+
+**Use the predictors and the response variable to describe the model**, not the model number that you assigned.
+
+#### g. Check the diagnostics
+
+Check your diagnostics for the model you selected using simulated residuals from the `DHARMa` package.  
+
+Display all code and output.
+
+#### h. Visualize the model predictions 
+
+Create a plot showing model predictions _for your selected model_ with 95% confidence intervals around the predictions and the underlying data.  
+
+Show and annotate all code. Show the output.   
+
+For full credit:  
+
+- make sure the x- and y-axis labels are written in full with units if necessary
+- take out the gridlines and grey background
+- use colors that are different from the default
+- display model predictions for each ant species in a different panel
+
+#### i. Write a caption for your figure.
+
+Include a figure number, title, description of the figure, and data citation.
+
+#### j. Calculate model predictions
+
+Calculate the predicted probability of nest occurrence at a value of 600 cm (the tallest tree in the dataset).  
+
+Show and annotate all code. Display the output.
+
+#### k. Interpret your results
+
+Write 3-5 sentences summarizing what you found, making references to the figure you made in part h and the predictions you calculated in part j. Your summary should include your interpretation of:  
+
+- the predicted probability of nest site occupancy at 600 cm (the tallest tree)
+- what relationships, if any, exist between tree height and acacia ant species and probability of nest occurrence
+- the biology behind the trends you found - what _explains_ the relationship between acacia ant species and probability of bird nest occurrence?
+
+:::{.callout-tip title="Read the discussion!" collapse=true}
+The authors contextualize the potential effects of these variables on the probability of nest occurrence. Read the discussion to understand the biology!
+:::
+
+## Problem 3. Affective and exploratory visualizations
+
+### Skills you will demonstrate
+
+In this problem, you will demonstrate your ability to **communicate about your visualization and give feedback to others.** You will also demonstrate your ability to **design and execute an appropriate statistical analysis for your data**.
+
+### Problem
+
+#### a. Comparing visualizations
+
+Compare and contrast your affective visualization from Homework 3 and the exploratory visualizations you made for Homework 2. In 1-3 sentences each, explain:  
+
+- How are the visualizations different from each other in the way you have represented your data?
+- What similarities do you see between all your visualizations?
+- What patterns (e.g. differences in means/counts/proportions/medians, trends through time, relationships between variables) do you see in each visualization? Are these different between visualizations? If so, why? If not, why not?
+- What kinds of feedback did you get during week 9 in workshop or from the instructors? How did you implement or try those suggestions? If you tried and kept those suggestions, explain how and why; if not, explain why not.
+
+#### b. Designing an analysis
+
+Based on your response variable and _one_ of your potential predictor variables (your focal variable or otherwise), propose _one_ analysis that we talked about this quarter that you could apply to answer your research question(s).  
+
+Additionally, explain _why_ this analysis is appropriate with regard to:  
+
+- your question
+- your variables and what _types_ of variables they are
+
+#### c. Check any assumptions and run your analysis
+
+In this section, create subsections (in the appropriate order) to:  
+
+- check any assumptions
+- run the analysis you proposed in part b
+- (if applicable) calculate an effect size
+
+Show all code and output.  
+
+#### d. Create a visualization
+
+Create a visualization that reflects the analysis you ran in part c (i.e. if you compared medians, you should create a plot representing medians; if you built a model, you should show predictions and confidence intervals).  
+
+For full marks, your plot should:  
+
+- have labelled x- and y-axes with units
+- use a different theme than the default
+- use different colors than the default
+- show the underlying data
+
+#### e. Write a caption
+
+Write a caption for the figure you created in part d. Include a figure number, title, description of visual components (including but not limited to shapes, colors, lines, etc.). 
+
+#### f. Write about your results
+
+In 2-4 sentences, write about your results (with appropriate components in the parenthetical statistical summary).  
+
+Include any components that would provide additional context to your interpretation (e.g. differences in means) or allow you to quantify the magnitude of effects (e.g. effect sizes).  
+
+#### g. Sharing your affective visualization
+
+This is a component you will complete in workshop during week 10. **We will be taking attendance that day. If you attend class and complete the activity, you will receive full credit for this section.** 
+
+## Double check your assignment!
+
+On Canvas, you will submit two links:  
+
+1. the link to your GitHub repository
+2. the link to your rendered pdf
+
+Your GitHub repository should:  
+
+- [ ] have an informative README with the following sections filled out: General information, Data and file information, and Rendered output. See the repos you created for workshop 7 and workshop 8 for examples. 
+- [ ] have separate folders for `code` and `data`. See workshops 7 and 8 for how to organize these folders. 
+- [ ] show at least 10 commits/pushes with a descriptive, concise commit message (a few words describing what changes you are committing)
+
+Your rendered pdf should:  
+
+- [ ] be organized and readable (for example: no messages, warnings, etc., text is formatted correctly with subscripts or mathematical notation where necessary, text and headers are clearly different)
+- [ ] include a table of contents (see code from workshop 7 and 8 for a reference in Quarto)
+
+Additionally, your rendered pdf should include only the components listed below:  
+
+- [ ] a set up chunk at the top of the document, where you have read in your packages and your data (and you should not have read in any packages or data anywhere else) 
+- [ ] your name, the title, and the date
+
+for Problem 1:  
+
+- [ ] written response for a
+- [ ] written response for b
+- [ ] written response for c
+
+for Problem 2:  
+
+- [ ] annotated code and output for a
+- [ ] written response for b
+- [ ] written response for c
+- [ ] written response for d
+- [ ] annotated code for e
+- [ ] annotated code, output, and written response for f
+- [ ] annotated code and output for g
+- [ ] annotated code and output for h
+- [ ] written response for i
+- [ ] annotated code and output for j
+- [ ] written response for k
+
+for Problem 3:  
+
+- [ ] written response for a
+- [ ] written response for b
+- [ ] annotated code and output for c
+- [ ] annotated code and output for d
+- [ ] written response for e
+- [ ] written response for f
+
+Lastly, check out the **rubric on Canvas** to see the component breakdown in more detail.
+

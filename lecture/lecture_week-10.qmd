@@ -1,9 +1,9 @@
 ---
 title: "Week 10 figures - Lectures 17 and 18"
-date: 2026-03-10
+date: 2026-05-26
 categories: [generalized linear model, logistic regression]
 citation:
-  url: https://winter-2026.envs-193ds.com/lecture/lecture_week-10.html
+  url: https://spring-2026.envs-193ds.com/lecture/lecture_week-10.html
 ---
 
 ```{r}
@@ -106,6 +106,8 @@ $$
 \eta = g(p) = log(\frac{p_i}{1 - p_i})
 $$
 
+
+
 $$
 log(\frac{p_i}{1 - p_i}) = \beta_0 + \beta_1 x_i
 $$
@@ -127,7 +129,7 @@ $$
 ### model equation
 
 $$
-log(\frac{p}{1-p}) = 13.0974 - 0.6741 \times distance
+log(\frac{p_i}{1 - p_i}) = 13.0974 - 0.6741 \times distance
 $$
 
 ## bat equations
@@ -240,6 +242,17 @@ gtsummary::tbl_regression(liz_mod,
                           exponentiate = TRUE)
 
 as_flextable(liz_mod)
+
+modelsummary::modelsummary(liz_mod)
+
+# r squared
+1 - summary(liz_mod)$deviance/summary(liz_mod)$null.deviance
+
+# chi statistic
+chi <- summary(liz_mod)$null.deviance - summary(liz_mod)$deviance
+
+# p-value for overall model
+pchisq(q = chi, df = 1, lower.tail = FALSE)
 ```
 
 
